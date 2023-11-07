@@ -276,7 +276,7 @@ CAMEL_API int cml_vector_norm(const CML_Vector *v, CML_Vector *out) {
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API double cml_vector_dot(const CML_Vector *v, CML_Vector *w) {
+CAMEL_API double cml_vector_dot(const CML_Vector *v, const CML_Vector *w) {
     if (!v || !w || !v->n || !v->data || !w->n || !w->data) {
         return CML_ERR_NULL_PTR;
     }

@@ -1,8 +1,8 @@
 /******************************************************************************
- * Filename: core.h
+ * Filename: linear.h
  * 
  * Description:
- *      Entry point for the core features of CAMEL.
+ *      Main entry point for the linear algebra module of CAMEL.
  *
  * Author: Sergio Madrid
  * Created on: 7/11/2023
@@ -12,13 +12,9 @@
  * license information.
  *****************************************************************************/
 
-#ifndef CAMEL_CORE
-#define CAMEL_CORE
+#ifndef CAMEL_LINEAR_ALGEBRA
+#define CAMEL_LINEAR_ALGEBRA
 
-#define CAMEL_API static inline
+#include "vector.h"
 
-#define CML_SUCCESS 0
-#define CML_ERR_INVALID_SIZE -1
-#define CML_ERR_NULL_PTR -2
-
-#endif /* CAMEL_CORE */
+#endif /* CAMEL_LINEAR_ALGEBRA */

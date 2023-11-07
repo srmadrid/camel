@@ -16,5 +16,7 @@
 #ifndef CAMEL
 #define CAMEL
 
+#include "core/core.h"
+#include "algebra/algebra.h"
 
 #endif /* CAMEL */
