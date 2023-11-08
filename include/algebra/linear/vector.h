@@ -1,5 +1,5 @@
 /******************************************************************************
- * Filename: camel.h
+ * Filename: vector.h
  * 
  * Description:
  *      Declarations for the vector manipulation functions of CAMEL.
@@ -264,7 +264,7 @@ CAMEL_API int cml_vector_norm(const CML_Vector *v, CML_Vector *out) {
 
 
 /******************************************************************************
- * Function: cml_vector_norm
+ * Function: cml_vector_dot
  * 
  * Description:
  *      Normalizes the input CML_Vector and writes it to the out CML_Vector.
