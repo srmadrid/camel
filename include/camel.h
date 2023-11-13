@@ -18,5 +18,6 @@
 
 #include "core/core.h"
 #include "algebra/algebra.h"
+#include "numtheory/numtheory.h"
 
 #endif /* CAMEL */

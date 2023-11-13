@@ -16,5 +16,6 @@
 #define CAMEL_LINEAR_ALGEBRA
 
 #include "vector.h"
+#include "matrix.h"
 
 #endif /* CAMEL_LINEAR_ALGEBRA */
