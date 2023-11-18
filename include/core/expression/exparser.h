@@ -5,7 +5,7 @@
  *      Declaration for expression parsing and manupulation of CAMEL.
  *
  * Author: Sergio Madrid
- * Created on: 15/11/2023
+ * Created on: 16/11/2023
  * 
  * Copyright (c) 2023 Sergio Madrid. All rights reserved.
  * Licensed under the MIT License. See LICENSE in the project root for
@@ -162,6 +162,7 @@ CAMEL_API int cml_read_char(char input) {
         case 'b':
         case 'c':
         case 'd':
+        case 'e':
         case 'f':
         case 'g':
         case 'h':
@@ -232,6 +233,8 @@ CAMEL_API CML_ExpressionToken **cml_lex_expression(const char *expression, size_
     size_t length = 0;
     char *aux;
     int nextCharType = 0;
+    
+    int letterAuxLen = 0; // For charType == 5, to be removed when a map is implemented
 
     // Iterate through the expression
     for (int i = 0; i < expressionLength;) { // remove ++i from loop
@@ -276,16 +279,56 @@ CAMEL_API CML_ExpressionToken **cml_lex_expression(const char *expression, size_
                 ++i; // increment here since we've processed the character
                 (*size)++;
             } else if (charType == 5) {
+                // Standard if else chain. Future plans may include using a map 
+                // or other more efficient data structure to more effitiently
+                // and more maintainably check for constants and function operators
+                // Constants
+                if (expression[i] == 'e') {
+                    letterAuxLen = 1;
+                    charType = 8;
+                } else if (expression[i] == 'i') {
+                    letterAuxLen = 1;
+                    charType = 8;
+                } else if (expression[i] == 'p' && expression[i + 1] == 'i') {
+                    letterAuxLen = 2;
+                    charType = 8;
+                } else if (expression[i] == 'p' && expression[i + 1] == 'h' &&
+                           expression[i + 2] == 'i') {
+                    letterAuxLen = 3;
+                    charType = 8;
+                } else if (expression[i] == 'l' && expression[i + 1] == 'n') { // Function operators
+                    letterAuxLen = 2;
+                    charType = 6;
+                } else if (expression[i] == 'l' && expression[i + 1] == 'o' &&
+                           expression[i + 2] == 'g') {
+                    letterAuxLen = 3;
+                    charType = 6;
+                } else if (expression[i] == 's' && expression[i + 1] == 'i' &&
+                           expression[i + 2] == 'n') {
+                    letterAuxLen = 3;
+                    charType = 6;
+                } else if (expression[i] == 'c' && expression[i + 1] == 'o' &&
+                           expression[i + 2] == 's') {
+                    letterAuxLen = 3;
+                    charType = 6;
+                } else {
+                    letterAuxLen = 1;
+                    charType = 7;
+                }
                 // To be implemented (log, ln, sin, cos, etc. (6) and variables (7) and constants (8))
                 // Right now placeholder code
-                aux = (char*)malloc(sizeof(char));
+                aux = (char*)malloc(letterAuxLen * sizeof(char));
                 if (aux == NULL) {
                     goto error;
                 }
-                aux[0] = expression[i];
-                result[*size] = cml_exptkn_init(&aux, 5, 1);
-                ++i; // increment here since we've processed the character
+                for (int k = 0; k < letterAuxLen; k++) {
+                    aux[k] = expression[i + k];
+                }
+                result[*size] = cml_exptkn_init(&aux, charType, letterAuxLen);
+                i += letterAuxLen; // increment here since we've processed the character
                 (*size)++;
+                // Maybe add a way to more quickly identify variables and constants 
+                // once in the token to optimize evaluations
             } 
         } else {
             ++i; // If the charType is -1 or 10, just move to the next character
