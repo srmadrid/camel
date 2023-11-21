@@ -24,7 +24,7 @@
 
 
 /******************************************************************************
- * Struct: CML_Matrix
+ * Struct: CML_ExpressionToken
  * 
  * Description:
  *      Token that stores information of each toke of a tokenized expression.
@@ -246,6 +246,7 @@ CAMEL_API CML_ExpressionToken **cml_lex_expression(const char *expression, size_
                 goto error;
             }
             result = temp;
+        }
         int charType = cml_read_char(expression[i]);
         if (charType != -1 && charType != 11) {
             if (charType == 1) {
@@ -264,8 +265,7 @@ CAMEL_API CML_ExpressionToken **cml_lex_expression(const char *expression, size_
                     goto error;
                 }
                 aux = temp;
-                return result;
-                result[*size] = cml_exptkn_init(&aux, 0, length);
+                result[*size] = cml_exptkn_init(&aux, charType, length);
                 i += length; // Move i the length of the digit chain
                 length = 0;
                 (*size)++;
