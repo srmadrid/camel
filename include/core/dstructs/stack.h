@@ -52,8 +52,8 @@ typedef struct {
  * Function: cml_charstack_init
  * 
  * Description:
- *      Initializes a CML_CharStack with the input capacity. If no size is
- *      passed as a parameter, the default initial size will be used.
+ *      Initializes a CML_CharStack with the input capacity. If a size smaller
+ *      than 1 is selected, the default initial size of 8 will be used.
  *
  * Parameters:
  *      size_t capacity - Initial capacity of the stack.
@@ -61,9 +61,9 @@ typedef struct {
  * Returns:
  *      A pointer to the initialized CML_CharStack.
  *****************************************************************************/
-CAMEL_API CML_CharStack *cml_charstack_init(size_t capacity = CML_INITIAL_STACK_CAP) {
+CAMEL_API CML_CharStack *cml_charstack_init(size_t capacity) {
     if (capacity < 1) {
-        return NULL;
+        capacity = CML_INITIAL_STACK_CAP;
     }
 
     CML_CharStack *out = (CML_CharStack*)malloc(sizeof(CML_CharStack));
@@ -234,8 +234,8 @@ typedef struct {
  * Function: cml_intstack_init
  * 
  * Description:
- *      Initializes a CML_IntStack with the input capacity. If no size is
- *      passed as a parameter, the default initial size will be used.
+ *      Initializes a CML_IntStack with the input capacity. If a size smaller
+ *      than 1 is selected, the default initial size of 8 will be used.
  *
  * Parameters:
  *      size_t capacity - Initial capacity of the stack.
@@ -243,9 +243,9 @@ typedef struct {
  * Returns:
  *      A pointer to the initialized CML_IntStack.
  *****************************************************************************/
-CAMEL_API CML_IntStack *cml_intstack_init(size_t capacity = CML_INITIAL_STACK_CAP) {
+CAMEL_API CML_IntStack *cml_intstack_init(size_t capacity) {
     if (capacity < 1) {
-        return NULL;
+        capacity = CML_INITIAL_STACK_CAP;
     }
 
     CML_IntStack *out = (CML_IntStack*)malloc(sizeof(CML_IntStack));
@@ -414,8 +414,8 @@ typedef struct {
  * Function: cml_doublestack_init
  * 
  * Description:
- *      Initializes a CML_DoubleStack with the input capacity. If no size is
- *      passed as a parameter, the default initial size will be used.
+ *      Initializes a CML_DoubleStack with the input capacity. If a size smaller
+ *      than 1 is selected, the default initial size of 8 will be used.
  *
  * Parameters:
  *      size_t capacity - Initial capacity of the stack.
@@ -423,9 +423,9 @@ typedef struct {
  * Returns:
  *      A pointer to the initialized CML_DoubleStack.
  *****************************************************************************/
-CAMEL_API CML_DoubleStack *cml_doublestack_init(size_t capacity = CML_INITIAL_STACK_CAP) {
+CAMEL_API CML_DoubleStack *cml_doublestack_init(size_t capacity) {
     if (capacity < 1) {
-        return NULL;
+        capacity = CML_INITIAL_STACK_CAP;
     }
 
     CML_DoubleStack *out = (CML_DoubleStack*)malloc(sizeof(CML_DoubleStack));

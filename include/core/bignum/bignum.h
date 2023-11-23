@@ -1,25 +1,20 @@
 /******************************************************************************
- * Filename: core.h
+ * Filename: dstructs.h
  * 
  * Description:
- *      Entry point for the core features of CAMEL.
+ *      Entry point for the arbitrary presicion arithemetic module of CAMEL.
  *
  * Author: Sergio Madrid
- * Created on: 7/11/2023
+ * Created on: 23/11/2023
  * 
  * Copyright (c) 2023 Sergio Madrid. All rights reserved.
  * Licensed under the MIT License. See LICENSE in the project root for
  * license information.
  *****************************************************************************/
 
-#ifndef CAMEL_CORE
-#define CAMEL_CORE
+#ifndef CAMEL_BIGNUM
+#define CAMEL_BIGNUM
 
-#include "macros.h"
-#include "err.h"
-#include "constants.h"
-#include "expression/expression.h"
-#include "dstructs/dstructs.h"
-#include "bignum/bignum.h"
+#include "bigint.h"
 
-#endif /* CAMEL_CORE */
+#endif /* CAMEL_BIGNUM */
