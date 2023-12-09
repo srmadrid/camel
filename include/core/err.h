@@ -15,8 +15,10 @@
 #ifndef CAMEL_ERROR
 #define CAMEL_ERROR
 
-#define CML_SUCCESS 0
-#define CML_ERR_INVALID_SIZE -1
-#define CML_ERR_NULL_PTR -2
+typedef enum {
+    CML_SUCCESS = 0,
+    CML_ERR_INVALID_SIZE = -1,
+    CML_ERR_NULL_PTR = -2,
+} CML_Status;
 
 #endif /* CAMEL_ERROR */

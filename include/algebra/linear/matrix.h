@@ -16,7 +16,6 @@
 #define CAMEL_MATRIX
 
 
-#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -35,7 +34,7 @@
  * Fields:
  *      size_t m - The number of rows of the matrix.
  *      size_t n - The number of columns of the matrix.
- *      double** data - A pointer to the dynamically allocated array of components.
+ *      f64 **data - A pointer to the dynamically allocated array of components.
  *
  * Notes:
  *      The 'data' pointer should be managed using cml_matrix_init and
@@ -45,7 +44,7 @@
 typedef struct {
     size_t m;
     size_t n;
-    double **data;
+    f64 **data;
 } CML_Matrix;
 
 
@@ -56,49 +55,14 @@ typedef struct {
  *      Initializes a matrix of size 'MxN' to 0.
  *
  * Parameters:
- *      size_t m - Number of rows of the matrix.
- *      size_t n - Number of columns of the matrix.
+ *      CML_Matrix *A - The matrix to be allocated.
+ *      size_t m      - Number of rows of the matrix.
+ *      size_t n      - Number of columns of the matrix.
  * 
  * Returns:
  *      A pointer to the allocated CML_Matrix.
  *****************************************************************************/
-CAMEL_API CML_Matrix *cml_matrix_init(size_t m, size_t n) {
-    if (m <= 0 || n <= 0) {
-        return NULL;
-    }
-
-    CML_Matrix *out = (CML_Matrix*)malloc(sizeof(CML_Matrix));
-    if (out == NULL) {
-        return NULL;
-    }
-
-    out->data = (double**)malloc(m * sizeof(double*));
-    if (out->data == NULL) {
-        free(out);
-        return NULL;
-    }
-
-    out->m = m;
-    out->n = n;
-
-    for (int i = 0; i < m; i++) {
-        out->data[i] = (double*)malloc(n * sizeof(double));
-        if (out->data[i] == NULL) {
-            for (size_t j = 0; j < i; j++) {
-                free(out->data[j]);
-            }
-            free(out->data);
-            free(out);
-            return NULL;
-        }
-
-        for (int j = 0; j < n; j++) {
-            out->data[i][j] = 0.0;
-        }
-    }
-
-    return out;
-}
+CAMEL_API CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n);
 
 
 /******************************************************************************
@@ -113,18 +77,7 @@ CAMEL_API CML_Matrix *cml_matrix_init(size_t m, size_t n) {
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_matrix_free(CML_Matrix *A) {
-    if (A != NULL) {
-        if (A->data != NULL) {
-            for (int i = 0; i < A->m; i++) {
-                if (A->data[i] != NULL) {
-                    free(A->data[i]);
-                }
-            free(A->data);
-        }
-        free(A);
-    }
-}
+CAMEL_API void cml_matrix_free(CML_Matrix *A);
 
 
 /******************************************************************************
@@ -142,23 +95,7 @@ CAMEL_API void cml_matrix_free(CML_Matrix *A) {
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out) {
-    if (!A || !B || !out || !A->m || !A->n || !A->data || !B->m || !B->n || !B->data || !out->m || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (A->m != B->m || A->n != B->n || A->m != out->m || A->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
-            out->data[i][j] = A->data[i][j] + B->data[i][j];
-        }
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -176,23 +113,7 @@ CAMEL_API int cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matri
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out) {
-    if (!A || !B || !out || !A->m || !A->n || !A->data || !B->m || !B->n || !B->data || !out->m || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (A->m != B->m || A->n != B->n || A->m != out->m || A->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
-            out->data[i][j] = A->data[i][j] - B->data[i][j];
-        }
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -210,23 +131,7 @@ CAMEL_API int cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matri
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_matrix_scalar_mult(const CML_Matrix *A, double t, CML_Matrix *out) {
-    if (!A || !out || !A->m || !A->n || !A->data || !out->m || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (A->m != out->m || A->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
-            out->data[i][j] = A->data[i][j] * t;
-        }
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_matrix_scalar_mult(const CML_Matrix *A, double t, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -244,29 +149,7 @@ CAMEL_API int cml_matrix_scalar_mult(const CML_Matrix *A, double t, CML_Matrix *
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_matrix_mult(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out) {
-    if (!A || !B || !out || !A->m || !A->n || !A->data || !B->m || !B->n || !B->data || !out->m || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (A->m != out->m || B->n != out->n || A->n != B->m) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    double aux;
-
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < B->n; j++) {
-            aux = 0.0;
-            for (int k = 0; k < A->n; k++) {
-                aux += A->data[i][k]*B->data[k][j];
-            }
-            out->data[i][j] = aux;
-        }
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_matrix_mult(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 #endif /* CAMEL_MATRIX */

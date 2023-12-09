@@ -16,7 +16,6 @@
 #define CAMEL_PRIME
 
 
-#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -31,25 +30,12 @@
  *      Checks if the input number is prime.
  *
  * Parameters:
- *      uint64_t n - Input number.
+ *      u64 n - Input number.
  * 
  * Returns:
  *      CAMEL_TRUE or CAMEL_FALSE.
  *****************************************************************************/
-CAMEL_API int cml_is_prime(uint64_t n) {
-    if (n == 2 || n == 3)
-        return CAMEL_TRUE;
-
-    if (n <= 1 || n % 2 == 0 || n % 3 == 0)
-        return CAMEL_FALSE;
-
-    for (uint32_t i = 5; i*i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0)
-            return CAMEL_FALSE;
-    }
-
-    return CAMEL_TRUE;
-}
+CAMEL_API CML_Bool cml_is_prime(u64 n);
 
 
 /******************************************************************************
@@ -59,7 +45,7 @@ CAMEL_API int cml_is_prime(uint64_t n) {
  *      Uses Eratostenes' sieve to generate prime numbers up to the limit.
  *
  * Parameters:
- *      uint64_t limit - Limit.
+ *      u64 limit - Limit.
  *      size_t   *size - Pointer to an unsigned int that will hold the size of the output array.
  * 
  * Returns:
@@ -68,50 +54,7 @@ CAMEL_API int cml_is_prime(uint64_t n) {
  * Notes:
  *      The user is responsible for freeing the returned array.
  *****************************************************************************/
-CAMEL_API uint64_t *cml_generate_primes(uint64_t limit, size_t *size) {
-    *size = 0;
-    
-    if (limit < 2)
-        return NULL;
-
-    int arrSize = (limit + 1)/2;
-    uint8_t *isPrime = (uint8_t*)malloc(arrSize);
-
-    if (isPrime == NULL)
-        return NULL;
-
-    memset(isPrime, 1, arrSize);
-
-    *size = 1;
-    for (uint64_t i = 3; i <= limit; i += 2) {
-        if (isPrime[i / 2]) {
-            (*size)++;
-            if ((uint64_t) i * i <= limit) {
-                for (uint64_t j = i * i; j <= limit; j += 2 * i) {
-                    isPrime[j / 2] = 0;
-                }
-            }
-        }
-    }
-
-    uint64_t *primes = (uint64_t*)malloc(*size * sizeof(uint64_t));
-    if (primes == NULL) {
-        *size = 0;
-        free(isPrime);
-        return NULL;
-    }
-
-    uint64_t index = 0;
-    primes[index++] = 2;
-    for (uint64_t i = 3; i <= limit; i += 2) {
-        if (isPrime[i / 2]) {
-            primes[index++] = i;
-        }
-    }
-
-    free(isPrime);
-    return primes;
-}
+CAMEL_API u64 *cml_generate_primes(u64 limit, size_t *size);
 
 
 /******************************************************************************
@@ -127,70 +70,7 @@ CAMEL_API uint64_t *cml_generate_primes(uint64_t limit, size_t *size) {
  * Returns:
  *      An array with all the prime factors (repetition is allowed).
  *****************************************************************************/
-CAMEL_API uint64_t *cml_prime_factors(uint64_t n, size_t *size) {
-    *size = 0;
-    uint64_t* factors = NULL;
-
-    size_t capacity = 10; // Initial capacity
-    factors = (uint64_t*)malloc(capacity * sizeof(uint64_t));
-    if (!factors) {
-        return NULL;
-    }
-
-    // Factor out 2s
-    while (n % 2 == 0) {
-        if (*size >= capacity) {
-            // Resize array
-            capacity *= 2;
-            uint64_t *temp = (uint64_t*)realloc(factors, capacity * sizeof(uint64_t));
-            if (!temp) {
-                *size = 0;
-                free(factors);
-                return NULL;
-            }
-            factors = temp;
-        }
-        factors[(*size)++] = 2;
-        n /= 2;
-    }
-
-    // Factor out odd primes
-    for (uint64_t i = 3; i <= sqrt(n); i += 2) {
-        while (n % i == 0) {
-            if (*size >= capacity) {
-                // Resize array
-                capacity *= 2;
-                uint64_t *temp = (uint64_t*)realloc(factors, capacity * sizeof(uint64_t));
-                if (!temp) {
-                    *size = 0;
-                    free(factors);
-                    return NULL;
-                }
-                factors = temp;
-            }
-            factors[(*size)++] = i;
-            n /= i;
-        }
-    }
-
-    // If n is a prime number greater than 2
-    if (n > 2) {
-        if (*size >= capacity) {
-            // Resize array
-            capacity += 1; // Only need space for one more element
-            uint64_t *temp = (uint64_t*)realloc(factors, capacity * sizeof(uint64_t));
-            if (!temp) {
-                *size = 0;
-                free(factors);
-                return NULL;
-            }
-            factors = temp;
-        }
-        factors[(*size)++] = n;
-    }
-
-    return factors;
-}
+CAMEL_API u64 *cml_prime_factors(u64 n, size_t *size);
 
 
 /******************************************************************************
@@ -206,41 +86,7 @@ CAMEL_API uint64_t *cml_prime_factors(uint64_t n, size_t *size) {
  * Returns:
  *      The result of the gcd.
  *****************************************************************************/
-CAMEL_API uint64_t cml_gcd(uint64_t a, uint64_t b) {
-    if (a == 0) return b;
-    if (b == 0) return a;
-
-    // Find common factors of 2
-    int shift;
-    for (shift = 0; ((a | b) & 1) == 0; ++shift) {
-        a >>= 1;
-        b >>= 1;
-    }
-
-    // Divide a by 2 until it becomes odd
-    while ((a & 1) == 0) {
-        a >>= 1;
-    }
-
-    do {
-        // If b is even, remove all factor of 2 in b
-        while ((b & 1) == 0) {
-            b >>= 1;
-        }
-
-        // Now a and b are both odd, subtract smaller from larger
-        if (a > b) {
-            uint64_t temp = a;
-            a = b;
-            b = temp;
-        }
-        b = b - a;
-
-    } while (b != 0);
-
-    // restore common factors of 2
-    return a << shift;
-}
+CAMEL_API u64 cml_gcd(u64 a, u64 b);
 
 
 /******************************************************************************
@@ -256,10 +102,7 @@ CAMEL_API uint64_t cml_gcd(uint64_t a, uint64_t b) {
  * Returns:
  *      The result of the lcm.
  *****************************************************************************/
-CAMEL_API uint64_t cml_lcm(uint64_t a, uint64_t b) {
-    if (a == 0 || b == 0) return 0;
-    return (a / cml_gcd(a, b)) * b;
-}
+CAMEL_API u64 cml_lcm(u64 a, u64 b);
 
 
 #endif /* CAMEL_PRIME */

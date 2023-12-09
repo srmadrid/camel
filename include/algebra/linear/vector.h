@@ -16,7 +16,6 @@
 #define CAMEL_VECTOR
 
 
-#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -33,7 +32,7 @@
  *
  * Fields:
  *      size_t n - The number of elements in the vector.
- *      double* data - A pointer to the dynamically allocated array of components.
+ *      f64 *data - A pointer to the dynamically allocated array of components.
  *
  * Notes:
  *      The 'data' pointer should be managed using cml_vector_init and
@@ -42,7 +41,7 @@
  *****************************************************************************/
 typedef struct {
     size_t n;
-    double *data;
+    f64 *data;
 } CML_Vector;
 
 
@@ -53,35 +52,13 @@ typedef struct {
  *      Initializes a vector of size 'n' to 0.
  *
  * Parameters:
- *      size_t n - Size of the vector.
+ *      CML_Vector *v - The vector to be initialized.
+ *      size_t n      - Size of the vector.
  * 
  * Returns:
  *      A pointer to the allocated CML_Vector.
  *****************************************************************************/
-CAMEL_API CML_Vector *clm_vector_init(size_t n) {
-    if (n <= 0) {
-        return NULL;
-    }
-
-    CML_Vector *out = (CML_Vector*)malloc(sizeof(CML_Vector));
-    if (out == NULL) {
-        return NULL;
-    }
-
-    out->data = (double*)malloc(n * sizeof(double));
-    if (out->data == NULL) {
-        free(out);
-        return NULL;
-    }
-
-    out->n = n;
-
-    for (int i = 0; i < n; i++) {
-        out->data[i] = 0.0;
-    }
-
-    return out;
-}
+CAMEL_API CML_Status clm_vector_init(CML_Vector *v, size_t n);
 
 
 /******************************************************************************
@@ -96,14 +73,7 @@ CAMEL_API CML_Vector *clm_vector_init(size_t n) {
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void sm_vector_free(CML_Vector *v) {
-    if (v != NULL) {
-        if (v->data != NULL) {
-            free(v->data);
-        }
-        free(v);
-    }
-}
+CAMEL_API void sm_vector_free(CML_Vector *v);
 
 
 /******************************************************************************
@@ -121,21 +91,7 @@ CAMEL_API void sm_vector_free(CML_Vector *v) {
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API int cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vector *out) {
-    if (!v || !w || !out || !v->n || !v->data || !w->n || !w->data || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (v->n != w->n || v->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < v->n; i++) {
-        out->data[i] = v->data[i] + w->data[i];
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
 
 
 /******************************************************************************
@@ -153,21 +109,7 @@ CAMEL_API int cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vecto
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *out) {
-    if (!v || !w || !out || !v->n || !v->data || !w->n || !w->data || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (v->n != w->n || v->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < v->n; i++) {
-        out->data[i] = v->data[i] - w->data[i];
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
 
 
 /******************************************************************************
@@ -185,21 +127,7 @@ CAMEL_API int cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vecto
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_vector_mult(const CML_Vector *v, double t, CML_Vector *out) {
-    if (!v || !out || !v->n || !v->data || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (v->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    for (int i = 0; i < v->n; i++) {
-        out->data[i] = v->data[i] * t;
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_vector_mult(const CML_Vector *v, double t, CML_Vector *out);
 
 
 /******************************************************************************
@@ -214,17 +142,7 @@ CAMEL_API int cml_vector_mult(const CML_Vector *v, double t, CML_Vector *out) {
  * Returns:
  *      The modulus of the input CML_Vector.
  *****************************************************************************/
-CAMEL_API double cml_vector_mod(const CML_Vector *v) {
-    if (!v || !v->n || !v->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    double mod = 0;
-    for (int i = 0; i < v->n; i++) {
-        mod += v->data[i] * v->data[i];
-    }
-    return sqrt(mod);
-}
+CAMEL_API f64 cml_vector_mod(const CML_Vector *v);
 
 
 /******************************************************************************
@@ -240,27 +158,7 @@ CAMEL_API double cml_vector_mod(const CML_Vector *v) {
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API int cml_vector_norm(const CML_Vector *v, CML_Vector *out) {
-    if (!v || !out || !v->n || !v->data || !out->n || !out->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (v->n != out->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    double mod = 0;
-    for (int i = 0; i < v->n; i++) {
-        mod += v->data[i] * v->data[i];
-    }
-    mod = 1/sqrt(mod);
-
-    for (int i = 0; i < v->n; i++) {
-        out->data[i] = v->data[i] * mod;
-    }
-
-    return CML_SUCCESS;
-}
+CAMEL_API CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out);
 
 
 /******************************************************************************
@@ -276,22 +174,7 @@ CAMEL_API int cml_vector_norm(const CML_Vector *v, CML_Vector *out) {
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API double cml_vector_dot(const CML_Vector *v, const CML_Vector *w) {
-    if (!v || !w || !v->n || !v->data || !w->n || !w->data) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (v->n != w->n) {
-        return CML_ERR_INVALID_SIZE;
-    }
-
-    double dot = 0;
-    for (int i = 0; i < v->n; i++) {
-        dot += v->data[i] * w->data[i];
-    }
-
-    return dot;
-}
+CAMEL_API f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w);
 
 
 #endif /* CAMEL_VECTOR */
