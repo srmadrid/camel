@@ -132,7 +132,6 @@ CML_ExpressionToken **cml_lex_expression(const char *expression, size_t *size) {
     *size = 0;
     size_t length = 0;
     char *aux;
-    int nextCharType = 0;
     
     int letterAuxLen = 0; // For charType == 5, to be removed when a map is implemented
 

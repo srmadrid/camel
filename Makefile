@@ -1,28 +1,45 @@
-CC=gcc
-CFLAGS=-Wall -Wextra -fPIC
-LDFLAGS=-shared
-SOURCES=$(shell find src -name '*.c')
-OBJECTS=$(SOURCES:.c=.o)
-OUTDIR=bin
-TARGET_LINUX=$(OUTDIR)/linux/camel.so
-TARGET_WINDOWS=$(OUTDIR)/windows/camel.dll
+# Detect the platform (Linux/Windows)
+OS := $(shell uname -s)
+ifeq ($(OS),Linux)
+    TARGET = bin/linux/camel.so
+    EXT = so
+    CFLAGS = -Wall -Iinclude -fPIC
+    LDFLAGS = -shared -lm
+else
+    TARGET = bin/win/camel.dll
+    EXT = dll
+    CFLAGS = -Wall -Iinclude
+    LDFLAGS = -shared
+endif
 
-.PHONY: all clean linux windows
+# Compiler settings
+CC = gcc
+SRC_DIRS = src
+SOURCES = $(shell find $(SRC_DIRS) -type f -name '*.c')
+OBJECTS = $(SOURCES:%.c=%.o)
+HDR_DIRS = include
+HEADERS = $(shell find $(HDR_DIRS) -type f -name '*.h')
 
-all: linux windows
+# Default rule
+all: $(TARGET)
 
-linux: $(TARGET_LINUX)
+# Rule for shared library
+$(TARGET): $(OBJECTS)
+	@echo "Linking: $@"
+	@$(CC) $(LDFLAGS) -o $@ $^
+	@echo "Cleaning up..."
+	@$(RM) $(OBJECTS)
+	@echo "Build complete."
 
-windows: $(TARGET_WINDOWS)
+# Rule for object files
+%.o: %.c $(HEADERS)
+	@echo "Compiling: $<"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(TARGET_LINUX): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
-
-$(TARGET_WINDOWS): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) -Wl,--out-implib,$(OUTDIR)/windows/libcamel.a
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Clean rule
 clean:
-	rm -f $(OBJECTS) $(TARGET_LINUX) $(TARGET_WINDOWS) $(OUTDIR)/windows/libcamel.a
+	@echo "Cleaning..."
+	@$(RM) $(OBJECTS) $(TARGET)
+	@echo "Clean complete."
+
+.PHONY: all clean

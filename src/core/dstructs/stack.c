@@ -147,7 +147,7 @@ CML_Status cml_intstack_push(CML_IntStack *stack, i64 input) {
 
     if (stack->size == stack->capacity) {
         stack->capacity *= 2;
-        int *temp = (i64*)realloc(stack->data, stack->capacity * sizeof(i64));
+        i64 *temp = (i64*)realloc(stack->data, stack->capacity * sizeof(i64));
         if (!temp) {
             return CML_ERR_NULL_PTR;
         }
