@@ -81,7 +81,7 @@ CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *
 }
 
 
-CML_Status cml_vector_mult(const CML_Vector *v, double t, CML_Vector *out) {
+CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *out) {
     if (!v || !out || !v->n || !v->data || !out->n || !out->data) {
         return CML_ERR_NULL_PTR;
     }
@@ -149,4 +149,233 @@ f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w) {
     }
 
     return dot;
+}
+
+
+
+CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] + *w[0];
+    *out[1] = *v[1] + *w[1];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] - *w[0];
+    *out[1] = *v[1] - *w[1];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] * t;
+    *out[1] = *v[1] * t;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector2_mod(const CML_Vector2 *v) {
+    if (!v) {
+        return 0;
+    }
+
+    return sqrt(*v[0] * *v[0] + *v[1] * *v[1]);
+}
+
+
+CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1]);
+    *out[0] = *v[0] * mod;
+    *out[1] = *v[1] * mod;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
+    if (!v || !w) {
+        return 0;
+    }
+
+    return *v[0] * *w[0] + *v[1] * *w[1];
+}
+
+
+
+CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] + *w[0];
+    *out[1] = *v[1] + *w[1];
+    *out[2] = *v[2] + *w[2];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] - *w[0];
+    *out[1] = *v[1] - *w[1];
+    *out[2] = *v[2] - *w[2];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] * t;
+    *out[1] = *v[1] * t;
+    *out[2] = *v[2] * t;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector3_mod(const CML_Vector3 *v) {
+    if (!v) {
+        return 0;
+    }
+
+    return sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2]);
+}
+
+
+CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2]);
+    *out[0] = *v[0] * mod;
+    *out[1] = *v[1] * mod;
+    *out[2] = *v[2] * mod;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w) {
+    if (!v || !w) {
+        return 0;
+    }
+
+    return *v[0] * *w[0] + *v[1] * *w[1] + *v[2] * *w[2];
+}
+
+
+CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[1] * *w[2] - *v[2] * *w[1];
+    *out[1] = *v[2] * *w[0] - *v[0] * *w[2];
+    *out[2] = *v[0] * *w[1] - *v[1] * *w[0];
+
+    return CML_SUCCESS;
+}
+
+
+
+CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] + *w[0];
+    *out[1] = *v[1] + *w[1];
+    *out[2] = *v[2] + *w[2];
+    *out[3] = *v[3] + *w[3];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
+    if (!v || !w || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] - *w[0];
+    *out[1] = *v[1] - *w[1];
+    *out[2] = *v[2] - *w[2];
+    *out[3] = *v[3] - *w[3];
+
+    return CML_SUCCESS;
+}
+
+
+CML_Status cml_vector4_scale(const CML_Vector4 *v, double t, CML_Vector4 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    *out[0] = *v[0] * t;
+    *out[1] = *v[1] * t;
+    *out[2] = *v[2] * t;
+    *out[3] = *v[3] * t;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector4_mod(const CML_Vector4 *v) {
+    if (!v) {
+        return 0;
+    }
+
+    return sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2] + *v[3] * *v[3]);
+}
+
+
+CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
+    if (!v || !out) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2] + *v[3] * *v[3]);
+    *out[0] = *v[0] * mod;
+    *out[1] = *v[1] * mod;
+    *out[2] = *v[2] * mod;
+    *out[3] = *v[3] * mod;
+
+    return CML_SUCCESS;
+}
+
+
+f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
+    if (!v || !w) {
+        return 0;
+    }
+
+    return *v[0] * *w[0] + *v[1] * *w[1] + *v[2] * *w[2] + *v[3] * *w[3];
 }

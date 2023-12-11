@@ -113,7 +113,7 @@ CAMEL_API CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CM
 
 
 /******************************************************************************
- * Function: cml_vector_mult
+ * Function: cml_vector_scale
  * 
  * Description:
  *      Multiplies a CML_Vector by a scalar, and writes the result to the out 
@@ -127,7 +127,7 @@ CAMEL_API CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CM
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector_mult(const CML_Vector *v, double t, CML_Vector *out);
+CAMEL_API CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *out);
 
 
 /******************************************************************************
@@ -168,13 +168,502 @@ CAMEL_API CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out);
  *      Normalizes the input CML_Vector and writes it to the out CML_Vector.
  *
  * Parameters:
- *      CML_Vector *v   - The input vector.
+ *      CML_Vector *v   - The first input vector.
+ *      CML_Vector *w   - The second input vector.
+ * 
+ * Returns:
+ *      The dot product of the input vectors.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w);
+
+
+
+/******************************************************************************
+ * Type: CML_Vector2
+ * 
+ * Description:
+ *      Represents a 2 dimensional vector.
+ *
+ * Notes:
+ *      The object is directly a 2 dimensional array of f64.
+ *****************************************************************************/
+typedef f64 CML_Vector2[2];
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR2_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Vector2 to 0.
+ *****************************************************************************/
+#define CML_VECTOR2_ZERO (CML_Vector2){0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR2_I
+ * 
+ * Description:
+ *      Initializes a CML_Vector2 to the unit vector in the i direction.
+ *****************************************************************************/
+#define CML_VECTOR2_I (CML_Vector2){1.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR2_J
+ * 
+ * Description:
+ *      Initializes a CML_Vector2 to the unit vector in the j direction.
+ *****************************************************************************/
+#define CML_VECTOR2_J (CML_Vector2){0.0, 1.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR2_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Vector2 to 1.
+ *****************************************************************************/
+#define CML_VECTOR2_ONE (CML_Vector2){1.0, 1.0}
+
+
+/******************************************************************************
+ * Function: cml_vector2_add
+ * 
+ * Description:
+ *      Adds two CML_Vector2 and writes the result to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      CML_Vector2 *w   - The second vector operand.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector2_sub
+ * 
+ * Description:
+ *      Subtracts two CML_Vector2 and writes the result to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      CML_Vector2 *w   - The second vector operand.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector2_scale
+ * 
+ * Description:
+ *      Multiplies a CML_Vector2 by a scalar, and writes the result to the out 
+ *      CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The vector operand.
+ *      double       t   - The scalar.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector2_mod
+ * 
+ * Description:
+ *      Calculates the modulus of the input CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v - The input vector.
+ * 
+ * Returns:
+ *      The modulus of the input CML_Vector2.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector2_mod(const CML_Vector2 *v);
+
+
+/******************************************************************************
+ * Function: cml_vector2_norm
+ * 
+ * Description:
+ *      Normalizes the input CML_Vector2 and writes it to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The input vector.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector2_dot
+ * 
+ * Description:
+ *      Calculates the dot product of the input CML_Vector2s.
+ *
+ * Parameters:
+ *      CML_Vector *v   - The first input vector.
+ *      CML_Vector *w   - The second input vector.
+ * 
+ * Returns:
+ *      The dot product of the input vectors.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
+
+
+
+/******************************************************************************
+ * Type: CML_Vector3
+ * 
+ * Description:
+ *      Represents a 3 dimensional vector.
+ *
+ * Notes:
+ *      The object is directly a 3 dimensional array of f64.
+ *****************************************************************************/
+typedef f64 CML_Vector3[3];
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to 0.
+ *****************************************************************************/
+#define CML_VECTOR3_ZERO (CML_Vector3){0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_I
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the i direction.
+ *****************************************************************************/
+#define CML_VECTOR3_I (CML_Vector3){1.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_J
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the j direction.
+ *****************************************************************************/
+#define CML_VECTOR3_J (CML_Vector3){0.0, 1.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_K
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the k direction.
+ *****************************************************************************/
+#define CML_VECTOR3_K (CML_Vector3){0.0, 0.0, 1.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to 1.
+ *****************************************************************************/
+#define CML_VECTOR3_ONE (CML_Vector3){1.0, 1.0, 1.0}
+
+
+/******************************************************************************
+ * Function: cml_vector3_add
+ * 
+ * Description:
+ *      Adds two CML_Vector3 and writes the result to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      CML_Vector3 *w   - The second vector operand.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector3_sub
+ * 
+ * Description:
+ *      Subtracts two CML_Vector3 and writes the result to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      CML_Vector3 *w   - The second vector operand.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector3_scale
+ * 
+ * Description:
+ *      Multiplies a CML_Vector3 by a scalar, and writes the result to the out 
+ *      CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The vector operand.
+ *      double       t   - The scalar.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector3_mod
+ * 
+ * Description:
+ *      Calculates the modulus of the input CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v - The input vector.
+ * 
+ * Returns:
+ *      The modulus of the input CML_Vector3.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector3_mod(const CML_Vector3 *v);
+
+
+/******************************************************************************
+ * Function: cml_vector3_norm
+ * 
+ * Description:
+ *      Normalizes the input CML_Vector3 and writes it to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The input vector.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector3_dot
+ * 
+ * Description:
+ *      Calculates the dot product of the input CML_Vector3s.
+ *
+ * Parameters:
+ *      CML_Vector *v   - The first input vector.
+ *      CML_Vector *w   - The second input vector.
+ * 
+ * Returns:
+ *      The dot product of the input vectors.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
+
+
+/******************************************************************************
+ * Function: cml_vector3_cross
+ * 
+ * Description:
+ *      Calculates the cross product of the input CML_Vector3s.
+ *
+ * Parameters:
+ *      CML_Vector *v   - The first input vector.
+ *      CML_Vector *w   - The second input vector.
  *      CML_Vector *out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w);
+CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+
+
+
+/******************************************************************************
+ * Type: CML_Vector4
+ * 
+ * Description:
+ *      Represents a 4 dimensional vector.
+ *
+ * Notes:
+ *      The object is directly a 4 dimensional array of f64.
+ *****************************************************************************/
+typedef f64 CML_Vector4[4];
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to 0.
+ *****************************************************************************/
+#define CML_VECTOR4_ZERO (CML_Vector4){0.0, 0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_I
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the i direction.
+ *****************************************************************************/
+#define CML_VECTOR4_I (CML_Vector4){1.0, 0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_J
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the j direction.
+ *****************************************************************************/
+#define CML_VECTOR4_J (CML_Vector4){0.0, 1.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_K
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the k direction.
+ *****************************************************************************/
+#define CML_VECTOR4_K (CML_Vector4){0.0, 0.0, 1.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_L
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the l direction.
+ *****************************************************************************/
+#define CML_VECTOR4_L (CML_Vector4){0.0, 0.0, 0.0, 1.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to 1.
+ *****************************************************************************/
+#define CML_VECTOR4_ONE (CML_Vector4){1.0, 1.0, 1.0, 1.0}
+
+
+
+/******************************************************************************
+ * Function: cml_vector4_add
+ * 
+ * Description:
+ *      Adds two CML_Vector4 and writes the result to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      CML_Vector4 *w   - The second vector operand.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector4_sub
+ * 
+ * Description:
+ *      Subtracts two CML_Vector4 and writes the result to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      CML_Vector4 *w   - The second vector operand.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      Success (0) or error (<0) code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector4_scale
+ * 
+ * Description:
+ *      Multiplies a CML_Vector4 by a scalar, and writes the result to the out 
+ *      CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The vector operand.
+ *      double       t   - The scalar.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector4_mod
+ * 
+ * Description:
+ *      Calculates the modulus of the input CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v - The input vector.
+ * 
+ * Returns:
+ *      The modulus of the input CML_Vector4.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector4_mod(const CML_Vector4 *v);
+
+
+/******************************************************************************
+ * Function: cml_vector4_norm
+ * 
+ * Description:
+ *      Normalizes the input CML_Vector4 and writes it to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The input vector.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      Success or error code.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cml_vector4_dot
+ * 
+ * Description:
+ *      Calculates the dot product of the input CML_Vector4s.
+ *
+ * Parameters:
+ *      CML_Vector *v   - The first input vector.
+ *      CML_Vector *w   - The second input vector.
+ * 
+ * Returns:
+ *      The dot product of the input vectors.
+ *****************************************************************************/
+CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
 
 
 #endif /* CAMEL_VECTOR */
