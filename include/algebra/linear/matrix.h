@@ -175,7 +175,7 @@ typedef CML_Vector2 CML_Matrix2x2[2];
  * Description:
  *      Initializes a CML_Matrix2x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ZERO (CML_Matrix2x2){CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
+#define CML_MATRIX2X2_ZERO {CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
 
 
 /******************************************************************************
@@ -184,7 +184,7 @@ typedef CML_Vector2 CML_Matrix2x2[2];
  * Description:
  *      Initializes a CML_Matrix2x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_IDENTITY (CML_Matrix2x2){CML_VECTOR2_I, CML_VECTOR2_J}
+#define CML_MATRIX2X2_IDENTITY {CML_VECTOR2_I, CML_VECTOR2_J}
 
 
 /******************************************************************************
@@ -193,7 +193,368 @@ typedef CML_Vector2 CML_Matrix2x2[2];
  * Description:
  *      Initializes a CML_Matrix2x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ONE (CML_Matrix2x2){CML_VECTOR2_ONE, CML_VECTOR2_ONE}
+#define CML_MATRIX2X2_ONE {CML_VECTOR2_ONE, CML_VECTOR2_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix3x3
+ * 
+ * Description:
+ *      Represents a 3x3 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector3.
+ *****************************************************************************/
+typedef CML_Vector3 CML_Matrix3x3[3];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x3 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X3_ZERO {CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X3_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x3 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X3_IDENTITY {CML_VECTOR3_I, CML_VECTOR3_J, CML_VECTOR3_K}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x3 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X3_ONE {CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix4x4
+ * 
+ * Description:
+ *      Represents a 4x4 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector4.
+ *****************************************************************************/
+typedef CML_Vector4 CML_Matrix4x4[4];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X4_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x4 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X4_ZERO {CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X4_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x4 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X4_IDENTITY {CML_VECTOR4_I, CML_VECTOR4_J, CML_VECTOR4_K, CML_VECTOR4_L}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X4_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x4 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X4_ONE {CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix2x3
+ * 
+ * Description:
+ *      Represents a 2x3 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector2.
+ *****************************************************************************/
+typedef CML_Vector2 CML_Matrix2x3[3];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x3 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X3_ZERO {CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X3_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x3 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X3_IDENTITY {CML_VECTOR2_I, CML_VECTOR2_J, CML_VECTOR2_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x3 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X3_ONE {CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix2x4
+ * 
+ * Description:
+ *      Represents a 2x4 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector2.
+ *****************************************************************************/
+typedef CML_Vector2 CML_Matrix2x4[4];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X4_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x4 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X4_ZERO {CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X4_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x4 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X4_IDENTITY {CML_VECTOR2_I, CML_VECTOR2_J, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X4_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x4 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX2X4_ONE {CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix3x2
+ * 
+ * Description:
+ *      Represents a 3x2 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector3.
+ *****************************************************************************/
+typedef CML_Vector3 CML_Matrix3x2[2];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X2_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x2 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X2_ZERO {CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X2_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x2 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X2_IDENTITY {CML_VECTOR3_I, CML_VECTOR3_J}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X2_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x2 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X2_ONE {CML_VECTOR3_ONE, CML_VECTOR3_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix3x4
+ * 
+ * Description:
+ *      Represents a 3x4 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector3.
+ *****************************************************************************/
+typedef CML_Vector3 CML_Matrix3x4[4];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X4_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x4 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X4_ZERO {CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X4_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x4 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X4_IDENTITY {CML_VECTOR3_I, CML_VECTOR3_J, CML_VECTOR3_K, CML_VECTOR3_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X4_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x4 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX3X4_ONE {CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix4x2
+ * 
+ * Description:
+ *      Represents a 4x2 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector4.
+ *****************************************************************************/
+typedef CML_Vector4 CML_Matrix4x2[2];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X2_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x2 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X2_ZERO {CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X2_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x2 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X2_IDENTITY {CML_VECTOR4_I, CML_VECTOR4_J}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X2_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x2 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X2_ONE {CML_VECTOR4_ONE, CML_VECTOR4_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix4x3
+ * 
+ * Description:
+ *      Represents a 4x3 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector4.
+ *****************************************************************************/
+typedef CML_Vector4 CML_Matrix4x3[3];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_ZERO {CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_IDENTITY {CML_VECTOR4_I, CML_VECTOR4_J, CML_VECTOR4_K}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_ONE {CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE}
+
+
+
+/******************************************************************************
+ * Type: CML_Matrix4x3
+ * 
+ * Description:
+ *      Represents a 4x3 matrix.
+ *
+ * Notes:
+ *      The object is directly an array of CML_Vector4.
+ *****************************************************************************/
+typedef CML_Vector4 CML_Matrix4x3[3];
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the zero matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_ZERO {CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_IDENTITY
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the identity matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_IDENTITY {CML_VECTOR4_I, CML_VECTOR4_J, CML_VECTOR4_K}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the one matrix.
+ *****************************************************************************/
+#define CML_MATRIX4X3_ONE {CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE}
+
 
 
 /******************************************************************************
@@ -365,44 +726,21 @@ CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2
 CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix3x3
+ * Function: cml_matrix2x2_compare
  * 
  * Description:
- *      Represents a 3x3 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector3.
- *****************************************************************************/
-typedef CML_Vector3 CML_Matrix3x3[3];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X3_ZERO
+ *      Compares two CML_Matrix2x2s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX3X3_ZERO (CML_Matrix3x3){CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X3_IDENTITY
+ * Parameters:
+ *      CML_Matrix2x2 *v - The first input vector.
+ *      CML_Matrix2x2 *w - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX3X3_IDENTITY (CML_Matrix3x3){CML_VECTOR3_I, CML_VECTOR3_J, CML_VECTOR3_K}
+CAMEL_API CML_Bool cml_matrix2x2_compare(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX3X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX3X3_ONE (CML_Matrix3x3){CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE}
 
 
 /******************************************************************************
@@ -574,44 +912,21 @@ CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3
 CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix4x4
+ * Function: cml_matrix3x3_compare
  * 
  * Description:
- *      Represents a 4x4 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector4.
- *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x4[4];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X4_ZERO
+ *      Compares two CML_Matrix3x3s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX4X4_ZERO (CML_Matrix4x4){CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X4_IDENTITY
+ * Parameters:
+ *      CML_Matrix3x3 *v - The first input vector.
+ *      CML_Matrix3x3 *w - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX4X4_IDENTITY (CML_Matrix4x4){CML_VECTOR4_I, CML_VECTOR4_J, CML_VECTOR4_K, CML_VECTOR4_L}
+CAMEL_API CML_Bool cml_matrix3x3_compare(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX4X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX4X4_ONE (CML_Matrix4x4){CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE}
 
 
 /******************************************************************************
@@ -783,44 +1098,21 @@ CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4
 CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix2x3
+ * Function: cml_matrix4x4_compare
  * 
  * Description:
- *      Represents a 2x3 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector2.
- *****************************************************************************/
-typedef CML_Vector2 CML_Matrix2x3[3];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX2X3_ZERO
+ *      Compares two CML_Matrix4x4s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX2X3_ZERO (CML_Matrix2x3){CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX2X3_IDENTITY
+ * Parameters:
+ *      CML_Matrix4x4 *v - The first input vector.
+ *      CML_Matrix4x4 *w - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX2X3_IDENTITY (CML_Matrix2x3){CML_VECTOR2_I, CML_VECTOR2_J, CML_VECTOR2_ZERO}
+CAMEL_API CML_Bool cml_matrix4x4_compare(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX2X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX2X3_ONE (CML_Matrix2x3){CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE}
 
 
 /******************************************************************************
@@ -998,44 +1290,21 @@ CAMEL_API CML_Status cml_matrix2x3_inv(const CML_Matrix2x3 *A, CML_Matrix2x3 *ou
 CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix2x4
+ * Function: cml_matrix2x3_compare
  * 
  * Description:
- *      Represents a 2x4 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector2.
- *****************************************************************************/
-typedef CML_Vector2 CML_Matrix2x4[4];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX2X4_ZERO
+ *      Compares two CML_Matrix2x3s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX2X4_ZERO (CML_Matrix2x4){CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX2X4_IDENTITY
+ * Parameters:
+ *      CML_Matrix2x3 *A - The first input vector.
+ *      CML_Matrix2x3 *B - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX2X4_IDENTITY (CML_Matrix2x4){CML_VECTOR2_I, CML_VECTOR2_J, CML_VECTOR2_ZERO, CML_VECTOR2_ZERO}
+CAMEL_API CML_Bool cml_matrix2x3_compare(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX2X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX2X4_ONE (CML_Matrix2x4){CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE, CML_VECTOR2_ONE}
 
 
 /******************************************************************************
@@ -1213,44 +1482,21 @@ CAMEL_API CML_Status cml_matrix2x4_inv(const CML_Matrix2x4 *A, CML_Matrix2x4 *ou
 CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix3x2
+ * Function: cml_matrix2x4_compare
  * 
  * Description:
- *      Represents a 3x2 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector3.
- *****************************************************************************/
-typedef CML_Vector3 CML_Matrix3x2[2];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X2_ZERO
+ *      Compares two CML_Matrix2x4s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX3X2_ZERO (CML_Matrix3x2){CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X2_IDENTITY
+ * Parameters:
+ *      CML_Matrix2x4 *A - The first input vector.
+ *      CML_Matrix2x4 *B - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX3X2_IDENTITY (CML_Matrix3x2){CML_VECTOR3_I, CML_VECTOR3_J}
+CAMEL_API CML_Bool cml_matrix2x4_compare(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX3X2_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX3X2_ONE (CML_Matrix3x2){CML_VECTOR3_ONE, CML_VECTOR3_ONE}
 
 
 /******************************************************************************
@@ -1428,44 +1674,21 @@ CAMEL_API CML_Status cml_matrix3x2_inv(const CML_Matrix3x2 *A, CML_Matrix3x2 *ou
 CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix3x4
+ * Function: cml_matrix3x2_compare
  * 
  * Description:
- *      Represents a 3x4 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector3.
- *****************************************************************************/
-typedef CML_Vector3 CML_Matrix3x4[4];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X4_ZERO
+ *      Compares two CML_Matrix3x2s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX3X4_ZERO (CML_Matrix3x4){CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO, CML_VECTOR3_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX3X4_IDENTITY
+ * Parameters:
+ *      CML_Matrix3x2 *A - The first input vector.
+ *      CML_Matrix3x2 *B - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX3X4_IDENTITY (CML_Matrix3x4){CML_VECTOR3_I, CML_VECTOR3_J, CML_VECTOR3_K, CML_VECTOR3_ZERO}
+CAMEL_API CML_Bool cml_matrix3x2_compare(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX3X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX3X4_ONE (CML_Matrix3x4){CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE, CML_VECTOR3_ONE}
 
 
 /******************************************************************************
@@ -1643,44 +1866,21 @@ CAMEL_API CML_Status cml_matrix3x4_inv(const CML_Matrix3x4 *A, CML_Matrix3x4 *ou
 CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix4x2
+ * Function: cml_matrix3x4_compare
  * 
  * Description:
- *      Represents a 4x2 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector4.
- *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x2[2];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X2_ZERO
+ *      Compares two CML_Matrix3x4s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX4X2_ZERO (CML_Matrix4x2){CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X2_IDENTITY
+ * Parameters:
+ *      CML_Matrix3x4 *A - The first input vector.
+ *      CML_Matrix3x4 *B - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX4X2_IDENTITY (CML_Matrix4x2){CML_VECTOR4_I, CML_VECTOR4_J}
+CAMEL_API CML_Bool cml_matrix3x4_compare(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX4X2_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX4X2_ONE (CML_Matrix4x2){CML_VECTOR4_ONE, CML_VECTOR4_ONE}
 
 
 /******************************************************************************
@@ -1858,44 +2058,21 @@ CAMEL_API CML_Status cml_matrix4x2_inv(const CML_Matrix4x2 *A, CML_Matrix4x2 *ou
 CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Matrix4x3
+ * Function: cml_matrix4x2_compare
  * 
  * Description:
- *      Represents a 4x3 matrix.
- *
- * Notes:
- *      The object is directly an array of CML_Vector4.
- *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x3[3];
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X3_ZERO
+ *      Compares two CML_Matrix4x2s for equality.
  * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the zero matrix.
- *****************************************************************************/
-#define CML_MATRIX4X3_ZERO (CML_Matrix4x3){CML_VECTOR4_ZERO, CML_VECTOR4_ZERO, CML_VECTOR4_ZERO}
-
-
-/******************************************************************************
- * Macro: CML_MATRIX4X3_IDENTITY
+ * Parameters:
+ *      CML_Matrix4x2 *A - The first input vector.
+ *      CML_Matrix4x2 *B - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the identity matrix.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_MATRIX4X3_IDENTITY (CML_Matrix4x3){CML_VECTOR4_I, CML_VECTOR4_J, CML_VECTOR4_K}
+CAMEL_API CML_Bool cml_matrix4x2_compare(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
 
-
-/******************************************************************************
- * Macro: CML_MATRIX4X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the one matrix.
- *****************************************************************************/
-#define CML_MATRIX4X3_ONE (CML_Matrix4x3){CML_VECTOR4_ONE, CML_VECTOR4_ONE, CML_VECTOR4_ONE}
 
 
 /******************************************************************************
@@ -2071,6 +2248,22 @@ CAMEL_API CML_Status cml_matrix4x3_inv(const CML_Matrix4x3 *A, CML_Matrix4x3 *ou
  *      Success or error code.
  *****************************************************************************/
 CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out);
+
+
+/******************************************************************************
+ * Function: cml_matrix4x3_compare
+ * 
+ * Description:
+ *      Compares two CML_Matrix4x3s for equality.
+ * 
+ * Parameters:
+ *      CML_Matrix4x3 *A - The first input vector.
+ *      CML_Matrix4x3 *B - The second input vector.
+ * 
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
+ *****************************************************************************/
+CAMEL_API CML_Bool cml_matrix4x3_compare(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
 
 
 #endif /* CAMEL_MATRIX */

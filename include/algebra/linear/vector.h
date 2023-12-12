@@ -196,7 +196,7 @@ typedef f64 CML_Vector2[2];
  * Description:
  *      Initializes a CML_Vector2 to 0.
  *****************************************************************************/
-#define CML_VECTOR2_ZERO (CML_Vector2){0.0, 0.0}
+#define CML_VECTOR2_ZERO {0.0, 0.0}
 
 
 /******************************************************************************
@@ -205,7 +205,7 @@ typedef f64 CML_Vector2[2];
  * Description:
  *      Initializes a CML_Vector2 to the unit vector in the i direction.
  *****************************************************************************/
-#define CML_VECTOR2_I (CML_Vector2){1.0, 0.0}
+#define CML_VECTOR2_I {1.0, 0.0}
 
 
 /******************************************************************************
@@ -214,7 +214,7 @@ typedef f64 CML_Vector2[2];
  * Description:
  *      Initializes a CML_Vector2 to the unit vector in the j direction.
  *****************************************************************************/
-#define CML_VECTOR2_J (CML_Vector2){0.0, 1.0}
+#define CML_VECTOR2_J {0.0, 1.0}
 
 
 /******************************************************************************
@@ -223,7 +223,133 @@ typedef f64 CML_Vector2[2];
  * Description:
  *      Initializes a CML_Vector2 to 1.
  *****************************************************************************/
-#define CML_VECTOR2_ONE (CML_Vector2){1.0, 1.0}
+#define CML_VECTOR2_ONE {1.0, 1.0}
+
+
+
+/******************************************************************************
+ * Type: CML_Vector3
+ * 
+ * Description:
+ *      Represents a 3 dimensional vector.
+ *
+ * Notes:
+ *      The object is directly a 3 dimensional array of f64.
+ *****************************************************************************/
+typedef f64 CML_Vector3[3];
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to 0.
+ *****************************************************************************/
+#define CML_VECTOR3_ZERO {0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_I
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the i direction.
+ *****************************************************************************/
+#define CML_VECTOR3_I {1.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_J
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the j direction.
+ *****************************************************************************/
+#define CML_VECTOR3_J {0.0, 1.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_K
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the unit vector in the k direction.
+ *****************************************************************************/
+#define CML_VECTOR3_K {0.0, 0.0, 1.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to 1.
+ *****************************************************************************/
+#define CML_VECTOR3_ONE {1.0, 1.0, 1.0}
+
+
+
+/******************************************************************************
+ * Type: CML_Vector4
+ * 
+ * Description:
+ *      Represents a 4 dimensional vector.
+ *
+ * Notes:
+ *      The object is directly a 4 dimensional array of f64.
+ *****************************************************************************/
+typedef f64 CML_Vector4[4];
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_ZERO
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to 0.
+ *****************************************************************************/
+#define CML_VECTOR4_ZERO {0.0, 0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_I
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the i direction.
+ *****************************************************************************/
+#define CML_VECTOR4_I {1.0, 0.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_J
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the j direction.
+ *****************************************************************************/
+#define CML_VECTOR4_J {0.0, 1.0, 0.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_K
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the k direction.
+ *****************************************************************************/
+#define CML_VECTOR4_K {0.0, 0.0, 1.0, 0.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_L
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the unit vector in the l direction.
+ *****************************************************************************/
+#define CML_VECTOR4_L {0.0, 0.0, 0.0, 1.0}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4_ONE
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to 1.
+ *****************************************************************************/
+#define CML_VECTOR4_ONE {1.0, 1.0, 1.0, 1.0}
+
 
 
 /******************************************************************************
@@ -325,62 +451,21 @@ CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
 CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
 
 
-
 /******************************************************************************
- * Type: CML_Vector3
+ * Function: cml_vector2_compare
  * 
  * Description:
- *      Represents a 3 dimensional vector.
- *
- * Notes:
- *      The object is directly a 3 dimensional array of f64.
- *****************************************************************************/
-typedef f64 CML_Vector3[3];
-
-
-/******************************************************************************
- * Macro: CML_VECTOR3_ZERO
+ *      Compares two CML_Vector4s for equality.
  * 
- * Description:
- *      Initializes a CML_Vector3 to 0.
- *****************************************************************************/
-#define CML_VECTOR3_ZERO (CML_Vector3){0.0, 0.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR3_I
+ * Parameters:
+ *      CML_Vector2 *v - The first input vector.
+ *      CML_Vector2 *w - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the i direction.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_VECTOR3_I (CML_Vector3){1.0, 0.0, 0.0}
+CAMEL_API CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w);
 
-
-/******************************************************************************
- * Macro: CML_VECTOR3_J
- * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the j direction.
- *****************************************************************************/
-#define CML_VECTOR3_J (CML_Vector3){0.0, 1.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR3_K
- * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the k direction.
- *****************************************************************************/
-#define CML_VECTOR3_K (CML_Vector3){0.0, 0.0, 1.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR3_ONE
- * 
- * Description:
- *      Initializes a CML_Vector3 to 1.
- *****************************************************************************/
-#define CML_VECTOR3_ONE (CML_Vector3){1.0, 1.0, 1.0}
 
 
 /******************************************************************************
@@ -499,71 +584,20 @@ CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
 CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
 
 
-
 /******************************************************************************
- * Type: CML_Vector4
+ * Function: cml_vector3_compare
  * 
  * Description:
- *      Represents a 4 dimensional vector.
- *
- * Notes:
- *      The object is directly a 4 dimensional array of f64.
- *****************************************************************************/
-typedef f64 CML_Vector4[4];
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_ZERO
+ *      Compares two CML_Vector4s for equality.
  * 
- * Description:
- *      Initializes a CML_Vector4 to 0.
- *****************************************************************************/
-#define CML_VECTOR4_ZERO (CML_Vector4){0.0, 0.0, 0.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_I
+ * Parameters:
+ *      CML_Vector3 *v - The first input vector.
+ *      CML_Vector3 *w - The second input vector.
  * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the i direction.
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-#define CML_VECTOR4_I (CML_Vector4){1.0, 0.0, 0.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_J
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the j direction.
- *****************************************************************************/
-#define CML_VECTOR4_J (CML_Vector4){0.0, 1.0, 0.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_K
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the k direction.
- *****************************************************************************/
-#define CML_VECTOR4_K (CML_Vector4){0.0, 0.0, 1.0, 0.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_L
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the l direction.
- *****************************************************************************/
-#define CML_VECTOR4_L (CML_Vector4){0.0, 0.0, 0.0, 1.0}
-
-
-/******************************************************************************
- * Macro: CML_VECTOR4_ONE
- * 
- * Description:
- *      Initializes a CML_Vector4 to 1.
- *****************************************************************************/
-#define CML_VECTOR4_ONE (CML_Vector4){1.0, 1.0, 1.0, 1.0}
+CAMEL_API CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w);
 
 
 
@@ -664,6 +698,22 @@ CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
  *      The dot product of the input vectors.
  *****************************************************************************/
 CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
+
+
+/******************************************************************************
+ * Function: cml_vector4_compare
+ * 
+ * Description:
+ *      Compares two CML_Vector4s for equality.
+ * 
+ * Parameters:
+ *      CML_Vector4 *v - The first input vector.
+ *      CML_Vector4 *w - The second input vector.
+ * 
+ * Returns:
+ *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
+ *****************************************************************************/
+CAMEL_API CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w);
 
 
 #endif /* CAMEL_VECTOR */
