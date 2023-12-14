@@ -13,52 +13,85 @@
  *****************************************************************************/
 
 
-#define CML_TEST_ENABLED
 #include "../../../include/camel.h"
 
 
-CML_TEST(test_vector2_add) {
+CML_TestResult test_vector2_add() {
     CML_Vector2 v = {1.0, 2.0};
     CML_Vector2 w = {3.0, 4.0};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {4.0, 6.0};
     cml_vector2_add(&v, &w, &out);
-    CML_ASSERT(cml_vector2_compare(&out, &expected));
+    CML_TestResult result;
+    result.passed = cml_vector2_compare(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector2_debug(&expected, &out);
+    }
+    return result;
 }
 
 
-CML_TEST(test_vector2_sub) {
+CML_TestResult test_vector2_sub() {
     CML_Vector2 v = {1.0, 2.0};
     CML_Vector2 w = {3.0, 4.0};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {-2.0, -2.0};
     cml_vector2_sub(&v, &w, &out);
-    CML_ASSERT(cml_vector2_compare(&out, &expected));
+    CML_TestResult result;
+    result.passed = cml_vector2_compare(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector2_debug(&expected, &out);
+    }
+    return result;
 }
 
 
-CML_TEST(test_vector2_scale) {
+CML_TestResult test_vector2_scale() {
     CML_Vector2 v = {1.0, 2.0};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {2.0, 4.0};
     cml_vector2_scale(&v, 2.0, &out);
-    CML_ASSERT(cml_vector2_compare(&out, &expected));
+    CML_TestResult result;
+    result.passed = cml_vector2_compare(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector2_debug(&expected, &out);
+    }
+    return result;
 }
 
 
-CML_TEST(test_vector2_mod) {
+CML_TestResult test_vector2_mod() {
     CML_Vector2 v = {3.0, 4.0};
     f64 expected = 5.0;
     f64 result = cml_vector2_mod(&v);
-    CML_ASSERT(((result - expected) < 0.0001)? CAMEL_TRUE : CAMEL_FALSE);
+    CML_TestResult test;
+    test.passed = ((result - expected) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    if (!test.passed) {
+        test.debugMessage = cml_f64_debug(expected, result);
+    }
+    return test;
 }
 
 
-CML_TEST(test_vector2_dot) {
+CML_TestResult test_vector2_dot() {
     CML_Vector2 v = {1.0, 2.0};
     CML_Vector2 w = {3.0, 4.0};
-    f64 out = 0.0;
     f64 expected = 11.0;
-    cml_vector2_dot(&v, &w, &out);
-    CML_ASSERT(cml_f64_compare(out, expected));
+    f64 result = cml_vector2_dot(&v, &w);
+    CML_TestResult test;
+    test.passed = ((result - expected) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    if (!test.passed) {
+        test.debugMessage = cml_f64_debug(expected, result);
+    }
+    return test;
+}
+
+
+
+void cml_register_vector2_tests(CML_Test *registry, u32 *count) {
+    cml_test_register(registry, count, test_vector2_add, "test_vector2_add");
+    cml_test_register(registry, count, test_vector2_sub, "test_vector2_sub");
+    cml_test_register(registry, count, test_vector2_scale, "test_vector2_scale");
+    cml_test_register(registry, count, test_vector2_mod, "test_vector2_mod");
+    cml_test_register(registry, count, test_vector2_dot, "test_vector2_dot");
 }

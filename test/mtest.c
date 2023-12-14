@@ -14,11 +14,27 @@
  *****************************************************************************/
 
 
-#define CML_TEST_ENABLED
-#include "../../../include/camel.h"
+#include "../include/camel.h"
+
+
+void cml_register_algebra_tests(CML_Test *registry, u32 *count);
+
+
+void cml_register_all_tests(CML_Test *registry, u32 *count) {
+    cml_register_algebra_tests(registry, count);
+}
 
 
 int main() {
-    runTests();
+    CML_Test registry;
+    u32 count;
+    u32 expectedCount = 100;
+
+    cml_test_init(&registry, &count, expectedCount);
+
+    cml_register_all_tests(&registry, &count);
+
+    cml_run_tests(&registry, count);
+    
     return 0;
 }

@@ -1,12 +1,12 @@
 # Detect the platform (Linux/Windows)
 OS := $(shell uname -s)
 ifeq ($(OS),Linux)
-    TARGET = bin/linux/camel.so
+    TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-    CFLAGS = -Wall -Iinclude -fPIC
+    CFLAGS = -Wall -Iinclude -fPIC # -g #(to debug if something like a segfault occurs)
     LDFLAGS = -shared -lm
-    LIB_LINK = -Lbin/linux -lcamel -lm
+    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm
 else
     TARGET = bin/win/camel.dll
     TEST_TARGET = test/bin/win/test.exe

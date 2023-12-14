@@ -12,14 +12,26 @@
  * license information.
  *****************************************************************************/
 
-#ifdef CAMEL_TEST_ENABLED
 #ifndef CAMEL_TEST
 #define CAMEL_TEST
 
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "core.h"
+
+
+/******************************************************************************
+ * Type: CML_TestResult
+ * 
+ * Description:
+ *      Represents the result of a test.
+ *****************************************************************************/
+typedef struct {
+    CML_Bool passed;
+    char *debugMessage;
+} CML_TestResult;
 
 
 /******************************************************************************
@@ -28,7 +40,7 @@
  * Description:
  *      Represents a function pointer for a test function.
  *****************************************************************************/
-typedef void (*CML_TestFunction)();
+typedef CML_TestResult (*CML_TestFunction)();
 
 
 /******************************************************************************
@@ -42,25 +54,27 @@ typedef struct {
     const char *name;
 } CML_Test;
 
-CML_Test testRegistry[100];
-u32 testCount = 0;
+
+/******************************************************************************
+ * Function: cml_test_init
+ * 
+ * Description:
+ *      Initializes the test registry.
+ *****************************************************************************/
+CAMEL_API CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedCount);
 
 
 /******************************************************************************
- * Function: cml_register_test
+ * Function: cml_test_register
  * 
  * Description:
  *      Registers a test function and its name to the test registry.
- * 
+ *
  * Parameters:
  *      TestFunc func - The test function to register.
  *      const char *name - The name of the test function.
  *****************************************************************************/
-void cml_register_test(CML_TestFunction func, const char *name) {
-    testRegistry[testCount].func = func;
-    testRegistry[testCount].name = name;
-    testCount++;
-}
+CAMEL_API void cml_test_register(CML_Test *testRegistry, u32 *testCount, CML_TestFunction func, const char *name);
 
 
 /******************************************************************************
@@ -69,32 +83,7 @@ void cml_register_test(CML_TestFunction func, const char *name) {
  * Description:
  *      Runs all registered test functions.
  *****************************************************************************/
-void cml_run_tests() {
-    for (int i = 0; i < testCount; i++) {
-        printf("Running test: %s\n", testRegistry[i].name);
-        testRegistry[i].func();
-    }
-}
-
-
-/******************************************************************************
- * Macro: CML_TEST
- * 
- * Description:
- *      Declares, registers, and defines a test function.
- *****************************************************************************/
-#define CML_TEST(name) void name(); cml_register_test(name, #name); void name()
-
-
-/******************************************************************************
- * Macro: CML_ASSERT
- * 
- * Description:
- *      Checks a condition and if it's not met, prints an error message and 
- *      returns from the function.
- *****************************************************************************/
-#define CML_ASSERT(cond) if (cond != CAMEL_TRUE) { printf("Assertion failed: %s\n", #cond); return; }
+CAMEL_API void cml_run_tests(CML_Test *testRegistry, u32 testCount);
 
 
 #endif /* CAMEL_TEST */
-#endif /* CAMEL_TEST_ENABLED */

@@ -229,6 +229,17 @@ CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w) {
 }
 
 
+char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got) {
+    if (!expected || !got) {
+        return NULL;
+    }
+
+    char *debug = (char *)malloc(sizeof(char) * 256);
+    sprintf(debug, "\t\tExpected: [%lf, %lf]\n\t\tGot: [%lf, %lf]", *expected[0], *expected[1], *got[0], *got[1]);
+    return debug;
+}
+
+
 
 CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     if (!v || !w || !out) {
@@ -323,6 +334,17 @@ CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w) {
 }
 
 
+char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got) {
+    if (!expected || !got) {
+        return NULL;
+    }
+
+    char *debug = (char *)malloc(sizeof(char) * 256);
+    sprintf(debug, "\t\tExpected: [%lf, %lf, %lf]\n\t\tGot: [%lf, %lf, %lf]", *expected[0], *expected[1], *expected[2], *got[0], *got[1], *got[2]);
+    return debug;
+}
+
+
 
 CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     if (!v || !w || !out) {
@@ -406,4 +428,15 @@ CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w) {
 
     return (fabs(*v[0] - *w[0]) <= CML_EPSILON && fabs(*v[1] - *w[1]) <= CML_EPSILON && 
             fabs(*v[2] - *w[2]) <= CML_EPSILON && fabs(*v[3] - *w[3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+}
+
+
+char *cml_vector4_debug(const CML_Vector4 *expected, const CML_Vector4 *got) {
+    if (!expected || !got) {
+        return NULL;
+    }
+
+    char *debug = (char *)malloc(sizeof(char) * 256);
+    sprintf(debug, "\t\tExpected: [%lf, %lf, %lf, %lf]\n\t\tGot: [%lf, %lf, %lf, %lf]", *expected[0], *expected[1], *expected[2], *expected[3], *got[0], *got[1], *got[2], *got[3]);
+    return debug;
 }

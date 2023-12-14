@@ -467,6 +467,22 @@ CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
 CAMEL_API CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w);
 
 
+/******************************************************************************
+ * Function: cml_vector2_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Vector2s.
+ *
+ * Parameters:
+ *      CML_Vector2 *expected - Expected vector.
+ *      CML_Vector2 *got - Result vector.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got);
+
+
 
 /******************************************************************************
  * Function: cml_vector3_add
@@ -600,6 +616,22 @@ CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *
 CAMEL_API CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w);
 
 
+/******************************************************************************
+ * Function: cml_vector3_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Vector3s.
+ *
+ * Parameters:
+ *      CML_Vector3 *expected - Expected vector.
+ *      CML_Vector3 *got - Result vector.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got);
+
+
 
 /******************************************************************************
  * Function: cml_vector4_add
@@ -714,6 +746,22 @@ CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_API CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w);
+
+
+/******************************************************************************
+ * Function: cml_vector4_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Vector4s.
+ *
+ * Parameters:
+ *      CML_Vector4 *expected - Expected vector.
+ *      CML_Vector4 *got - Result vector.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_vector4_debug(const CML_Vector4 *expected, const CML_Vector4 *got);
 
 
 #endif /* CAMEL_VECTOR */
