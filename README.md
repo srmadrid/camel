@@ -8,6 +8,8 @@ To compile the project, run ```make``` in the root directory of the project. Thi
 
 ## Usage
 
+### Matrices
+Vectors are represented as column vectors inside matrices.
 
 ### Testing module
 

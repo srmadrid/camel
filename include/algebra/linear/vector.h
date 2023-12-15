@@ -73,7 +73,7 @@ CAMEL_API CML_Status clm_vector_init(CML_Vector *v, size_t n);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void sm_vector_free(CML_Vector *v);
+CAMEL_API void cml_vector_free(CML_Vector *v);
 
 
 /******************************************************************************
@@ -442,8 +442,8 @@ CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
  *      Calculates the dot product of the input CML_Vector2s.
  *
  * Parameters:
- *      CML_Vector *v   - The first input vector.
- *      CML_Vector *w   - The second input vector.
+ *      CML_Vector2 *v   - The first input vector.
+ *      CML_Vector2 *w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.
@@ -574,8 +574,8 @@ CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
  *      Calculates the dot product of the input CML_Vector3s.
  *
  * Parameters:
- *      CML_Vector *v   - The first input vector.
- *      CML_Vector *w   - The second input vector.
+ *      CML_Vector3 *v   - The first input vector.
+ *      CML_Vector3 *w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.
@@ -590,9 +590,9 @@ CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
  *      Calculates the cross product of the input CML_Vector3s.
  *
  * Parameters:
- *      CML_Vector *v   - The first input vector.
- *      CML_Vector *w   - The second input vector.
- *      CML_Vector *out - The output vector.
+ *      CML_Vector3 *v   - The first input vector.
+ *      CML_Vector3 *w   - The second input vector.
+ *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
  *      Success or error code.
@@ -723,8 +723,8 @@ CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
  *      Calculates the dot product of the input CML_Vector4s.
  *
  * Parameters:
- *      CML_Vector *v   - The first input vector.
- *      CML_Vector *w   - The second input vector.
+ *      CML_Vector4 *v   - The first input vector.
+ *      CML_Vector4 *w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.

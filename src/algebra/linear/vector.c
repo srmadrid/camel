@@ -158,8 +158,8 @@ CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] + *w[0];
-    *out[1] = *v[1] + *w[1];
+    (*out)[0] = (*v)[0] + (*w)[0];
+    (*out)[1] = (*v)[1] + (*w)[1];
 
     return CML_SUCCESS;
 }
@@ -170,8 +170,8 @@ CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] - *w[0];
-    *out[1] = *v[1] - *w[1];
+    (*out)[0] = (*v)[0] - (*w)[0];
+    (*out)[1] = (*v)[1] - (*w)[1];
 
     return CML_SUCCESS;
 }
@@ -182,8 +182,8 @@ CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] * t;
-    *out[1] = *v[1] * t;
+    (*out)[0] = (*v)[0] * t;
+    (*out)[1] = (*v)[1] * t;
 
     return CML_SUCCESS;
 }
@@ -194,7 +194,7 @@ f64 cml_vector2_mod(const CML_Vector2 *v) {
         return 0;
     }
 
-    return sqrt(*v[0] * *v[0] + *v[1] * *v[1]);
+    return sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1]);
 }
 
 
@@ -203,9 +203,9 @@ CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1]);
-    *out[0] = *v[0] * mod;
-    *out[1] = *v[1] * mod;
+    f64 mod = 1/sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1]);
+    (*out)[0] = (*v)[0] * mod;
+    (*out)[1] = (*v)[1] * mod;
 
     return CML_SUCCESS;
 }
@@ -216,7 +216,7 @@ f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
         return 0;
     }
 
-    return *v[0] * *w[0] + *v[1] * *w[1];
+    return (*v)[0] * (*w)[0] + (*v)[1] * (*w)[1];
 }
 
 
@@ -225,7 +225,7 @@ CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w) {
         return CAMEL_FALSE;
     }
 
-    return (fabs(*v[0] - *w[0]) <= CML_EPSILON && fabs(*v[1] - *w[1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
 }
 
 
@@ -235,7 +235,12 @@ char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got) {
     }
 
     char *debug = (char *)malloc(sizeof(char) * 256);
-    sprintf(debug, "\t\tExpected: [%lf, %lf]\n\t\tGot: [%lf, %lf]", *expected[0], *expected[1], *got[0], *got[1]);
+    if (debug == NULL) {
+        return NULL;
+    }
+
+    sprintf(debug, "\t\tExpected:\n\t\t\t[%lf, %lf]\n\t\tGot:\n\t\t\t[%lf, %lf]\n", 
+            (*expected)[0], (*expected)[1], (*got)[0], (*got)[1]);
     return debug;
 }
 
@@ -246,9 +251,9 @@ CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] + *w[0];
-    *out[1] = *v[1] + *w[1];
-    *out[2] = *v[2] + *w[2];
+    (*out)[0] = (*v)[0] + (*w)[0];
+    (*out)[1] = (*v)[1] + (*w)[1];
+    (*out)[2] = (*v)[2] + (*w)[2];
 
     return CML_SUCCESS;
 }
@@ -259,9 +264,9 @@ CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] - *w[0];
-    *out[1] = *v[1] - *w[1];
-    *out[2] = *v[2] - *w[2];
+    (*out)[0] = (*v)[0] - (*w)[0];
+    (*out)[1] = (*v)[1] - (*w)[1];
+    (*out)[2] = (*v)[2] - (*w)[2];
 
     return CML_SUCCESS;
 }
@@ -272,9 +277,9 @@ CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] * t;
-    *out[1] = *v[1] * t;
-    *out[2] = *v[2] * t;
+    (*out)[0] = (*v)[0] * t;
+    (*out)[1] = (*v)[1] * t;
+    (*out)[2] = (*v)[2] * t;
 
     return CML_SUCCESS;
 }
@@ -285,7 +290,7 @@ f64 cml_vector3_mod(const CML_Vector3 *v) {
         return 0;
     }
 
-    return sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2]);
+    return sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1] + (*v)[2] * (*v)[2]);
 }
 
 
@@ -294,10 +299,10 @@ CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2]);
-    *out[0] = *v[0] * mod;
-    *out[1] = *v[1] * mod;
-    *out[2] = *v[2] * mod;
+    f64 mod = 1/sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1] + (*v)[2] * (*v)[2]);
+    (*out)[0] = (*v)[0] * mod;
+    (*out)[1] = (*v)[1] * mod;
+    (*out)[2] = (*v)[2] * mod;
 
     return CML_SUCCESS;
 }
@@ -308,7 +313,7 @@ f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w) {
         return 0;
     }
 
-    return *v[0] * *w[0] + *v[1] * *w[1] + *v[2] * *w[2];
+    return (*v)[0] * (*w)[0] + (*v)[1] * (*w)[1] + (*v)[2] * (*w)[2];
 }
 
 
@@ -317,9 +322,9 @@ CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vec
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[1] * *w[2] - *v[2] * *w[1];
-    *out[1] = *v[2] * *w[0] - *v[0] * *w[2];
-    *out[2] = *v[0] * *w[1] - *v[1] * *w[0];
+    (*out)[0] = (*v)[1] * (*w)[2] - (*v)[2] * (*w)[1];
+    (*out)[1] = (*v)[2] * (*w)[0] - (*v)[0] * (*w)[2];
+    (*out)[2] = (*v)[0] * (*w)[1] - (*v)[1] * (*w)[0];
 
     return CML_SUCCESS;
 }
@@ -330,7 +335,7 @@ CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w) {
         return CAMEL_FALSE;
     }
 
-    return (fabs(*v[0] - *w[0]) <= CML_EPSILON && fabs(*v[1] - *w[1]) <= CML_EPSILON && fabs(*v[2] - *w[2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON && fabs((*v)[2] - (*w)[2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
 }
 
 
@@ -340,7 +345,12 @@ char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got) {
     }
 
     char *debug = (char *)malloc(sizeof(char) * 256);
-    sprintf(debug, "\t\tExpected: [%lf, %lf, %lf]\n\t\tGot: [%lf, %lf, %lf]", *expected[0], *expected[1], *expected[2], *got[0], *got[1], *got[2]);
+    if (debug == NULL) {
+        return NULL;
+    }
+
+    sprintf(debug, "\t\tExpected:\n\t\t\t[%lf, %lf, %lf]\n\t\tGot:\n\t\t\t[%lf, %lf, %lf]\n",
+            (*expected)[0], (*expected)[1], (*expected)[2], (*got)[0], (*got)[1], (*got)[2]);
     return debug;
 }
 
@@ -351,10 +361,10 @@ CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] + *w[0];
-    *out[1] = *v[1] + *w[1];
-    *out[2] = *v[2] + *w[2];
-    *out[3] = *v[3] + *w[3];
+    (*out)[0] = (*v)[0] + (*w)[0];
+    (*out)[1] = (*v)[1] + (*w)[1];
+    (*out)[2] = (*v)[2] + (*w)[2];
+    (*out)[3] = (*v)[3] + (*w)[3];
 
     return CML_SUCCESS;
 }
@@ -365,10 +375,10 @@ CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vecto
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] - *w[0];
-    *out[1] = *v[1] - *w[1];
-    *out[2] = *v[2] - *w[2];
-    *out[3] = *v[3] - *w[3];
+    (*out)[0] = (*v)[0] - (*w)[0];
+    (*out)[1] = (*v)[1] - (*w)[1];
+    (*out)[2] = (*v)[2] - (*w)[2];
+    (*out)[3] = (*v)[3] - (*w)[3];
 
     return CML_SUCCESS;
 }
@@ -379,10 +389,10 @@ CML_Status cml_vector4_scale(const CML_Vector4 *v, double t, CML_Vector4 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    *out[0] = *v[0] * t;
-    *out[1] = *v[1] * t;
-    *out[2] = *v[2] * t;
-    *out[3] = *v[3] * t;
+    (*out)[0] = (*v)[0] * t;
+    (*out)[1] = (*v)[1] * t;
+    (*out)[2] = (*v)[2] * t;
+    (*out)[3] = (*v)[3] * t;
 
     return CML_SUCCESS;
 }
@@ -393,7 +403,7 @@ f64 cml_vector4_mod(const CML_Vector4 *v) {
         return 0;
     }
 
-    return sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2] + *v[3] * *v[3]);
+    return sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1] + (*v)[2] * (*v)[2] + (*v)[3] * (*v)[3]);
 }
 
 
@@ -402,11 +412,11 @@ CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    f64 mod = 1/sqrt(*v[0] * *v[0] + *v[1] * *v[1] + *v[2] * *v[2] + *v[3] * *v[3]);
-    *out[0] = *v[0] * mod;
-    *out[1] = *v[1] * mod;
-    *out[2] = *v[2] * mod;
-    *out[3] = *v[3] * mod;
+    f64 mod = 1/sqrt((*v)[0] * (*v)[0] + (*v)[1] * (*v)[1] + (*v)[2] * (*v)[2] + (*v)[3] * (*v)[3]);
+    (*out)[0] = (*v)[0] * mod;
+    (*out)[1] = (*v)[1] * mod;
+    (*out)[2] = (*v)[2] * mod;
+    (*out)[3] = (*v)[3] * mod;
 
     return CML_SUCCESS;
 }
@@ -417,7 +427,7 @@ f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
         return 0;
     }
 
-    return *v[0] * *w[0] + *v[1] * *w[1] + *v[2] * *w[2] + *v[3] * *w[3];
+    return (*v)[0] * (*w)[0] + (*v)[1] * (*w)[1] + (*v)[2] * (*w)[2] + (*v)[3] * (*w)[3];
 }
 
 
@@ -426,8 +436,8 @@ CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w) {
         return CAMEL_FALSE;
     }
 
-    return (fabs(*v[0] - *w[0]) <= CML_EPSILON && fabs(*v[1] - *w[1]) <= CML_EPSILON && 
-            fabs(*v[2] - *w[2]) <= CML_EPSILON && fabs(*v[3] - *w[3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON && 
+            fabs((*v)[2] - (*w)[2]) <= CML_EPSILON && fabs((*v)[3] - (*w)[3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
 }
 
 
@@ -437,6 +447,11 @@ char *cml_vector4_debug(const CML_Vector4 *expected, const CML_Vector4 *got) {
     }
 
     char *debug = (char *)malloc(sizeof(char) * 256);
-    sprintf(debug, "\t\tExpected: [%lf, %lf, %lf, %lf]\n\t\tGot: [%lf, %lf, %lf, %lf]", *expected[0], *expected[1], *expected[2], *expected[3], *got[0], *got[1], *got[2], *got[3]);
+    if (debug == NULL) {
+        return NULL;
+    }
+
+    sprintf(debug, "\t\tExpected:\n\t\t\t[%lf, %lf, %lf, %lf]\n\t\tGot:\n\t\t\t[%lf, %lf, %lf, %lf]\n", 
+            (*expected)[0], (*expected)[1], (*expected)[2], (*expected)[3], (*got)[0], (*got)[1], (*got)[2], (*got)[3]);
     return debug;
 }

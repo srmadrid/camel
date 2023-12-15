@@ -742,6 +742,22 @@ CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
 CAMEL_API CML_Bool cml_matrix2x2_compare(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
 
 
+/******************************************************************************
+ * Function: cml_matrix2x2_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix2x2s.
+ *
+ * Parameters:
+ *      CML_Matrix2x2 *expected - Expected matrix.
+ *      CML_Matrix2x2 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Matrix2x2 *got);
+
+
 
 /******************************************************************************
  * Function: cml_matrix3x3_add
@@ -928,6 +944,22 @@ CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
 CAMEL_API CML_Bool cml_matrix3x3_compare(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
 
 
+/******************************************************************************
+ * Function: cml_matrix3x3_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix3x3s.
+ *
+ * Parameters:
+ *      CML_Matrix3x3 *expected - Expected matrix.
+ *      CML_Matrix3x3 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Matrix3x3 *got);
+
+
 
 /******************************************************************************
  * Function: cml_matrix4x4_add
@@ -1112,6 +1144,22 @@ CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_API CML_Bool cml_matrix4x4_compare(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
+
+
+/******************************************************************************
+ * Function: cml_matrix4x4_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix4x4s.
+ *
+ * Parameters:
+ *      CML_Matrix4x4 *expected - Expected matrix.
+ *      CML_Matrix4x4 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, const CML_Matrix4x4 *got);
 
 
 
@@ -1306,6 +1354,22 @@ CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3
 CAMEL_API CML_Bool cml_matrix2x3_compare(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
 
 
+/******************************************************************************
+ * Function: cml_matrix2x3_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix2x3s.
+ *
+ * Parameters:
+ *      CML_Matrix2x3 *expected - Expected matrix.
+ *      CML_Matrix2x3 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, const CML_Matrix2x3 *got);
+
+
 
 /******************************************************************************
  * Function: cml_matrix2x4_add
@@ -1496,6 +1560,22 @@ CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_API CML_Bool cml_matrix2x4_compare(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
+
+
+/******************************************************************************
+ * Function: cml_matrix2x4_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix2x4s.
+ *
+ * Parameters:
+ *      CML_Matrix2x4 *expected - Expected matrix.
+ *      CML_Matrix2x4 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, const CML_Matrix2x4 *got);
 
 
 
@@ -1690,6 +1770,22 @@ CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2
 CAMEL_API CML_Bool cml_matrix3x2_compare(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
 
 
+/******************************************************************************
+ * Function: cml_matrix3x2_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix3x2s.
+ *
+ * Parameters:
+ *      CML_Matrix3x2 *expected - Expected matrix.
+ *      CML_Matrix3x2 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, const CML_Matrix3x2 *got);
+
+
 
 /******************************************************************************
  * Function: cml_matrix3x4_add
@@ -1880,6 +1976,22 @@ CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_API CML_Bool cml_matrix3x4_compare(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
+
+
+/******************************************************************************
+ * Function: cml_matrix3x4_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix3x4s.
+ *
+ * Parameters:
+ *      CML_Matrix3x4 *expected - Expected matrix.
+ *      CML_Matrix3x4 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, const CML_Matrix3x4 *got);
 
 
 
@@ -2074,6 +2186,22 @@ CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2
 CAMEL_API CML_Bool cml_matrix4x2_compare(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
 
 
+/******************************************************************************
+ * Function: cml_matrix4x2_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix4x2s.
+ *
+ * Parameters:
+ *      CML_Matrix4x2 *expected - Expected matrix.
+ *      CML_Matrix4x2 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, const CML_Matrix4x2 *got);
+
+
 
 /******************************************************************************
  * Function: cml_matrix4x3_add
@@ -2264,6 +2392,22 @@ CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_API CML_Bool cml_matrix4x3_compare(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
+
+
+/******************************************************************************
+ * Function: cml_matrix4x3_debug
+ * 
+ * Description:
+ *      Returns a debug message comparing the input CML_Matrix4x3s.
+ *
+ * Parameters:
+ *      CML_Matrix4x3 *expected - Expected matrix.
+ *      CML_Matrix4x3 *got - Result matrix.
+ * 
+ * Returns:
+ *      A string containing the debug message.
+ *****************************************************************************/
+CAMEL_API char *cml_matrix4x3_debug(const CML_Matrix4x3 *expected, const CML_Matrix4x3 *got);
 
 
 #endif /* CAMEL_MATRIX */
