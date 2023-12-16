@@ -16,9 +16,11 @@
 #include "../../../include/camel.h"
 
 
-void cml_register_vector2_tests(CML_Test *registry, u32 *count);
+void cml_register_vector_tests(CML_Test *registry, u32 *count);
+void cml_register_matrix_tests(CML_Test *registry, u32 *count);
 
 
 void cml_register_linear_tests(CML_Test *registry, u32 *count) {
-    cml_register_vector2_tests(registry, count);
+    cml_register_vector_tests(registry, count);
+    cml_register_matrix_tests(registry, count);
 }

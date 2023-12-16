@@ -289,7 +289,7 @@ CML_TestResult test_vector4_dot() {
 
 
 
-void cml_register_vector2_tests(CML_Test *registry, u32 *count) {
+void cml_register_vector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_vector2_add, "test_vector2_add");
     cml_test_register(registry, count, test_vector2_sub, "test_vector2_sub");
     cml_test_register(registry, count, test_vector2_scale, "test_vector2_scale");

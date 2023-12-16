@@ -286,7 +286,7 @@ typedef CML_Vector4 CML_Matrix4x4[4];
  * Notes:
  *      The object is directly an array of CML_Vector2.
  *****************************************************************************/
-typedef CML_Vector2 CML_Matrix2x3[3];
+typedef CML_Vector3 CML_Matrix2x3[2];
 
 
 /******************************************************************************
@@ -326,7 +326,7 @@ typedef CML_Vector2 CML_Matrix2x3[3];
  * Notes:
  *      The object is directly an array of CML_Vector2.
  *****************************************************************************/
-typedef CML_Vector2 CML_Matrix2x4[4];
+typedef CML_Vector4 CML_Matrix2x4[2];
 
 
 /******************************************************************************
@@ -366,7 +366,7 @@ typedef CML_Vector2 CML_Matrix2x4[4];
  * Notes:
  *      The object is directly an array of CML_Vector3.
  *****************************************************************************/
-typedef CML_Vector3 CML_Matrix3x2[2];
+typedef CML_Vector2 CML_Matrix3x2[3];
 
 
 /******************************************************************************
@@ -406,7 +406,7 @@ typedef CML_Vector3 CML_Matrix3x2[2];
  * Notes:
  *      The object is directly an array of CML_Vector3.
  *****************************************************************************/
-typedef CML_Vector3 CML_Matrix3x4[4];
+typedef CML_Vector4 CML_Matrix3x4[3];
 
 
 /******************************************************************************
@@ -446,7 +446,7 @@ typedef CML_Vector3 CML_Matrix3x4[4];
  * Notes:
  *      The object is directly an array of CML_Vector4.
  *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x2[2];
+typedef CML_Vector2 CML_Matrix4x2[4];
 
 
 /******************************************************************************
@@ -486,7 +486,7 @@ typedef CML_Vector4 CML_Matrix4x2[2];
  * Notes:
  *      The object is directly an array of CML_Vector4.
  *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x3[3];
+typedef CML_Vector3 CML_Matrix4x3[4];
 
 
 /******************************************************************************
@@ -526,7 +526,7 @@ typedef CML_Vector4 CML_Matrix4x3[3];
  * Notes:
  *      The object is directly an array of CML_Vector4.
  *****************************************************************************/
-typedef CML_Vector4 CML_Matrix4x3[3];
+typedef CML_Vector3 CML_Matrix4x3[4];
 
 
 /******************************************************************************
@@ -647,7 +647,7 @@ CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CM
 
 
 /******************************************************************************
- * Function: cml_vec2_mult_matrix2x2
+ * Function: cml_vector2_mult_matrix2x2
  * 
  * Description:
  *     Multiplies a CML_Vector2 by a CML_Matrix2x2, and writes the result to 
@@ -1307,22 +1307,6 @@ CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_
 
 
 /******************************************************************************
- * Function: cml_matrix2x3_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix2x3.
- * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_inv(const CML_Matrix2x3 *A, CML_Matrix2x3 *out);
-
-
-/******************************************************************************
  * Function: cml_matrix2x3_transpose
  * 
  * Description:
@@ -1512,22 +1496,6 @@ CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CM
  *      Success or error code.
  *****************************************************************************/
 CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out);
-
-
-/******************************************************************************
- * Function: cml_matrix2x4_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix2x4.
- * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_inv(const CML_Matrix2x4 *A, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -1723,22 +1691,6 @@ CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_
 
 
 /******************************************************************************
- * Function: cml_matrix3x2_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix3x2.
- * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_inv(const CML_Matrix3x2 *A, CML_Matrix3x2 *out);
-
-
-/******************************************************************************
  * Function: cml_matrix3x2_transpose
  * 
  * Description:
@@ -1928,22 +1880,6 @@ CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CM
  *      Success or error code.
  *****************************************************************************/
 CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out);
-
-
-/******************************************************************************
- * Function: cml_matrix3x4_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix3x4.
- * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_inv(const CML_Matrix3x4 *A, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -2139,22 +2075,6 @@ CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_
 
 
 /******************************************************************************
- * Function: cml_matrix4x2_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix4x2.
- * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_inv(const CML_Matrix4x2 *A, CML_Matrix4x2 *out);
-
-
-/******************************************************************************
  * Function: cml_matrix4x2_transpose
  * 
  * Description:
@@ -2344,22 +2264,6 @@ CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CM
  *      Success or error code.
  *****************************************************************************/
 CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out);
-
-
-/******************************************************************************
- * Function: cml_matrix4x3_inv
- * 
- * Description:
- *     Calculates the inverse of a CML_Matrix4x3.
- * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_inv(const CML_Matrix4x3 *A, CML_Matrix4x3 *out);
 
 
 /******************************************************************************

@@ -26,11 +26,13 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    CML_Test registry;
-    u32 count;
-    u32 expectedCount = 100;
+    u32 count = 0;
+    u32 expectedCount = 200;
+    CML_Test registry[expectedCount];
 
-    cml_test_init(&registry, &count, expectedCount);
+    // cml_test_init(&registry, &count, expectedCount);
+    // Better create the registry on the stack, so we 
+    // don't have to free it.
 
     cml_register_all_tests(&registry, &count);
 

@@ -237,8 +237,8 @@ CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 
     f64 a00 = (*A)[0][0], a01 = (*A)[0][1], a10 = (*A)[1][0], a11 = (*A)[1][1];
     f64 v0 = (*v)[0], v1 = (*v)[1];
 
-    (*out)[0] = a00*v0 + a01*v1;
-    (*out)[1] = a10*v0 + a11*v1;
+    (*out)[0] = a00*v0 + a10*v1;
+    (*out)[1] = a01*v0 + a11*v1;
 
     return CML_SUCCESS;
 }
@@ -326,8 +326,10 @@ char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Matrix2x2 *go
     }
 
     sprintf(debugMessage, "\t\tExpected:\n\t\t\t[%lf, %lf]\n\t\t\t[%lf, %lf]\n\t\tGot:\n\t\t\t[%lf, %lf]\n\t\t\t[%lf, %lf]\n", 
-            (*expected)[0][0], (*expected)[0][1], (*expected)[1][0], (*expected)[1][1], 
-            (*got)[0][0], (*got)[0][1], (*got)[1][0], (*got)[1][1]);
+            (*expected)[0][0], (*expected)[0][1], 
+            (*expected)[1][0], (*expected)[1][1], 
+            (*got)[0][0], (*got)[0][1], 
+            (*got)[1][0], (*got)[1][1]);
 
     return debugMessage;
 }
@@ -448,9 +450,9 @@ CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 
 
     f64 v0 = (*v)[0], v1 = (*v)[1], v2 = (*v)[2];
 
-    (*out)[0] = a00*v0 + a01*v1 + a02*v2;
-    (*out)[1] = a10*v0 + a11*v1 + a12*v2;
-    (*out)[2] = a20*v0 + a21*v1 + a22*v2;
+    (*out)[0] = a00*v0 + a10*v1 + a20*v2;
+    (*out)[1] = a01*v0 + a11*v1 + a21*v2;
+    (*out)[2] = a02*v0 + a12*v1 + a22*v2;
 
     return CML_SUCCESS;
 }
@@ -554,8 +556,12 @@ char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Matrix3x3 *go
     }
 
     sprintf(debugMessage, "\t\tExpected:\n\t\t\t[%lf, %lf, %lf]\n\t\t\t[%lf, %lf, %lf]\n\t\t\t[%lf, %lf, %lf]\n\t\tGot:\n\t\t\t[%lf, %lf, %lf]\n\t\t\t[%lf, %lf, %lf]\n\t\t\t[%lf, %lf, %lf]\n", 
-            (*expected)[0][0], (*expected)[0][1], (*expected)[0][2], (*expected)[1][0], (*expected)[1][1], (*expected)[1][2], (*expected)[2][0], (*expected)[2][1], (*expected)[2][2], 
-            (*got)[0][0], (*got)[0][1], (*got)[0][2], (*got)[1][0], (*got)[1][1], (*got)[1][2], (*got)[2][0], (*got)[2][1], (*got)[2][2]);
+            (*expected)[0][0], (*expected)[0][1], (*expected)[0][2], 
+            (*expected)[1][0], (*expected)[1][1], (*expected)[1][2], 
+            (*expected)[2][0], (*expected)[2][1], (*expected)[2][2], 
+            (*got)[0][0], (*got)[0][1], (*got)[0][2], 
+            (*got)[1][0], (*got)[1][1], (*got)[1][2], 
+            (*got)[2][0], (*got)[2][1], (*got)[2][2]);
 
     return debugMessage;
 }
@@ -709,10 +715,10 @@ CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 
 
     f64 v0 = (*v)[0], v1 = (*v)[1], v2 = (*v)[2], v3 = (*v)[3];
 
-    (*out)[0] = a00*v0 + a01*v1 + a02*v2 + a03*v3;
-    (*out)[1] = a10*v0 + a11*v1 + a12*v2 + a13*v3;
-    (*out)[2] = a20*v0 + a21*v1 + a22*v2 + a23*v3;
-    (*out)[3] = a30*v0 + a31*v1 + a32*v2 + a33*v3;
+    (*out)[0] = a00*v0 + a10*v1 + a20*v2 + a30*v3;
+    (*out)[1] = a01*v0 + a11*v1 + a21*v2 + a31*v3;
+    (*out)[2] = a02*v0 + a12*v1 + a22*v2 + a32*v3;
+    (*out)[3] = a03*v0 + a13*v1 + a23*v2 + a33*v3;
 
     return CML_SUCCESS;
 }
@@ -1014,33 +1020,6 @@ CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 
 }
 
 
-CML_Status cml_matrix2x3_inv(const CML_Matrix2x3 *A, CML_Matrix2x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1], a02 = (*A)[0][2];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1], a12 = (*A)[1][2];
-
-    f64 det = a00*a11 - a01*a10;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  a11*det;
-    (*out)[0][1] = -a01*det;
-    (*out)[0][2] =  (a01*a12 - a02*a11)*det;
-    (*out)[1][0] = -a10*det;
-    (*out)[1][1] =  a00*det;
-    (*out)[1][2] = -(a00*a12 - a02*a10)*det;
-
-    return CML_SUCCESS;
-}
-
-
 CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
     if (!A || !out) {
         return CML_ERR_NULL_PTR;
@@ -1249,35 +1228,6 @@ CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 
     (*out)[1] = a01*v0 + a11*v1;
     (*out)[2] = a02*v0 + a12*v1;
     (*out)[3] = a03*v0 + a13*v1;
-
-    return CML_SUCCESS;
-}
-
-
-CML_Status cml_matrix2x4_inv(const CML_Matrix2x4 *A, CML_Matrix2x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1], a02 = (*A)[0][2], a03 = (*A)[0][3];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1], a12 = (*A)[1][2], a13 = (*A)[1][3];
-
-    f64 det = a00*a11 - a01*a10;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  a11*det;
-    (*out)[0][1] = -a01*det;
-    (*out)[0][2] =  (a01*a13 - a03*a11)*det;
-    (*out)[0][3] = -(a01*a12 - a02*a11)*det;
-    (*out)[1][0] = -a10*det;
-    (*out)[1][1] =  a00*det;
-    (*out)[1][2] = -(a00*a13 - a03*a10)*det;
-    (*out)[1][3] =  (a00*a12 - a02*a10)*det;
 
     return CML_SUCCESS;
 }
@@ -1495,34 +1445,6 @@ CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 
 
     (*out)[0] = a00*v0 + a10*v1 + a20*v2;
     (*out)[1] = a01*v0 + a11*v1 + a21*v2;
-
-    return CML_SUCCESS;
-}
-
-
-CML_Status cml_matrix3x2_inv(const CML_Matrix3x2 *A, CML_Matrix3x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1];
-    f64 a20 = (*A)[2][0], a21 = (*A)[2][1];
-
-    f64 det = a00*a11 - a01*a10;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  a11*det;
-    (*out)[0][1] = -a01*det;
-    (*out)[1][0] = -a10*det;
-    (*out)[1][1] =  a00*det;
-    (*out)[2][0] = (a01*a21 - a11*a20)*det;
-    (*out)[2][1] = (a10*a20 - a00*a21)*det;
 
     return CML_SUCCESS;
 }
@@ -1771,40 +1693,6 @@ CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 
 }
 
 
-CML_Status cml_matrix3x4_inv(const CML_Matrix3x4 *A, CML_Matrix3x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1], a02 = (*A)[0][2], a03 = (*A)[0][3];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1], a12 = (*A)[1][2], a13 = (*A)[1][3];
-    f64 a20 = (*A)[2][0], a21 = (*A)[2][1], a22 = (*A)[2][2], a23 = (*A)[2][3];
-
-    f64 det = a00*a11*a22 + a01*a12*a20 + a02*a10*a21 - a00*a12*a21 - a01*a10*a22 - a02*a11*a20;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  (a11*a22 - a12*a21)*det;
-    (*out)[0][1] = -(a01*a22 - a02*a21)*det;
-    (*out)[0][2] =  (a01*a12 - a02*a11)*det;
-    (*out)[0][3] = -(a01*a12*a23 + a02*a13*a21 + a03*a11*a22 - a01*a13*a22 - a02*a11*a23 - a03*a12*a21)*det;
-    (*out)[1][0] = -(a10*a22 - a12*a20)*det;
-    (*out)[1][1] =  (a00*a22 - a02*a20)*det;
-    (*out)[1][2] = -(a00*a12 - a02*a10)*det;
-    (*out)[1][3] =  (a00*a12*a23 + a02*a13*a20 + a03*a10*a22 - a00*a13*a22 - a02*a10*a23 - a03*a12*a20)*det;
-    (*out)[2][0] =  (a10*a21 - a11*a20)*det;
-    (*out)[2][1] = -(a00*a21 - a01*a20)*det;
-    (*out)[2][2] =  (a00*a11 - a01*a10)*det;
-    (*out)[2][3] = -(a00*a11*a23 + a01*a13*a20 + a03*a10*a21 - a00*a13*a21 - a01*a10*a23 - a03*a11*a20)*det;
-
-    return CML_SUCCESS;
-}
-
-
 CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
     if (!A || !out) {
         return CML_ERR_NULL_PTR;
@@ -2047,37 +1935,6 @@ CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 
 
     (*out)[0] = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     (*out)[1] = a01*v0 + a11*v1 + a21*v2 + a31*v3;
-
-    return CML_SUCCESS;
-}
-
-
-CML_Status cml_matrix4x2_inv(const CML_Matrix4x2 *A, CML_Matrix4x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1];
-    f64 a20 = (*A)[2][0], a21 = (*A)[2][1];
-    f64 a30 = (*A)[3][0], a31 = (*A)[3][1];
-
-    f64 det = a00*a11 - a01*a10;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  a11*det;
-    (*out)[0][1] = -a01*det;
-    (*out)[1][0] = -a10*det;
-    (*out)[1][1] =  a00*det;
-    (*out)[2][0] = (a10*a31 - a11*a30)*det;
-    (*out)[2][1] = (a01*a30 - a00*a31)*det;
-    (*out)[3][0] = (a11*a20 - a10*a21)*det;
-    (*out)[3][1] = (a00*a21 - a01*a20)*det;
 
     return CML_SUCCESS;
 }
@@ -2333,41 +2190,6 @@ CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 
     (*out)[0] = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     (*out)[1] = a01*v0 + a11*v1 + a21*v2 + a31*v3;
     (*out)[2] = a02*v0 + a12*v1 + a22*v2 + a32*v3;
-
-    return CML_SUCCESS;
-}
-
-
-CML_Status cml_matrix4x3_inv(const CML_Matrix4x3 *A, CML_Matrix4x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    f64 a00 = (*A)[0][0], a01 = (*A)[0][1], a02 = (*A)[0][2];
-    f64 a10 = (*A)[1][0], a11 = (*A)[1][1], a12 = (*A)[1][2];
-    f64 a20 = (*A)[2][0], a21 = (*A)[2][1], a22 = (*A)[2][2];
-    f64 a30 = (*A)[3][0], a31 = (*A)[3][1], a32 = (*A)[3][2];
-
-    f64 det = a00*a11*a22 + a01*a12*a20 + a02*a10*a21 - a00*a12*a21 - a01*a10*a22 - a02*a11*a20;
-
-    if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
-    }
-
-    det = 1/det;
-
-    (*out)[0][0] =  (a11*a22 - a12*a21)*det;
-    (*out)[0][1] = -(a01*a22 - a02*a21)*det;
-    (*out)[0][2] =  (a01*a12 - a02*a11)*det;
-    (*out)[1][0] = -(a10*a22 - a12*a20)*det;
-    (*out)[1][1] =  (a00*a22 - a02*a20)*det;
-    (*out)[1][2] = -(a00*a12 - a02*a10)*det;
-    (*out)[2][0] =  (a10*a21 - a11*a20)*det;
-    (*out)[2][1] = -(a00*a21 - a01*a20)*det;
-    (*out)[2][2] =  (a00*a11 - a01*a10)*det;
-    (*out)[3][0] = -(a10*a21*a32 + a11*a22*a30 + a12*a20*a31 - a10*a22*a31 - a11*a20*a32 - a12*a21*a30)*det;
-    (*out)[3][1] = -(a00*a21*a32 + a01*a22*a30 + a02*a20*a31 - a00*a22*a31 - a01*a20*a32 - a02*a21*a30)*det;
-    (*out)[3][2] = -(a00*a11*a32 + a01*a12*a30 + a02*a10*a31 - a00*a12*a31 - a01*a10*a32 - a02*a11*a30)*det;
 
     return CML_SUCCESS;
 }
