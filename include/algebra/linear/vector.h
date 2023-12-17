@@ -452,7 +452,7 @@ CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
 
 
 /******************************************************************************
- * Function: cml_vector2_compare
+ * Function: cml_vector2_eq
  * 
  * Description:
  *      Compares two CML_Vector4s for equality.
@@ -464,7 +464,7 @@ CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w);
+CAMEL_API CML_Bool cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w);
 
 
 /******************************************************************************
@@ -601,7 +601,7 @@ CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *
 
 
 /******************************************************************************
- * Function: cml_vector3_compare
+ * Function: cml_vector3_eq
  * 
  * Description:
  *      Compares two CML_Vector4s for equality.
@@ -613,7 +613,7 @@ CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w);
+CAMEL_API CML_Bool cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w);
 
 
 /******************************************************************************
@@ -733,7 +733,7 @@ CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
 
 
 /******************************************************************************
- * Function: cml_vector4_compare
+ * Function: cml_vector4_eq
  * 
  * Description:
  *      Compares two CML_Vector4s for equality.
@@ -745,7 +745,7 @@ CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w);
+CAMEL_API CML_Bool cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w);
 
 
 /******************************************************************************

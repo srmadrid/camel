@@ -22,9 +22,16 @@
 #define CAMEL_API inline
 
 typedef enum {
-    CAMEL_TRUE = 1,
-    CAMEL_FALSE = 0,
+    CML_TRUE = 1,
+    CML_FALSE = 0,
 } CML_Bool;
+
+
+typedef enum {
+    CML_LOWER = -1,
+    CML_EQUAL = 0,
+    CML_GREATER = 1,
+} CML_Comparison;
 
 
 // Unsigned int types.

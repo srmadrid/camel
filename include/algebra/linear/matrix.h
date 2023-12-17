@@ -727,7 +727,7 @@ CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
 
 
 /******************************************************************************
- * Function: cml_matrix2x2_compare
+ * Function: cml_matrix2x2_eq
  * 
  * Description:
  *      Compares two CML_Matrix2x2s for equality.
@@ -739,7 +739,7 @@ CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x2_compare(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
+CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
 
 
 /******************************************************************************
@@ -929,7 +929,7 @@ CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
 
 
 /******************************************************************************
- * Function: cml_matrix3x3_compare
+ * Function: cml_matrix3x3_eq
  * 
  * Description:
  *      Compares two CML_Matrix3x3s for equality.
@@ -941,7 +941,7 @@ CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x3_compare(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
+CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
 
 
 /******************************************************************************
@@ -1131,7 +1131,7 @@ CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
 
 
 /******************************************************************************
- * Function: cml_matrix4x4_compare
+ * Function: cml_matrix4x4_eq
  * 
  * Description:
  *      Compares two CML_Matrix4x4s for equality.
@@ -1143,7 +1143,7 @@ CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x4_compare(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
+CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
 
 
 /******************************************************************************
@@ -1323,7 +1323,7 @@ CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3
 
 
 /******************************************************************************
- * Function: cml_matrix2x3_compare
+ * Function: cml_matrix2x3_eq
  * 
  * Description:
  *      Compares two CML_Matrix2x3s for equality.
@@ -1335,7 +1335,7 @@ CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x3_compare(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
+CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
 
 
 /******************************************************************************
@@ -1515,7 +1515,7 @@ CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4
 
 
 /******************************************************************************
- * Function: cml_matrix2x4_compare
+ * Function: cml_matrix2x4_eq
  * 
  * Description:
  *      Compares two CML_Matrix2x4s for equality.
@@ -1527,7 +1527,7 @@ CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x4_compare(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
+CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
 
 
 /******************************************************************************
@@ -1707,7 +1707,7 @@ CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2
 
 
 /******************************************************************************
- * Function: cml_matrix3x2_compare
+ * Function: cml_matrix3x2_eq
  * 
  * Description:
  *      Compares two CML_Matrix3x2s for equality.
@@ -1719,7 +1719,7 @@ CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x2_compare(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
+CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
 
 
 /******************************************************************************
@@ -1899,7 +1899,7 @@ CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4
 
 
 /******************************************************************************
- * Function: cml_matrix3x4_compare
+ * Function: cml_matrix3x4_eq
  * 
  * Description:
  *      Compares two CML_Matrix3x4s for equality.
@@ -1911,7 +1911,7 @@ CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x4_compare(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
+CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
 
 
 /******************************************************************************
@@ -2091,7 +2091,7 @@ CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2
 
 
 /******************************************************************************
- * Function: cml_matrix4x2_compare
+ * Function: cml_matrix4x2_eq
  * 
  * Description:
  *      Compares two CML_Matrix4x2s for equality.
@@ -2103,7 +2103,7 @@ CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x2_compare(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
+CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
 
 
 /******************************************************************************
@@ -2283,7 +2283,7 @@ CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3
 
 
 /******************************************************************************
- * Function: cml_matrix4x3_compare
+ * Function: cml_matrix4x3_eq
  * 
  * Description:
  *      Compares two CML_Matrix4x3s for equality.
@@ -2295,7 +2295,7 @@ CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x3_compare(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
+CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
 
 
 /******************************************************************************

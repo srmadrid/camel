@@ -18,17 +18,17 @@
 
 CML_Bool cml_is_prime(u64 n) {
     if (n == 2 || n == 3)
-        return CAMEL_TRUE;
+        return CML_TRUE;
 
     if (n <= 1 || n % 2 == 0 || n % 3 == 0)
-        return CAMEL_FALSE;
+        return CML_FALSE;
 
     for (u32 i = 5; i*i <= n; i += 6) {
         if (n % i == 0 || n % (i + 2) == 0)
-            return CAMEL_FALSE;
+            return CML_FALSE;
     }
 
-    return CAMEL_TRUE;
+    return CML_TRUE;
 }
 
 

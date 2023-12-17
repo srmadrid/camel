@@ -2,7 +2,7 @@
  * Filename: test.c
  * 
  * Description:
- *      Implementations for the testing suite of CAMEL.
+ *      Implementations for the testing suite of CML.
  *
  * Author: Sergio Madrid
  * Created on: 14/12/2023
@@ -42,7 +42,7 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
     for (int i = 0; i < testCount; i++) {
         printf("[%i/%i] Running test: %s\n", i + 1, testCount, testRegistry[i].name);
         CML_TestResult result = testRegistry[i].func();
-        if (result.passed == CAMEL_TRUE) {
+        if (result.passed == CML_TRUE) {
             printf("\t%sPASSED%s\n\n", CML_TERMINAL_GREEN, CML_TERMINAL_RESET);
             passedCount++;
         } else {

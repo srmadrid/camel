@@ -2,7 +2,7 @@
  * Filename: matrix.c
  * 
  * Description:
- *      Implementations for the matrix manipulation functions of CAMEL.
+ *      Implementations for the matrix manipulation functions of CML.
  *
  * Author: Sergio Madrid
  * Created on: 9/12/2023
@@ -305,13 +305,13 @@ f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
 }
 
 
-CML_Bool cml_matrix2x2_compare(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
+CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
-            fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -534,14 +534,14 @@ f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A) {
 }
 
 
-CML_Bool cml_matrix3x3_compare(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
+CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && fabs((*A)[0][2] - (*B)[0][2]) <= CML_EPSILON && 
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON && 
-            fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -827,9 +827,9 @@ f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A) {
 }
 
 
-CML_Bool cml_matrix4x4_compare(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
+CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
@@ -839,7 +839,7 @@ CML_Bool cml_matrix4x4_compare(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
             fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && 
             fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON && fabs((*A)[2][3] - (*B)[2][3]) <= CML_EPSILON && 
             fabs((*A)[3][0] - (*B)[3][0]) <= CML_EPSILON && fabs((*A)[3][1] - (*B)[3][1]) <= CML_EPSILON && 
-            fabs((*A)[3][2] - (*B)[3][2]) <= CML_EPSILON && fabs((*A)[3][3] - (*B)[3][3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[3][2] - (*B)[3][2]) <= CML_EPSILON && fabs((*A)[3][3] - (*B)[3][3]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1039,14 +1039,14 @@ CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
 }
 
 
-CML_Bool cml_matrix2x3_compare(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
+CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
             fabs((*A)[0][2] - (*B)[0][2]) <= CML_EPSILON && fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && 
-            fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1254,15 +1254,15 @@ CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
 }
 
 
-CML_Bool cml_matrix2x4_compare(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
+CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
             fabs((*A)[0][2] - (*B)[0][2]) <= CML_EPSILON && fabs((*A)[0][3] - (*B)[0][3]) <= CML_EPSILON && 
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && 
-            fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON && fabs((*A)[1][3] - (*B)[1][3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON && fabs((*A)[1][3] - (*B)[1][3]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1470,14 +1470,14 @@ CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
 }
 
 
-CML_Bool cml_matrix3x2_compare(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
+CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && 
-            fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1719,9 +1719,9 @@ CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
 }
 
 
-CML_Bool cml_matrix3x4_compare(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
+CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
@@ -1729,7 +1729,7 @@ CML_Bool cml_matrix3x4_compare(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && 
             fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON && fabs((*A)[1][3] - (*B)[1][3]) <= CML_EPSILON && 
             fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && 
-            fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON && fabs((*A)[2][3] - (*B)[2][3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON && fabs((*A)[2][3] - (*B)[2][3]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1958,15 +1958,15 @@ CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out) {
 }
 
 
-CML_Bool cml_matrix4x2_compare(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
+CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && 
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && 
             fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && 
-            fabs((*A)[3][0] - (*B)[3][0]) <= CML_EPSILON && fabs((*A)[3][1] - (*B)[3][1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[3][0] - (*B)[3][0]) <= CML_EPSILON && fabs((*A)[3][1] - (*B)[3][1]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -2222,15 +2222,15 @@ CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
 }
 
 
-CML_Bool cml_matrix4x3_compare(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
+CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
     if (!A || !B) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*A)[0][0] - (*B)[0][0]) <= CML_EPSILON && fabs((*A)[0][1] - (*B)[0][1]) <= CML_EPSILON && fabs((*A)[0][2] - (*B)[0][2]) <= CML_EPSILON && 
             fabs((*A)[1][0] - (*B)[1][0]) <= CML_EPSILON && fabs((*A)[1][1] - (*B)[1][1]) <= CML_EPSILON && fabs((*A)[1][2] - (*B)[1][2]) <= CML_EPSILON && 
             fabs((*A)[2][0] - (*B)[2][0]) <= CML_EPSILON && fabs((*A)[2][1] - (*B)[2][1]) <= CML_EPSILON && fabs((*A)[2][2] - (*B)[2][2]) <= CML_EPSILON && 
-            fabs((*A)[3][0] - (*B)[3][0]) <= CML_EPSILON && fabs((*A)[3][1] - (*B)[3][1]) <= CML_EPSILON && fabs((*A)[3][2] - (*B)[3][2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*A)[3][0] - (*B)[3][0]) <= CML_EPSILON && fabs((*A)[3][1] - (*B)[3][1]) <= CML_EPSILON && fabs((*A)[3][2] - (*B)[3][2]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 

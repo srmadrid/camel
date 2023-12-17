@@ -2,7 +2,7 @@
  * Filename: vector.c
  * 
  * Description:
- *      Implementations for the vector manipulation functions of CAMEL.
+ *      Implementations for the vector manipulation functions of CML.
  *
  * Author: Sergio Madrid
  * Created on: 9/12/2023
@@ -220,12 +220,12 @@ f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
 }
 
 
-CML_Bool cml_vector2_compare(const CML_Vector2 *v, const CML_Vector2 *w) {
+CML_Bool cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
     if (!v || !w) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
-    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -330,12 +330,12 @@ CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vec
 }
 
 
-CML_Bool cml_vector3_compare(const CML_Vector3 *v, const CML_Vector3 *w) {
+CML_Bool cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
     if (!v || !w) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
-    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON && fabs((*v)[2] - (*w)[2]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+    return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON && fabs((*v)[2] - (*w)[2]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -431,13 +431,13 @@ f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
 }
 
 
-CML_Bool cml_vector4_compare(const CML_Vector4 *v, const CML_Vector4 *w) {
+CML_Bool cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
     if (!v || !w) {
-        return CAMEL_FALSE;
+        return CML_FALSE;
     }
 
     return (fabs((*v)[0] - (*w)[0]) <= CML_EPSILON && fabs((*v)[1] - (*w)[1]) <= CML_EPSILON && 
-            fabs((*v)[2] - (*w)[2]) <= CML_EPSILON && fabs((*v)[3] - (*w)[3]) <= CML_EPSILON)? CAMEL_TRUE : CAMEL_FALSE;
+            fabs((*v)[2] - (*w)[2]) <= CML_EPSILON && fabs((*v)[3] - (*w)[3]) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
