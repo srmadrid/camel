@@ -359,14 +359,14 @@ typedef f64 CML_Vector4[4];
  *      Adds two CML_Vector2 and writes the result to the out CML_Vector2.
  *
  * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      CML_Vector2 *w   - The second vector operand.
- *      CML_Vector2 *out - The output vector.
+ *      CML_Vector2 v   - The first vector operand.
+ *      CML_Vector2 w   - The second vector operand.
+ *      CML_Vector2 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 v, const CML_Vector2 w, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -376,14 +376,14 @@ CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w,
  *      Subtracts two CML_Vector2 and writes the result to the out CML_Vector2.
  *
  * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      CML_Vector2 *w   - The second vector operand.
- *      CML_Vector2 *out - The output vector.
+ *      CML_Vector2 v   - The first vector operand.
+ *      CML_Vector2 w   - The second vector operand.
+ *      CML_Vector2 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 v, const CML_Vector2 w, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -394,14 +394,14 @@ CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w,
  *      CML_Vector2.
  *
  * Parameters:
- *      CML_Vector2 *v   - The vector operand.
+ *      CML_Vector2 v   - The vector operand.
  *      double       t   - The scalar.
- *      CML_Vector2 *out - The output vector.
+ *      CML_Vector2 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 v, f64 t, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -411,12 +411,12 @@ CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 
  *      Calculates the modulus of the input CML_Vector2.
  *
  * Parameters:
- *      CML_Vector2 *v - The input vector.
+ *      CML_Vector2 v - The input vector.
  * 
  * Returns:
  *      The modulus of the input CML_Vector2.
  *****************************************************************************/
-CAMEL_API f64 cml_vector2_mod(const CML_Vector2 *v);
+CAMEL_API f64 cml_vector2_mod(const CML_Vector2 v);
 
 
 /******************************************************************************
@@ -426,13 +426,13 @@ CAMEL_API f64 cml_vector2_mod(const CML_Vector2 *v);
  *      Normalizes the input CML_Vector2 and writes it to the out CML_Vector2.
  *
  * Parameters:
- *      CML_Vector2 *v   - The input vector.
- *      CML_Vector2 *out - The output vector.
+ *      CML_Vector2 v   - The input vector.
+ *      CML_Vector2 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 v, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -442,13 +442,13 @@ CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
  *      Calculates the dot product of the input CML_Vector2s.
  *
  * Parameters:
- *      CML_Vector2 *v   - The first input vector.
- *      CML_Vector2 *w   - The second input vector.
+ *      CML_Vector2 v   - The first input vector.
+ *      CML_Vector2 w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.
  *****************************************************************************/
-CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
+CAMEL_API f64 cml_vector2_dot(const CML_Vector2 v, const CML_Vector2 w);
 
 
 /******************************************************************************
@@ -458,13 +458,13 @@ CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w);
  *      Compares two CML_Vector4s for equality.
  * 
  * Parameters:
- *      CML_Vector2 *v - The first input vector.
- *      CML_Vector2 *w - The second input vector.
+ *      CML_Vector2 v - The first input vector.
+ *      CML_Vector2 w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w);
+CAMEL_API CML_Bool cml_vector2_eq(const CML_Vector2 v, const CML_Vector2 w);
 
 
 /******************************************************************************
@@ -474,13 +474,13 @@ CAMEL_API CML_Bool cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w);
  *      Returns a debug message comparing the input CML_Vector2s.
  *
  * Parameters:
- *      CML_Vector2 *expected - Expected vector.
- *      CML_Vector2 *got - Result vector.
+ *      CML_Vector2 expected - Expected vector.
+ *      CML_Vector2 got - Result vector.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got);
+CAMEL_API char *cml_vector2_debug(const CML_Vector2 expected, const CML_Vector2 got);
 
 
 
@@ -491,14 +491,14 @@ CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2
  *      Adds two CML_Vector3 and writes the result to the out CML_Vector3.
  *
  * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      CML_Vector3 *w   - The second vector operand.
- *      CML_Vector3 *out - The output vector.
+ *      CML_Vector3 v   - The first vector operand.
+ *      CML_Vector3 w   - The second vector operand.
+ *      CML_Vector3 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 v, const CML_Vector3 w, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -508,14 +508,14 @@ CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w,
  *      Subtracts two CML_Vector3 and writes the result to the out CML_Vector3.
  *
  * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      CML_Vector3 *w   - The second vector operand.
- *      CML_Vector3 *out - The output vector.
+ *      CML_Vector3 v   - The first vector operand.
+ *      CML_Vector3 w   - The second vector operand.
+ *      CML_Vector3 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 v, const CML_Vector3 w, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -526,14 +526,14 @@ CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w,
  *      CML_Vector3.
  *
  * Parameters:
- *      CML_Vector3 *v   - The vector operand.
+ *      CML_Vector3 v   - The vector operand.
  *      double       t   - The scalar.
- *      CML_Vector3 *out - The output vector.
+ *      CML_Vector3 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 v, f64 t, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -543,12 +543,12 @@ CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 
  *      Calculates the modulus of the input CML_Vector3.
  *
  * Parameters:
- *      CML_Vector3 *v - The input vector.
+ *      CML_Vector3 v - The input vector.
  * 
  * Returns:
  *      The modulus of the input CML_Vector3.
  *****************************************************************************/
-CAMEL_API f64 cml_vector3_mod(const CML_Vector3 *v);
+CAMEL_API f64 cml_vector3_mod(const CML_Vector3 v);
 
 
 /******************************************************************************
@@ -558,13 +558,13 @@ CAMEL_API f64 cml_vector3_mod(const CML_Vector3 *v);
  *      Normalizes the input CML_Vector3 and writes it to the out CML_Vector3.
  *
  * Parameters:
- *      CML_Vector3 *v   - The input vector.
- *      CML_Vector3 *out - The output vector.
+ *      CML_Vector3 v   - The input vector.
+ *      CML_Vector3 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 v, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -574,13 +574,13 @@ CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
  *      Calculates the dot product of the input CML_Vector3s.
  *
  * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
+ *      CML_Vector3 v   - The first input vector.
+ *      CML_Vector3 w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.
  *****************************************************************************/
-CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
+CAMEL_API f64 cml_vector3_dot(const CML_Vector3 v, const CML_Vector3 w);
 
 
 /******************************************************************************
@@ -590,14 +590,14 @@ CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
  *      Calculates the cross product of the input CML_Vector3s.
  *
  * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
- *      CML_Vector3 *out - The output vector.
+ *      CML_Vector3 v   - The first input vector.
+ *      CML_Vector3 w   - The second input vector.
+ *      CML_Vector3 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 v, const CML_Vector3 w, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -607,13 +607,13 @@ CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *
  *      Compares two CML_Vector4s for equality.
  * 
  * Parameters:
- *      CML_Vector3 *v - The first input vector.
- *      CML_Vector3 *w - The second input vector.
+ *      CML_Vector3 v - The first input vector.
+ *      CML_Vector3 w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w);
+CAMEL_API CML_Bool cml_vector3_eq(const CML_Vector3 v, const CML_Vector3 w);
 
 
 /******************************************************************************
@@ -623,13 +623,13 @@ CAMEL_API CML_Bool cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w);
  *      Returns a debug message comparing the input CML_Vector3s.
  *
  * Parameters:
- *      CML_Vector3 *expected - Expected vector.
- *      CML_Vector3 *got - Result vector.
+ *      CML_Vector3 expected - Expected vector.
+ *      CML_Vector3 got - Result vector.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got);
+CAMEL_API char *cml_vector3_debug(const CML_Vector3 expected, const CML_Vector3 got);
 
 
 
@@ -640,14 +640,14 @@ CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3
  *      Adds two CML_Vector4 and writes the result to the out CML_Vector4.
  *
  * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      CML_Vector4 *w   - The second vector operand.
- *      CML_Vector4 *out - The output vector.
+ *      CML_Vector4 v   - The first vector operand.
+ *      CML_Vector4 w   - The second vector operand.
+ *      CML_Vector4 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 v, const CML_Vector4 w, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -657,14 +657,14 @@ CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w,
  *      Subtracts two CML_Vector4 and writes the result to the out CML_Vector4.
  *
  * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      CML_Vector4 *w   - The second vector operand.
- *      CML_Vector4 *out - The output vector.
+ *      CML_Vector4 v   - The first vector operand.
+ *      CML_Vector4 w   - The second vector operand.
+ *      CML_Vector4 out - The output vector.
  * 
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 v, const CML_Vector4 w, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -675,14 +675,14 @@ CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w,
  *      CML_Vector4.
  *
  * Parameters:
- *      CML_Vector4 *v   - The vector operand.
+ *      CML_Vector4 v   - The vector operand.
  *      double       t   - The scalar.
- *      CML_Vector4 *out - The output vector.
+ *      CML_Vector4 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 v, f64 t, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -692,12 +692,12 @@ CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 
  *      Calculates the modulus of the input CML_Vector4.
  *
  * Parameters:
- *      CML_Vector4 *v - The input vector.
+ *      CML_Vector4 v - The input vector.
  * 
  * Returns:
  *      The modulus of the input CML_Vector4.
  *****************************************************************************/
-CAMEL_API f64 cml_vector4_mod(const CML_Vector4 *v);
+CAMEL_API f64 cml_vector4_mod(const CML_Vector4 v);
 
 
 /******************************************************************************
@@ -707,13 +707,13 @@ CAMEL_API f64 cml_vector4_mod(const CML_Vector4 *v);
  *      Normalizes the input CML_Vector4 and writes it to the out CML_Vector4.
  *
  * Parameters:
- *      CML_Vector4 *v   - The input vector.
- *      CML_Vector4 *out - The output vector.
+ *      CML_Vector4 v   - The input vector.
+ *      CML_Vector4 out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 v, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -723,13 +723,13 @@ CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
  *      Calculates the dot product of the input CML_Vector4s.
  *
  * Parameters:
- *      CML_Vector4 *v   - The first input vector.
- *      CML_Vector4 *w   - The second input vector.
+ *      CML_Vector4 v   - The first input vector.
+ *      CML_Vector4 w   - The second input vector.
  * 
  * Returns:
  *      The dot product of the input vectors.
  *****************************************************************************/
-CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
+CAMEL_API f64 cml_vector4_dot(const CML_Vector4 v, const CML_Vector4 w);
 
 
 /******************************************************************************
@@ -739,13 +739,13 @@ CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w);
  *      Compares two CML_Vector4s for equality.
  * 
  * Parameters:
- *      CML_Vector4 *v - The first input vector.
- *      CML_Vector4 *w - The second input vector.
+ *      CML_Vector4 v - The first input vector.
+ *      CML_Vector4 w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w);
+CAMEL_API CML_Bool cml_vector4_eq(const CML_Vector4 v, const CML_Vector4 w);
 
 
 /******************************************************************************
@@ -755,13 +755,13 @@ CAMEL_API CML_Bool cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w);
  *      Returns a debug message comparing the input CML_Vector4s.
  *
  * Parameters:
- *      CML_Vector4 *expected - Expected vector.
- *      CML_Vector4 *got - Result vector.
+ *      CML_Vector4 expected - Expected vector.
+ *      CML_Vector4 got - Result vector.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_vector4_debug(const CML_Vector4 *expected, const CML_Vector4 *got);
+CAMEL_API char *cml_vector4_debug(const CML_Vector4 expected, const CML_Vector4 got);
 
 
 #endif /* CAMEL_VECTOR */

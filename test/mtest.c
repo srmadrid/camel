@@ -22,9 +22,9 @@ void cml_register_core_tests(CML_Test *registry, u32 *count);
 
 
 void cml_register_all_tests(CML_Test *registry, u32 *count) {
-    //cml_register_algebra_tests(registry, count);
+    cml_register_algebra_tests(registry, count);
 
-    cml_register_core_tests(registry, count);
+    //cml_register_core_tests(registry, count);
 }
 
 

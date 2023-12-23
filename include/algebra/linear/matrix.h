@@ -564,14 +564,14 @@ typedef CML_Vector3 CML_Matrix4x3[4];
  *     Adds two CML_Matrix2x2 and writes the result to the out CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 A   - The first matrix operand.
+ *      CML_Matrix2x2 B   - The second matrix operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_add(const CML_Matrix2x2 A, const CML_Matrix2x2 B, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -582,14 +582,14 @@ CAMEL_API CML_Status cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2
  *     CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 A   - The first matrix operand.
+ *      CML_Matrix2x2 B   - The second matrix operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_sub(const CML_Matrix2x2 A, const CML_Matrix2x2 B, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -600,14 +600,14 @@ CAMEL_API CML_Status cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2
  *     CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
+ *      CML_Matrix2x2 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_scale(const CML_Matrix2x2 A, f64 t, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -618,14 +618,14 @@ CAMEL_API CML_Status cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matr
  *     CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 A   - The first matrix operand.
+ *      CML_Matrix2x2 B   - The second matrix operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 A, const CML_Matrix2x2 B, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -636,14 +636,14 @@ CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Matrix2x2 A   - The matrix operand.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out);
+CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2 A, const CML_Vector2 v, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -654,14 +654,14 @@ CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CM
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Matrix2x2 A   - The matrix operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 v, const CML_Matrix2x2 A, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -671,12 +671,12 @@ CAMEL_API CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_
  *     Calculates the determinant of a CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A - The matrix operand.
+ *      CML_Matrix2x2 A - The matrix operand.
  * 
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A);
+CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 A);
 
 
 /******************************************************************************
@@ -686,13 +686,13 @@ CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A);
  *     Calculates the inverse of a CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 A   - The matrix operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 A, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -702,13 +702,13 @@ CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *ou
  *     Calculates the transpose of a CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x2 A   - The matrix operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 A, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -718,12 +718,12 @@ CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2
  *     Calculates the trace of a CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x2 *A - The matrix operand.
+ *      CML_Matrix2x2 A - The matrix operand.
  * 
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
+CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 A);
 
 
 /******************************************************************************
@@ -733,13 +733,13 @@ CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A);
  *      Compares two CML_Matrix2x2s for equality.
  * 
  * Parameters:
- *      CML_Matrix2x2 *v - The first input vector.
+ *      CML_Matrix2x2 v - The first input vector.
  *      CML_Matrix2x2 *w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
+CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 A, const CML_Matrix2x2 B);
 
 
 /******************************************************************************
@@ -749,13 +749,13 @@ CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 
  *      Returns a debug message comparing the input CML_Matrix2x2s.
  *
  * Parameters:
- *      CML_Matrix2x2 *expected - Expected matrix.
- *      CML_Matrix2x2 *got - Result matrix.
+ *      CML_Matrix2x2 expected - Expected matrix.
+ *      CML_Matrix2x2 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Matrix2x2 *got);
+CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 expected, const CML_Matrix2x2 got);
 
 
 
@@ -766,14 +766,14 @@ CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Mat
  *     Adds two CML_Matrix3x3 and writes the result to the out CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second matrix operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 A, const CML_Matrix3x3 B, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -784,14 +784,14 @@ CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3
  *     CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second matrix operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 A, const CML_Matrix3x3 B, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -802,14 +802,14 @@ CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3
  *     CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
+ *      CML_Matrix3x3 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 A, f64 t, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -820,14 +820,14 @@ CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matr
  *     CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second matrix operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 A, const CML_Matrix3x3 B, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -838,14 +838,14 @@ CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Matrix3x3 A   - The matrix operand.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out);
+CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3 A, const CML_Vector3 v, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -856,14 +856,14 @@ CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CM
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Matrix3x3 A   - The matrix operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 v, const CML_Matrix3x3 A, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -873,12 +873,12 @@ CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_
  *     Calculates the determinant of a CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A - The matrix operand.
+ *      CML_Matrix3x3 A - The matrix operand.
  * 
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A);
+CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 A);
 
 
 /******************************************************************************
@@ -888,13 +888,13 @@ CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A);
  *     Calculates the inverse of a CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 A   - The matrix operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 A, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -904,13 +904,13 @@ CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *ou
  *     Calculates the transpose of a CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x3 A   - The matrix operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 A, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -920,12 +920,12 @@ CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3
  *     Calculates the trace of a CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x3 *A - The matrix operand.
+ *      CML_Matrix3x3 A - The matrix operand.
  * 
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
+CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 A);
 
 
 /******************************************************************************
@@ -935,13 +935,13 @@ CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A);
  *      Compares two CML_Matrix3x3s for equality.
  * 
  * Parameters:
- *      CML_Matrix3x3 *v - The first input vector.
+ *      CML_Matrix3x3 v - The first input vector.
  *      CML_Matrix3x3 *w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
+CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 A, const CML_Matrix3x3 B);
 
 
 /******************************************************************************
@@ -951,13 +951,13 @@ CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 
  *      Returns a debug message comparing the input CML_Matrix3x3s.
  *
  * Parameters:
- *      CML_Matrix3x3 *expected - Expected matrix.
- *      CML_Matrix3x3 *got - Result matrix.
+ *      CML_Matrix3x3 expected - Expected matrix.
+ *      CML_Matrix3x3 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Matrix3x3 *got);
+CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 expected, const CML_Matrix3x3 got);
 
 
 
@@ -968,14 +968,14 @@ CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Mat
  *     Adds two CML_Matrix4x4 and writes the result to the out CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 A   - The first matrix operand.
+ *      CML_Matrix4x4 B   - The second matrix operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 A, const CML_Matrix4x4 B, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -986,14 +986,14 @@ CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4
  *     CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 A   - The first matrix operand.
+ *      CML_Matrix4x4 B   - The second matrix operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 A, const CML_Matrix4x4 B, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -1004,14 +1004,14 @@ CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4
  *     CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
+ *      CML_Matrix4x4 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 A, f64 t, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -1022,14 +1022,14 @@ CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matr
  *     CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 A   - The first matrix operand.
+ *      CML_Matrix4x4 B   - The second matrix operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 A, const CML_Matrix4x4 B, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -1040,14 +1040,14 @@ CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Matrix4x4 A   - The matrix operand.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out);
+CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4 A, const CML_Vector4 v, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -1058,14 +1058,14 @@ CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CM
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Matrix4x4 A   - The matrix operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 v, const CML_Matrix4x4 A, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -1075,12 +1075,12 @@ CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_
  *     Calculates the determinant of a CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A - The matrix operand.
+ *      CML_Matrix4x4 A - The matrix operand.
  * 
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A);
+CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 A);
 
 
 /******************************************************************************
@@ -1090,13 +1090,13 @@ CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A);
  *     Calculates the inverse of a CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 A   - The matrix operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 A, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -1106,13 +1106,13 @@ CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *ou
  *     Calculates the transpose of a CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x4 A   - The matrix operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 A, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -1122,12 +1122,12 @@ CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4
  *     Calculates the trace of a CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x4 *A - The matrix operand.
+ *      CML_Matrix4x4 A - The matrix operand.
  * 
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
+CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 A);
 
 
 /******************************************************************************
@@ -1137,13 +1137,13 @@ CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A);
  *      Compares two CML_Matrix4x4s for equality.
  * 
  * Parameters:
- *      CML_Matrix4x4 *v - The first input vector.
+ *      CML_Matrix4x4 v - The first input vector.
  *      CML_Matrix4x4 *w - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
+CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 A, const CML_Matrix4x4 B);
 
 
 /******************************************************************************
@@ -1153,13 +1153,13 @@ CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 
  *      Returns a debug message comparing the input CML_Matrix4x4s.
  *
  * Parameters:
- *      CML_Matrix4x4 *expected - Expected matrix.
- *      CML_Matrix4x4 *got - Result matrix.
+ *      CML_Matrix4x4 expected - Expected matrix.
+ *      CML_Matrix4x4 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, const CML_Matrix4x4 *got);
+CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 expected, const CML_Matrix4x4 got);
 
 
 
@@ -1170,14 +1170,14 @@ CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, const CML_Mat
  *     Adds two CML_Matrix2x3 and writes the result to the out CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The first matrix operand.
+ *      CML_Matrix2x3 B   - The second matrix operand.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix2x3_add(const CML_Matrix2x3 A, const CML_Matrix2x3 B, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1188,14 +1188,14 @@ CAMEL_API CML_Status cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2
  *     CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The first matrix operand.
+ *      CML_Matrix2x3 B   - The second matrix operand.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix2x3_sub(const CML_Matrix2x3 A, const CML_Matrix2x3 B, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1206,14 +1206,14 @@ CAMEL_API CML_Status cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2
  *     CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
+ *      CML_Matrix2x3 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix2x3_scale(const CML_Matrix2x3 A, f64 t, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1224,14 +1224,14 @@ CAMEL_API CML_Status cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matr
  *     the out CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second vector operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 A, const CML_Matrix3x2 B, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -1242,14 +1242,14 @@ CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const 
  *     the out CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second vector operand.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 A, const CML_Matrix3x3 B, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1260,14 +1260,14 @@ CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const 
  *     the out CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second vector operand.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 A, const CML_Matrix3x4 B, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -1278,14 +1278,14 @@ CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const 
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Matrix2x3 A   - The matrix operand.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out);
+CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3 A, const CML_Vector3 v, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -1296,14 +1296,14 @@ CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CM
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Matrix2x3 A   - The matrix operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 v, const CML_Matrix2x3 A, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -1313,13 +1313,13 @@ CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_
  *     Calculates the transpose of a CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix2x3 A   - The matrix operand.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 A, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1329,13 +1329,13 @@ CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3
  *      Compares two CML_Matrix2x3s for equality.
  * 
  * Parameters:
- *      CML_Matrix2x3 *A - The first input vector.
- *      CML_Matrix2x3 *B - The second input vector.
+ *      CML_Matrix2x3 A - The first input vector.
+ *      CML_Matrix2x3 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
+CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 A, const CML_Matrix2x3 B);
 
 
 /******************************************************************************
@@ -1345,13 +1345,13 @@ CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 
  *      Returns a debug message comparing the input CML_Matrix2x3s.
  *
  * Parameters:
- *      CML_Matrix2x3 *expected - Expected matrix.
- *      CML_Matrix2x3 *got - Result matrix.
+ *      CML_Matrix2x3 expected - Expected matrix.
+ *      CML_Matrix2x3 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, const CML_Matrix2x3 *got);
+CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 expected, const CML_Matrix2x3 got);
 
 
 
@@ -1362,14 +1362,14 @@ CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, const CML_Mat
  *     Adds two CML_Matrix2x4 and writes the result to the out CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The first matrix operand.
+ *      CML_Matrix2x4 B   - The second matrix operand.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 A, const CML_Matrix2x4 B, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -1380,14 +1380,14 @@ CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2
  *     CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The first matrix operand.
+ *      CML_Matrix2x4 B   - The second matrix operand.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 A, const CML_Matrix2x4 B, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -1398,14 +1398,14 @@ CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2
  *     CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
+ *      CML_Matrix2x4 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 A, f64 t, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -1416,14 +1416,14 @@ CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matr
  *     the out CML_Matrix2x2.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second vector operand.
- *      CML_Matrix2x2 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The first matrix operand.
+ *      CML_Matrix4x2 B   - The second vector operand.
+ *      CML_Matrix2x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out);
+CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 A, const CML_Matrix4x2 B, CML_Matrix2x2 out);
 
 
 /******************************************************************************
@@ -1434,14 +1434,14 @@ CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const 
  *     the out CML_Matrix2x3.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second vector operand.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The first matrix operand.
+ *      CML_Matrix4x3 B   - The second vector operand.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 A, const CML_Matrix4x3 B, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1452,14 +1452,14 @@ CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const 
  *     the out CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second vector operand.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The first matrix operand.
+ *      CML_Matrix4x4 B   - The second vector operand.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 A, const CML_Matrix4x4 B, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -1470,14 +1470,14 @@ CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const 
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Matrix2x4 A   - The matrix operand.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out);
+CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4 A, const CML_Vector4 v, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -1488,14 +1488,14 @@ CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CM
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Matrix2x4 A   - The matrix operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 v, const CML_Matrix2x4 A, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -1505,13 +1505,13 @@ CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_
  *     Calculates the transpose of a CML_Matrix2x4.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix2x4 A   - The matrix operand.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 A, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -1521,13 +1521,13 @@ CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4
  *      Compares two CML_Matrix2x4s for equality.
  * 
  * Parameters:
- *      CML_Matrix2x4 *A - The first input vector.
- *      CML_Matrix2x4 *B - The second input vector.
+ *      CML_Matrix2x4 A - The first input vector.
+ *      CML_Matrix2x4 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
+CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 A, const CML_Matrix2x4 B);
 
 
 /******************************************************************************
@@ -1537,13 +1537,13 @@ CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 
  *      Returns a debug message comparing the input CML_Matrix2x4s.
  *
  * Parameters:
- *      CML_Matrix2x4 *expected - Expected matrix.
- *      CML_Matrix2x4 *got - Result matrix.
+ *      CML_Matrix2x4 expected - Expected matrix.
+ *      CML_Matrix2x4 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, const CML_Matrix2x4 *got);
+CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 expected, const CML_Matrix2x4 got);
 
 
 
@@ -1554,14 +1554,14 @@ CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, const CML_Mat
  *     Adds two CML_Matrix3x2 and writes the result to the out CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The first matrix operand.
+ *      CML_Matrix3x2 B   - The second matrix operand.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix3x2_add(const CML_Matrix3x2 A, const CML_Matrix3x2 B, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1572,14 +1572,14 @@ CAMEL_API CML_Status cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3
  *     CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The first matrix operand.
+ *      CML_Matrix3x2 B   - The second matrix operand.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix3x2_sub(const CML_Matrix3x2 A, const CML_Matrix3x2 B, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1590,14 +1590,14 @@ CAMEL_API CML_Status cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3
  *     CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
+ *      CML_Matrix3x2 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix3x2_scale(const CML_Matrix3x2 A, f64 t, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1608,14 +1608,14 @@ CAMEL_API CML_Status cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matr
  *     the out CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second vector operand.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The first matrix operand.
+ *      CML_Matrix2x2 B   - The second vector operand.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 A, const CML_Matrix2x2 B, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1626,14 +1626,14 @@ CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const 
  *     the out CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second vector operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The first matrix operand.
+ *      CML_Matrix2x3 B   - The second vector operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 A, const CML_Matrix2x3 B, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -1644,14 +1644,14 @@ CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const 
  *     the out CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second vector operand.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The first matrix operand.
+ *      CML_Matrix2x4 B   - The second vector operand.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 A, const CML_Matrix2x4 B, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -1662,14 +1662,14 @@ CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const 
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Matrix3x2 A   - The matrix operand.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out);
+CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2 A, const CML_Vector2 v, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -1680,14 +1680,14 @@ CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CM
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Matrix3x2 A   - The matrix operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 v, const CML_Matrix3x2 A, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -1697,13 +1697,13 @@ CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_
  *     Calculates the transpose of a CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
+ *      CML_Matrix3x2 A   - The matrix operand.
+ *      CML_Matrix2x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out);
+CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 A, CML_Matrix2x3 out);
 
 
 /******************************************************************************
@@ -1713,13 +1713,13 @@ CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2
  *      Compares two CML_Matrix3x2s for equality.
  * 
  * Parameters:
- *      CML_Matrix3x2 *A - The first input vector.
- *      CML_Matrix3x2 *B - The second input vector.
+ *      CML_Matrix3x2 A - The first input vector.
+ *      CML_Matrix3x2 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
+CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 A, const CML_Matrix3x2 B);
 
 
 /******************************************************************************
@@ -1729,13 +1729,13 @@ CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 
  *      Returns a debug message comparing the input CML_Matrix3x2s.
  *
  * Parameters:
- *      CML_Matrix3x2 *expected - Expected matrix.
- *      CML_Matrix3x2 *got - Result matrix.
+ *      CML_Matrix3x2 expected - Expected matrix.
+ *      CML_Matrix3x2 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, const CML_Matrix3x2 *got);
+CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 expected, const CML_Matrix3x2 got);
 
 
 
@@ -1746,14 +1746,14 @@ CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, const CML_Mat
  *     Adds two CML_Matrix3x4 and writes the result to the out CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The first matrix operand.
+ *      CML_Matrix3x4 B   - The second matrix operand.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 A, const CML_Matrix3x4 B, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -1764,14 +1764,14 @@ CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3
  *     CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The first matrix operand.
+ *      CML_Matrix3x4 B   - The second matrix operand.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 A, const CML_Matrix3x4 B, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -1782,14 +1782,14 @@ CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3
  *     CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
+ *      CML_Matrix3x4 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 A, f64 t, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -1800,14 +1800,14 @@ CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matr
  *     the out CML_Matrix3x2.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second vector operand.
- *      CML_Matrix3x2 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The first matrix operand.
+ *      CML_Matrix4x2 B   - The second vector operand.
+ *      CML_Matrix3x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out);
+CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 A, const CML_Matrix4x2 B, CML_Matrix3x2 out);
 
 
 /******************************************************************************
@@ -1818,14 +1818,14 @@ CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const 
  *     the out CML_Matrix3x3.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second vector operand.
- *      CML_Matrix3x3 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The first matrix operand.
+ *      CML_Matrix4x3 B   - The second vector operand.
+ *      CML_Matrix3x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out);
+CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 A, const CML_Matrix4x3 B, CML_Matrix3x3 out);
 
 
 /******************************************************************************
@@ -1836,14 +1836,14 @@ CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const 
  *     the out CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second vector operand.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The first matrix operand.
+ *      CML_Matrix4x4 B   - The second vector operand.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 A, const CML_Matrix4x4 B, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -1854,14 +1854,14 @@ CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const 
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Matrix3x4 A   - The matrix operand.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out);
+CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4 A, const CML_Vector4 v, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -1872,14 +1872,14 @@ CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CM
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Matrix3x4 A   - The matrix operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out);
+CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 v, const CML_Matrix3x4 A, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -1889,13 +1889,13 @@ CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_
  *     Calculates the transpose of a CML_Matrix3x4.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix3x4 A   - The matrix operand.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 A, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -1905,13 +1905,13 @@ CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4
  *      Compares two CML_Matrix3x4s for equality.
  * 
  * Parameters:
- *      CML_Matrix3x4 *A - The first input vector.
- *      CML_Matrix3x4 *B - The second input vector.
+ *      CML_Matrix3x4 A - The first input vector.
+ *      CML_Matrix3x4 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
+CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 A, const CML_Matrix3x4 B);
 
 
 /******************************************************************************
@@ -1921,13 +1921,13 @@ CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 
  *      Returns a debug message comparing the input CML_Matrix3x4s.
  *
  * Parameters:
- *      CML_Matrix3x4 *expected - Expected matrix.
- *      CML_Matrix3x4 *got - Result matrix.
+ *      CML_Matrix3x4 expected - Expected matrix.
+ *      CML_Matrix3x4 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, const CML_Matrix3x4 *got);
+CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 expected, const CML_Matrix3x4 got);
 
 
 
@@ -1938,14 +1938,14 @@ CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, const CML_Mat
  *     Adds two CML_Matrix4x2 and writes the result to the out CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The first matrix operand.
+ *      CML_Matrix4x2 B   - The second matrix operand.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 A, const CML_Matrix4x2 B, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -1956,14 +1956,14 @@ CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4
  *     CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The first matrix operand.
+ *      CML_Matrix4x2 B   - The second matrix operand.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 A, const CML_Matrix4x2 B, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -1974,14 +1974,14 @@ CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4
  *     CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
+ *      CML_Matrix4x2 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 A, f64 t, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -1992,14 +1992,14 @@ CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matr
  *     the out CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second vector operand.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The first matrix operand.
+ *      CML_Matrix2x2 B   - The second vector operand.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 A, const CML_Matrix2x2 B, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -2010,14 +2010,14 @@ CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const 
  *     the out CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second vector operand.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The first matrix operand.
+ *      CML_Matrix2x3 B   - The second vector operand.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 A, const CML_Matrix2x3 B, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -2028,14 +2028,14 @@ CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const 
  *     the out CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second vector operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The first matrix operand.
+ *      CML_Matrix2x4 B   - The second vector operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 A, const CML_Matrix2x4 B, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -2046,14 +2046,14 @@ CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const 
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Matrix4x2 A   - The matrix operand.
+ *      CML_Vector2   v   - The vector operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out);
+CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2 A, const CML_Vector2 v, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -2064,14 +2064,14 @@ CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CM
  *     the out CML_Vector2.
  * 
  * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Matrix4x2 A   - The matrix operand.
+ *      CML_Vector2   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out);
+CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 v, const CML_Matrix4x2 A, CML_Vector2 out);
 
 
 /******************************************************************************
@@ -2081,13 +2081,13 @@ CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_
  *     Calculates the transpose of a CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
+ *      CML_Matrix4x2 A   - The matrix operand.
+ *      CML_Matrix2x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out);
+CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 A, CML_Matrix2x4 out);
 
 
 /******************************************************************************
@@ -2097,13 +2097,13 @@ CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2
  *      Compares two CML_Matrix4x2s for equality.
  * 
  * Parameters:
- *      CML_Matrix4x2 *A - The first input vector.
- *      CML_Matrix4x2 *B - The second input vector.
+ *      CML_Matrix4x2 A - The first input vector.
+ *      CML_Matrix4x2 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
+CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 A, const CML_Matrix4x2 B);
 
 
 /******************************************************************************
@@ -2113,13 +2113,13 @@ CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 
  *      Returns a debug message comparing the input CML_Matrix4x2s.
  *
  * Parameters:
- *      CML_Matrix4x2 *expected - Expected matrix.
- *      CML_Matrix4x2 *got - Result matrix.
+ *      CML_Matrix4x2 expected - Expected matrix.
+ *      CML_Matrix4x2 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, const CML_Matrix4x2 *got);
+CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 expected, const CML_Matrix4x2 got);
 
 
 
@@ -2130,14 +2130,14 @@ CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, const CML_Mat
  *     Adds two CML_Matrix4x3 and writes the result to the out CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The first matrix operand.
+ *      CML_Matrix4x3 B   - The second matrix operand.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 A, const CML_Matrix4x3 B, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -2148,14 +2148,14 @@ CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4
  *     CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The first matrix operand.
+ *      CML_Matrix4x3 B   - The second matrix operand.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 A, const CML_Matrix4x3 B, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -2166,14 +2166,14 @@ CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4
  *     CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
+ *      CML_Matrix4x3 A   - The matrix operand.
  *      double         t   - The scalar.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 A, f64 t, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -2184,14 +2184,14 @@ CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matr
  *     the out CML_Matrix4x2.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second vector operand.
- *      CML_Matrix4x2 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The first matrix operand.
+ *      CML_Matrix3x2 B   - The second vector operand.
+ *      CML_Matrix4x2 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out);
+CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 A, const CML_Matrix3x2 B, CML_Matrix4x2 out);
 
 
 /******************************************************************************
@@ -2202,14 +2202,14 @@ CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const 
  *     the out CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix4x3 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The first matrix operand.
+ *      CML_Matrix3x3 B   - The second vector operand.
+ *      CML_Matrix4x3 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out);
+CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 A, const CML_Matrix3x3 B, CML_Matrix4x3 out);
 
 
 /******************************************************************************
@@ -2220,14 +2220,14 @@ CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const 
  *     the out CML_Matrix4x4.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second vector operand.
- *      CML_Matrix4x4 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The first matrix operand.
+ *      CML_Matrix3x4 B   - The second vector operand.
+ *      CML_Matrix4x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out);
+CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 A, const CML_Matrix3x4 B, CML_Matrix4x4 out);
 
 
 /******************************************************************************
@@ -2238,14 +2238,14 @@ CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const 
  *     the out CML_Vector4.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
+ *      CML_Matrix4x3 A   - The matrix operand.
+ *      CML_Vector3   v   - The vector operand.
+ *      CML_Vector4   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out);
+CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3 A, const CML_Vector3 v, CML_Vector4 out);
 
 
 /******************************************************************************
@@ -2256,14 +2256,14 @@ CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CM
  *     the out CML_Vector3.
  * 
  * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
+ *      CML_Vector4   v   - The vector operand.
+ *      CML_Matrix4x3 A   - The matrix operand.
+ *      CML_Vector3   out - The output vector.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out);
+CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 v, const CML_Matrix4x3 A, CML_Vector3 out);
 
 
 /******************************************************************************
@@ -2273,13 +2273,13 @@ CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_
  *     Calculates the transpose of a CML_Matrix4x3.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
+ *      CML_Matrix4x3 A   - The matrix operand.
+ *      CML_Matrix3x4 out - The output matrix.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out);
+CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 A, CML_Matrix3x4 out);
 
 
 /******************************************************************************
@@ -2289,13 +2289,13 @@ CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3
  *      Compares two CML_Matrix4x3s for equality.
  * 
  * Parameters:
- *      CML_Matrix4x3 *A - The first input vector.
- *      CML_Matrix4x3 *B - The second input vector.
+ *      CML_Matrix4x3 A - The first input vector.
+ *      CML_Matrix4x3 B - The second input vector.
  * 
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
+CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 A, const CML_Matrix4x3 B);
 
 
 /******************************************************************************
@@ -2305,13 +2305,13 @@ CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 
  *      Returns a debug message comparing the input CML_Matrix4x3s.
  *
  * Parameters:
- *      CML_Matrix4x3 *expected - Expected matrix.
- *      CML_Matrix4x3 *got - Result matrix.
+ *      CML_Matrix4x3 expected - Expected matrix.
+ *      CML_Matrix4x3 got - Result matrix.
  * 
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_matrix4x3_debug(const CML_Matrix4x3 *expected, const CML_Matrix4x3 *got);
+CAMEL_API char *cml_matrix4x3_debug(const CML_Matrix4x3 expected, const CML_Matrix4x3 got);
 
 
 #endif /* CAMEL_MATRIX */

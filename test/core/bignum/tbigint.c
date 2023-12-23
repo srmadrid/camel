@@ -35,7 +35,7 @@ CML_TestResult test_bigint_set_int() {
     char *expected = "200345";
     cml_bigint_set_int(&bigint, 200345, 1);
     CML_TestResult result;
-    result.passed = cml_bigint_eq_int(&bigint, 200344, 1);
+    result.passed = cml_bigint_eq_int(&bigint, 200345, 1);
     if (!result.passed) {
         result.debugMessage = cml_bigint_debug(expected, &bigint);
     }
