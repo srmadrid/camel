@@ -20,6 +20,7 @@
 
 
 #define CAMEL_API inline
+#define CAMEL_STATIC static
 
 typedef enum {
     CML_TRUE = 1,
