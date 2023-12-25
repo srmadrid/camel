@@ -1,8 +1,8 @@
 /******************************************************************************
- * Filename: tvector.c
+ * Filename: tfvector.c
  * 
  * Description:
- *      Test file for the vector module.
+ *      Test file for the fixed vector module.
  *
  * Author: Sergio Madrid
  * Created on: 12/12/2023
@@ -13,7 +13,7 @@
  *****************************************************************************/
 
 
-#include "../../../include/camel.h"
+#include "../../../../include/camel.h"
 
 
 CML_TestResult test_vector2_add() {
@@ -289,7 +289,7 @@ CML_TestResult test_vector4_dot() {
 
 
 
-void cml_register_vector_tests(CML_Test *registry, u32 *count) {
+void cml_register_fvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_vector2_add, "test_vector2_add");
     cml_test_register(registry, count, test_vector2_sub, "test_vector2_sub");
     cml_test_register(registry, count, test_vector2_scale, "test_vector2_scale");

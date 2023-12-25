@@ -1,8 +1,8 @@
 /******************************************************************************
- * Filename: tvector.c
+ * Filename: tfmatrix.c
  * 
  * Description:
- *      Test file for the vector module.
+ *      Test file for the fixed vector module.
  *
  * Author: Sergio Madrid
  * Created on: 16/12/2023
@@ -13,7 +13,7 @@
  *****************************************************************************/
 
 
-#include "../../../include/camel.h"
+#include "../../../../include/camel.h"
 
 
 CML_TestResult test_matrix2x2_add() {
@@ -1984,7 +1984,7 @@ CML_TestResult test_matrix4x3_transpose() {
 
 
 
-void cml_register_matrix_tests(CML_Test *registry, u32 *count) {
+void cml_register_fmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_matrix2x2_add, "test_matrix2x2_add");
     cml_test_register(registry, count, test_matrix2x2_sub, "test_matrix2x2_sub");
     cml_test_register(registry, count, test_matrix2x2_scale, "test_matrix2x2_scale");

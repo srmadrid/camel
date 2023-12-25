@@ -1,4 +1,30 @@
-# camel
+# Camel
+
+Camel is a C mathematics library, which aims to provide a simple and easy to use API for a wide array of mathematical operations. It is written in C99, and is cross-platform. It is currently in development, so it is not recommended to use it in production. It is licensed under the MIT license.
+
+## Table of Contents   
+- [Features](#features)
+- [Installation](#installation)
+- [Compile](#compile)
+- [Usage](#usage)
+- [To-Do](#to-do)
+
+
+## Features
+The library is structured in modules, each module centered around a specific mathematical branch. The modules are:
+- [Core](doc/core/core.md)
+    - [Arbitrary Precision Arithmetic](doc/core/bignum.md)
+    - [Data Structures](doc/core/dstructs.md)
+    - [Expression Parsing](doc/core/expression.md)
+- [Algebra](doc/algebra/algebra.md)
+    - [Linear Algebra](doc/algebra/linear/linear.md)
+        - [Fixed Size Linear Algebra](doc/algebra/linear/flinear.md)
+        - [Variable Size Linear Algebra](doc/algebra/linear/vlinear.md)
+    - [Abstract Algebra](doc/algebra/abstract.md)
+- [Calculus](doc/calculus/calculus.md)
+- [Geometry](doc/geometry/geometry.md)
+- [Number Theory](doc/numtheory/numtheory.md)
+- [Statistics](doc/statistics/statistics.md)
 
 
 ## Compile
@@ -9,7 +35,7 @@ To compile the project, run ```make``` in the root directory of the project. Thi
 ## Usage
 
 ### Matrices
-Vectors are represented as column vectors inside matrices.
+Vectors are represented as row vectors inside matrices.
 
 ### Testing module
 
@@ -25,7 +51,5 @@ For a complete example, explore the ```test``` directory, where you will find al
 
 ## To-Do
 
-- [ ] Create testing suite
-- [ ] Create tests
 - [ ] Create documentation
 - [ ] Create examples
