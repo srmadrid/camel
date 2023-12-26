@@ -8,8 +8,8 @@ ifeq ($(OS),Linux)
     LDFLAGS = -shared -lm
     LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm
 else
-    TARGET = bin/win/camel.dll
-    TEST_TARGET = test/bin/win/test.exe
+    TARGET = bin/windows/camel.dll
+    TEST_TARGET = test/bin/windows/test.exe
     EXT = dll
     CFLAGS = -Wall -Iinclude
     LDFLAGS = -shared -lm

@@ -24,11 +24,15 @@ The functions and types in the library follow a specific naming convention.
 - ```<function>```: indicates the function name.
 - Second ```<type>```: indicates a second type on which the function operates, if necessary. If the function only operates on one type, this is omitted. For example, for a function that adds two numbers, if we want to add two ```f64```, the function name would be ```cml_f64_add```, but if we want to add a ```f64``` and a ```i64```, the function name would be ```cml_f64_add_i64```.
 
+For a complete list of functions, see [Functions](doc/functions.md).
+
 ### Types
 
 #### ```CML_<type>```
 
-- **```<type>```**: indicates the type name. For a complete list of types, see [Types](doc/types.md).
+- **```<type>```**: indicates the type name.
+
+For a complete list of types, see [Types](doc/types.md).
 
 ## Features
 

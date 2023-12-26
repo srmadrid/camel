@@ -36,9 +36,12 @@
  *      f64 x - The x component of the vector.
  *      f64 y - The y component of the vector.
  *****************************************************************************/
-typedef struct {
-    f64 x;
-    f64 y;
+typedef union {
+    struct {
+        f64 x;
+        f64 y;
+    };
+    f64 array[2];
 } CML_Vector2;
 
 
@@ -90,10 +93,13 @@ typedef struct {
  *      f64 y - The y component of the vector.
  *      f64 z - The z component of the vector.
  *****************************************************************************/
-typedef struct {
-    f64 x;
-    f64 y;
-    f64 z;
+typedef union {
+    struct {
+        f64 x;
+        f64 y;
+        f64 z;
+    };
+    f64 array[3];
 } CML_Vector3;
 
 
@@ -155,11 +161,14 @@ typedef struct {
  *      f64 z - The z component of the vector.
  *      f64 w - The w component of the vector.
  *****************************************************************************/
-typedef struct {
-    f64 x;
-    f64 y;
-    f64 z;
-    f64 w;
+typedef union {
+    struct {
+        f64 x;
+        f64 y;
+        f64 z;
+        f64 w;
+    };
+    f64 array[4];
 } CML_Vector4;
 
 
@@ -230,17 +239,11 @@ typedef struct {
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
-
-    return CML_SUCCESS;
 }
 
 
@@ -256,17 +259,11 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_add(const CML_Vector2 *v, const CM
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
-
-    return CML_SUCCESS;
 }
 
 
@@ -283,17 +280,11 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_sub(const CML_Vector2 *v, const CM
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -310,11 +301,24 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_scale(const CML_Vector2 *v, f64 t,
  *      The modulus of the input CML_Vector2.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector2_mod(const CML_Vector2 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector2.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector2_mod2(const CML_Vector2 *v) {
+    return v->x * v->x + v->y * v->y;
 }
 
 
@@ -329,18 +333,12 @@ CAMEL_STATIC CAMEL_API f64 cml_vector2_mod(const CML_Vector2 *v) {
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y);
     out->x = v->x * mod;
     out->y = v->y * mod;
-
-    return CML_SUCCESS;
 }
 
 
@@ -358,10 +356,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_norm(const CML_Vector2 *v, CML_Vec
  *      The dot product of the input vectors.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y;
 }
 
@@ -430,18 +424,12 @@ CAMEL_STATIC CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, cons
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
     out->z = v->z + w->z;
-
-    return CML_SUCCESS;
 }
 
 
@@ -457,18 +445,12 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_add(const CML_Vector3 *v, const CM
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
-
-    return CML_SUCCESS;
 }
 
 
@@ -485,18 +467,12 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_sub(const CML_Vector3 *v, const CM
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
     out->z = v->z * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -513,11 +489,24 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_scale(const CML_Vector3 *v, f64 t,
  *      The modulus of the input CML_Vector3.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector3_mod(const CML_Vector3 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector3.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector3_mod2(const CML_Vector3 *v) {
+    return v->x * v->x + v->y * v->y + v->z * v->z;
 }
 
 
@@ -532,19 +521,13 @@ CAMEL_STATIC CAMEL_API f64 cml_vector3_mod(const CML_Vector3 *v) {
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
     out->x = v->x * mod;
     out->y = v->y * mod;
     out->z = v->z * mod;
-
-    return CML_SUCCESS;
 }
 
 
@@ -562,10 +545,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_norm(const CML_Vector3 *v, CML_Vec
  *      The dot product of the input vectors.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y + v->z * w->z;
 }
 
@@ -582,18 +561,12 @@ CAMEL_STATIC CAMEL_API f64 cml_vector3_dot(const CML_Vector3 *v, const CML_Vecto
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->y * w->z - v->z * w->y;
     out->y = v->z * w->x - v->x * w->z;
     out->z = v->x * w->y - v->y * w->x;
-
-    return CML_SUCCESS;
 }
 
 
@@ -661,19 +634,13 @@ CAMEL_STATIC CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, cons
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
     out->z = v->z + w->z;
     out->w = v->w + w->w;
-
-    return CML_SUCCESS;
 }
 
 
@@ -689,19 +656,13 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_add(const CML_Vector4 *v, const CM
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
     out->w = v->w - w->w;
-
-    return CML_SUCCESS;
 }
 
 
@@ -718,19 +679,13 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_sub(const CML_Vector4 *v, const CM
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
     out->z = v->z * t;
     out->w = v->w * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -747,11 +702,24 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_scale(const CML_Vector4 *v, f64 t,
  *      The modulus of the input CML_Vector4.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector4_mod(const CML_Vector4 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector4.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector4_mod2(const CML_Vector4 *v) {
+    return v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
 }
 
 
@@ -766,20 +734,14 @@ CAMEL_STATIC CAMEL_API f64 cml_vector4_mod(const CML_Vector4 *v) {
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
     out->x = v->x * mod;
     out->y = v->y * mod;
     out->z = v->z * mod;
     out->w = v->w * mod;
-
-    return CML_SUCCESS;
 }
 
 
@@ -797,10 +759,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_norm(const CML_Vector4 *v, CML_Vec
  *      The dot product of the input vectors.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w;
 }
 

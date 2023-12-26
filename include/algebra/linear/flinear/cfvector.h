@@ -36,9 +36,9 @@
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+CAMEL_API void cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -53,9 +53,9 @@ CAMEL_API CML_Status cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+CAMEL_API void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -71,9 +71,9 @@ CAMEL_API CML_Status cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
+CAMEL_API void cmlc_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -92,6 +92,21 @@ CAMEL_API f64 cmlc_vector2_mod(const CML_Vector2 *v);
 
 
 /******************************************************************************
+ * Function: cmlc_vector2_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector2.
+ *****************************************************************************/
+CAMEL_API f64 cmlc_vector2_mod2(const CML_Vector2 *v);
+
+
+/******************************************************************************
  * Function: cmlc_vector2_norm
  * 
  * Description:
@@ -102,9 +117,9 @@ CAMEL_API f64 cmlc_vector2_mod(const CML_Vector2 *v);
  *      CML_Vector2 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
+CAMEL_API void cmlc_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -168,9 +183,9 @@ CAMEL_API char *cmlc_vector2_debug(const CML_Vector2 *expected, const CML_Vector
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -185,9 +200,9 @@ CAMEL_API CML_Status cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -203,9 +218,9 @@ CAMEL_API CML_Status cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -224,6 +239,21 @@ CAMEL_API f64 cmlc_vector3_mod(const CML_Vector3 *v);
 
 
 /******************************************************************************
+ * Function: cmlc_vector3_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector3.
+ *****************************************************************************/
+CAMEL_API f64 cmlc_vector3_mod2(const CML_Vector3 *v);
+
+
+/******************************************************************************
  * Function: cmlc_vector3_norm
  * 
  * Description:
@@ -234,9 +264,9 @@ CAMEL_API f64 cmlc_vector3_mod(const CML_Vector3 *v);
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -267,9 +297,9 @@ CAMEL_API f64 cmlc_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w);
  *      CML_Vector3 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -317,9 +347,9 @@ CAMEL_API char *cmlc_vector3_debug(const CML_Vector3 *expected, const CML_Vector
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+CAMEL_API void cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -334,9 +364,9 @@ CAMEL_API CML_Status cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success (0) or error (<0) code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+CAMEL_API void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -352,9 +382,9 @@ CAMEL_API CML_Status cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
+CAMEL_API void cmlc_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -373,6 +403,21 @@ CAMEL_API f64 cmlc_vector4_mod(const CML_Vector4 *v);
 
 
 /******************************************************************************
+ * Function: cmlc_vector4_mod2
+ * 
+ * Description:
+ *      Calculates the squared modulus of the input CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v - The input vector.
+ * 
+ * Returns:
+ *      The squared modulus of the input CML_Vector4.
+ *****************************************************************************/
+CAMEL_API f64 cmlc_vector4_mod2(const CML_Vector4 *v);
+
+
+/******************************************************************************
  * Function: cmlc_vector4_norm
  * 
  * Description:
@@ -383,9 +428,9 @@ CAMEL_API f64 cmlc_vector4_mod(const CML_Vector4 *v);
  *      CML_Vector4 *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
+CAMEL_API void cmlc_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out);
 
 
 /******************************************************************************

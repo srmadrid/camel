@@ -37,9 +37,12 @@
  *      f64 mxy - The element at row x, column y. x and y are in the range 
  *                [0, 1].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01;
-    f64 m10, m11;
+typedef union {
+    struct {
+        f64 m00, m01;
+        f64 m10, m11;
+    };
+    f64 m[4];
 } CML_Matrix2x2;
 
 
@@ -84,10 +87,13 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x and y are in the range
  *                [0, 2].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02;
-    f64 m10, m11, m12;
-    f64 m20, m21, m22;
+typedef union {
+    struct {
+        f64 m00, m01, m02;
+        f64 m10, m11, m12;
+        f64 m20, m21, m22;
+    };
+    f64 m[9];
 } CML_Matrix3x3;
 
 
@@ -135,11 +141,14 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x and y are in the range
  *                [0, 3].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02, m03;
-    f64 m10, m11, m12, m13;
-    f64 m20, m21, m22, m23;
-    f64 m30, m31, m32, m33;
+typedef union {
+    struct {
+        f64 m00, m01, m02, m03;
+        f64 m10, m11, m12, m13;
+        f64 m20, m21, m22, m23;
+        f64 m30, m31, m32, m33;
+    };
+    f64 m[16];
 } CML_Matrix4x4;
 
 
@@ -190,9 +199,12 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 1] and
  *                y in [0, 2].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02;
-    f64 m10, m11, m12;
+typedef union {
+    struct {
+        f64 m00, m01, m02;
+        f64 m10, m11, m12;
+    };
+    f64 m[6];
 } CML_Matrix2x3;
 
 
@@ -237,9 +249,12 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 1] and
  *                y in [0, 3].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02, m03;
-    f64 m10, m11, m12, m13;
+typedef union {
+    struct {
+        f64 m00, m01, m02, m03;
+        f64 m10, m11, m12, m13;
+    };
+    f64 m[8];
 } CML_Matrix2x4;
 
 
@@ -284,10 +299,13 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 2] and
  *                y in [0, 1].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01;
-    f64 m10, m11;
-    f64 m20, m21;
+typedef union {
+    struct {
+        f64 m00, m01;
+        f64 m10, m11;
+        f64 m20, m21;
+    };
+    f64 m[6];
 } CML_Matrix3x2;
 
 
@@ -335,10 +353,13 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 2] and
  *                y in [0, 3].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02, m03;
-    f64 m10, m11, m12, m13;
-    f64 m20, m21, m22, m23;
+typedef union {
+    struct {
+        f64 m00, m01, m02, m03;
+        f64 m10, m11, m12, m13;
+        f64 m20, m21, m22, m23;
+    };
+    f64 m[12];
 } CML_Matrix3x4;
 
 
@@ -386,11 +407,14 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 3] and
  *                y in [0, 1].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01;
-    f64 m10, m11;
-    f64 m20, m21;
-    f64 m30, m31;
+typedef union {
+    struct {
+        f64 m00, m01;
+        f64 m10, m11;
+        f64 m20, m21;
+        f64 m30, m31;
+    };
+    f64 m[8];
 } CML_Matrix4x2;
 
 
@@ -441,11 +465,14 @@ typedef struct {
  *      f64 mxy - The element at row x, column y. x is in the range [0, 3] and
  *                y in [0, 2].
  *****************************************************************************/
-typedef struct {
-    f64 m00, m01, m02;
-    f64 m10, m11, m12;
-    f64 m20, m21, m22;
-    f64 m30, m31, m32;
+typedef union {
+    struct {
+        f64 m00, m01, m02;
+        f64 m10, m11, m12;
+        f64 m20, m21, m22;
+        f64 m30, m31, m32;
+    };
+    f64 m[12];
 } CML_Matrix4x3;
 
 
@@ -498,19 +525,13 @@ typedef struct {
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m10 = A->m10 + B->m10;
     out->m11 = A->m11 + B->m11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -527,19 +548,13 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_add(const CML_Matrix2x2 *A, cons
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m10 = A->m10 - B->m10;
     out->m11 = A->m11 - B->m11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -556,19 +571,13 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_sub(const CML_Matrix2x2 *A, cons
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
     out->m11 = A->m11 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -585,13 +594,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_scale(const CML_Matrix2x2 *A, f6
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
     f64 b00 = B->m00, b01 = B->m01, b10 = B->m10, b11 = B->m11;
 
@@ -599,8 +604,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 *A, con
     out->m01 = a00*b01 + a01*b11;
     out->m10 = a10*b00 + a11*b10;
     out->m11 = a10*b01 + a11*b11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -617,20 +620,14 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_mult(const CML_Matrix2x2 *A, con
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
     f64 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -647,20 +644,14 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_mult_vector2(const CML_Matrix2x2
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
     f64 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -677,10 +668,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x2(const CML_Vector2 *
  *      The determinant of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
 
     return a00*a11 - a01*a10;
@@ -698,18 +685,14 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
     f64 det = (a00*a11 - a01*a10);
 
     if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
+        return CML_ERR_SINGULAR_MATRIX;
     }
 
     det = 1/det;
@@ -734,13 +717,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
 
@@ -749,8 +728,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A
     out->m01 = a10;
     out->m10 = a01;
     out->m11 = a11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -767,10 +744,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_transpose(const CML_Matrix2x2 *A
  *      The trace of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     return A->m00 + A->m11;
 }
 
@@ -786,7 +759,7 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
  *      CML_Matrix2x2 *B - The second input vector.
  * 
  * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
+ *      CAMEL_TRUE if the matrices are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
@@ -845,13 +818,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, 
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
@@ -861,8 +830,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 *A, cons
     out->m20 = A->m20 + B->m20;
     out->m21 = A->m21 + B->m21;
     out->m22 = A->m22 + B->m22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -879,13 +846,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_add(const CML_Matrix3x3 *A, cons
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
@@ -895,8 +858,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 *A, cons
     out->m20 = A->m20 - B->m20;
     out->m21 = A->m21 - B->m21;
     out->m22 = A->m22 - B->m22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -913,13 +874,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_sub(const CML_Matrix3x3 *A, cons
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -929,8 +886,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 *A, f6
     out->m20 = A->m20 * t;
     out->m21 = A->m21 * t;
     out->m22 = A->m22 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -947,13 +902,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_scale(const CML_Matrix3x3 *A, f6
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -971,8 +922,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 *A, con
     out->m20 = a20*b00 + a21*b10 + a22*b20;
     out->m21 = a20*b01 + a21*b11 + a22*b21;
     out->m22 = a20*b02 + a21*b12 + a22*b22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -989,13 +938,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult(const CML_Matrix3x3 *A, con
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -1005,8 +950,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
     out->z = a20*v0 + a21*v1 + a22*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1023,13 +966,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_mult_vector3(const CML_Matrix3x3
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -1039,8 +978,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
     out->z = a02*v0 + a12*v1 + a22*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1057,10 +994,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x3(const CML_Vector3 *
  *      The determinant of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -1080,13 +1013,9 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -1094,7 +1023,7 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_
     f64 det = a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
 
     if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
+        return CML_ERR_SINGULAR_MATRIX;
     }
 
     det = 1/det;
@@ -1124,13 +1053,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -1144,8 +1069,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A
     out->m20 = a02;
     out->m21 = a12;
     out->m22 = a22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1162,10 +1085,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_transpose(const CML_Matrix3x3 *A
  *      The trace of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     return A->m00 + A->m11 + A->m22;
 }
 
@@ -1242,13 +1161,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, 
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
@@ -1265,8 +1180,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 *A, cons
     out->m31 = A->m31 + B->m31;
     out->m32 = A->m32 + B->m32;
     out->m33 = A->m33 + B->m33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1283,13 +1196,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_add(const CML_Matrix4x4 *A, cons
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
@@ -1306,8 +1215,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 *A, cons
     out->m31 = A->m31 - B->m31;
     out->m32 = A->m32 - B->m32;
     out->m33 = A->m33 - B->m33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1324,13 +1231,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_sub(const CML_Matrix4x4 *A, cons
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -1347,8 +1250,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 *A, f6
     out->m31 = A->m31 * t;
     out->m32 = A->m32 * t;
     out->m33 = A->m33 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1365,13 +1266,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_scale(const CML_Matrix4x4 *A, f6
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1398,8 +1295,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 *A, con
     out->m31 = a30*b01 + a31*b11 + a32*b21 + a33*b31;
     out->m32 = a30*b02 + a31*b12 + a32*b22 + a33*b32;
     out->m33 = a30*b03 + a31*b13 + a32*b23 + a33*b33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1416,13 +1311,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult(const CML_Matrix4x4 *A, con
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1434,8 +1325,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
     out->z = a20*v0 + a21*v1 + a22*v2 + a23*v3;
     out->w = a30*v0 + a31*v1 + a32*v2 + a33*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1452,13 +1341,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_mult_vector4(const CML_Matrix4x4
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1470,8 +1355,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
     out->z = a02*v0 + a12*v1 + a22*v2 + a32*v3;
     out->w = a03*v0 + a13*v1 + a23*v2 + a33*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1488,10 +1371,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x4(const CML_Vector4 *
  *      The determinant of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1517,13 +1396,9 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1537,7 +1412,7 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_
               a02*a10*a21*a33 - a00*a12*a21*a33 - a01*a10*a22*a33 + a00*a11*a22*a33;
 
     if (det == 0.0) {
-        return CML_ERR_NULL_PTR; // TODO: Change to singular matrix error.
+        return CML_ERR_SINGULAR_MATRIX;
     }
 
     det = 1/det;
@@ -1574,13 +1449,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -1602,8 +1473,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A
     out->m31 = a13;
     out->m32 = a23;
     out->m33 = a33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1620,10 +1489,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_transpose(const CML_Matrix4x4 *A
  *      The trace of the matrix.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A) {
-    if (!A) {
-        return CML_ERR_NULL_PTR;
-    }
-
     return A->m00 + A->m11 + A->m22 + A->m33;
 }
 
@@ -1707,21 +1572,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, 
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
     out->m10 = A->m10 + B->m10;
     out->m11 = A->m11 + B->m11;
     out->m12 = A->m12 + B->m12;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1738,21 +1597,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_add(const CML_Matrix2x3 *A, cons
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
     out->m10 = A->m10 - B->m10;
     out->m11 = A->m11 - B->m11;
     out->m12 = A->m12 - B->m12;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1769,21 +1622,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_sub(const CML_Matrix2x3 *A, cons
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
     out->m10 = A->m10 * t;
     out->m11 = A->m11 * t;
     out->m12 = A->m12 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1800,13 +1647,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_scale(const CML_Matrix2x3 *A, f6
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1818,8 +1661,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2
     out->m01 = a00*b01 + a01*b11 + a02*b21;
     out->m10 = a10*b00 + a11*b10 + a12*b20;
     out->m11 = a10*b01 + a11*b11 + a12*b21;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1836,13 +1677,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x2(const CML_Matrix2
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1856,8 +1693,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2
     out->m10 = a10*b00 + a11*b10 + a12*b20;
     out->m11 = a10*b01 + a11*b11 + a12*b21;
     out->m12 = a10*b02 + a11*b12 + a12*b22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1874,13 +1709,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x3(const CML_Matrix2
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1896,8 +1727,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2
     out->m11 = a10*b01 + a11*b11 + a12*b21;
     out->m12 = a10*b02 + a11*b12 + a12*b22;
     out->m13 = a10*b03 + a11*b13 + a12*b23;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1914,13 +1743,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_matrix3x4(const CML_Matrix2
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1928,8 +1753,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1946,13 +1769,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_mult_vector3(const CML_Matrix2x3
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1961,8 +1780,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
     out->z = a02*v0 + a12*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -1977,13 +1794,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x3(const CML_Vector2 *
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
@@ -1993,8 +1806,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x3_transpose(const CML_Matrix2x3 *A
     out->m11 = a11;
     out->m20 = a02;
     out->m21 = a12;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2068,13 +1879,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, 
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
@@ -2083,8 +1890,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 *A, cons
     out->m11 = A->m11 + B->m11;
     out->m12 = A->m12 + B->m12;
     out->m13 = A->m13 + B->m13;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2101,13 +1906,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_add(const CML_Matrix2x4 *A, cons
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
@@ -2116,8 +1917,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 *A, cons
     out->m11 = A->m11 - B->m11;
     out->m12 = A->m12 - B->m12;
     out->m13 = A->m13 - B->m13;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2134,13 +1933,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_sub(const CML_Matrix2x4 *A, cons
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -2149,8 +1944,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 *A, f6
     out->m11 = A->m11 * t;
     out->m12 = A->m12 * t;
     out->m13 = A->m13 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2167,13 +1960,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_scale(const CML_Matrix2x4 *A, f6
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2186,8 +1975,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
     out->m10 = a10*b00 + a11*b10 + a12*b20 + a13*b30;
     out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2204,13 +1991,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x2(const CML_Matrix2
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2225,8 +2008,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2
     out->m10 = a10*b00 + a11*b10 + a12*b20 + a13*b30;
     out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
     out->m12 = a10*b02 + a11*b12 + a12*b22 + a13*b32;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2243,13 +2024,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x3(const CML_Matrix2
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2266,8 +2043,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2
     out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
     out->m12 = a10*b02 + a11*b12 + a12*b22 + a13*b32;
     out->m13 = a10*b03 + a11*b13 + a12*b23 + a13*b33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2284,13 +2059,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_matrix4x4(const CML_Matrix2
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2298,8 +2069,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2316,13 +2085,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_mult_vector4(const CML_Matrix2x4
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2332,8 +2097,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *
     out->y = a01*v0 + a11*v1;
     out->z = a02*v0 + a12*v1;
     out->w = a03*v0 + a13*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2348,13 +2111,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector2_mult_matrix2x4(const CML_Vector2 *
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
@@ -2366,8 +2125,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x4_transpose(const CML_Matrix2x4 *A
     out->m21 = a12;
     out->m30 = a03;
     out->m31 = a13;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2442,21 +2199,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, 
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m10 = A->m10 + B->m10;
     out->m11 = A->m11 + B->m11;
     out->m20 = A->m20 + B->m20;
     out->m21 = A->m21 + B->m21;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2473,21 +2224,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_add(const CML_Matrix3x2 *A, cons
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m10 = A->m10 - B->m10;
     out->m11 = A->m11 - B->m11;
     out->m20 = A->m20 - B->m20;
     out->m21 = A->m21 - B->m21;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2504,21 +2249,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_sub(const CML_Matrix3x2 *A, cons
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
     out->m11 = A->m11 * t;
     out->m20 = A->m20 * t;
     out->m21 = A->m21 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2535,13 +2274,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_scale(const CML_Matrix3x2 *A, f6
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2555,8 +2290,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3
     out->m11 = a10*b01 + a11*b11;
     out->m20 = a20*b00 + a21*b10;
     out->m21 = a20*b01 + a21*b11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2573,13 +2306,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x2(const CML_Matrix3
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2596,8 +2325,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3
     out->m20 = a20*b00 + a21*b10;
     out->m21 = a20*b01 + a21*b11;
     out->m22 = a20*b02 + a21*b12;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2614,13 +2341,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x3(const CML_Matrix3
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2640,8 +2363,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3
     out->m21 = a20*b01 + a21*b11;
     out->m22 = a20*b02 + a21*b12;
     out->m23 = a20*b03 + a21*b13;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2658,13 +2379,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_matrix2x4(const CML_Matrix3
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2674,8 +2391,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
     out->z = a20*v0 + a21*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2692,13 +2407,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_mult_vector2(const CML_Matrix3x2
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2707,8 +2418,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2723,13 +2432,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x2(const CML_Vector3 *
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -2740,8 +2445,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x2_transpose(const CML_Matrix3x2 *A
     out->m10 = a01;
     out->m11 = a11;
     out->m12 = a21;
-    
-    return CML_SUCCESS;
 }
 
 
@@ -2817,13 +2520,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, 
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
@@ -2836,8 +2535,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 *A, cons
     out->m21 = A->m21 + B->m21;
     out->m22 = A->m22 + B->m22;
     out->m23 = A->m23 + B->m23;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2854,13 +2551,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_add(const CML_Matrix3x4 *A, cons
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
@@ -2873,8 +2566,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 *A, cons
     out->m21 = A->m21 - B->m21;
     out->m22 = A->m22 - B->m22;
     out->m23 = A->m23 - B->m23;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2891,13 +2582,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_sub(const CML_Matrix3x4 *A, cons
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -2910,8 +2597,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 *A, f6
     out->m21 = A->m21 * t;
     out->m22 = A->m22 * t;
     out->m23 = A->m23 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2928,13 +2613,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_scale(const CML_Matrix3x4 *A, f6
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -2950,8 +2631,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3
     out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
     out->m20 = a20*b00 + a21*b10 + a22*b20 + a23*b30;
     out->m21 = a20*b01 + a21*b11 + a22*b21 + a23*b31;
-
-    return CML_SUCCESS;
 }
 
 
@@ -2968,13 +2647,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x2(const CML_Matrix3
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -2993,8 +2668,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3
     out->m20 = a20*b00 + a21*b10 + a22*b20 + a23*b30;
     out->m21 = a20*b01 + a21*b11 + a22*b21 + a23*b31;
     out->m22 = a20*b02 + a21*b12 + a22*b22 + a23*b32;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3011,13 +2684,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x3(const CML_Matrix3
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -3039,8 +2708,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3
     out->m21 = a20*b01 + a21*b11 + a22*b21 + a23*b31;
     out->m22 = a20*b02 + a21*b12 + a22*b22 + a23*b32;
     out->m23 = a20*b03 + a21*b13 + a22*b23 + a23*b33;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3057,13 +2724,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_matrix4x4(const CML_Matrix3
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -3073,8 +2736,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
     out->z = a20*v0 + a21*v1 + a22*v2 + a23*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3091,13 +2752,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_mult_vector4(const CML_Matrix3x4
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -3108,8 +2765,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *
     out->y = a01*v0 + a11*v1 + a21*v2;
     out->z = a02*v0 + a12*v1 + a22*v2;
     out->w = a03*v0 + a13*v1 + a23*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3124,13 +2779,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector3_mult_matrix3x4(const CML_Vector3 *
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
@@ -3147,8 +2798,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x4_transpose(const CML_Matrix3x4 *A
     out->m30 = a03;
     out->m31 = a13;
     out->m32 = a23;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3227,13 +2876,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, 
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m10 = A->m10 + B->m10;
@@ -3242,8 +2887,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 *A, cons
     out->m21 = A->m21 + B->m21;
     out->m30 = A->m30 + B->m30;
     out->m31 = A->m31 + B->m31;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3260,13 +2903,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_add(const CML_Matrix4x2 *A, cons
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m10 = A->m10 - B->m10;
@@ -3275,8 +2914,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 *A, cons
     out->m21 = A->m21 - B->m21;
     out->m30 = A->m30 - B->m30;
     out->m31 = A->m31 - B->m31;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3293,13 +2930,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_sub(const CML_Matrix4x2 *A, cons
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -3308,8 +2941,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 *A, f6
     out->m21 = A->m21 * t;
     out->m30 = A->m30 * t;
     out->m31 = A->m31 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3326,13 +2957,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_scale(const CML_Matrix4x2 *A, f6
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -3349,8 +2976,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4
     out->m21 = a20*b01 + a21*b11;
     out->m30 = a30*b00 + a31*b10;
     out->m31 = a30*b01 + a31*b11;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3367,13 +2992,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x2(const CML_Matrix4
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -3394,8 +3015,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4
     out->m30 = a30*b00 + a31*b10;
     out->m31 = a30*b01 + a31*b11;
     out->m32 = a30*b02 + a31*b12;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3412,13 +3031,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x3(const CML_Matrix4
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -3443,8 +3058,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4
     out->m31 = a30*b01 + a31*b11;
     out->m32 = a30*b02 + a31*b12;
     out->m33 = a30*b03 + a31*b13;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3461,13 +3074,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_matrix2x4(const CML_Matrix4
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -3479,8 +3088,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2
     out->y = a10*v0 + a11*v1;
     out->z = a20*v0 + a21*v1;
     out->w = a30*v0 + a31*v1;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3497,13 +3104,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_mult_vector2(const CML_Matrix4x2
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out) {
     f64 a00 = A->m00, a01 = A->m01;
     f64 a10 = A->m10, a11 = A->m11;
     f64 a20 = A->m20, a21 = A->m21;
@@ -3513,8 +3116,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3529,13 +3130,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x2(const CML_Vector4 *
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out) {
     out->m00 = A->m00;
     out->m01 = A->m10;
     out->m02 = A->m20;
@@ -3544,8 +3141,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x2_transpose(const CML_Matrix4x2 *A
     out->m11 = A->m11;
     out->m12 = A->m21;
     out->m13 = A->m31;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3624,13 +3219,9 @@ CAMEL_STATIC CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, 
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m01 = A->m01 + B->m01;
     out->m02 = A->m02 + B->m02;
@@ -3643,8 +3234,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 *A, cons
     out->m30 = A->m30 + B->m30;
     out->m31 = A->m31 + B->m31;
     out->m32 = A->m32 + B->m32;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3661,13 +3250,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_add(const CML_Matrix4x3 *A, cons
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m01 = A->m01 - B->m01;
     out->m02 = A->m02 - B->m02;
@@ -3680,8 +3265,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 *A, cons
     out->m30 = A->m30 - B->m30;
     out->m31 = A->m31 - B->m31;
     out->m32 = A->m32 - B->m32;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3698,13 +3281,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_sub(const CML_Matrix4x3 *A, cons
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -3717,8 +3296,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 *A, f6
     out->m30 = A->m30 * t;
     out->m31 = A->m31 * t;
     out->m32 = A->m32 * t;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3735,13 +3312,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_scale(const CML_Matrix4x3 *A, f6
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3759,8 +3332,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4
     out->m21 = a20*b01 + a21*b11 + a22*b21;
     out->m30 = a30*b00 + a31*b10 + a32*b20;
     out->m31 = a30*b01 + a31*b11 + a32*b21;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3777,13 +3348,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x2(const CML_Matrix4
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3805,8 +3372,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4
     out->m30 = a30*b00 + a31*b10 + a32*b20;
     out->m31 = a30*b01 + a31*b11 + a32*b21;
     out->m32 = a30*b02 + a31*b12 + a32*b22;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3823,13 +3388,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x3(const CML_Matrix4
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out) {
-    if (!A || !B || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3855,8 +3416,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4
     out->m31 = a30*b01 + a31*b11 + a32*b21;
     out->m32 = a30*b02 + a31*b12 + a32*b22;
     out->m33 = a30*b03 + a31*b13 + a32*b23;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3873,13 +3432,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_matrix3x4(const CML_Matrix4
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out) {
-    if (!A || !v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3891,8 +3446,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3
     out->y = a10*v0 + a11*v1 + a12*v2;
     out->z = a20*v0 + a21*v1 + a22*v2;
     out->w = a30*v0 + a31*v1 + a32*v2;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3909,13 +3462,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_mult_vector3(const CML_Matrix4x3
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out) {
-    if (!v || !A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3926,8 +3475,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
     out->z = a02*v0 + a12*v1 + a22*v2 + a32*v3;
-
-    return CML_SUCCESS;
 }
 
 
@@ -3942,13 +3489,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_vector4_mult_matrix4x3(const CML_Vector4 *
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
-    if (!A || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
     f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
     f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
@@ -3966,8 +3509,6 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x3_transpose(const CML_Matrix4x3 *A
     out->m21 = A->m12;
     out->m22 = A->m22;
     out->m23 = A->m32;
-
-    return CML_SUCCESS;
 }
 
 

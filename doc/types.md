@@ -10,7 +10,7 @@
 
 #### Fixed Size Linear Algebra
 
-- **CML_Vector2**: 2D Vector
+- [**CML_Vector2**](algebra/linear/flinear.md#types): 2D Vector
 - **CML_Vector3**: 3D Vector
 - **CML_Vector4**: 4D Vector
 - **CML_Matrix2x2**: 2x2 Matrix

@@ -19,69 +19,42 @@
 #include "../../../../include/algebra/linear/flinear/cfvector.h"
 
 
-CML_Status cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector2_scale(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector2_mod(const CML_Vector2 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y);
 }
 
 
-CML_Status cmlc_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
+f64 cmlc_vector2_mod2(const CML_Vector2 *v) {
+    return v->x * v->x + v->y * v->y;
+}
 
+
+void cmlc_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y);
     out->x = v->x * mod;
     out->y = v->y * mod;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y;
 }
 
@@ -112,87 +85,54 @@ char *cmlc_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got) {
 
 
 
-CML_Status cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
     out->z = v->z + w->z;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector3_scale(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
     out->z = v->z * t;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector3_mod(const CML_Vector3 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
 
-CML_Status cmlc_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
+f64 cmlc_vector3_mod2(const CML_Vector3 *v) {
+    return v->x * v->x + v->y * v->y + v->z * v->z;
+}
 
+
+void cmlc_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
     out->x = v->x * mod;
     out->y = v->y * mod;
     out->z = v->z * mod;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y + v->z * w->z;
 }
 
 
-CML_Status cmlc_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->y * w->z - v->z * w->y;
     out->y = v->z * w->x - v->x * w->z;
     out->z = v->x * w->y - v->y * w->x;
-
-    return CML_SUCCESS;
 }
 
 
@@ -222,77 +162,50 @@ char *cmlc_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got) {
 
 
 
-CML_Status cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
     out->z = v->z + w->z;
     out->w = v->w + w->w;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    if (!v || !w || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
     out->w = v->w - w->w;
-
-    return CML_SUCCESS;
 }
 
 
-CML_Status cmlc_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
-
+void cmlc_vector4_scale(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
     out->z = v->z * t;
     out->w = v->w * t;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector4_mod(const CML_Vector4 *v) {
-    if (!v) {
-        return 0;
-    }
-
     return sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
 }
 
 
-CML_Status cmlc_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
-    if (!v || !out) {
-        return CML_ERR_NULL_PTR;
-    }
+f64 cmlc_vector4_mod2(const CML_Vector4 *v) {
+    return v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
+}
 
+
+void cmlc_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
     f64 mod = 1/sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
     out->x = v->x * mod;
     out->y = v->y * mod;
     out->z = v->z * mod;
     out->w = v->w * mod;
-
-    return CML_SUCCESS;
 }
 
 
 f64 cmlc_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
-    if (!v || !w) {
-        return 0;
-    }
-
     return v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w;
 }
 

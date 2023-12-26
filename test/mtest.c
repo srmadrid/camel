@@ -45,35 +45,25 @@ int main() {
     cml_run_tests(registry, count);
 
 
-    int profiling = 1;
+    int profiling = 0;
     if (profiling) {
         // Time profiling
         u32 iterations = 1000000;
         u32 outIterations = 1000;
         printf("\n\nTime profiling:\n");
-        printf("Function being profiled: cml_matrix4x4_mult\n");
+        printf("Function being profiled: cml_vector2_add\n");
         printf("Total iterations: %d\n", iterations*outIterations);
 
         struct timeval start, end;
-        CML_Matrix4x4 A = {
-            1.0, 2.0, 3.0, 4.0,
-            5.0, 6.0, 7.0, 8.0,
-            9.0, 10.0, 11.0, 12.0,
-            13.0, 14.0, 15.0, 16.0
-        };
-        CML_Matrix4x4 B = {
-            1.0, 2.0, 3.0, 4.0,
-            5.0, 6.0, 7.0, 8.0,
-            9.0, 10.0, 11.0, 12.0,
-            13.0, 14.0, 15.0, 16.0
-        };
-        CML_Matrix4x4 C = {0};
+        CML_Vector2 v1 = {1.0, 2.0};
+        CML_Vector2 v2 = {3.0, 4.0};
+        CML_Vector2 v3 = {0.0, 0.0};
         double totalElapsed = 0.0;
         double elapsed = 0.0;
         for (u32 i = 0; i < outIterations; i++) {
             gettimeofday(&start, NULL);
             for (u32 i = 0; i < iterations; i++) {
-                cml_matrix4x4_mult(&A, &B, &C);
+                cml_vector2_add(&v1, &v2, &v3);
             }
             gettimeofday(&end, NULL);
             elapsed = (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0);

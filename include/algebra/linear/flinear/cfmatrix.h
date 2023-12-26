@@ -36,9 +36,9 @@
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
 
 /******************************************************************************
  * Function: cmlc_matrix2x2_sub
@@ -53,9 +53,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -71,9 +71,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -89,9 +89,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Mat
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -107,9 +107,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matri
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out);
+CAMEL_API void cmlc_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -125,9 +125,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const C
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out);
+CAMEL_API void cmlc_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -156,7 +156,7 @@ CAMEL_API f64 cmlc_matrix2x2_det(const CML_Matrix2x2 *A);
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_API CML_Status cmlc_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
 
@@ -172,9 +172,9 @@ CAMEL_API CML_Status cmlc_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *o
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -237,9 +237,9 @@ CAMEL_API char *cmlc_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Ma
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -255,9 +255,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -273,9 +273,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -291,9 +291,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Mat
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -309,9 +309,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matri
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out);
+CAMEL_API void cmlc_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -327,9 +327,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const C
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out);
+CAMEL_API void cmlc_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -358,7 +358,7 @@ CAMEL_API f64 cmlc_matrix3x3_det(const CML_Matrix3x3 *A);
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_API CML_Status cmlc_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
 
@@ -374,9 +374,9 @@ CAMEL_API CML_Status cmlc_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *o
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -439,9 +439,9 @@ CAMEL_API char *cmlc_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Ma
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -457,9 +457,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -475,9 +475,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -493,9 +493,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Mat
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -511,9 +511,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matri
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out);
+CAMEL_API void cmlc_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -529,9 +529,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const C
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out);
+CAMEL_API void cmlc_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -560,7 +560,7 @@ CAMEL_API f64 cmlc_matrix4x4_det(const CML_Matrix4x4 *A);
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_API CML_Status cmlc_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
 
@@ -576,9 +576,9 @@ CAMEL_API CML_Status cmlc_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *o
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -641,9 +641,9 @@ CAMEL_API char *cmlc_matrix4x4_debug(const CML_Matrix4x4 *expected, const CML_Ma
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -659,9 +659,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -677,9 +677,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -695,9 +695,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Mat
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -713,9 +713,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -731,9 +731,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -749,9 +749,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out);
+CAMEL_API void cmlc_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -767,9 +767,9 @@ CAMEL_API CML_Status cmlc_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const C
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out);
+CAMEL_API void cmlc_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -783,9 +783,9 @@ CAMEL_API CML_Status cmlc_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -833,9 +833,9 @@ CAMEL_API char *cmlc_matrix2x3_debug(const CML_Matrix2x3 *expected, const CML_Ma
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -851,9 +851,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -869,9 +869,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -887,9 +887,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Mat
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out);
+CAMEL_API void cmlc_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -905,9 +905,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -923,9 +923,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -941,9 +941,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out);
+CAMEL_API void cmlc_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -959,9 +959,9 @@ CAMEL_API CML_Status cmlc_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const C
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out);
+CAMEL_API void cmlc_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -975,9 +975,9 @@ CAMEL_API CML_Status cmlc_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1025,9 +1025,9 @@ CAMEL_API char *cmlc_matrix2x4_debug(const CML_Matrix2x4 *expected, const CML_Ma
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1043,9 +1043,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1061,9 +1061,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1079,9 +1079,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Mat
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1097,9 +1097,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -1115,9 +1115,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1133,9 +1133,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out);
+CAMEL_API void cmlc_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -1151,9 +1151,9 @@ CAMEL_API CML_Status cmlc_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const C
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out);
+CAMEL_API void cmlc_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -1167,9 +1167,9 @@ CAMEL_API CML_Status cmlc_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out);
+CAMEL_API void cmlc_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -1217,9 +1217,9 @@ CAMEL_API char *cmlc_matrix3x2_debug(const CML_Matrix3x2 *expected, const CML_Ma
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1235,9 +1235,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1253,9 +1253,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1271,9 +1271,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Mat
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out);
+CAMEL_API void cmlc_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1289,9 +1289,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out);
+CAMEL_API void cmlc_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -1307,9 +1307,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1325,9 +1325,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out);
+CAMEL_API void cmlc_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -1343,9 +1343,9 @@ CAMEL_API CML_Status cmlc_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const C
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out);
+CAMEL_API void cmlc_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -1359,9 +1359,9 @@ CAMEL_API CML_Status cmlc_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1409,9 +1409,9 @@ CAMEL_API char *cmlc_matrix3x4_debug(const CML_Matrix3x4 *expected, const CML_Ma
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1427,9 +1427,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1445,9 +1445,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1463,9 +1463,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Mat
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1481,9 +1481,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1499,9 +1499,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -1517,9 +1517,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out);
+CAMEL_API void cmlc_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -1535,9 +1535,9 @@ CAMEL_API CML_Status cmlc_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const C
  *      CML_Vector2   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out);
+CAMEL_API void cmlc_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -1551,9 +1551,9 @@ CAMEL_API CML_Status cmlc_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out);
+CAMEL_API void cmlc_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -1601,9 +1601,9 @@ CAMEL_API char *cmlc_matrix4x2_debug(const CML_Matrix4x2 *expected, const CML_Ma
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1619,9 +1619,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1637,9 +1637,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1655,9 +1655,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Mat
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out);
+CAMEL_API void cmlc_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1673,9 +1673,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out);
+CAMEL_API void cmlc_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
@@ -1691,9 +1691,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out);
+CAMEL_API void cmlc_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -1709,9 +1709,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const
  *      CML_Vector4   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out);
+CAMEL_API void cmlc_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out);
 
 
 /******************************************************************************
@@ -1727,9 +1727,9 @@ CAMEL_API CML_Status cmlc_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const C
  *      CML_Vector3   *out - The output vector.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out);
+CAMEL_API void cmlc_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -1743,9 +1743,9 @@ CAMEL_API CML_Status cmlc_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
- *      Success or error code.
+ *      void.
  *****************************************************************************/
-CAMEL_API CML_Status cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out);
+CAMEL_API void cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out);
 
 
 /******************************************************************************

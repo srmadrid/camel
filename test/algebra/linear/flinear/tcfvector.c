@@ -73,6 +73,19 @@ CML_TestResult testc_vector2_mod() {
 }
 
 
+CML_TestResult testc_vector2_mod2() {
+    CML_Vector2 v = {3.0, 4.0};
+    f64 expected = 25.0;
+    f64 result = cmlc_vector2_mod2(&v);
+    CML_TestResult test;
+    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    if (!test.passed) {
+        test.debugMessage = cml_f64_debug(expected, result);
+    }
+    return test;
+}
+
+
 CML_TestResult testc_vector2_norm() {
     CML_Vector2 v = {3.0, 4.0};
     CML_Vector2 out = CML_VECTOR2_ZERO;
@@ -150,6 +163,19 @@ CML_TestResult testc_vector3_mod() {
     CML_Vector3 v = {3.0, 4.0, 5.0};
     f64 expected = 7.0710678118654755;
     f64 result = cmlc_vector3_mod(&v);
+    CML_TestResult test;
+    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    if (!test.passed) {
+        test.debugMessage = cml_f64_debug(expected, result);
+    }
+    return test;
+}
+
+
+CML_TestResult testc_vector3_mod2() {
+    CML_Vector3 v = {3.0, 4.0, 5.0};
+    f64 expected = 50.0;
+    f64 result = cmlc_vector3_mod2(&v);
     CML_TestResult test;
     test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
     if (!test.passed) {
@@ -260,6 +286,19 @@ CML_TestResult testc_vector4_mod() {
 }
 
 
+CML_TestResult testc_vector4_mod2() {
+    CML_Vector4 v = {3.0, 4.0, 5.0, 6.0};
+    f64 expected = 86.0;
+    f64 result = cmlc_vector4_mod2(&v);
+    CML_TestResult test;
+    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    if (!test.passed) {
+        test.debugMessage = cml_f64_debug(expected, result);
+    }
+    return test;
+}
+
+
 CML_TestResult testc_vector4_norm() {
     CML_Vector4 v = {3.0, 4.0, 5.0, 6.0};
     CML_Vector4 out = CML_VECTOR4_ZERO;
@@ -294,6 +333,7 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector2_sub, "testc_vector2_sub");
     cml_test_register(registry, count, testc_vector2_scale, "testc_vector2_scale");
     cml_test_register(registry, count, testc_vector2_mod, "testc_vector2_mod");
+    cml_test_register(registry, count, testc_vector2_mod2, "testc_vector2_mod2");
     cml_test_register(registry, count, testc_vector2_norm, "testc_vector2_norm");
     cml_test_register(registry, count, testc_vector2_dot, "testc_vector2_dot");
 
@@ -301,6 +341,7 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector3_sub, "testc_vector3_sub");
     cml_test_register(registry, count, testc_vector3_scale, "testc_vector3_scale");
     cml_test_register(registry, count, testc_vector3_mod, "testc_vector3_mod");
+    cml_test_register(registry, count, testc_vector3_mod2, "testc_vector3_mod2");
     cml_test_register(registry, count, testc_vector3_norm, "testc_vector3_norm");
     cml_test_register(registry, count, testc_vector3_dot, "testc_vector3_dot");
     cml_test_register(registry, count, testc_vector3_cross, "testc_vector3_cross");
@@ -309,6 +350,7 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector4_sub, "testc_vector4_sub");
     cml_test_register(registry, count, testc_vector4_scale, "testc_vector4_scale");
     cml_test_register(registry, count, testc_vector4_mod, "testc_vector4_mod");
+    cml_test_register(registry, count, testc_vector4_mod2, "testc_vector4_mod2");
     cml_test_register(registry, count, testc_vector4_norm, "testc_vector4_norm");
     cml_test_register(registry, count, testc_vector4_dot, "testc_vector4_dot");
 }

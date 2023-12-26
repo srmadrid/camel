@@ -21,6 +21,7 @@ typedef enum {
     CML_SUCCESS = 1,
     CML_ERR_INVALID_SIZE = -1,
     CML_ERR_NULL_PTR = -2,
+    CML_ERR_SINGULAR_MATRIX = -3,
 } CML_Status;
 
 
