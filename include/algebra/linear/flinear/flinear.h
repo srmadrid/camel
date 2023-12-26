@@ -19,6 +19,8 @@
 #define CAMEL_FIXED_LINEAR_ALGEBRA
 
 #include "fvector.h"
+#include "cfvector.h"
 #include "fmatrix.h"
+#include "cfmatrix.h"
 
 #endif /* CAMEL_FIXED_LINEAR_ALGEBRA */

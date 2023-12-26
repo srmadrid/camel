@@ -17,10 +17,14 @@
 
 
 void cml_register_fvector_tests(CML_Test *registry, u32 *count);
+void cml_register_cfvector_tests(CML_Test *registry, u32 *count);
 void cml_register_fmatrix_tests(CML_Test *registry, u32 *count);
+void cml_register_cfmatrix_tests(CML_Test *registry, u32 *count);
 
 
 void cml_register_flinear_tests(CML_Test *registry, u32 *count) {
     cml_register_fvector_tests(registry, count);
+    cml_register_cfvector_tests(registry, count);
     cml_register_fmatrix_tests(registry, count);
+    cml_register_cfmatrix_tests(registry, count);
 }

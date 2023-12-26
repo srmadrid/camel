@@ -12,7 +12,7 @@ else
     TEST_TARGET = test/bin/win/test.exe
     EXT = dll
     CFLAGS = -Wall -Iinclude
-    LDFLAGS = -shared
+    LDFLAGS = -shared -lm
     LIB_LINK = -Lbin/win -lcamel -lm
 endif
 
