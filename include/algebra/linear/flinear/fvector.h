@@ -403,6 +403,82 @@ CAMEL_STATIC CAMEL_API f64 cml_vector2_dot(const CML_Vector2 *v, const CML_Vecto
 
 
 /******************************************************************************
+ * Function: cml_vector2_distance
+ * 
+ * Description:
+ *      Calculates the distance between two CML_Vector2s.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first input vector.
+ *      CML_Vector2 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector2_distance(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_distance2
+ * 
+ * Description:
+ *      Calculates the squared distance between two CML_Vector2s.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first input vector.
+ *      CML_Vector2 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The squared distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector2_distance2(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_angle
+ * 
+ * Description:
+ *      Calculates the angle between two CML_Vector2s in radians.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first input vector.
+ *      CML_Vector2 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The angle between the input vectors in radians.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector2_angle(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return acos((v->x * w->x + v->y * w->y) / (sqrt(v->x * v->x + v->y * v->y) * sqrt(w->x * w->x + w->y * w->y)));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_project
+ * 
+ * Description:
+ *      Projects the first CML_Vector2 onto the second CML_Vector2 and writes
+ *      the result to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The vector operand.
+ *      CML_Vector2 *w   - The vector to project onto.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
+    f64 mod = v->x * w->x + v->y * w->y / (w->x * w->x + w->y * w->y);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+}
+
+
+/******************************************************************************
  * Function: cml_vector2_eq
  * 
  * Description:
@@ -655,6 +731,83 @@ CAMEL_STATIC CAMEL_API void cml_vector3_cross(const CML_Vector3 *v, const CML_Ve
 
 
 /******************************************************************************
+ * Function: cml_vector3_distance
+ * 
+ * Description:
+ *      Calculates the distance between two CML_Vector3s.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first input vector.
+ *      CML_Vector3 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector3_distance(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_distance2
+ * 
+ * Description:
+ *      Calculates the squared distance between two CML_Vector3s.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first input vector.
+ *      CML_Vector3 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The squared distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector3_distance2(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_angle
+ * 
+ * Description:
+ *      Calculates the angle between two CML_Vector3s in radians.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first input vector.
+ *      CML_Vector3 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The angle between the input vectors in radians.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector3_angle(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return acos((v->x * w->x + v->y * w->y + v->z * w->z) / (sqrt(v->x * v->x + v->y * v->y + v->z * v->z) * sqrt(w->x * w->x + w->y * w->y + w->z * w->z)));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_project
+ * 
+ * Description:
+ *      Projects the first CML_Vector3 onto the second CML_Vector3 and writes
+ *      the result to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The vector operand.
+ *      CML_Vector3 *w   - The vector to project onto.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
+    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z / (w->x * w->x + w->y * w->y + w->z * w->z);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+    out->z = mod * w->z;
+}
+
+
+/******************************************************************************
  * Function: cml_vector3_eq
  * 
  * Description:
@@ -888,6 +1041,89 @@ CAMEL_STATIC CAMEL_API void cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
     return v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_distance
+ * 
+ * Description:
+ *      Calculates the distance between two CML_Vector4s.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first input vector.
+ *      CML_Vector4 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector4_distance(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
+                (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_distance2
+ * 
+ * Description:
+ *      Calculates the squared distance between two CML_Vector4s.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first input vector.
+ *      CML_Vector4 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The squared distance between the input vectors.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector4_distance2(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
+           (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w);
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_angle
+ * 
+ * Description:
+ *      Calculates the angle between two CML_Vector4s in radians.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first input vector.
+ *      CML_Vector4 *w   - The second input vector.
+ * 
+ * Returns:
+ *      The angle between the input vectors in radians.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API f64 cml_vector4_angle(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return acos((v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
+                (sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w) * 
+                 sqrt(w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w)));
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_project
+ * 
+ * Description:
+ *      Projects the first CML_Vector4 onto the second CML_Vector4 and writes
+ *      the result to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The vector operand.
+ *      CML_Vector4 *w   - The vector to project onto.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
+    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w / 
+              (w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+    out->z = mod * w->z;
+    out->w = mod * w->w;
 }
 
 

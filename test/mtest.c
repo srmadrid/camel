@@ -72,12 +72,12 @@ int main() {
             9.0, 10.0, 11.0, 12.0,
             13.0, 14.0, 15.0, 16.0
         };
-        CML_Matrix4x4 C = {0};
         double totalElapsed = 0.0;
         double elapsed = 0.0;
         for (u32 i = 0; i < outIterations; i++) {
             gettimeofday(&start, NULL);
-            for (u32 i = 0; i < iterations; i++) {
+            for (u32 j = 0; j < iterations; j++) {
+                CML_Matrix4x4 C;
                 cml_matrix4x4_mult(&A, &B, &C);
             }
             gettimeofday(&end, NULL);

@@ -71,6 +71,28 @@ f64 cmlc_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
 }
 
 
+f64 cmlc_vector2_distance(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y));
+}
+
+
+f64 cmlc_vector2_distance2(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y);
+}
+
+
+f64 cmlc_vector2_angle(const CML_Vector2 *v, const CML_Vector2 *w) {
+    return acos((v->x * w->x + v->y * w->y) / (sqrt(v->x * v->x + v->y * v->y) * sqrt(w->x * w->x + w->y * w->y)));
+}
+
+
+void cmlc_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
+    f64 mod = v->x * w->x + v->y * w->y / (w->x * w->x + w->y * w->y);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+}
+
+
 CML_Bool cmlc_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
     if (!v || !w) {
         return CML_FALSE;
@@ -162,6 +184,31 @@ void cmlc_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 
 }
 
 
+f64 cmlc_vector3_distance(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z));
+}
+
+
+f64 cmlc_vector3_distance2(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z);
+}
+
+
+f64 cmlc_vector3_angle(const CML_Vector3 *v, const CML_Vector3 *w) {
+    return acos((v->x * w->x + v->y * w->y + v->z * w->z) / 
+                (sqrt(v->x * v->x + v->y * v->y + v->z * v->z) * 
+                 sqrt(w->x * w->x + w->y * w->y + w->z * w->z)));
+}
+
+
+void cmlc_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
+    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z / (w->x * w->x + w->y * w->y + w->z * w->z);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+    out->z = mod * w->z;
+}
+
+
 CML_Bool cmlc_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
     if (!v || !w) {
         return CML_FALSE;
@@ -249,6 +296,35 @@ void cmlc_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
 
 f64 cmlc_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
     return v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w;
+}
+
+
+f64 cmlc_vector4_distance(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return sqrt((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
+                (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w));
+}
+
+
+f64 cmlc_vector4_distance2(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
+           (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w);
+}
+
+
+f64 cmlc_vector4_angle(const CML_Vector4 *v, const CML_Vector4 *w) {
+    return acos((v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
+                (sqrt(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w) * 
+                 sqrt(w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w)));
+}
+
+
+void cmlc_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
+    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w / 
+              (w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w);
+    out->x = mod * w->x;
+    out->y = mod * w->y;
+    out->z = mod * w->z;
+    out->w = mod * w->w;
 }
 
 
