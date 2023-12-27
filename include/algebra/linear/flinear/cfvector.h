@@ -42,6 +42,24 @@ CAMEL_API void cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_
 
 
 /******************************************************************************
+ * Function: cmlc_vector2_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector2 and writes the result to the out
+ *      CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector2_add_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
+
+
+/******************************************************************************
  * Function: cmlc_vector2_sub
  * 
  * Description:
@@ -56,6 +74,24 @@ CAMEL_API void cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_
  *      void.
  *****************************************************************************/
 CAMEL_API void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_vector2_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector2 and writes the result to the out
+ *      CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector2_sub_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -189,6 +225,23 @@ CAMEL_API void cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_
 
 
 /******************************************************************************
+ * Function: cmlc_vector3_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector3 and writes the result to the out.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      CML_Vector3 *w   - The second vector operand.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector3_add_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
+
+
+/******************************************************************************
  * Function: cmlc_vector3_sub
  * 
  * Description:
@@ -203,6 +256,23 @@ CAMEL_API void cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_
  *      void.
  *****************************************************************************/
 CAMEL_API void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_vector3_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector3 and writes the result to the out.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector3_sub_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -353,6 +423,23 @@ CAMEL_API void cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_
 
 
 /******************************************************************************
+ * Function: cmlc_vector4_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector4 and writes the result to the out
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector4_add_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
+
+
+/******************************************************************************
  * Function: cmlc_vector4_sub
  * 
  * Description:
@@ -367,6 +454,23 @@ CAMEL_API void cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_
  *      void.
  *****************************************************************************/
 CAMEL_API void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_vector4_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector4 and writes the result to the out
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector4_sub_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out);
 
 
 /******************************************************************************

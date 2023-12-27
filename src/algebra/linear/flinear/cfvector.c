@@ -25,9 +25,21 @@ void cmlc_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *o
 }
 
 
+void cmlc_vector2_add_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+}
+
+
 void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
+}
+
+
+void cmlc_vector2_sub_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
 }
 
 
@@ -92,10 +104,24 @@ void cmlc_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *o
 }
 
 
+void cmlc_vector3_add_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+    out->z = v->z + t;
+}
+
+
 void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
+}
+
+
+void cmlc_vector3_sub_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
+    out->z = v->z - t;
 }
 
 
@@ -170,11 +196,27 @@ void cmlc_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *o
 }
 
 
+void cmlc_vector4_add_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+    out->z = v->z + t;
+    out->w = v->w + t;
+}
+
+
 void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
     out->w = v->w - w->w;
+}
+
+
+void cmlc_vector4_sub_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
+    out->z = v->z - t;
+    out->w = v->w - t;
 }
 
 

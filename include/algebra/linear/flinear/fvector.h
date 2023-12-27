@@ -248,6 +248,27 @@ CAMEL_STATIC CAMEL_API void cml_vector2_add(const CML_Vector2 *v, const CML_Vect
 
 
 /******************************************************************************
+ * Function: cml_vector2_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector2 and writes the result to the out
+ *      CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector2_add_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+}
+
+
+/******************************************************************************
  * Function: cml_vector2_sub
  * 
  * Description:
@@ -264,6 +285,27 @@ CAMEL_STATIC CAMEL_API void cml_vector2_add(const CML_Vector2 *v, const CML_Vect
 CAMEL_STATIC CAMEL_API void cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector2 and writes the result to the out
+ *      CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector2_sub_scalar(const CML_Vector2 *v, f64 t, CML_Vector2 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
 }
 
 
@@ -434,6 +476,27 @@ CAMEL_STATIC CAMEL_API void cml_vector3_add(const CML_Vector3 *v, const CML_Vect
 
 
 /******************************************************************************
+ * Function: cml_vector3_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector3 and writes the result to the out.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector3_add_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+    out->z = v->z + t;
+}
+
+
+/******************************************************************************
  * Function: cml_vector3_sub
  * 
  * Description:
@@ -451,6 +514,27 @@ CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vect
     out->x = v->x - w->x;
     out->y = v->y - w->y;
     out->z = v->z - w->z;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector3 and writes the result to the out.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector3_sub_scalar(const CML_Vector3 *v, f64 t, CML_Vector3 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
+    out->z = v->z - t;
 }
 
 
@@ -645,6 +729,28 @@ CAMEL_STATIC CAMEL_API void cml_vector4_add(const CML_Vector4 *v, const CML_Vect
 
 
 /******************************************************************************
+ * Function: cml_vector4_add_scalar
+ * 
+ * Description:
+ *      Adds a scalar to all CML_Vector4 and writes the result to the out
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector4_add_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
+    out->x = v->x + t;
+    out->y = v->y + t;
+    out->z = v->z + t;
+    out->w = v->w + t;
+}
+
+
+/******************************************************************************
  * Function: cml_vector4_sub
  * 
  * Description:
@@ -663,6 +769,28 @@ CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vect
     out->y = v->y - w->y;
     out->z = v->z - w->z;
     out->w = v->w - w->w;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_sub_scalar
+ * 
+ * Description:
+ *      Subtracts a scalar to all CML_Vector4 and writes the result to the out
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The first vector operand.
+ *      f64          t   - The scalar.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector4_sub_scalar(const CML_Vector4 *v, f64 t, CML_Vector4 *out) {
+    out->x = v->x - t;
+    out->y = v->y - t;
+    out->z = v->z - t;
+    out->w = v->w - t;
 }
 
 

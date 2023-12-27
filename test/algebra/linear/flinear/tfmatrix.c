@@ -108,6 +108,54 @@ CML_TestResult test_matrix2x2_mult() {
 }
 
 
+CML_TestResult test_matrix2x2_mult_matrix2x3() {
+    CML_Matrix2x2 A = {
+        1.0, 2.0,
+        3.0, 4.0
+    };
+    CML_Matrix2x3 B = {
+        5.0, 6.0, 7.0,
+        8.0, 9.0, 10.0
+    };
+    CML_Matrix2x3 out = CML_MATRIX2X3_ZERO;
+    CML_Matrix2x3 expected = {
+        21.0, 24.0, 27.0,
+        47.0, 54.0, 61.0
+    };
+    cml_matrix2x2_mult_matrix2x3(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix2x3_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix2x3_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_matrix2x2_mult_matrix2x4() {
+    CML_Matrix2x2 A = {
+        1.0, 2.0,
+        3.0, 4.0
+    };
+    CML_Matrix2x4 B = {
+        5.0, 6.0, 7.0, 8.0,
+        9.0, 10.0, 11.0, 12.0
+    };
+    CML_Matrix2x4 out = CML_MATRIX2X4_ZERO;
+    CML_Matrix2x4 expected = {
+        23.0, 26.0, 29.0, 32.0,
+        51.0, 58.0, 65.0, 72.0
+    };
+    cml_matrix2x2_mult_matrix2x4(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix2x4_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix2x4_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 CML_TestResult test_matrix2x2_mult_vector2() {
     CML_Matrix2x2 A = {
         1.0, 2.0,
@@ -315,6 +363,60 @@ CML_TestResult test_matrix3x3_mult() {
     result.passed = cml_matrix3x3_eq(&out, &expected);
     if (!result.passed) {
         result.debugMessage = cml_matrix3x3_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_matrix3x3_mult_matrix3x2() {
+    CML_Matrix3x3 A = {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+    CML_Matrix3x2 B = {
+        10.0, 11.0,
+        12.0, 13.0,
+        14.0, 15.0
+    };
+    CML_Matrix3x2 out = CML_MATRIX3X2_ZERO;
+    CML_Matrix3x2 expected = {
+        76.0, 82.0,
+        184.0, 199.0,
+        292.0, 316.0
+    };
+    cml_matrix3x3_mult_matrix3x2(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix3x2_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix3x2_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_matrix3x3_mult_matrix3x4() {
+    CML_Matrix3x3 A = {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+    CML_Matrix3x4 B = {
+        10.0, 11.0, 12.0, 13.0,
+        14.0, 15.0, 16.0, 17.0,
+        18.0, 19.0, 20.0, 21.0
+    };
+    CML_Matrix3x4 out = CML_MATRIX3X4_ZERO;
+    CML_Matrix3x4 expected = {
+        92.0, 98.0, 104.0, 110.0,
+        218.0, 233.0, 248.0, 263.0,
+        344.0, 368.0, 392.0, 416.0
+    };
+    cml_matrix3x3_mult_matrix3x4(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix3x4_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix3x4_debug(&expected, &out);
     }
     return result;
 }
@@ -546,6 +648,66 @@ CML_TestResult test_matrix4x4_mult() {
     result.passed = cml_matrix4x4_eq(&out, &expected);
     if (!result.passed) {
         result.debugMessage = cml_matrix4x4_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_matrix4x4_mult_matrix4x2() {
+    CML_Matrix4x4 A = {
+        1.0, 2.0, 3.0, 4.0, 
+        5.0, 6.0, 7.0, 8.0, 
+        9.0, 10.0, 11.0, 12.0,
+        13.0, 14.0, 15.0, 16.0
+    };
+    CML_Matrix4x2 B = {
+        17.0, 18.0,
+        19.0, 20.0,
+        21.0, 22.0,
+        23.0, 24.0
+    };
+    CML_Matrix4x2 out = CML_MATRIX4X2_ZERO;
+    CML_Matrix4x2 expected = {
+        210.0, 220.0,
+        530.0, 556.0,
+        850.0, 892.0,
+        1170.0, 1228.0
+    };
+    cml_matrix4x4_mult_matrix4x2(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix4x2_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix4x2_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_matrix4x4_mult_matrix4x3() {
+    CML_Matrix4x4 A = {
+        1.0, 2.0, 3.0, 4.0, 
+        5.0, 6.0, 7.0, 8.0, 
+        9.0, 10.0, 11.0, 12.0,
+        13.0, 14.0, 15.0, 16.0
+    };
+    CML_Matrix4x3 B = {
+        17.0, 18.0, 19.0,
+        20.0, 21.0, 22.0,
+        23.0, 24.0, 25.0,
+        26.0, 27.0, 28.0
+    };
+    CML_Matrix4x3 out = CML_MATRIX4X3_ZERO;
+    CML_Matrix4x3 expected = {
+        230.0, 240.0, 250.0,
+        574.0, 600.0, 626.0,
+        918.0, 960.0, 1002.0,
+        1262.0, 1320.0, 1378.0
+    };
+    cml_matrix4x4_mult_matrix4x3(&A, &B, &out);
+    CML_TestResult result;
+    result.passed = cml_matrix4x3_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_matrix4x3_debug(&expected, &out);
     }
     return result;
 }
@@ -1989,6 +2151,8 @@ void cml_register_fmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_matrix2x2_sub, "test_matrix2x2_sub");
     cml_test_register(registry, count, test_matrix2x2_scale, "test_matrix2x2_scale");
     cml_test_register(registry, count, test_matrix2x2_mult, "test_matrix2x2_mult");
+    cml_test_register(registry, count, test_matrix2x2_mult_matrix2x3, "test_matrix2x2_mult_matrix2x3");
+    cml_test_register(registry, count, test_matrix2x2_mult_matrix2x4, "test_matrix2x2_mult_matrix2x4");
     cml_test_register(registry, count, test_matrix2x2_mult_vector2, "test_matrix2x2_mult_vector2");
     cml_test_register(registry, count, test_vector2_mult_matrix2x2, "test_vector2_mult_matrix2x2");
     cml_test_register(registry, count, test_matrix2x2_det, "test_matrix2x2_det");
@@ -2000,6 +2164,8 @@ void cml_register_fmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_matrix3x3_sub, "test_matrix3x3_sub");
     cml_test_register(registry, count, test_matrix3x3_scale, "test_matrix3x3_scale");
     cml_test_register(registry, count, test_matrix3x3_mult, "test_matrix3x3_mult");
+    cml_test_register(registry, count, test_matrix3x3_mult_matrix3x2, "test_matrix3x3_mult_matrix3x2");
+    cml_test_register(registry, count, test_matrix3x3_mult_matrix3x4, "test_matrix3x3_mult_matrix3x4");
     cml_test_register(registry, count, test_matrix3x3_mult_vector3, "test_matrix3x3_mult_vector3");
     cml_test_register(registry, count, test_vector3_mult_matrix3x3, "test_vector3_mult_matrix3x3");
     cml_test_register(registry, count, test_matrix3x3_det, "test_matrix3x3_det");
@@ -2011,6 +2177,8 @@ void cml_register_fmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_matrix4x4_sub, "test_matrix4x4_sub");
     cml_test_register(registry, count, test_matrix4x4_scale, "test_matrix4x4_scale");
     cml_test_register(registry, count, test_matrix4x4_mult, "test_matrix4x4_mult");
+    cml_test_register(registry, count, test_matrix4x4_mult_matrix4x2, "test_matrix4x4_mult_matrix4x2");
+    cml_test_register(registry, count, test_matrix4x4_mult_matrix4x3, "test_matrix4x4_mult_matrix4x3");
     cml_test_register(registry, count, test_matrix4x4_mult_vector4, "test_matrix4x4_mult_vector4");
     cml_test_register(registry, count, test_vector4_mult_matrix4x4, "test_vector4_mult_matrix4x4");
     cml_test_register(registry, count, test_matrix4x4_det, "test_matrix4x4_det");

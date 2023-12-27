@@ -608,6 +608,66 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML
 
 
 /******************************************************************************
+ * Function: cml_matrix2x2_mult_matrix2x3
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x3, and writes the result to 
+ *      the out CML_Matrix2x3.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *A   - The first matrix operand.
+ *      CML_Matrix2x3 *B   - The second matrix operand.
+ *      CML_Matrix2x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+
+    out->m00 = a00*b00 + a01*b10;
+    out->m01 = a00*b01 + a01*b11;
+    out->m02 = a00*b02 + a01*b12;
+    out->m10 = a10*b00 + a11*b10;
+    out->m11 = a10*b01 + a11*b11;
+    out->m12 = a10*b02 + a11*b12;
+}
+
+
+/******************************************************************************
+ * Function: cml_matrix2x2_mult_matrix2x4
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x4, and writes the result to 
+ *      the out CML_Matrix2x4.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *A   - The first matrix operand.
+ *      CML_Matrix2x4 *B   - The second matrix operand.
+ *      CML_Matrix2x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+
+    out->m00 = a00*b00 + a01*b10;
+    out->m01 = a00*b01 + a01*b11;
+    out->m02 = a00*b02 + a01*b12;
+    out->m03 = a00*b03 + a01*b13;
+    out->m10 = a10*b00 + a11*b10;
+    out->m11 = a10*b01 + a11*b11;
+    out->m12 = a10*b02 + a11*b12;
+    out->m13 = a10*b03 + a11*b13;
+}
+
+
+/******************************************************************************
  * Function: cml_matrix2x2_mult_vector2
  * 
  * Description:
@@ -922,6 +982,78 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML
     out->m20 = a20*b00 + a21*b10 + a22*b20;
     out->m21 = a20*b01 + a21*b11 + a22*b21;
     out->m22 = a20*b02 + a21*b12 + a22*b22;
+}
+
+
+/******************************************************************************
+ * Function: cml_matrix3x3_mult_matrix3x2
+ * 
+ * Description:
+ *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x2, and writes the result to the out 
+ *     CML_Matrix3x2.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *A   - The first matrix operand.
+ *      CML_Matrix3x2 *B   - The second matrix operand.
+ *      CML_Matrix3x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+
+    f64 b00 = B->m00, b01 = B->m01;
+    f64 b10 = B->m10, b11 = B->m11;
+    f64 b20 = B->m20, b21 = B->m21;
+
+    out->m00 = a00*b00 + a01*b10 + a02*b20;
+    out->m01 = a00*b01 + a01*b11 + a02*b21;
+    out->m10 = a10*b00 + a11*b10 + a12*b20;
+    out->m11 = a10*b01 + a11*b11 + a12*b21;
+    out->m20 = a20*b00 + a21*b10 + a22*b20;
+    out->m21 = a20*b01 + a21*b11 + a22*b21;
+}
+
+
+/******************************************************************************
+ * Function: cml_matrix3x3_mult_matrix3x4
+ * 
+ * Description:
+ *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x4, and writes the result to the out 
+ *     CML_Matrix3x4.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *A   - The first matrix operand.
+ *      CML_Matrix3x4 *B   - The second matrix operand.
+ *      CML_Matrix3x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+
+    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+
+    out->m00 = a00*b00 + a01*b10 + a02*b20;
+    out->m01 = a00*b01 + a01*b11 + a02*b21;
+    out->m02 = a00*b02 + a01*b12 + a02*b22;
+    out->m03 = a00*b03 + a01*b13 + a02*b23;
+    out->m10 = a10*b00 + a11*b10 + a12*b20;
+    out->m11 = a10*b01 + a11*b11 + a12*b21;
+    out->m12 = a10*b02 + a11*b12 + a12*b22;
+    out->m13 = a10*b03 + a11*b13 + a12*b23;
+    out->m20 = a20*b00 + a21*b10 + a22*b20;
+    out->m21 = a20*b01 + a21*b11 + a22*b21;
+    out->m22 = a20*b02 + a21*b12 + a22*b22;
+    out->m23 = a20*b03 + a21*b13 + a22*b23;
 }
 
 
@@ -1295,6 +1427,84 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML
     out->m31 = a30*b01 + a31*b11 + a32*b21 + a33*b31;
     out->m32 = a30*b02 + a31*b12 + a32*b22 + a33*b32;
     out->m33 = a30*b03 + a31*b13 + a32*b23 + a33*b33;
+}
+
+
+/******************************************************************************
+ * Function: cml_matrix4x4_mult_matrix4x2
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x2, and writes the result to 
+ *      the out CML_Matrix4x2.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *A   - The first matrix operand.
+ *      CML_Matrix4x2 *B   - The second matrix operand.
+ *      CML_Matrix4x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+
+    f64 b00 = B->m00, b01 = B->m01;
+    f64 b10 = B->m10, b11 = B->m11;
+    f64 b20 = B->m20, b21 = B->m21;
+    f64 b30 = B->m30, b31 = B->m31;
+
+    out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
+    out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
+    out->m10 = a10*b00 + a11*b10 + a12*b20 + a13*b30;
+    out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
+    out->m20 = a20*b00 + a21*b10 + a22*b20 + a23*b30;
+    out->m21 = a20*b01 + a21*b11 + a22*b21 + a23*b31;
+    out->m30 = a30*b00 + a31*b10 + a32*b20 + a33*b30;
+    out->m31 = a30*b01 + a31*b11 + a32*b21 + a33*b31;
+}
+
+
+/******************************************************************************
+ * Function: cml_matrix4x4_mult_matrix4x3
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x3, and writes the result to 
+ *      the out CML_Matrix4x3.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *A   - The first matrix operand.
+ *      CML_Matrix4x3 *B   - The second matrix operand.
+ *      CML_Matrix4x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
+    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+
+    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+
+    out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
+    out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
+    out->m02 = a00*b02 + a01*b12 + a02*b22 + a03*b32;
+    out->m10 = a10*b00 + a11*b10 + a12*b20 + a13*b30;
+    out->m11 = a10*b01 + a11*b11 + a12*b21 + a13*b31;
+    out->m12 = a10*b02 + a11*b12 + a12*b22 + a13*b32;
+    out->m20 = a20*b00 + a21*b10 + a22*b20 + a23*b30;
+    out->m21 = a20*b01 + a21*b11 + a22*b21 + a23*b31;
+    out->m22 = a20*b02 + a21*b12 + a22*b22 + a23*b32;
+    out->m30 = a30*b00 + a31*b10 + a32*b20 + a33*b30;
+    out->m31 = a30*b01 + a31*b11 + a32*b21 + a33*b31;
+    out->m32 = a30*b02 + a31*b12 + a32*b22 + a33*b32;
 }
 
 

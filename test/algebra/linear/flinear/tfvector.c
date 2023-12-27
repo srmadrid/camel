@@ -31,12 +31,40 @@ CML_TestResult test_vector2_add() {
 }
 
 
+CML_TestResult test_vector2_add_scalar() {
+    CML_Vector2 v = {1.0, 2.0};
+    CML_Vector2 out = CML_VECTOR2_ZERO;
+    CML_Vector2 expected = {3.0, 4.0};
+    cml_vector2_add_scalar(&v, 2.0, &out);
+    CML_TestResult result;
+    result.passed = cml_vector2_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector2_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 CML_TestResult test_vector2_sub() {
     CML_Vector2 v = {1.0, 2.0};
     CML_Vector2 w = {3.0, 4.0};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {-2.0, -2.0};
     cml_vector2_sub(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cml_vector2_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector2_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_vector2_sub_scalar() {
+    CML_Vector2 v = {1.0, 2.0};
+    CML_Vector2 out = CML_VECTOR2_ZERO;
+    CML_Vector2 expected = {-1.0, 0.0};
+    cml_vector2_sub_scalar(&v, 2.0, &out);
     CML_TestResult result;
     result.passed = cml_vector2_eq(&out, &expected);
     if (!result.passed) {
@@ -130,12 +158,40 @@ CML_TestResult test_vector3_add() {
 }
 
 
+CML_TestResult test_vector3_add_scalar() {
+    CML_Vector3 v = {1.0, 2.0, 3.0};
+    CML_Vector3 out = CML_VECTOR3_ZERO;
+    CML_Vector3 expected = {3.0, 4.0, 5.0};
+    cml_vector3_add_scalar(&v, 2.0, &out);
+    CML_TestResult result;
+    result.passed = cml_vector3_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector3_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 CML_TestResult test_vector3_sub() {
     CML_Vector3 v = {1.0, 2.0, 3.0};
     CML_Vector3 w = {4.0, 5.0, 6.0};
     CML_Vector3 out = CML_VECTOR3_ZERO;
     CML_Vector3 expected = {-3.0, -3.0, -3.0};
     cml_vector3_sub(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cml_vector3_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector3_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_vector3_sub_scalar() {
+    CML_Vector3 v = {1.0, 2.0, 3.0};
+    CML_Vector3 out = CML_VECTOR3_ZERO;
+    CML_Vector3 expected = {-1.0, 0.0, 1.0};
+    cml_vector3_sub_scalar(&v, 2.0, &out);
     CML_TestResult result;
     result.passed = cml_vector3_eq(&out, &expected);
     if (!result.passed) {
@@ -244,12 +300,40 @@ CML_TestResult test_vector4_add() {
 }
 
 
+CML_TestResult test_vector4_add_scalar() {
+    CML_Vector4 v = {1.0, 2.0, 3.0, 4.0};
+    CML_Vector4 out = CML_VECTOR4_ZERO;
+    CML_Vector4 expected = {3.0, 4.0, 5.0, 6.0};
+    cml_vector4_add_scalar(&v, 2.0, &out);
+    CML_TestResult result;
+    result.passed = cml_vector4_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector4_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 CML_TestResult test_vector4_sub() {
     CML_Vector4 v = {1.0, 2.0, 3.0, 4.0};
     CML_Vector4 w = {5.0, 6.0, 7.0, 8.0};
     CML_Vector4 out = CML_VECTOR4_ZERO;
     CML_Vector4 expected = {-4.0, -4.0, -4.0, -4.0};
     cml_vector4_sub(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cml_vector4_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cml_vector4_debug(&expected, &out);
+    }
+    return result;
+}
+
+
+CML_TestResult test_vector4_sub_scalar() {
+    CML_Vector4 v = {1.0, 2.0, 3.0, 4.0};
+    CML_Vector4 out = CML_VECTOR4_ZERO;
+    CML_Vector4 expected = {-1.0, 0.0, 1.0, 2.0};
+    cml_vector4_sub_scalar(&v, 2.0, &out);
     CML_TestResult result;
     result.passed = cml_vector4_eq(&out, &expected);
     if (!result.passed) {
@@ -330,7 +414,9 @@ CML_TestResult test_vector4_dot() {
 
 void cml_register_fvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_vector2_add, "test_vector2_add");
+    cml_test_register(registry, count, test_vector2_add_scalar, "test_vector2_add_scalar");
     cml_test_register(registry, count, test_vector2_sub, "test_vector2_sub");
+    cml_test_register(registry, count, test_vector2_sub_scalar, "test_vector2_sub_scalar");
     cml_test_register(registry, count, test_vector2_scale, "test_vector2_scale");
     cml_test_register(registry, count, test_vector2_mod, "test_vector2_mod");
     cml_test_register(registry, count, test_vector2_mod2, "test_vector2_mod2");
@@ -338,7 +424,9 @@ void cml_register_fvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_vector2_dot, "test_vector2_dot");
 
     cml_test_register(registry, count, test_vector3_add, "test_vector3_add");
+    cml_test_register(registry, count, test_vector3_add_scalar, "test_vector3_add_scalar");
     cml_test_register(registry, count, test_vector3_sub, "test_vector3_sub");
+    cml_test_register(registry, count, test_vector3_sub_scalar, "test_vector3_sub_scalar");
     cml_test_register(registry, count, test_vector3_scale, "test_vector3_scale");
     cml_test_register(registry, count, test_vector3_mod, "test_vector3_mod");
     cml_test_register(registry, count, test_vector3_mod2, "test_vector3_mod2");
@@ -347,7 +435,9 @@ void cml_register_fvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, test_vector3_cross, "test_vector3_cross");
 
     cml_test_register(registry, count, test_vector4_add, "test_vector4_add");
+    cml_test_register(registry, count, test_vector4_add_scalar, "test_vector4_add_scalar");
     cml_test_register(registry, count, test_vector4_sub, "test_vector4_sub");
+    cml_test_register(registry, count, test_vector4_sub_scalar, "test_vector4_sub_scalar");
     cml_test_register(registry, count, test_vector4_scale, "test_vector4_scale");
     cml_test_register(registry, count, test_vector4_mod, "test_vector4_mod");
     cml_test_register(registry, count, test_vector4_mod2, "test_vector4_mod2");

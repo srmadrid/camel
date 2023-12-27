@@ -95,6 +95,42 @@ CAMEL_API void cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *
 
 
 /******************************************************************************
+ * Function: cmlc_matrix2x2_mult_matrix2x3
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x3, and writes the result to 
+ *      the out CML_Matrix2x3.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *A   - The first matrix operand.
+ *      CML_Matrix2x3 *B   - The second matrix operand.
+ *      CML_Matrix2x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_mult_matrix2x4
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x4, and writes the result to 
+ *      the out CML_Matrix2x4.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *A   - The first matrix operand.
+ *      CML_Matrix2x4 *B   - The second matrix operand.
+ *      CML_Matrix2x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out);
+
+
+/******************************************************************************
  * Function: cmlc_matrix2x2_mult_vector2
  * 
  * Description:
@@ -297,6 +333,42 @@ CAMEL_API void cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *
 
 
 /******************************************************************************
+ * Function: cmlc_matrix3x3_mult_matrix3x2
+ * 
+ * Description:
+ *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x2, and writes the result to the out 
+ *     CML_Matrix3x2.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *A   - The first matrix operand.
+ *      CML_Matrix3x2 *B   - The second matrix operand.
+ *      CML_Matrix3x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_mult_matrix3x4
+ * 
+ * Description:
+ *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x4, and writes the result to the out 
+ *     CML_Matrix3x4.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *A   - The first matrix operand.
+ *      CML_Matrix3x4 *B   - The second matrix operand.
+ *      CML_Matrix3x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out);
+
+
+/******************************************************************************
  * Function: cmlc_matrix3x3_mult_vector3
  * 
  * Description:
@@ -496,6 +568,42 @@ CAMEL_API void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4
  *      void.
  *****************************************************************************/
 CAMEL_API void cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_mult_matrix4x2
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x2, and writes the result to 
+ *      the out CML_Matrix4x2.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *A   - The first matrix operand.
+ *      CML_Matrix4x2 *B   - The second matrix operand.
+ *      CML_Matrix4x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_mult_matrix4x3
+ * 
+ * Description:
+ *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x3, and writes the result to 
+ *      the out CML_Matrix4x3.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *A   - The first matrix operand.
+ *      CML_Matrix4x3 *B   - The second matrix operand.
+ *      CML_Matrix4x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
