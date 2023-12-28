@@ -472,9 +472,31 @@ CAMEL_STATIC CAMEL_API f64 cml_vector2_angle(const CML_Vector2 *v, const CML_Vec
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    f64 mod = v->x * w->x + v->y * w->y / (w->x * w->x + w->y * w->y);
+    f64 mod = (v->x * w->x + v->y * w->y) / (w->x * w->x + w->y * w->y);
     out->x = mod * w->x;
     out->y = mod * w->y;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector2_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector2 across the surface defined by the normal
+ *      CML_Vector2 and writes the result to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The vector operand.
+ *      CML_Vector2 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_Vector2 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y) / (normal->x * normal->x + normal->y * normal->y);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
 }
 
 
@@ -780,7 +802,9 @@ CAMEL_STATIC CAMEL_API f64 cml_vector3_distance2(const CML_Vector3 *v, const CML
  *      The angle between the input vectors in radians.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API f64 cml_vector3_angle(const CML_Vector3 *v, const CML_Vector3 *w) {
-    return acos((v->x * w->x + v->y * w->y + v->z * w->z) / (sqrt(v->x * v->x + v->y * v->y + v->z * v->z) * sqrt(w->x * w->x + w->y * w->y + w->z * w->z)));
+    return acos((v->x * w->x + v->y * w->y + v->z * w->z) / 
+                (sqrt(v->x * v->x + v->y * v->y + v->z * v->z) * 
+                 sqrt(w->x * w->x + w->y * w->y + w->z * w->z)));
 }
 
 
@@ -800,10 +824,34 @@ CAMEL_STATIC CAMEL_API f64 cml_vector3_angle(const CML_Vector3 *v, const CML_Vec
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z / (w->x * w->x + w->y * w->y + w->z * w->z);
+    f64 mod = (v->x * w->x + v->y * w->y + v->z * w->z) / (w->x * w->x + w->y * w->y + w->z * w->z);
     out->x = mod * w->x;
     out->y = mod * w->y;
     out->z = mod * w->z;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector3_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector3 across the surface defined by the normal
+ *      CML_Vector3 and writes the result to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The vector operand.
+ *      CML_Vector3 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_Vector3 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z) / 
+                  (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
+    out->z = v->z - mod * normal->z;
 }
 
 
@@ -1118,12 +1166,37 @@ CAMEL_STATIC CAMEL_API f64 cml_vector4_angle(const CML_Vector4 *v, const CML_Vec
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w / 
+    f64 mod = (v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
               (w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w);
     out->x = mod * w->x;
     out->y = mod * w->y;
     out->z = mod * w->z;
     out->w = mod * w->w;
+}
+
+
+/******************************************************************************
+ * Function: cml_vector4_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector4 across the surface defined by the normal
+ *      CML_Vector4 and writes the result to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The vector operand.
+ *      CML_Vector4 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_STATIC CAMEL_API void cml_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_Vector4 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z + v->w * normal->w) / 
+                  (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z + normal->w * normal->w);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
+    out->z = v->z - mod * normal->z;
+    out->w = v->w - mod * normal->w;
 }
 
 

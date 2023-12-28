@@ -199,6 +199,22 @@ CML_TestResult testc_vector2_project() {
 }
 
 
+CML_TestResult testc_vector2_reflect() {
+    CML_Vector2 v = {1.0, 2.0};
+    CML_Vector2 w = {3.0, 4.0};
+    CML_Vector2 out = CML_VECTOR2_ZERO;
+    CML_Vector2 expected = {-1.64, -1.52};
+    cmlc_vector2_reflect(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &out);
+    }
+    return result;
+
+}
+
+
 
 CML_TestResult testc_vector3_add() {
     CML_Vector3 v = {1.0, 2.0, 3.0};
@@ -398,6 +414,21 @@ CML_TestResult testc_vector3_project() {
 }
 
 
+CML_TestResult testc_vector3_reflect() {
+    CML_Vector3 v = {1.0, 2.0, 3.0};
+    CML_Vector3 w = {4.0, 5.0, 6.0};
+    CML_Vector3 out = CML_VECTOR3_ZERO;
+    CML_Vector3 expected = {-2.324675324675325, -2.1558441558441563, -1.987012987012987};
+    cmlc_vector3_reflect(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 
 CML_TestResult testc_vector4_add() {
     CML_Vector4 v = {1.0, 2.0, 3.0, 4.0};
@@ -582,6 +613,21 @@ CML_TestResult testc_vector4_project() {
 }
 
 
+CML_TestResult testc_vector4_reflect() {
+    CML_Vector4 v = {1.0, 2.0, 3.0, 4.0};
+    CML_Vector4 w = {5.0, 6.0, 7.0, 8.0};
+    CML_Vector4 out = CML_VECTOR4_ZERO;
+    CML_Vector4 expected = {-3.0229885057471266, -2.8275862068965516, -2.6321839080459775, -2.4367816091954024};
+    cmlc_vector4_reflect(&v, &w, &out);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&out, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &out);
+    }
+    return result;
+}
+
+
 
 void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector2_add, "testc_vector2_add");
@@ -597,6 +643,7 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector2_distance2, "testc_vector2_distance2");
     cml_test_register(registry, count, testc_vector2_angle, "testc_vector2_angle");
     cml_test_register(registry, count, testc_vector2_project, "testc_vector2_project");
+    cml_test_register(registry, count, testc_vector2_reflect, "testc_vector2_reflect");
 
     cml_test_register(registry, count, testc_vector3_add, "testc_vector3_add");
     cml_test_register(registry, count, testc_vector3_add_scalar, "testc_vector3_add_scalar");
@@ -612,6 +659,7 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector3_distance2, "testc_vector3_distance2");
     cml_test_register(registry, count, testc_vector3_angle, "testc_vector3_angle");
     cml_test_register(registry, count, testc_vector3_project, "testc_vector3_project");
+    cml_test_register(registry, count, testc_vector3_reflect, "testc_vector3_reflect");
 
     cml_test_register(registry, count, testc_vector4_add, "testc_vector4_add");
     cml_test_register(registry, count, testc_vector4_add_scalar, "testc_vector4_add_scalar");
@@ -626,4 +674,5 @@ void cml_register_cfvector_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_vector4_distance2, "testc_vector4_distance2");
     cml_test_register(registry, count, testc_vector4_angle, "testc_vector4_angle");
     cml_test_register(registry, count, testc_vector4_project, "testc_vector4_project");
+    cml_test_register(registry, count, testc_vector4_reflect, "testc_vector4_reflect");
 }

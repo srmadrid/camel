@@ -241,6 +241,24 @@ CAMEL_API void cmlc_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, 
 
 
 /******************************************************************************
+ * Function: cmlc_vector2_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector2 across the second CML_Vector2 and writes
+ *      the result to the out CML_Vector2.
+ *
+ * Parameters:
+ *      CML_Vector2 *v   - The vector operand.
+ *      CML_Vector2 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector2 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_Vector2 *out);
+
+
+/******************************************************************************
  * Function: cmlc_vector2_eq
  * 
  * Description:
@@ -505,6 +523,24 @@ CAMEL_API void cmlc_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, 
 
 
 /******************************************************************************
+ * Function: cmlc_vector3_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector3 across the surface defined by the normal
+ *      CML_Vector3 and writes the result to the out CML_Vector3.
+ *
+ * Parameters:
+ *      CML_Vector3 *v   - The vector operand.
+ *      CML_Vector3 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector3 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_Vector3 *out);
+
+
+/******************************************************************************
  * Function: cmlc_vector3_eq
  * 
  * Description:
@@ -749,6 +785,24 @@ CAMEL_API f64 cmlc_vector4_angle(const CML_Vector4 *v, const CML_Vector4 *w);
  *      void.
  *****************************************************************************/
 CAMEL_API void cmlc_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_vector4_reflect
+ * 
+ * Description:
+ *      Reflects the first CML_Vector4 across the surface defined by the normal
+ *      CML_Vector4 and writes the result to the out CML_Vector4.
+ *
+ * Parameters:
+ *      CML_Vector4 *v   - The vector operand.
+ *      CML_Vector4 *normal   - The normal of the surface to reflect across.
+ *      CML_Vector4 *out - The output vector.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+CAMEL_API void cmlc_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_Vector4 *out);
 
 
 /******************************************************************************

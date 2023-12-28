@@ -87,9 +87,16 @@ f64 cmlc_vector2_angle(const CML_Vector2 *v, const CML_Vector2 *w) {
 
 
 void cmlc_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
-    f64 mod = v->x * w->x + v->y * w->y / (w->x * w->x + w->y * w->y);
+    f64 mod = (v->x * w->x + v->y * w->y) / (w->x * w->x + w->y * w->y);
     out->x = mod * w->x;
     out->y = mod * w->y;
+}
+
+
+void cmlc_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_Vector2 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y) / (normal->x * normal->x + normal->y * normal->y);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
 }
 
 
@@ -202,10 +209,19 @@ f64 cmlc_vector3_angle(const CML_Vector3 *v, const CML_Vector3 *w) {
 
 
 void cmlc_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
-    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z / (w->x * w->x + w->y * w->y + w->z * w->z);
+    f64 mod = (v->x * w->x + v->y * w->y + v->z * w->z) / (w->x * w->x + w->y * w->y + w->z * w->z);
     out->x = mod * w->x;
     out->y = mod * w->y;
     out->z = mod * w->z;
+}
+
+
+void cmlc_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_Vector3 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z) / 
+                  (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
+    out->z = v->z - mod * normal->z;
 }
 
 
@@ -319,12 +335,22 @@ f64 cmlc_vector4_angle(const CML_Vector4 *v, const CML_Vector4 *w) {
 
 
 void cmlc_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
-    f64 mod = v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w / 
+    f64 mod = (v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
               (w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w);
     out->x = mod * w->x;
     out->y = mod * w->y;
     out->z = mod * w->z;
     out->w = mod * w->w;
+}
+
+
+void cmlc_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_Vector4 *out) {
+    f64 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z + v->w * normal->w) / 
+                  (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z + normal->w * normal->w);
+    out->x = v->x - mod * normal->x;
+    out->y = v->y - mod * normal->y;
+    out->z = v->z - mod * normal->z;
+    out->w = v->w - mod * normal->w;
 }
 
 
