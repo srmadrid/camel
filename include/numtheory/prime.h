@@ -20,7 +20,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../core/core.h"
+#include "../core/macros.h"
+#include "../core/err.h"
 
 
 /******************************************************************************
@@ -35,7 +36,7 @@
  * Returns:
  *      CAMEL_TRUE or CAMEL_FALSE.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_is_prime(u64 n);
+CML_Bool cml_is_prime(u64 n);
 
 
 /******************************************************************************
@@ -54,7 +55,7 @@ CAMEL_API CML_Bool cml_is_prime(u64 n);
  * Notes:
  *      The user is responsible for freeing the returned array.
  *****************************************************************************/
-CAMEL_API u64 *cml_generate_primes(u64 limit, size_t *size);
+u64 *cml_generate_primes(u64 limit, size_t *size);
 
 
 /******************************************************************************
@@ -70,7 +71,7 @@ CAMEL_API u64 *cml_generate_primes(u64 limit, size_t *size);
  * Returns:
  *      An array with all the prime factors (repetition is allowed).
  *****************************************************************************/
-CAMEL_API u64 *cml_prime_factors(u64 n, size_t *size);
+u64 *cml_prime_factors(u64 n, size_t *size);
 
 
 /******************************************************************************
@@ -86,7 +87,7 @@ CAMEL_API u64 *cml_prime_factors(u64 n, size_t *size);
  * Returns:
  *      The result of the gcd.
  *****************************************************************************/
-CAMEL_API u64 cml_gcd(u64 a, u64 b);
+u64 cml_gcd(u64 a, u64 b);
 
 
 /******************************************************************************
@@ -102,7 +103,7 @@ CAMEL_API u64 cml_gcd(u64 a, u64 b);
  * Returns:
  *      The result of the lcm.
  *****************************************************************************/
-CAMEL_API u64 cml_lcm(u64 a, u64 b);
+u64 cml_lcm(u64 a, u64 b);
 
 
 #endif /* CAMEL_PRIME */

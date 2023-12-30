@@ -16,7 +16,7 @@
 #include "../../../../include/algebra/linear/vlinear/vmatrix.h"
 
 
-CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n) {
+CML_Status cml_matrix_init(CML_Matrix *A, u32 m, u32 n) {
     if (m <= 0 || n <= 0) {
         return CML_ERR_INVALID_SIZE;
     }
@@ -35,7 +35,7 @@ CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n) {
     A->m = m;
     A->n = n;
 
-    for (int i = 0; i < m; i++) {
+    for (u32 i = 0; i < m; i++) {
         A->data[i] = (f64*)calloc(n, sizeof(double));
         if (A->data[i] == NULL) {
             for (size_t j = 0; j < i; j++) {
@@ -59,7 +59,7 @@ CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n) {
 void cml_matrix_free(CML_Matrix *A) {
     if (A != NULL) {
         if (A->data != NULL) {
-            for (int i = 0; i < A->m; i++) {
+            for (u32 i = 0; i < A->m; i++) {
                 if (A->data[i] != NULL) {
                     free(A->data[i]);
                 }
@@ -84,8 +84,8 @@ CML_Status cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
+    for (u32 i = 0; i < A->m; i++) {
+        for (u32 j = 0; j < A->n; j++) {
             out->data[i][j] = A->data[i][j] + B->data[i][j];
         }
     }
@@ -106,8 +106,8 @@ CML_Status cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
+    for (u32 i = 0; i < A->m; i++) {
+        for (u32 j = 0; j < A->n; j++) {
             out->data[i][j] = A->data[i][j] - B->data[i][j];
         }
     }
@@ -127,8 +127,8 @@ CML_Status cml_matrix_scale(const CML_Matrix *A, f64 t, CML_Matrix *out) {
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < A->n; j++) {
+    for (u32 i = 0; i < A->m; i++) {
+        for (u32 j = 0; j < A->n; j++) {
             out->data[i][j] = A->data[i][j] * t;
         }
     }
@@ -151,10 +151,10 @@ CML_Status cml_matrix_mult(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix 
 
     double aux;
 
-    for (int i = 0; i < A->m; i++) {
-        for (int j = 0; j < B->n; j++) {
+    for (u32 i = 0; i < A->m; i++) {
+        for (u32 j = 0; j < B->n; j++) {
             aux = 0.0;
-            for (int k = 0; k < A->n; k++) {
+            for (u32 k = 0; k < A->n; k++) {
                 aux += A->data[i][k]*B->data[k][j];
             }
             out->data[i][j] = aux;

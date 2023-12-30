@@ -27,6 +27,20 @@ Vectors represent a point in space, or a direction. This module includes vectors
 - ```CML_Vector3```: 3D Vector. This is a ```union``` of a  ```struct``` with three ```f64``` fields, ```x```, ```y``` and ```z```, and a three element array.
 - ```CML_Vector4```: 4D Vector. This is a ```union``` of a  ```struct``` with four ```f64``` fields, ```x```, ```y```, ```z``` and ```w```, and a four element array.
 
+### Vector Initialization
+
+Vectors can be initiallized in two ways:
+
+- Using the macros (```<VECTOR>``` indicates any vector type specified above in capital letters):
+  - ```CML_<VECTOR>_ZERO```: Initializes a vector to zero.
+  - ```CML_<VECTOR>_I```: Initializes a vector to unit length in the x direction.
+  - ```CML_<VECTOR>_J```: Initializes a vector to unit length in the y direction.
+  - ```CML_<VECTOR>_K```: Initializes a vector to unit length in the z direction.
+  - ```CML_<VECTOR>_L```: Initializes a vector to unit length in the w direction.
+  - ```CML_<VECTOR>_ONE```: Initializes a vector to one.
+  - ```CML_<VECTOR>(f64 x, f64 y, f64 z, f64 w)```: Initializes a vector to the specified values. **Note**: takes only the first two values for 2D vectors, the first three for 3D vectors and all four for 4D vectors.
+- Using standard initialization ```<vector> v = {{x, y, z, w}}```: Initializes a vector to the specified values using standard notation. **Note**: two braces are needed because of the union.
+
 ### Vector Functions
 
 **Note**: The functions in this module are named according to the [common convention](../../../README.md#functions): ```cmlc_<type>_<function>_<type>``` for the compiled version, and ```cml_<type>_<function>_<type>``` for the header only version. For simplicity, only the header only version will be shown here, but the compiled version is also available. ```<vector>``` indicates any vector type specified above.
@@ -69,6 +83,17 @@ Matrices represent linear transformations. This module includes all matrices of 
 - ```CML_Matrix4x2```: 4x2 Matrix. This is a ```union``` of a  ```struct``` with eight ```f64``` fields, ```m00```, ```m01```, ```m10```, ```m11```, ```m20```, ```m21```, ```m30``` and ```m31```, and a eight element array.
 - ```CML_Matrix4x3```: 4x3 Matrix. This is a ```union``` of a  ```struct``` with twelve ```f64``` fields, ```m00```, ```m01```, ```m02```, ```m10```, ```m11```, ```m12```, ```m20```, ```m21```, ```m22```, ```m30```, ```m31``` and ```m32```, and a twelve element array.
 - ```CML_Matrix4x4```: 4x4 Matrix. This is a ```union``` of a  ```struct``` with sixteen ```f64``` fields, ```m00```, ```m01```, ```m02```, ```m03```, ```m10```, ```m11```, ```m12```, ```m13```, ```m20```, ```m21```, ```m22```, ```m23```, ```m30```, ```m31```, ```m32``` and ```m33```, and a sixteen element array.
+
+### Matrix Initialization
+
+Matrices can be initiallized in two ways:
+
+- Using the macros (```<MATRIX>``` indicates any matrix type specified above in capital letters):
+  - ```CML_<MATRIX>_ZERO```: Initializes a matrix to zero.
+  - ```CML_<MATRIX>_IDENTITY```: Initializes a matrix to the identity matrix.
+  - ```CML_<MATRIX>_ONE```: Initializes a matrix to one.
+  - ```CML_<MATRIX>(f64 m00, f64 m01, f64 m02, f64 m03, f64 m10, f64 m11, f64 m12, f64 m13, f64 m20, f64 m21, f64 m22, f64 m23, f64 m30, f64 m31, f64 m32, f64 m33)```: Initializes a matrix to the specified values. **Note**: takes only the first four values for 2x2 matrices, the first six for 2x3 and 3x2 matrices, and so on.
+- Using standard initialization ```<matrix> m = {{m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33}}```: Initializes a matrix to the specified values using standard notation. **Note**: two braces are needed because of the union.
 
 ### Matrix Functions
 

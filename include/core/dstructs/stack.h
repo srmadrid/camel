@@ -32,8 +32,8 @@
  *
  * Fields:
  *      char   **data   - Array of arrays of chars, data of the stack.
- *      size_t size     - Number of elements held, postion of top element + 1.
- *      size_t capacity - Current size of the array, maximum amount of elements
+ *      u32 size     - Number of elements held, postion of top element + 1.
+ *      u32 capacity - Current size of the array, maximum amount of elements
  *                        that can fit until a resize is needed.
  *
  * Notes:
@@ -42,8 +42,8 @@
  *****************************************************************************/
 typedef struct {
     char **data;
-    size_t size;
-    size_t capacity;
+    u32 size;
+    u32 capacity;
 } CML_CharStack;
 
 
@@ -56,12 +56,12 @@ typedef struct {
  *
  * Parameters:
  *      CML_CharStack *stack   - Stack to be initiallized.
- *      size_t        capacity - Initial capacity of the stack.
+ *      u32        capacity - Initial capacity of the stack.
  * 
  * Returns:
  *      A pointer to the initialized CML_CharStack.
  *****************************************************************************/
-CAMEL_API CML_Status cml_charstack_init(CML_CharStack *stack, size_t capacity);
+CML_Status cml_charstack_init(CML_CharStack *stack, u32 capacity);
 
 
 /******************************************************************************
@@ -76,7 +76,7 @@ CAMEL_API CML_Status cml_charstack_init(CML_CharStack *stack, size_t capacity);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_charstack_free(CML_CharStack *stack);
+void cml_charstack_free(CML_CharStack *stack);
 
 
 /******************************************************************************
@@ -91,7 +91,7 @@ CAMEL_API void cml_charstack_free(CML_CharStack *stack);
  * Returns:
  *      True or false.
  *****************************************************************************/
-CAMEL_API int cml_charstack_isempty(CML_CharStack *stack);
+int cml_charstack_isempty(CML_CharStack *stack);
 
 
 /******************************************************************************
@@ -107,7 +107,7 @@ CAMEL_API int cml_charstack_isempty(CML_CharStack *stack);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_charstack_push(CML_CharStack *stack, char **input);
+CML_Status cml_charstack_push(CML_CharStack *stack, char **input);
 
 
 /******************************************************************************
@@ -122,7 +122,7 @@ CAMEL_API CML_Status cml_charstack_push(CML_CharStack *stack, char **input);
  * Returns:
  *      The top element of the stack.
  *****************************************************************************/
-CAMEL_API char *cml_charstack_pop(CML_CharStack *stack);
+char *cml_charstack_pop(CML_CharStack *stack);
 
 
 /******************************************************************************
@@ -142,7 +142,7 @@ CAMEL_API char *cml_charstack_pop(CML_CharStack *stack);
  *      It is the users responsibility to not edit it in any way, and to delete
  *      the outside pointer (set it to NULL) once it is no longer needed.
  *****************************************************************************/
-CAMEL_API const char *cml_charstack_peek(CML_CharStack *stack);
+char *cml_charstack_peek(CML_CharStack *stack);
 
 
 
@@ -154,14 +154,14 @@ CAMEL_API const char *cml_charstack_peek(CML_CharStack *stack);
  *
  * Fields:
  *      i64    *data    - Array of ints, data of the stack.
- *      size_t size     - Number of elements held, postion of top element + 1.
- *      size_t capacity - Current size of the array, maximum amount of elements
+ *      u32 size     - Number of elements held, postion of top element + 1.
+ *      u32 capacity - Current size of the array, maximum amount of elements
  *                        that can fit until a resize is needed.
  *****************************************************************************/
 typedef struct {
     i64 *data;
-    size_t size;
-    size_t capacity;
+    u32 size;
+    u32 capacity;
 } CML_IntStack;
 
 
@@ -174,12 +174,12 @@ typedef struct {
  *
  * Parameters:
  *      CML_IntStack *stack   - Stack to be initialized.
- *      size_t       capacity - Initial capacity of the stack.
+ *      u32       capacity - Initial capacity of the stack.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_intstack_init(CML_IntStack *stack, size_t capacity);
+CML_Status cml_intstack_init(CML_IntStack *stack, u32 capacity);
 
 
 /******************************************************************************
@@ -194,7 +194,7 @@ CAMEL_API CML_Status cml_intstack_init(CML_IntStack *stack, size_t capacity);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_intstack_free(CML_IntStack *stack);
+void cml_intstack_free(CML_IntStack *stack);
 
 
 /******************************************************************************
@@ -209,7 +209,7 @@ CAMEL_API void cml_intstack_free(CML_IntStack *stack);
  * Returns:
  *      True or false.
  *****************************************************************************/
-CAMEL_API int cml_intstack_isempty(CML_CharStack *stack);
+int cml_intstack_isempty(CML_CharStack *stack);
 
 
 /******************************************************************************
@@ -225,7 +225,7 @@ CAMEL_API int cml_intstack_isempty(CML_CharStack *stack);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_intstack_push(CML_IntStack *stack, i64 input);
+CML_Status cml_intstack_push(CML_IntStack *stack, i64 input);
 
 
 /******************************************************************************
@@ -240,7 +240,7 @@ CAMEL_API CML_Status cml_intstack_push(CML_IntStack *stack, i64 input);
  * Returns:
  *      The top element of the stack.
  *****************************************************************************/
-CAMEL_API i64 cml_intstack_pop(CML_IntStack *stack); 
+i64 cml_intstack_pop(CML_IntStack *stack); 
 
 
 /******************************************************************************
@@ -255,7 +255,7 @@ CAMEL_API i64 cml_intstack_pop(CML_IntStack *stack);
  * Returns:
  *      The top element of the stack.
  *****************************************************************************/
-CAMEL_API const i64 cml_intstack_peek(CML_IntStack *stack);
+i64 cml_intstack_peek(CML_IntStack *stack);
 
 
 
@@ -267,14 +267,14 @@ CAMEL_API const i64 cml_intstack_peek(CML_IntStack *stack);
  *
  * Fields:
  *      f64 *data    - Array of doubles, data of the stack.
- *      size_t size     - Number of elements held, postion of top element + 1.
- *      size_t capacity - Current size of the array, maximum amount of elements
+ *      u32 size     - Number of elements held, postion of top element + 1.
+ *      u32 capacity - Current size of the array, maximum amount of elements
  *                        that can fit until a resize is needed.
  *****************************************************************************/
 typedef struct {
     f64 *data;
-    size_t size;
-    size_t capacity;
+    u32 size;
+    u32 capacity;
 } CML_DoubleStack;
 
 
@@ -288,12 +288,12 @@ typedef struct {
  *
  * Parameters:
  *      CML_DoubleStack *stack   - The stack to be initialized.
- *      size_t          capacity - Initial capacity of the stack.
+ *      u32          capacity - Initial capacity of the stack.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_doublestack_init(CML_DoubleStack *stack, size_t capacity);
+CML_Status cml_doublestack_init(CML_DoubleStack *stack, u32 capacity);
 
 
 /******************************************************************************
@@ -308,7 +308,7 @@ CAMEL_API CML_Status cml_doublestack_init(CML_DoubleStack *stack, size_t capacit
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_doublestack_free(CML_DoubleStack *stack);
+void cml_doublestack_free(CML_DoubleStack *stack);
 
 
 /******************************************************************************
@@ -323,7 +323,7 @@ CAMEL_API void cml_doublestack_free(CML_DoubleStack *stack);
  * Returns:
  *      True or false.
  *****************************************************************************/
-CAMEL_API int cml_doublestack_isempty(CML_DoubleStack *stack);
+int cml_doublestack_isempty(CML_DoubleStack *stack);
 
 
 /******************************************************************************
@@ -339,7 +339,7 @@ CAMEL_API int cml_doublestack_isempty(CML_DoubleStack *stack);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_doublestack_push(CML_DoubleStack *stack, f64 input);
+CML_Status cml_doublestack_push(CML_DoubleStack *stack, f64 input);
 
 
 /******************************************************************************
@@ -354,7 +354,7 @@ CAMEL_API CML_Status cml_doublestack_push(CML_DoubleStack *stack, f64 input);
  * Returns:
  *      The top element of the stack.
  *****************************************************************************/
-CAMEL_API f64 cml_doublestack_pop(CML_DoubleStack *stack);
+f64 cml_doublestack_pop(CML_DoubleStack *stack);
 
 
 /******************************************************************************
@@ -369,7 +369,7 @@ CAMEL_API f64 cml_doublestack_pop(CML_DoubleStack *stack);
  * Returns:
  *      The top element of the stack.
  *****************************************************************************/
-CAMEL_API const f64 cml_doublestack_peek(CML_DoubleStack *stack);
+f64 cml_doublestack_peek(CML_DoubleStack *stack);
 // Make stack for CML_ExpressionToken and other types that may arise
 
 #endif /* CAMEL_STACK */

@@ -121,22 +121,22 @@ int cml_read_char(char input) {
 }
 
 
-CML_ExpressionToken **cml_lex_expression(const char *expression, size_t *size) {
+CML_ExpressionToken **cml_lex_expression(const char *expression, u32 *size) {
     size_t capacity = INITIAL_EXP_SIZE; // Initial size
     CML_ExpressionToken **result = (CML_ExpressionToken**)malloc(capacity * sizeof(CML_ExpressionToken*));
     if (result == NULL) {
         return NULL;
     }
 
-    int expressionLength = strlen(expression);
+    u32 expressionLength = strlen(expression);
     *size = 0;
-    size_t length = 0;
+    u32 length = 0;
     char *aux;
     
     int letterAuxLen = 0; // For charType == 5, to be removed when a map is implemented
 
     // Iterate through the expression
-    for (int i = 0; i < expressionLength;) { // remove ++i from loop
+    for (u32 i = 0; i < expressionLength;) { // remove ++i from loop
         if (*size >= capacity) {
             // Resize array
             capacity *= 2;
@@ -245,7 +245,7 @@ error:
     if (aux) {
         free(aux);
     }
-    for (int j = 0; j < *size; j++) {
+    for (u32 j = 0; j < *size; j++) {
         cml_exptkn_free(result[j]);
     }
     *size = 0;

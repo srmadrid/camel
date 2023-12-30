@@ -16,7 +16,7 @@
 #include "../../../../include/algebra/linear/vlinear/vvector.h"
 
 
-CML_Status clm_vector_init(CML_Vector *v, size_t n) {
+CML_Status clm_vector_init(CML_Vector *v, u32 n) {
     if (n <= 0) {
         return CML_ERR_INVALID_SIZE;
     }
@@ -37,7 +37,7 @@ CML_Status clm_vector_init(CML_Vector *v, size_t n) {
 }
 
 
-void sm_vector_free(CML_Vector *v) {
+void cml_vector_free(CML_Vector *v) {
     if (v != NULL) {
         if (v->data != NULL) {
             free(v->data);
@@ -56,7 +56,7 @@ CML_Status cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vector *
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         out->data[i] = v->data[i] + w->data[i];
     }
 
@@ -73,7 +73,7 @@ CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         out->data[i] = v->data[i] - w->data[i];
     }
 
@@ -90,7 +90,7 @@ CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *out) {
         return CML_ERR_INVALID_SIZE;
     }
 
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         out->data[i] = v->data[i] * t;
     }
 
@@ -104,7 +104,7 @@ f64 cml_vector_mod(const CML_Vector *v) {
     }
 
     f64 mod = 0;
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         mod += v->data[i] * v->data[i];
     }
     return sqrt(mod);
@@ -121,12 +121,12 @@ CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out) {
     }
 
     f64 mod = 0;
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         mod += v->data[i] * v->data[i];
     }
     mod = 1/sqrt(mod);
 
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         out->data[i] = v->data[i] * mod;
     }
 
@@ -144,7 +144,7 @@ f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w) {
     }
 
     f64 dot = 0;
-    for (int i = 0; i < v->n; i++) {
+    for (u32 i = 0; i < v->n; i++) {
         dot += v->data[i] * w->data[i];
     }
 

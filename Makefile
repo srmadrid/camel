@@ -4,14 +4,14 @@ ifeq ($(OS),Linux)
     TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-    CFLAGS = -Wall -Iinclude -fPIC # -g #(to debug if something like a segfault occurs)
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fPIC # -g #(to debug if something like a segfault occurs)
     LDFLAGS = -shared -lm
     LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm
 else
     TARGET = bin/windows/camel.dll
     TEST_TARGET = test/bin/windows/test.exe
     EXT = dll
-    CFLAGS = -Wall -Iinclude
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude
     LDFLAGS = -shared -lm
     LIB_LINK = -Lbin/win -lcamel -lm
 endif

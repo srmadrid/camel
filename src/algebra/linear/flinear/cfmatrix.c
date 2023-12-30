@@ -1705,18 +1705,18 @@ void cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
     f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    out->m00 = A->m00;
-    out->m01 = A->m10;
-    out->m02 = A->m20;
-    out->m03 = A->m30;
-    out->m10 = A->m01;
-    out->m11 = A->m11;
-    out->m12 = A->m21;
-    out->m13 = A->m31;
-    out->m20 = A->m02;
-    out->m21 = A->m12;
-    out->m22 = A->m22;
-    out->m23 = A->m32;
+    out->m00 = a00;
+    out->m01 = a10;
+    out->m02 = a20;
+    out->m03 = a30;
+    out->m10 = a01;
+    out->m11 = a11;
+    out->m12 = a21;
+    out->m13 = a31;
+    out->m20 = a02;
+    out->m21 = a12;
+    out->m22 = a22;
+    out->m23 = a32;
 }
 
 

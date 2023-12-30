@@ -16,7 +16,7 @@
 #include "../../../include/core/dstructs/stack.h"
 
 
-CML_Status cml_charstack_init(CML_CharStack *stack, size_t capacity) {
+CML_Status cml_charstack_init(CML_CharStack *stack, u32 capacity) {
     if (capacity < 1) {
         capacity = CML_INITIAL_STACK_CAP;
     }
@@ -41,7 +41,7 @@ CML_Status cml_charstack_init(CML_CharStack *stack, size_t capacity) {
 void cml_charstack_free(CML_CharStack *stack) {
     if (stack != NULL) {
         if (stack->data != NULL) {
-            for (int i = 0; i < stack->size; ++i) {
+            for (u32 i = 0; i < stack->size; ++i) {
                 free(stack->data[i]);
             }
             free(stack->data);
@@ -92,7 +92,7 @@ char *cml_charstack_pop(CML_CharStack *stack) {
 }
 
 
-const char *cml_charstack_peek(CML_CharStack *stack) {
+char *cml_charstack_peek(CML_CharStack *stack) {
     if (stack == NULL || stack->size == 0) {
         return NULL;
     }
@@ -102,7 +102,7 @@ const char *cml_charstack_peek(CML_CharStack *stack) {
 
 
 
-CML_Status cml_intstack_init(CML_IntStack *stack, size_t capacity) {
+CML_Status cml_intstack_init(CML_IntStack *stack, u32 capacity) {
     if (capacity < 1) {
         capacity = CML_INITIAL_STACK_CAP;
     }
@@ -177,7 +177,7 @@ i64 cml_intstack_pop(CML_IntStack *stack) {
 }
 
 
-const i64 cml_intstack_peek(CML_IntStack *stack) {
+i64 cml_intstack_peek(CML_IntStack *stack) {
     if (stack == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -191,7 +191,7 @@ const i64 cml_intstack_peek(CML_IntStack *stack) {
 
 
 
-CML_Status cml_doublestack_init(CML_DoubleStack *stack, size_t capacity) {
+CML_Status cml_doublestack_init(CML_DoubleStack *stack, u32 capacity) {
     if (capacity < 1) {
         capacity = CML_INITIAL_STACK_CAP;
     }
@@ -266,7 +266,7 @@ f64 cml_doublestack_pop(CML_DoubleStack *stack) {
 }
 
 
-const f64 cml_doublestack_peek(CML_DoubleStack *stack) {
+f64 cml_doublestack_peek(CML_DoubleStack *stack) {
     if (stack == NULL) {
         return CML_ERR_NULL_PTR;
     }

@@ -32,15 +32,15 @@
  *
  * Fields:
  *      u32 *data    - Array holding the number data.
- *      size_t   size     - Number of elements with data (>0x00000001).
- *      size_t   capacity - Current size of the array, maximum amount of elements
+ *      u32   size     - Number of elements with data (>0x00000001).
+ *      u32   capacity - Current size of the array, maximum amount of elements
  *                          that can fit until a resize is needed.
  *      i8       sign     - Sign of the number (-1: Negative; 1: Positive).
  *****************************************************************************/
 typedef struct {
     u32 *data;
-    size_t size;
-    size_t capacity;
+    u32 size;
+    u32 capacity;
     i8 sign;
 } CML_BigInt;
 
@@ -55,12 +55,12 @@ typedef struct {
  *
  * Parameters:
  *      CML_BigInt *bigint - Big int to be initialized.
- *      size_t capacity    - Initial capacity of the bigint.
+ *      u32 capacity    - Initial capacity of the bigint.
  * 
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_bigint_init(CML_BigInt *bigint, size_t capacity);
+CML_Status cml_bigint_init(CML_BigInt *bigint, u32 capacity);
 
 
 /******************************************************************************
@@ -75,7 +75,7 @@ CAMEL_API CML_Status cml_bigint_init(CML_BigInt *bigint, size_t capacity);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_bigint_free(CML_BigInt *bigint);
+void cml_bigint_free(CML_BigInt *bigint);
 
 
 /******************************************************************************
@@ -93,7 +93,7 @@ CAMEL_API void cml_bigint_free(CML_BigInt *bigint);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign);
+CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign);
 
 
 /******************************************************************************
@@ -115,7 +115,7 @@ CAMEL_API CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign)
  *      sign is there, positive will be assumed, otherwise a - must be at the 
  *      beginning, like "-20".
  *****************************************************************************/
-CAMEL_API CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input);
+CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input);
 
 
 /******************************************************************************
@@ -131,7 +131,7 @@ CAMEL_API CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input);
+CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input);
 
 
 /******************************************************************************
@@ -146,7 +146,7 @@ CAMEL_API CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input);
  * Returns:
  *      String representation of the big int.
  *****************************************************************************/
-CAMEL_API char *cml_bigint_to_str(CML_BigInt *bigint);
+char *cml_bigint_to_str(CML_BigInt *bigint);
 
 
 /******************************************************************************
@@ -161,7 +161,7 @@ CAMEL_API char *cml_bigint_to_str(CML_BigInt *bigint);
  * Returns:
  *      Binary string representation of the big int.
  *****************************************************************************/
-CAMEL_API char *cml_bigint_to_bin_str(CML_BigInt *bigint);
+char *cml_bigint_to_bin_str(CML_BigInt *bigint);
 
 // Implement addition, subtraction, multiplication, division, exponentiation, etc.
 
@@ -179,7 +179,7 @@ CAMEL_API char *cml_bigint_to_bin_str(CML_BigInt *bigint);
  * Returns:
  *      CML_TRUE if bigint1 == bigint2, CML_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
+CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
 
 
 /******************************************************************************
@@ -196,7 +196,7 @@ CAMEL_API CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
  *      CML_LOWER if bigint1 < bigint2, CML_EQUAL if bigint1 == bigint2,
  *      CML_GREATER if bigint1 > bigint2.
  *****************************************************************************/
-CAMEL_API CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2);
+CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2);
 
 
 /******************************************************************************
@@ -214,7 +214,7 @@ CAMEL_API CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *big
  * Returns:
  *      CML_TRUE if bigint == input, CML_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
+CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
 
 
 /******************************************************************************
@@ -233,7 +233,7 @@ CAMEL_API CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
  *      CML_LOWER if bigint < input, CML_EQUAL if bigint == input,
  *      CML_GREATER if bigint > input.
  *****************************************************************************/
-CAMEL_API CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign);
+CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign);
 
 
 /******************************************************************************
@@ -249,7 +249,7 @@ CAMEL_API CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i
  * Returns:
  *      CML_TRUE if bigint == str, CML_FALSE otherwise.
  *****************************************************************************/
-CAMEL_API CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str);
+CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str);
 
 
 /******************************************************************************
@@ -266,7 +266,7 @@ CAMEL_API CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str);
  *      CML_LOWER if bigint < str, CML_EQUAL if bigint == str,
  *      CML_GREATER if bigint > str.
  *****************************************************************************/
-CAMEL_API CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str);
+CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str);
 
 
 /******************************************************************************
@@ -282,7 +282,7 @@ CAMEL_API CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str);
  * Returns:
  *      A string containing the debug message.
  *****************************************************************************/
-CAMEL_API char *cml_bigint_debug(char *expected_str, CML_BigInt *got);
+char *cml_bigint_debug(char *expected_str, CML_BigInt *got);
 
 
 #endif /* CAMEL_BIGINT */

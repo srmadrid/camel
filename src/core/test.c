@@ -21,6 +21,7 @@ CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedCount) {
     if (registry == NULL || count == NULL)
         return CML_ERR_NULL_PTR;
     *count = 0;
+    return CML_SUCCESS;
 }
 
 
@@ -39,7 +40,7 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
         printf("Failed to allocate memory for failed tests.\n");
         return;
     }
-    for (int i = 0; i < testCount; i++) {
+    for (u32 i = 0; i < testCount; i++) {
         printf("[%i/%i] Running test: %s\n", i + 1, testCount, testRegistry[i].name);
         CML_TestResult result = testRegistry[i].func();
         if (result.passed == CML_TRUE) {
@@ -55,7 +56,7 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
 
     if (passedCount != testCount){
         printf("Failed tests:\n");
-        for (int i = 0; i < failedCount; i++) {
+        for (u32 i = 0; i < failedCount; i++) {
             printf("\t[%i]: %s\n",failed[i] + 1, testRegistry[failed[i]].name);
         }
     }

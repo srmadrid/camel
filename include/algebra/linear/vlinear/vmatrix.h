@@ -19,7 +19,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../../../core/core.h"
+#include "../../../core/macros.h"
+#include "../../../core/err.h"
 #include "vvector.h"
 
 
@@ -43,8 +44,8 @@
  *      should always reflect the number of allocated elements in 'data'.
  *****************************************************************************/
 typedef struct {
-    size_t m;
-    size_t n;
+    u32 m;
+    u32 n;
     f64 **data;
 } CML_Matrix;
 
@@ -63,7 +64,7 @@ typedef struct {
  * Returns:
  *      A pointer to the allocated CML_Matrix.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n);
+CML_Status cml_matrix_init(CML_Matrix *A, u32 m, u32 n);
 
 
 /******************************************************************************
@@ -78,7 +79,7 @@ CAMEL_API CML_Status cml_matrix_init(CML_Matrix *A, size_t m, size_t n);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_matrix_free(CML_Matrix *A);
+void cml_matrix_free(CML_Matrix *A);
 
 
 /******************************************************************************
@@ -96,7 +97,7 @@ CAMEL_API void cml_matrix_free(CML_Matrix *A);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
+CML_Status cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -114,7 +115,7 @@ CAMEL_API CML_Status cml_matrix_add(const CML_Matrix *A, const CML_Matrix *B, CM
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
+CML_Status cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -132,7 +133,7 @@ CAMEL_API CML_Status cml_matrix_sub(const CML_Matrix *A, const CML_Matrix *B, CM
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix_scale(const CML_Matrix *A, f64 t, CML_Matrix *out);
+CML_Status cml_matrix_scale(const CML_Matrix *A, f64 t, CML_Matrix *out);
 
 
 /******************************************************************************
@@ -150,7 +151,7 @@ CAMEL_API CML_Status cml_matrix_scale(const CML_Matrix *A, f64 t, CML_Matrix *ou
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_matrix_mult(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
+CML_Status cml_matrix_mult(const CML_Matrix *A, const CML_Matrix *B, CML_Matrix *out);
 
 
 // TODO: Implement other matrix operations.

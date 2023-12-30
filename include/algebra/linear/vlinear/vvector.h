@@ -19,7 +19,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../../../core/core.h"
+#include "../../../core/macros.h"
+#include "../../../core/err.h"
 
 
 /******************************************************************************
@@ -40,7 +41,7 @@
  *      should always reflect the number of allocated elements in 'data'.
  *****************************************************************************/
 typedef struct {
-    size_t n;
+    u32 n;
     f64 *data;
 } CML_Vector;
 
@@ -58,7 +59,7 @@ typedef struct {
  * Returns:
  *      A pointer to the allocated CML_Vector.
  *****************************************************************************/
-CAMEL_API CML_Status clm_vector_init(CML_Vector *v, size_t n);
+CML_Status clm_vector_init(CML_Vector *v, u32 n);
 
 
 /******************************************************************************
@@ -73,7 +74,7 @@ CAMEL_API CML_Status clm_vector_init(CML_Vector *v, size_t n);
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void sm_vector_free(CML_Vector *v);
+void cml_vector_free(CML_Vector *v);
 
 
 /******************************************************************************
@@ -91,7 +92,7 @@ CAMEL_API void sm_vector_free(CML_Vector *v);
  * Returns:
  *      Success (0) or error (<0) code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
+CML_Status cml_vector_add(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
 
 
 /******************************************************************************
@@ -109,7 +110,7 @@ CAMEL_API CML_Status cml_vector_add(const CML_Vector *v, const CML_Vector *w, CM
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
+CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CML_Vector *out);
 
 
 /******************************************************************************
@@ -127,7 +128,7 @@ CAMEL_API CML_Status cml_vector_sub(const CML_Vector *v, const CML_Vector *w, CM
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *out);
+CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *out);
 
 
 /******************************************************************************
@@ -142,7 +143,7 @@ CAMEL_API CML_Status cml_vector_scale(const CML_Vector *v, f64 t, CML_Vector *ou
  * Returns:
  *      The modulus of the input CML_Vector.
  *****************************************************************************/
-CAMEL_API f64 cml_vector_mod(const CML_Vector *v);
+f64 cml_vector_mod(const CML_Vector *v);
 
 
 /******************************************************************************
@@ -158,7 +159,7 @@ CAMEL_API f64 cml_vector_mod(const CML_Vector *v);
  * Returns:
  *      Success or error code.
  *****************************************************************************/
-CAMEL_API CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out);
+CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out);
 
 
 /******************************************************************************
@@ -174,7 +175,7 @@ CAMEL_API CML_Status cml_vector_norm(const CML_Vector *v, CML_Vector *out);
  * Returns:
  *      The dot product of the input vectors.
  *****************************************************************************/
-CAMEL_API f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w);
+f64 cml_vector_dot(const CML_Vector *v, const CML_Vector *w);
 
 
 #endif /* CAMEL_VARIABLE_VECTOR */

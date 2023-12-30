@@ -19,7 +19,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "core.h"
+#include "macros.h"
+#include "err.h"
 
 
 /******************************************************************************
@@ -61,7 +62,7 @@ typedef struct {
  * Description:
  *      Initializes the test registry.
  *****************************************************************************/
-CAMEL_API CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedCount);
+CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedCount);
 
 
 /******************************************************************************
@@ -74,7 +75,7 @@ CAMEL_API CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedC
  *      TestFunc func - The test function to register.
  *      const char *name - The name of the test function.
  *****************************************************************************/
-CAMEL_API void cml_test_register(CML_Test *testRegistry, u32 *testCount, CML_TestFunction func, const char *name);
+void cml_test_register(CML_Test *testRegistry, u32 *testCount, CML_TestFunction func, const char *name);
 
 
 /******************************************************************************
@@ -83,7 +84,7 @@ CAMEL_API void cml_test_register(CML_Test *testRegistry, u32 *testCount, CML_Tes
  * Description:
  *      Runs all registered test functions.
  *****************************************************************************/
-CAMEL_API void cml_run_tests(CML_Test *testRegistry, u32 testCount);
+void cml_run_tests(CML_Test *testRegistry, u32 testCount);
 
 
 #endif /* CAMEL_TEST */

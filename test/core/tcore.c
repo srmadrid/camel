@@ -20,5 +20,5 @@ void cml_register_bignum_tests(CML_Test *registry, u32 *count);
 
 
 void cml_register_core_tests(CML_Test *registry, u32 *count) {
-    cml_register_bigint_tests(registry, count);
+    cml_register_bignum_tests(registry, count);
 }

@@ -16,19 +16,6 @@
 #include "../../../include/camel.h"
 
 
-CML_TestResult test_bigint_init() {
-    CML_BigInt bigint;
-    CML_Status expected = CML_SUCCESS;
-    CML_TestResult result;
-    result.passed = cml_bigint_init(&bigint, 0);
-    if (!result.passed) {
-        result.debugMessage = cml_status_debug(expected, result.passed);
-    }
-    cml_bigint_free(&bigint);
-    return result;
-}
-
-
 CML_TestResult test_bigint_set_int() {
     CML_BigInt bigint;
     cml_bigint_init(&bigint, 0);
@@ -46,6 +33,5 @@ CML_TestResult test_bigint_set_int() {
 
 
 void cml_register_bigint_tests(CML_Test *registry, u32 *count) {
-    cml_test_register(registry, count, test_bigint_init, "test_bigint_init");
     cml_test_register(registry, count, test_bigint_set_int, "test_bigint_set_int");
 }

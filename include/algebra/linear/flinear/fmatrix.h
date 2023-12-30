@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../../../core/core.h"
+#include "../../../core/macros.h"
+#include "../../../core/err.h"
+#include "../../../core/constants.h"
 #include "fvector.h"
 
 
@@ -52,8 +54,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ZERO {0.0, 0.0, \
-                            0.0, 0.0}
+#define CML_MATRIX2X2_ZERO {{0.0, 0.0, \
+                             0.0, 0.0}}
 
 
 /******************************************************************************
@@ -62,8 +64,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_IDENTITY {1.0, 0.0, \
-                                0.0, 1.0}
+#define CML_MATRIX2X2_IDENTITY {{1.0, 0.0, \
+                                 0.0, 1.0}}
 
 
 /******************************************************************************
@@ -72,8 +74,24 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ONE {1.0, 1.0, \
-                           1.0, 1.0}
+#define CML_MATRIX2X2_ONE {{1.0, 1.0, \
+                            1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X2
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x2 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *****************************************************************************/
+#define CML_MATRIX2X2(m00, m01, m10, m11) {{m00, m01, \
+                                            m10, m11}}
 
 
 
@@ -103,9 +121,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_ZERO {0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0}
+#define CML_MATRIX3X3_ZERO {{0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -114,9 +132,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_IDENTITY {1.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0, \
-                                0.0, 0.0, 1.0}
+#define CML_MATRIX3X3_IDENTITY {{1.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0, \
+                                 0.0, 0.0, 1.0}}
 
 
 /******************************************************************************
@@ -125,9 +143,31 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_ONE {1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0}
+#define CML_MATRIX3X3_ONE {{1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X3
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x3 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *      f64 m22 - The element at row 2, column 2.
+ *****************************************************************************/
+#define CML_MATRIX3X3(m00, m01, m02, m10, m11, m12, m20, m21, m22) {{m00, m01, m02, \
+                                                                     m10, m11, m12, \
+                                                                     m20, m21, m22}}
 
 
 
@@ -158,10 +198,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_ZERO {0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0}
+#define CML_MATRIX4X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -170,10 +210,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_IDENTITY {1.0, 0.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0, 0.0, \
-                                0.0, 0.0, 1.0, 0.0, \
-                                0.0, 0.0, 0.0, 1.0}
+#define CML_MATRIX4X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0, 0.0, \
+                                 0.0, 0.0, 1.0, 0.0, \
+                                 0.0, 0.0, 0.0, 1.0}}
 
 
 /******************************************************************************
@@ -182,10 +222,41 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_ONE {1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0}
+#define CML_MATRIX4X4_ONE {{1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X4
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x4 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m03 - The element at row 0, column 3.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *      f64 m13 - The element at row 1, column 3.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *      f64 m22 - The element at row 2, column 2.
+ *      f64 m23 - The element at row 2, column 3.
+ *      f64 m30 - The element at row 3, column 0.
+ *      f64 m31 - The element at row 3, column 1.
+ *      f64 m32 - The element at row 3, column 2.
+ *      f64 m33 - The element at row 3, column 3.
+ *****************************************************************************/
+#define CML_MATRIX4X4(m00, m01, m02, m03, m10, m11, m12, m13, \
+                      m20, m21, m22, m23, m30, m31, m32, m33) {{m00, m01, m02, m03, \
+                                                                m10, m11, m12, m13, \
+                                                                m20, m21, m22, m23, \
+                                                                m30, m31, m32, m33}}
 
 
 
@@ -214,8 +285,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_ZERO {0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0}
+#define CML_MATRIX2X3_ZERO {{0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -224,8 +295,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_IDENTITY {1.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0}
+#define CML_MATRIX2X3_IDENTITY {{1.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0}}
 
 
 /******************************************************************************
@@ -234,8 +305,26 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_ONE {1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0}
+#define CML_MATRIX2X3_ONE {{1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X3
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x3 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *****************************************************************************/
+#define CML_MATRIX2X3(m00, m01, m02, m10, m11, m12) {{m00, m01, m02, \
+                                                      m10, m11, m12}}
 
 
 
@@ -264,8 +353,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_ZERO {0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0}
+#define CML_MATRIX2X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -274,8 +363,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_IDENTITY {1.0, 0.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0, 0.0}
+#define CML_MATRIX2X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -284,8 +373,28 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_ONE {1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0}
+#define CML_MATRIX2X4_ONE {{1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX2X4
+ * 
+ * Description:
+ *      Initializes a CML_Matrix2x4 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m03 - The element at row 0, column 3.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *      f64 m13 - The element at row 1, column 3.
+ *****************************************************************************/
+#define CML_MATRIX2X4(m00, m01, m02, m03, m10, m11, m12, m13) {{m00, m01, m02, m03, \
+                                                                m10, m11, m12, m13}}
 
 
 
@@ -315,9 +424,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_ZERO {0.0, 0.0, \
-                            0.0, 0.0, \
-                            0.0, 0.0}
+#define CML_MATRIX3X2_ZERO {{0.0, 0.0, \
+                             0.0, 0.0, \
+                             0.0, 0.0}}
 
 
 /******************************************************************************
@@ -326,9 +435,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_IDENTITY {1.0, 0.0, \
-                                0.0, 1.0, \
-                                0.0, 0.0}
+#define CML_MATRIX3X2_IDENTITY {{1.0, 0.0, \
+                                 0.0, 1.0, \
+                                 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -337,9 +446,28 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_ONE {1.0, 1.0, \
-                           1.0, 1.0, \
-                           1.0, 1.0}
+#define CML_MATRIX3X2_ONE {{1.0, 1.0, \
+                            1.0, 1.0, \
+                            1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X2
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x2 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *****************************************************************************/
+#define CML_MATRIX3X2(m00, m01, m10, m11, m20, m21) {{m00, m01, \
+                                                      m10, m11, \
+                                                      m20, m21}}
 
 
 
@@ -369,9 +497,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_ZERO {0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, 0.0}
+#define CML_MATRIX3X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -380,9 +508,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_IDENTITY {1.0, 0.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0, 0.0, \
-                                0.0, 0.0, 1.0, 0.0}
+#define CML_MATRIX3X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0, 0.0, \
+                                 0.0, 0.0, 1.0, 0.0}}
 
 
 /******************************************************************************
@@ -391,9 +519,35 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_ONE {1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, 1.0}
+#define CML_MATRIX3X4_ONE {{1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX3X4
+ * 
+ * Description:
+ *      Initializes a CML_Matrix3x4 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m03 - The element at row 0, column 3.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *      f64 m13 - The element at row 1, column 3.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *      f64 m22 - The element at row 2, column 2.
+ *      f64 m23 - The element at row 2, column 3.
+ *****************************************************************************/
+#define CML_MATRIX3X4(m00, m01, m02, m03, m10, m11, \
+                      m12, m13, m20, m21, m22, m23) {{m00, m01, m02, m03, \
+                                                      m10, m11, m12, m13, \
+                                                      m20, m21, m22, m23}}
 
 
 
@@ -424,10 +578,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_ZERO {0.0, 0.0, \
-                            0.0, 0.0, \
-                            0.0, 0.0, \
-                            0.0, 0.0}
+#define CML_MATRIX4X2_ZERO {{0.0, 0.0, \
+                             0.0, 0.0, \
+                             0.0, 0.0, \
+                             0.0, 0.0}}
 
 
 /******************************************************************************
@@ -436,10 +590,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_IDENTITY {1.0, 0.0, \
-                                0.0, 1.0, \
-                                0.0, 0.0, \
-                                0.0, 0.0}
+#define CML_MATRIX4X2_IDENTITY {{1.0, 0.0, \
+                                 0.0, 1.0, \
+                                 0.0, 0.0, \
+                                 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -448,10 +602,32 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_ONE {1.0, 1.0, \
-                           1.0, 1.0, \
-                           1.0, 1.0, \
-                           1.0, 1.0}
+#define CML_MATRIX4X2_ONE {{1.0, 1.0, \
+                            1.0, 1.0, \
+                            1.0, 1.0, \
+                            1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X2
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x2 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *      f64 m30 - The element at row 3, column 0.
+ *      f64 m31 - The element at row 3, column 1.
+ *****************************************************************************/
+#define CML_MATRIX4X2(m00, m01, m10, m11, m20, m21, m30, m31) {{m00, m01, \
+                                                                m10, m11, \
+                                                                m20, m21, \
+                                                                m30, m31}}
 
 
 
@@ -482,10 +658,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_ZERO {0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0, \
-                            0.0, 0.0, 0.0}
+#define CML_MATRIX4X3_ZERO {{0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0, \
+                             0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -494,10 +670,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_IDENTITY {1.0, 0.0, 0.0, \
-                                0.0, 1.0, 0.0, \
-                                0.0, 0.0, 1.0, \
-                                0.0, 0.0, 0.0}
+#define CML_MATRIX4X3_IDENTITY {{1.0, 0.0, 0.0, \
+                                 0.0, 1.0, 0.0, \
+                                 0.0, 0.0, 1.0, \
+                                 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -506,10 +682,37 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_ONE {1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0, \
-                           1.0, 1.0, 1.0}
+#define CML_MATRIX4X3_ONE {{1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0, \
+                            1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_MATRIX4X3
+ * 
+ * Description:
+ *      Initializes a CML_Matrix4x3 to the given values.
+ *
+ * Parameters:
+ *      f64 m00 - The element at row 0, column 0.
+ *      f64 m01 - The element at row 0, column 1.
+ *      f64 m02 - The element at row 0, column 2.
+ *      f64 m10 - The element at row 1, column 0.
+ *      f64 m11 - The element at row 1, column 1.
+ *      f64 m12 - The element at row 1, column 2.
+ *      f64 m20 - The element at row 2, column 0.
+ *      f64 m21 - The element at row 2, column 1.
+ *      f64 m22 - The element at row 2, column 2.
+ *      f64 m30 - The element at row 3, column 0.
+ *      f64 m31 - The element at row 3, column 1.
+ *      f64 m32 - The element at row 3, column 2.
+ *****************************************************************************/
+#define CML_MATRIX4X3(m00, m01, m02, m10, m11, m12, \
+                      m20, m21, m22, m30, m31, m32) {{m00, m01, m02, \
+                                                      m10, m11, m12, \
+                                                      m20, m21, m22, \
+                                                      m30, m31, m32}}
 
 
 
@@ -3707,18 +3910,18 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_
     f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
     f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    out->m00 = A->m00;
-    out->m01 = A->m10;
-    out->m02 = A->m20;
-    out->m03 = A->m30;
-    out->m10 = A->m01;
-    out->m11 = A->m11;
-    out->m12 = A->m21;
-    out->m13 = A->m31;
-    out->m20 = A->m02;
-    out->m21 = A->m12;
-    out->m22 = A->m22;
-    out->m23 = A->m32;
+    out->m00 = a00;
+    out->m01 = a10;
+    out->m02 = a20;
+    out->m03 = a30;
+    out->m10 = a01;
+    out->m11 = a11;
+    out->m12 = a21;
+    out->m13 = a31;
+    out->m20 = a02;
+    out->m21 = a12;
+    out->m22 = a22;
+    out->m23 = a32;
 }
 
 

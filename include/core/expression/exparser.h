@@ -77,7 +77,7 @@ typedef struct {
  *          cml_exptkn_init(&string, charType, size);.
  *****************************************************************************/
 // Yet to change to return CML_Status and initialize input CML_ExpressionToken *
-CAMEL_API CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 size);
+CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 size);
 
 
 /******************************************************************************
@@ -92,7 +92,7 @@ CAMEL_API CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 s
  * Returns:
  *      Void.
  *****************************************************************************/
-CAMEL_API void cml_exptkn_free(CML_ExpressionToken *token);
+void cml_exptkn_free(CML_ExpressionToken *token);
 
 
 /******************************************************************************
@@ -107,7 +107,7 @@ CAMEL_API void cml_exptkn_free(CML_ExpressionToken *token);
  * Returns:
  *      The type of the character input.
  *****************************************************************************/
-CAMEL_API int cml_read_char(char input);
+int cml_read_char(char input);
 
 
 /******************************************************************************
@@ -126,7 +126,7 @@ CAMEL_API int cml_read_char(char input);
  *****************************************************************************/
 #define INITIAL_EXP_SIZE 10
 #define INITIAL_NUM_SIZE 20
-CAMEL_API CML_ExpressionToken **cml_lex_expression(const char *expression, size_t *size);
+CML_ExpressionToken **cml_lex_expression(const char *expression, u32 *size);
 
 
 /******************************************************************************

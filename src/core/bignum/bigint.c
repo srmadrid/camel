@@ -16,7 +16,7 @@
 #include "../../../include/core/bignum/bigint.h"
 
 
-CML_Status cml_bigint_init(CML_BigInt *bigint, size_t capacity) {
+CML_Status cml_bigint_init(CML_BigInt *bigint, u32 capacity) {
     if (capacity < CML_INITIAL_BIGINT_CAP) {
         capacity = CML_INITIAL_BIGINT_CAP;
     }
@@ -31,7 +31,7 @@ CML_Status cml_bigint_init(CML_BigInt *bigint, size_t capacity) {
         bigint->size = 0;
         return CML_ERR_INVALID_SIZE;
     }
-    for (int i = 0; i < capacity; ++i) {
+    for (u32 i = 0; i < capacity; ++i) {
         bigint->data[i] = 0;
     }
     bigint->size = 0;
@@ -74,6 +74,10 @@ CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign) {
 
 
 CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input) {
+    if (bigint == NULL || input == NULL) {
+        return CML_ERR_NULL_PTR;
+    }
+    return CML_SUCCESS;
     // To be implemented
 }
 
@@ -96,7 +100,7 @@ CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input) {
     bigint->size = input->size;
     bigint->sign = input->sign;
 
-    for (int i = 0; i < input->size; ++i) {
+    for (u32 i = 0; i < input->size; ++i) {
         bigint->data[i] = input->data[i];
     }
 
@@ -105,6 +109,9 @@ CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input) {
 
 
 char *cml_bigint_to_str(CML_BigInt *bigint) {
+    if (bigint == NULL) {
+        return NULL;
+    }
     // To be implemented
     return NULL;
 }
@@ -120,12 +127,12 @@ char *cml_bigint_to_bin_str(CML_BigInt *bigint) {
         return NULL;
     }
 
-    for (int i = 0; i < bigint->size * 32; ++i) {
+    for (u32 i = 0; i < bigint->size * 32; ++i) {
         str[i] = (bigint->data[i / 32] & (1 << (i % 32))) ? '1' : '0';
     }
     str[bigint->size * 32] = '\0';
 
-    size_t start = 0, end = strlen(str) - 1;
+    u32 start = 0, end = strlen(str) - 1;
     while (start < end && str[end] == '0') {
         end--;
     }
@@ -149,7 +156,7 @@ CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2) {
         return CML_FALSE;
     }
 
-    for (int i = 0; i < bigint1->size; ++i) {
+    for (u32 i = 0; i < bigint1->size; ++i) {
         if (bigint1->data[i] != bigint2->data[i]) {
             return CML_FALSE;
         }
@@ -176,10 +183,10 @@ CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2) {
         return CML_LOWER;
     }
 
-    for (int i = bigint1->size - 1; i >= 0; --i) {
-        if (bigint1->data[i] > bigint2->data[i]) {
+    for (u32 i = bigint1->size; i > 0; --i) {
+        if (bigint1->data[i - 1] > bigint2->data[i - 1]) {
             return CML_GREATER;
-        } else if (bigint1->data[i] < bigint2->data[i]) {
+        } else if (bigint1->data[i - 1] < bigint2->data[i - 1]) {
             return CML_LOWER;
         }
     }
@@ -220,12 +227,23 @@ CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign) {
 
 
 CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign) {
+    if (bigint == NULL) {
+        return CML_EQUAL;
+    }
+    if (input + sign) {
+        return CML_EQUAL;
+    }
     // To be implemented
+    return CML_EQUAL;
 }
 
 
 CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str) {
+    if (bigint == NULL || str == NULL) {
+        return CML_FALSE;
+    }
     // To be implemented
+    return CML_FALSE;
 }
 
 

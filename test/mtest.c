@@ -32,7 +32,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    int testing = 1;
+    int testing = 0;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 300;
@@ -47,7 +47,7 @@ int main() {
         cml_run_tests(registry, count);
     }
 
-    int profiling = 0;
+    int profiling = 1;
     if (profiling && testing) {
         printf("\n\n");
     }
@@ -56,29 +56,29 @@ int main() {
         u32 iterations = 1000000;
         u32 outIterations = 1000;
         printf("Time profiling:\n");
-        printf("Function being profiled: cml_matrix4x4_mult\n");
+        printf("Function being profiled: cmlc_matrix4x4_mult\n");
         printf("Total iterations: %d\n", iterations*outIterations);
 
         struct timeval start, end;
-        CML_Matrix4x4 A = {
+        CML_Matrix4x4 A = {{
             1.0, 2.0, 3.0, 4.0,
             5.0, 6.0, 7.0, 8.0,
             9.0, 10.0, 11.0, 12.0,
             13.0, 14.0, 15.0, 16.0
-        };
-        CML_Matrix4x4 B = {
+        }};
+        CML_Matrix4x4 B = {{
             1.0, 2.0, 3.0, 4.0,
             5.0, 6.0, 7.0, 8.0,
             9.0, 10.0, 11.0, 12.0,
             13.0, 14.0, 15.0, 16.0
-        };
+        }};
         double totalElapsed = 0.0;
         double elapsed = 0.0;
         for (u32 i = 0; i < outIterations; i++) {
             gettimeofday(&start, NULL);
             for (u32 j = 0; j < iterations; j++) {
                 CML_Matrix4x4 C;
-                cml_matrix4x4_mult(&A, &B, &C);
+                cmlc_matrix4x4_mult(&A, &B, &C);
             }
             gettimeofday(&end, NULL);
             elapsed = (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0);

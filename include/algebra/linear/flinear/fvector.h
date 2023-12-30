@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../../../core/core.h"
+#include "../../../core/macros.h"
+#include "../../../core/err.h"
+#include "../../../core/constants.h"
 
 
 /******************************************************************************
@@ -51,7 +53,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector2 to 0.
  *****************************************************************************/
-#define CML_VECTOR2_ZERO {0.0, 0.0}
+#define CML_VECTOR2_ZERO {{0.0, 0.0}}
 
 
 /******************************************************************************
@@ -60,7 +62,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector2 to the unit vector in the i direction.
  *****************************************************************************/
-#define CML_VECTOR2_I {1.0, 0.0}
+#define CML_VECTOR2_I {{1.0, 0.0}}
 
 
 /******************************************************************************
@@ -69,7 +71,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector2 to the unit vector in the j direction.
  *****************************************************************************/
-#define CML_VECTOR2_J {0.0, 1.0}
+#define CML_VECTOR2_J {{0.0, 1.0}}
 
 
 /******************************************************************************
@@ -78,7 +80,20 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector2 to 1.
  *****************************************************************************/
-#define CML_VECTOR2_ONE {1.0, 1.0}
+#define CML_VECTOR2_ONE {{1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR2
+ * 
+ * Description:
+ *      Initializes a CML_Vector2 to the given values.
+ *
+ * Parameters:
+ *      f64 x - The x component of the vector.
+ *      f64 y - The y component of the vector.
+ *****************************************************************************/
+#define CML_VECTOR2(x, y) {{x, y}}
 
 
 
@@ -109,7 +124,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector3 to 0.
  *****************************************************************************/
-#define CML_VECTOR3_ZERO {0.0, 0.0, 0.0}
+#define CML_VECTOR3_ZERO {{0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -118,7 +133,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector3 to the unit vector in the i direction.
  *****************************************************************************/
-#define CML_VECTOR3_I {1.0, 0.0, 0.0}
+#define CML_VECTOR3_I {{1.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -127,7 +142,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector3 to the unit vector in the j direction.
  *****************************************************************************/
-#define CML_VECTOR3_J {0.0, 1.0, 0.0}
+#define CML_VECTOR3_J {{0.0, 1.0, 0.0}}
 
 
 /******************************************************************************
@@ -136,7 +151,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector3 to the unit vector in the k direction.
  *****************************************************************************/
-#define CML_VECTOR3_K {0.0, 0.0, 1.0}
+#define CML_VECTOR3_K {{0.0, 0.0, 1.0}}
 
 
 /******************************************************************************
@@ -145,7 +160,21 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector3 to 1.
  *****************************************************************************/
-#define CML_VECTOR3_ONE {1.0, 1.0, 1.0}
+#define CML_VECTOR3_ONE {{1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR3
+ * 
+ * Description:
+ *      Initializes a CML_Vector3 to the given values.
+ *
+ * Parameters:
+ *      f64 x - The x component of the vector.
+ *      f64 y - The y component of the vector.
+ *      f64 z - The z component of the vector.
+ *****************************************************************************/
+#define CML_VECTOR3(x, y, z) {{x, y, z}}
 
 
 
@@ -178,7 +207,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to 0.
  *****************************************************************************/
-#define CML_VECTOR4_ZERO {0.0, 0.0, 0.0, 0.0}
+#define CML_VECTOR4_ZERO {{0.0, 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -187,7 +216,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to the unit vector in the i direction.
  *****************************************************************************/
-#define CML_VECTOR4_I {1.0, 0.0, 0.0, 0.0}
+#define CML_VECTOR4_I {{1.0, 0.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -196,7 +225,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to the unit vector in the j direction.
  *****************************************************************************/
-#define CML_VECTOR4_J {0.0, 1.0, 0.0, 0.0}
+#define CML_VECTOR4_J {{0.0, 1.0, 0.0, 0.0}}
 
 
 /******************************************************************************
@@ -205,7 +234,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to the unit vector in the k direction.
  *****************************************************************************/
-#define CML_VECTOR4_K {0.0, 0.0, 1.0, 0.0}
+#define CML_VECTOR4_K {{0.0, 0.0, 1.0, 0.0}}
 
 
 /******************************************************************************
@@ -214,7 +243,7 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to the unit vector in the l direction.
  *****************************************************************************/
-#define CML_VECTOR4_L {0.0, 0.0, 0.0, 1.0}
+#define CML_VECTOR4_L {{0.0, 0.0, 0.0, 1.0}}
 
 
 /******************************************************************************
@@ -223,7 +252,22 @@ typedef union {
  * Description:
  *      Initializes a CML_Vector4 to 1.
  *****************************************************************************/
-#define CML_VECTOR4_ONE {1.0, 1.0, 1.0, 1.0}
+#define CML_VECTOR4_ONE {{1.0, 1.0, 1.0, 1.0}}
+
+
+/******************************************************************************
+ * Macro: CML_VECTOR4
+ * 
+ * Description:
+ *      Initializes a CML_Vector4 to the given values.
+ *
+ * Parameters:
+ *      f64 x - The x component of the vector.
+ *      f64 y - The y component of the vector.
+ *      f64 z - The z component of the vector.
+ *      f64 w - The w component of the vector.
+ *****************************************************************************/
+#define CML_VECTOR4(x, y, z, w) {{x, y, z, w}}
 
 
 
