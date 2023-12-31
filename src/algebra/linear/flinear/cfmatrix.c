@@ -34,7 +34,7 @@ void cmlc_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matr
 }
 
 
-void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out) {
+void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f32 t, CML_Matrix2x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -43,8 +43,8 @@ void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out) {
 
 
 void cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b10 = B->m10, b11 = B->m11;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -54,9 +54,9 @@ void cmlc_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Mat
 
 
 void cmlc_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -68,9 +68,9 @@ void cmlc_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *
 
 
 void cmlc_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -84,8 +84,8 @@ void cmlc_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *
 
 
 void cmlc_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 v0 = v->x, v1 = v->y;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -93,26 +93,26 @@ void cmlc_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, C
 
 
 void cmlc_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 v0 = v->x, v1 = v->y;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
 }
 
 
-f64 cmlc_matrix2x2_det(const CML_Matrix2x2 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+f32 cmlc_matrix2x2_det(const CML_Matrix2x2 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
 
     return a00*a11 - a01*a10;
 }
 
 
 CML_Status cmlc_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 det = (a00*a11 - a01*a10);
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 det = (a00*a11 - a01*a10);
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -128,8 +128,8 @@ CML_Status cmlc_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
 
 
 void cmlc_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
 
 
     out->m00 = a00;
@@ -139,7 +139,7 @@ void cmlc_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
 }
 
 
-f64 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A) {
+f32 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A) {
     return A->m00 + A->m11;
 }
 
@@ -149,8 +149,8 @@ CML_Bool cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -202,7 +202,7 @@ void cmlc_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matr
 }
 
 
-void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out) {
+void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f32 t, CML_Matrix3x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -216,13 +216,13 @@ void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out) {
 
 
 void cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -237,13 +237,13 @@ void cmlc_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Mat
 
 
 void cmlc_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -255,13 +255,13 @@ void cmlc_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *
 
 
 void cmlc_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -279,11 +279,11 @@ void cmlc_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *
 
 
 void cmlc_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -292,11 +292,11 @@ void cmlc_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, C
 
 
 void cmlc_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -304,23 +304,23 @@ void cmlc_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, C
 }
 
 
-f64 cmlc_matrix3x3_det(const CML_Matrix3x3 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+f32 cmlc_matrix3x3_det(const CML_Matrix3x3 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
     return a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
 }
 
 
 CML_Status cmlc_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 det = a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
+    f32 det = a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -341,9 +341,9 @@ CML_Status cmlc_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
 
 
 void cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -357,7 +357,7 @@ void cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
 }
 
 
-f64 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A) {
+f32 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A) {
     return A->m00 + A->m11 + A->m22;
 }
 
@@ -367,9 +367,9 @@ CML_Bool cmlc_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && fabs(A->m02 - B->m02) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && fabs(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m02 - B->m02) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -436,7 +436,7 @@ void cmlc_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matr
 }
 
 
-void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out) {
+void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f32 t, CML_Matrix4x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -457,15 +457,15 @@ void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out) {
 
 
 void cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -487,15 +487,15 @@ void cmlc_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Mat
 
 
 void cmlc_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -509,15 +509,15 @@ void cmlc_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *
 
 
 void cmlc_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -535,12 +535,12 @@ void cmlc_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *
 
 
 void cmlc_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -550,12 +550,12 @@ void cmlc_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, C
 
 
 void cmlc_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -564,11 +564,11 @@ void cmlc_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, C
 }
 
 
-f64 cmlc_matrix4x4_det(const CML_Matrix4x4 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+f32 cmlc_matrix4x4_det(const CML_Matrix4x4 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
     return a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
            a02*a11*a23*a30 - a01*a12*a23*a30 - a03*a12*a20*a31 + a02*a13*a20*a31+
@@ -580,19 +580,19 @@ f64 cmlc_matrix4x4_det(const CML_Matrix4x4 *A) {
 
 
 CML_Status cmlc_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 det = a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
+    f32 det = a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
               a02*a11*a23*a30 - a01*a12*a23*a30 - a03*a12*a20*a31 + a02*a13*a20*a31+
               a03*a10*a22*a31 - a00*a13*a22*a31 - a02*a10*a23*a31 + a00*a12*a23*a31+
               a03*a11*a20*a32 - a01*a13*a20*a32 - a03*a10*a21*a32 + a00*a13*a21*a32+
               a01*a10*a23*a32 - a00*a11*a23*a32 - a02*a11*a20*a33 + a01*a12*a20*a33+
               a02*a10*a21*a33 - a00*a12*a21*a33 - a01*a10*a22*a33 + a00*a11*a22*a33;
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -620,10 +620,10 @@ CML_Status cmlc_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
 
 
 void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -644,7 +644,7 @@ void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
 }
 
 
-f64 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A) {
+f32 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A) {
     return A->m00 + A->m11 + A->m22 + A->m33;
 }
 
@@ -654,14 +654,14 @@ CML_Bool cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m22 - B->m22) <= CML_EPSILON && fabs(A->m23 - B->m23) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON && 
-            fabs(A->m32 - B->m32) <= CML_EPSILON && fabs(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && 
+            fabsf(A->m32 - B->m32) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -710,7 +710,7 @@ void cmlc_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matr
 }
 
 
-void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out) {
+void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f32 t, CML_Matrix2x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -721,12 +721,12 @@ void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out) {
 
 
 void cmlc_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -736,12 +736,12 @@ void cmlc_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *
 
 
 void cmlc_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -753,12 +753,12 @@ void cmlc_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *
 
 
 void cmlc_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -772,10 +772,10 @@ void cmlc_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *
 
 
 void cmlc_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -783,10 +783,10 @@ void cmlc_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, C
 
 
 void cmlc_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
@@ -795,8 +795,8 @@ void cmlc_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, C
 
 
 void cmlc_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -812,9 +812,9 @@ CML_Bool cmlc_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m10 - B->m10) <= CML_EPSILON && 
-            fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
+            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -863,7 +863,7 @@ void cmlc_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matr
 }
 
 
-void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out) {
+void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f32 t, CML_Matrix2x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -876,13 +876,13 @@ void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out) {
 
 
 void cmlc_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -892,13 +892,13 @@ void cmlc_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *
 
 
 void cmlc_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -910,13 +910,13 @@ void cmlc_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *
 
 
 void cmlc_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -930,10 +930,10 @@ void cmlc_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *
 
 
 void cmlc_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -941,10 +941,10 @@ void cmlc_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, C
 
 
 void cmlc_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
@@ -954,8 +954,8 @@ void cmlc_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, C
 
 
 void cmlc_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -973,10 +973,10 @@ CML_Bool cmlc_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1021,7 +1021,7 @@ void cmlc_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matr
 }
 
 
-void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out) {
+void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f32 t, CML_Matrix3x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -1032,12 +1032,12 @@ void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out) {
 
 
 void cmlc_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1049,12 +1049,12 @@ void cmlc_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *
 
 
 void cmlc_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1069,12 +1069,12 @@ void cmlc_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *
 
 
 void cmlc_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1092,11 +1092,11 @@ void cmlc_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *
 
 
 void cmlc_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -1105,11 +1105,11 @@ void cmlc_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, C
 
 
 void cmlc_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -1117,9 +1117,9 @@ void cmlc_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, C
 
 
 void cmlc_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -1135,9 +1135,9 @@ CML_Bool cmlc_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1196,7 +1196,7 @@ void cmlc_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matr
 }
 
 
-void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out) {
+void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f32 t, CML_Matrix3x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -1213,14 +1213,14 @@ void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out) {
 
 
 void cmlc_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1232,14 +1232,14 @@ void cmlc_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *
 
 
 void cmlc_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1254,14 +1254,14 @@ void cmlc_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *
 
 
 void cmlc_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1279,11 +1279,11 @@ void cmlc_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *
 
 
 void cmlc_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -1292,11 +1292,11 @@ void cmlc_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, C
 
 
 void cmlc_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -1306,9 +1306,9 @@ void cmlc_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, C
 
 
 void cmlc_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -1330,12 +1330,12 @@ CML_Bool cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m22 - B->m22) <= CML_EPSILON && fabs(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1386,7 +1386,7 @@ void cmlc_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matr
 }
 
 
-void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out) {
+void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f32 t, CML_Matrix4x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -1399,13 +1399,13 @@ void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out) {
 
 
 void cmlc_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1419,13 +1419,13 @@ void cmlc_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *
 
 
 void cmlc_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1443,13 +1443,13 @@ void cmlc_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *
 
 
 void cmlc_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -1471,12 +1471,12 @@ void cmlc_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *
 
 
 void cmlc_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -1486,12 +1486,12 @@ void cmlc_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, C
 
 
 void cmlc_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -1515,10 +1515,10 @@ CML_Bool cmlc_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1579,7 +1579,7 @@ void cmlc_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matr
 }
 
 
-void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out) {
+void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f32 t, CML_Matrix4x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -1596,14 +1596,14 @@ void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out) {
 
 
 void cmlc_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1617,14 +1617,14 @@ void cmlc_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *
 
 
 void cmlc_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1642,14 +1642,14 @@ void cmlc_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *
 
 
 void cmlc_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1671,12 +1671,12 @@ void cmlc_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *
 
 
 void cmlc_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -1686,12 +1686,12 @@ void cmlc_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, C
 
 
 void cmlc_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -1700,10 +1700,10 @@ void cmlc_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, C
 
 
 void cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -1725,10 +1725,10 @@ CML_Bool cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && fabs(A->m02 - B->m02) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && fabs(A->m22 - B->m22) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON && fabs(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m02 - B->m02) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 

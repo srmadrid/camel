@@ -9,7 +9,7 @@ Camel is a C mathematics library, which aims to provide a simple and easy to use
 - [Installation](#installation)
 - [Compile](#compile)
 - [Usage](#usage)
-- [To-Do](#to-do)
+- [To-Do](todo.md)
 
 ## Notation
 
@@ -22,7 +22,7 @@ The functions and types in the library follow a specific naming convention.
 - **```<c>```**: indicates an optional trailing ```c``` if the function belongs to a header only module where compiled versions are also available, and you want to use the compiled version; i.e. ```cmlc_<type>_<function>_<type>``` to use the compiled version of the function.
 - First ```<type>```: indicates the type on which the function operates.
 - ```<function>```: indicates the function name.
-- Second ```<type>```: indicates a second type on which the function operates, if necessary. If the function only operates on one type, this is omitted. For example, for a function that adds two numbers, if we want to add two ```f64```, the function name would be ```cml_f64_add```, but if we want to add a ```f64``` and a ```i64```, the function name would be ```cml_f64_add_i64```.
+- Second ```<type>```: indicates a second type on which the function operates, if necessary. If the function only operates on one type, this is omitted. For example, for a function that adds two numbers, if we want to add two ```f64```, the function name would be ```cml_f64_add```, but if we want to add a ```f64``` and a ```i64```, the function name would be ```cml_f64_add_i64``` (these are example functions, they don't exist).
 
 For a complete list of functions, see [Functions](doc/functions.md).
 
@@ -76,8 +76,3 @@ To use the testing module first create a file that within the ```main``` functio
 For a complete example, explore the ```test``` directory, where you will find all the official tests. Here are some of the important files:
 
 - [1] ```mtest.c```: Here you will find the ```main``` function that runs all the tests, as well as all the setup.
-
-## To-Do
-
-- [ ] Create documentation
-- [ ] Create examples

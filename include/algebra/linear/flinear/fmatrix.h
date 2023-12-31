@@ -36,15 +36,15 @@
  *      Represents a 2x2 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x and y are in the range 
+ *      f32 mxy - The element at row x, column y. x and y are in the range 
  *                [0, 1].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01;
-        f64 m10, m11;
+        f32 m00, m01;
+        f32 m10, m11;
     };
-    f64 m[4];
+    f32 array[4];
 } CML_Matrix2x2;
 
 
@@ -54,8 +54,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ZERO {{0.0, 0.0, \
-                             0.0, 0.0}}
+#define CML_MATRIX2X2_ZERO {{0.0f, 0.0f, \
+                             0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -64,8 +64,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_IDENTITY {{1.0, 0.0, \
-                                 0.0, 1.0}}
+#define CML_MATRIX2X2_IDENTITY {{1.0f, 0.0f, \
+                                 0.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -74,8 +74,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X2_ONE {{1.0, 1.0, \
-                            1.0, 1.0}}
+#define CML_MATRIX2X2_ONE {{1.0f, 1.0f, \
+                            1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -85,10 +85,10 @@ typedef union {
  *      Initializes a CML_Matrix2x2 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
  *****************************************************************************/
 #define CML_MATRIX2X2(m00, m01, m10, m11) {{m00, m01, \
                                             m10, m11}}
@@ -102,16 +102,16 @@ typedef union {
  *      Represents a 3x3 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x and y are in the range
+ *      f32 mxy - The element at row x, column y. x and y are in the range
  *                [0, 2].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02;
-        f64 m10, m11, m12;
-        f64 m20, m21, m22;
+        f32 m00, m01, m02;
+        f32 m10, m11, m12;
+        f32 m20, m21, m22;
     };
-    f64 m[9];
+    f32 array[9];
 } CML_Matrix3x3;
 
 
@@ -121,9 +121,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_ZERO {{0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0}}
+#define CML_MATRIX3X3_ZERO {{0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -132,9 +132,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_IDENTITY {{1.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0, \
-                                 0.0, 0.0, 1.0}}
+#define CML_MATRIX3X3_IDENTITY {{1.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f, \
+                                 0.0f, 0.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -143,9 +143,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X3_ONE {{1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0}}
+#define CML_MATRIX3X3_ONE {{1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -155,15 +155,15 @@ typedef union {
  *      Initializes a CML_Matrix3x3 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
- *      f64 m22 - The element at row 2, column 2.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
+ *      f32 m22 - The element at row 2, column 2.
  *****************************************************************************/
 #define CML_MATRIX3X3(m00, m01, m02, m10, m11, m12, m20, m21, m22) {{m00, m01, m02, \
                                                                      m10, m11, m12, \
@@ -178,17 +178,17 @@ typedef union {
  *      Represents a 4x4 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x and y are in the range
+ *      f32 mxy - The element at row x, column y. x and y are in the range
  *                [0, 3].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02, m03;
-        f64 m10, m11, m12, m13;
-        f64 m20, m21, m22, m23;
-        f64 m30, m31, m32, m33;
+        f32 m00, m01, m02, m03;
+        f32 m10, m11, m12, m13;
+        f32 m20, m21, m22, m23;
+        f32 m30, m31, m32, m33;
     };
-    f64 m[16];
+    f32 array[16];
 } CML_Matrix4x4;
 
 
@@ -198,10 +198,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0}}
+#define CML_MATRIX4X4_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -210,10 +210,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0, 0.0, \
-                                 0.0, 0.0, 1.0, 0.0, \
-                                 0.0, 0.0, 0.0, 1.0}}
+#define CML_MATRIX4X4_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f, 0.0f, \
+                                 0.0f, 0.0f, 1.0f, 0.0f, \
+                                 0.0f, 0.0f, 0.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -222,10 +222,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X4_ONE {{1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0}}
+#define CML_MATRIX4X4_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -235,22 +235,22 @@ typedef union {
  *      Initializes a CML_Matrix4x4 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m03 - The element at row 0, column 3.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
- *      f64 m13 - The element at row 1, column 3.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
- *      f64 m22 - The element at row 2, column 2.
- *      f64 m23 - The element at row 2, column 3.
- *      f64 m30 - The element at row 3, column 0.
- *      f64 m31 - The element at row 3, column 1.
- *      f64 m32 - The element at row 3, column 2.
- *      f64 m33 - The element at row 3, column 3.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m03 - The element at row 0, column 3.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
+ *      f32 m13 - The element at row 1, column 3.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
+ *      f32 m22 - The element at row 2, column 2.
+ *      f32 m23 - The element at row 2, column 3.
+ *      f32 m30 - The element at row 3, column 0.
+ *      f32 m31 - The element at row 3, column 1.
+ *      f32 m32 - The element at row 3, column 2.
+ *      f32 m33 - The element at row 3, column 3.
  *****************************************************************************/
 #define CML_MATRIX4X4(m00, m01, m02, m03, m10, m11, m12, m13, \
                       m20, m21, m22, m23, m30, m31, m32, m33) {{m00, m01, m02, m03, \
@@ -267,15 +267,15 @@ typedef union {
  *      Represents a 2x3 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 1] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 1] and
  *                y in [0, 2].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02;
-        f64 m10, m11, m12;
+        f32 m00, m01, m02;
+        f32 m10, m11, m12;
     };
-    f64 m[6];
+    f32 array[6];
 } CML_Matrix2x3;
 
 
@@ -285,8 +285,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_ZERO {{0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0}}
+#define CML_MATRIX2X3_ZERO {{0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -295,8 +295,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_IDENTITY {{1.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0}}
+#define CML_MATRIX2X3_IDENTITY {{1.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -305,8 +305,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X3_ONE {{1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0}}
+#define CML_MATRIX2X3_ONE {{1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -316,12 +316,12 @@ typedef union {
  *      Initializes a CML_Matrix2x3 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
  *****************************************************************************/
 #define CML_MATRIX2X3(m00, m01, m02, m10, m11, m12) {{m00, m01, m02, \
                                                       m10, m11, m12}}
@@ -335,15 +335,15 @@ typedef union {
  *      Represents a 2x4 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 1] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 1] and
  *                y in [0, 3].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02, m03;
-        f64 m10, m11, m12, m13;
+        f32 m00, m01, m02, m03;
+        f32 m10, m11, m12, m13;
     };
-    f64 m[8];
+    f32 array[8];
 } CML_Matrix2x4;
 
 
@@ -353,8 +353,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0}}
+#define CML_MATRIX2X4_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -363,8 +363,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0, 0.0}}
+#define CML_MATRIX2X4_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -373,8 +373,8 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix2x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX2X4_ONE {{1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0}}
+#define CML_MATRIX2X4_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -384,14 +384,14 @@ typedef union {
  *      Initializes a CML_Matrix2x4 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m03 - The element at row 0, column 3.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
- *      f64 m13 - The element at row 1, column 3.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m03 - The element at row 0, column 3.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
+ *      f32 m13 - The element at row 1, column 3.
  *****************************************************************************/
 #define CML_MATRIX2X4(m00, m01, m02, m03, m10, m11, m12, m13) {{m00, m01, m02, m03, \
                                                                 m10, m11, m12, m13}}
@@ -405,16 +405,16 @@ typedef union {
  *      Represents a 3x2 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 2] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 2] and
  *                y in [0, 1].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01;
-        f64 m10, m11;
-        f64 m20, m21;
+        f32 m00, m01;
+        f32 m10, m11;
+        f32 m20, m21;
     };
-    f64 m[6];
+    f32 array[6];
 } CML_Matrix3x2;
 
 
@@ -424,9 +424,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_ZERO {{0.0, 0.0, \
-                             0.0, 0.0, \
-                             0.0, 0.0}}
+#define CML_MATRIX3X2_ZERO {{0.0f, 0.0f, \
+                             0.0f, 0.0f, \
+                             0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -435,9 +435,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_IDENTITY {{1.0, 0.0, \
-                                 0.0, 1.0, \
-                                 0.0, 0.0}}
+#define CML_MATRIX3X2_IDENTITY {{1.0f, 0.0f, \
+                                 0.0f, 1.0f, \
+                                 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -446,9 +446,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X2_ONE {{1.0, 1.0, \
-                            1.0, 1.0, \
-                            1.0, 1.0}}
+#define CML_MATRIX3X2_ONE {{1.0f, 1.0f, \
+                            1.0f, 1.0f, \
+                            1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -458,12 +458,12 @@ typedef union {
  *      Initializes a CML_Matrix3x2 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
  *****************************************************************************/
 #define CML_MATRIX3X2(m00, m01, m10, m11, m20, m21) {{m00, m01, \
                                                       m10, m11, \
@@ -478,16 +478,16 @@ typedef union {
  *      Represents a 3x4 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 2] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 2] and
  *                y in [0, 3].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02, m03;
-        f64 m10, m11, m12, m13;
-        f64 m20, m21, m22, m23;
+        f32 m00, m01, m02, m03;
+        f32 m10, m11, m12, m13;
+        f32 m20, m21, m22, m23;
     };
-    f64 m[12];
+    f32 array[12];
 } CML_Matrix3x4;
 
 
@@ -497,9 +497,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_ZERO {{0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, 0.0}}
+#define CML_MATRIX3X4_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -508,9 +508,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_IDENTITY {{1.0, 0.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0, 0.0, \
-                                 0.0, 0.0, 1.0, 0.0}}
+#define CML_MATRIX3X4_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f, 0.0f, \
+                                 0.0f, 0.0f, 1.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -519,9 +519,9 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix3x4 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX3X4_ONE {{1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, 1.0}}
+#define CML_MATRIX3X4_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -531,18 +531,18 @@ typedef union {
  *      Initializes a CML_Matrix3x4 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m03 - The element at row 0, column 3.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
- *      f64 m13 - The element at row 1, column 3.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
- *      f64 m22 - The element at row 2, column 2.
- *      f64 m23 - The element at row 2, column 3.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m03 - The element at row 0, column 3.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
+ *      f32 m13 - The element at row 1, column 3.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
+ *      f32 m22 - The element at row 2, column 2.
+ *      f32 m23 - The element at row 2, column 3.
  *****************************************************************************/
 #define CML_MATRIX3X4(m00, m01, m02, m03, m10, m11, \
                       m12, m13, m20, m21, m22, m23) {{m00, m01, m02, m03, \
@@ -558,17 +558,17 @@ typedef union {
  *      Represents a 4x2 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 3] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 3] and
  *                y in [0, 1].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01;
-        f64 m10, m11;
-        f64 m20, m21;
-        f64 m30, m31;
+        f32 m00, m01;
+        f32 m10, m11;
+        f32 m20, m21;
+        f32 m30, m31;
     };
-    f64 m[8];
+    f32 array[8];
 } CML_Matrix4x2;
 
 
@@ -578,10 +578,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_ZERO {{0.0, 0.0, \
-                             0.0, 0.0, \
-                             0.0, 0.0, \
-                             0.0, 0.0}}
+#define CML_MATRIX4X2_ZERO {{0.0f, 0.0f, \
+                             0.0f, 0.0f, \
+                             0.0f, 0.0f, \
+                             0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -590,10 +590,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_IDENTITY {{1.0, 0.0, \
-                                 0.0, 1.0, \
-                                 0.0, 0.0, \
-                                 0.0, 0.0}}
+#define CML_MATRIX4X2_IDENTITY {{1.0f, 0.0f, \
+                                 0.0f, 1.0f, \
+                                 0.0f, 0.0f, \
+                                 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -602,10 +602,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x2 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X2_ONE {{1.0, 1.0, \
-                            1.0, 1.0, \
-                            1.0, 1.0, \
-                            1.0, 1.0}}
+#define CML_MATRIX4X2_ONE {{1.0f, 1.0f, \
+                            1.0f, 1.0f, \
+                            1.0f, 1.0f, \
+                            1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -615,14 +615,14 @@ typedef union {
  *      Initializes a CML_Matrix4x2 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
- *      f64 m30 - The element at row 3, column 0.
- *      f64 m31 - The element at row 3, column 1.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
+ *      f32 m30 - The element at row 3, column 0.
+ *      f32 m31 - The element at row 3, column 1.
  *****************************************************************************/
 #define CML_MATRIX4X2(m00, m01, m10, m11, m20, m21, m30, m31) {{m00, m01, \
                                                                 m10, m11, \
@@ -638,17 +638,17 @@ typedef union {
  *      Represents a 4x3 matrix.
  *
  * Fields:
- *      f64 mxy - The element at row x, column y. x is in the range [0, 3] and
+ *      f32 mxy - The element at row x, column y. x is in the range [0, 3] and
  *                y in [0, 2].
  *****************************************************************************/
 typedef union {
     struct {
-        f64 m00, m01, m02;
-        f64 m10, m11, m12;
-        f64 m20, m21, m22;
-        f64 m30, m31, m32;
+        f32 m00, m01, m02;
+        f32 m10, m11, m12;
+        f32 m20, m21, m22;
+        f32 m30, m31, m32;
     };
-    f64 m[12];
+    f32 array[12];
 } CML_Matrix4x3;
 
 
@@ -658,10 +658,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the zero matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_ZERO {{0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0, \
-                             0.0, 0.0, 0.0}}
+#define CML_MATRIX4X3_ZERO {{0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f, \
+                             0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -670,10 +670,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the identity matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_IDENTITY {{1.0, 0.0, 0.0, \
-                                 0.0, 1.0, 0.0, \
-                                 0.0, 0.0, 1.0, \
-                                 0.0, 0.0, 0.0}}
+#define CML_MATRIX4X3_IDENTITY {{1.0f, 0.0f, 0.0f, \
+                                 0.0f, 1.0f, 0.0f, \
+                                 0.0f, 0.0f, 1.0f, \
+                                 0.0f, 0.0f, 0.0f}}
 
 
 /******************************************************************************
@@ -682,10 +682,10 @@ typedef union {
  * Description:
  *      Initializes a CML_Matrix4x3 to the one matrix.
  *****************************************************************************/
-#define CML_MATRIX4X3_ONE {{1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0, \
-                            1.0, 1.0, 1.0}}
+#define CML_MATRIX4X3_ONE {{1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f, \
+                            1.0f, 1.0f, 1.0f}}
 
 
 /******************************************************************************
@@ -695,18 +695,18 @@ typedef union {
  *      Initializes a CML_Matrix4x3 to the given values.
  *
  * Parameters:
- *      f64 m00 - The element at row 0, column 0.
- *      f64 m01 - The element at row 0, column 1.
- *      f64 m02 - The element at row 0, column 2.
- *      f64 m10 - The element at row 1, column 0.
- *      f64 m11 - The element at row 1, column 1.
- *      f64 m12 - The element at row 1, column 2.
- *      f64 m20 - The element at row 2, column 0.
- *      f64 m21 - The element at row 2, column 1.
- *      f64 m22 - The element at row 2, column 2.
- *      f64 m30 - The element at row 3, column 0.
- *      f64 m31 - The element at row 3, column 1.
- *      f64 m32 - The element at row 3, column 2.
+ *      f32 m00 - The element at row 0, column 0.
+ *      f32 m01 - The element at row 0, column 1.
+ *      f32 m02 - The element at row 0, column 2.
+ *      f32 m10 - The element at row 1, column 0.
+ *      f32 m11 - The element at row 1, column 1.
+ *      f32 m12 - The element at row 1, column 2.
+ *      f32 m20 - The element at row 2, column 0.
+ *      f32 m21 - The element at row 2, column 1.
+ *      f32 m22 - The element at row 2, column 2.
+ *      f32 m30 - The element at row 3, column 0.
+ *      f32 m31 - The element at row 3, column 1.
+ *      f32 m32 - The element at row 3, column 2.
  *****************************************************************************/
 #define CML_MATRIX4X3(m00, m01, m02, m10, m11, m12, \
                       m20, m21, m22, m30, m31, m32) {{m00, m01, m02, \
@@ -770,13 +770,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix2x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f32 t, CML_Matrix2x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -800,8 +800,8 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b10 = B->m10, b11 = B->m11;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -826,9 +826,9 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -855,9 +855,9 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -886,8 +886,8 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 v0 = v->x, v1 = v->y;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -910,8 +910,8 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 v0 = v->x, v1 = v->y;
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
@@ -930,8 +930,8 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x2(const CML_Vector2 *v, con
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+CAMEL_STATIC CAMEL_API f32 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
 
     return a00*a11 - a01*a10;
 }
@@ -951,10 +951,10 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
  *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
-    f64 det = (a00*a11 - a01*a10);
+    f32 a00 = A->m00, a01 = A->m01, a10 = A->m10, a11 = A->m11;
+    f32 det = (a00*a11 - a01*a10);
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -983,8 +983,8 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
 
 
     out->m00 = a00;
@@ -1006,7 +1006,7 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
+CAMEL_STATIC CAMEL_API f32 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
     return A->m00 + A->m11;
 }
 
@@ -1029,8 +1029,8 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1133,13 +1133,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix3x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f32 t, CML_Matrix3x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -1168,13 +1168,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1204,13 +1204,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1237,13 +1237,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -1276,11 +1276,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -1304,11 +1304,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -1328,10 +1328,10 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x3(const CML_Vector3 *v, con
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+CAMEL_STATIC CAMEL_API f32 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
     return a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
 }
@@ -1351,13 +1351,13 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
  *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
-    f64 det = a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
+    f32 det = a00*(a11*a22 - a12*a21) - a01*(a10*a22 - a12*a20) + a02*(a10*a21 - a11*a20);
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -1391,9 +1391,9 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -1419,7 +1419,7 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix3x3_trace(const CML_Matrix3x3 *A) {
+CAMEL_STATIC CAMEL_API f32 cml_matrix3x3_trace(const CML_Matrix3x3 *A) {
     return A->m00 + A->m11 + A->m22;
 }
 
@@ -1442,9 +1442,9 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && fabs(A->m02 - B->m02) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && fabs(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m02 - B->m02) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -1562,13 +1562,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix4x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f32 t, CML_Matrix4x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -1604,15 +1604,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1649,15 +1649,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1686,15 +1686,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -1727,12 +1727,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -1757,12 +1757,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -1783,11 +1783,11 @@ CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x4(const CML_Vector4 *v, con
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+CAMEL_STATIC CAMEL_API f32 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
     return a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
            a02*a11*a23*a30 - a01*a12*a23*a30 - a03*a12*a20*a31 + a02*a13*a20*a31+
@@ -1812,19 +1812,19 @@ CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
  *      Success or error code if the matrix is invertible.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
-    f64 det = a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
+    f32 det = a03*a12*a21*a30 - a02*a13*a21*a30 - a03*a11*a22*a30 + a01*a13*a22*a30+
               a02*a11*a23*a30 - a01*a12*a23*a30 - a03*a12*a20*a31 + a02*a13*a20*a31+
               a03*a10*a22*a31 - a00*a13*a22*a31 - a02*a10*a23*a31 + a00*a12*a23*a31+
               a03*a11*a20*a32 - a01*a13*a20*a32 - a03*a10*a21*a32 + a00*a13*a21*a32+
               a01*a10*a23*a32 - a00*a11*a23*a32 - a02*a11*a20*a33 + a01*a12*a20*a33+
               a02*a10*a21*a33 - a00*a12*a21*a33 - a01*a10*a22*a33 + a00*a11*a22*a33;
 
-    if (det == 0.0) {
+    if (det == 0.0f) {
         return CML_ERR_SINGULAR_MATRIX;
     }
 
@@ -1865,10 +1865,10 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32, a33 = A->m33;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -1901,7 +1901,7 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API f64 cml_matrix4x4_trace(const CML_Matrix4x4 *A) {
+CAMEL_STATIC CAMEL_API f32 cml_matrix4x4_trace(const CML_Matrix4x4 *A) {
     return A->m00 + A->m11 + A->m22 + A->m33;
 }
 
@@ -1924,14 +1924,14 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m22 - B->m22) <= CML_EPSILON && fabs(A->m23 - B->m23) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON && 
-            fabs(A->m32 - B->m32) <= CML_EPSILON && fabs(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && 
+            fabsf(A->m32 - B->m32) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -2031,13 +2031,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix2x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f32 t, CML_Matrix2x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -2063,12 +2063,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -2093,12 +2093,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -2125,12 +2125,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -2159,10 +2159,10 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -2185,10 +2185,10 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
@@ -2210,8 +2210,8 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x3(const CML_Vector2 *v, con
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -2240,9 +2240,9 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m10 - B->m10) <= CML_EPSILON && 
-            fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
+            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -2342,13 +2342,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix2x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f32 t, CML_Matrix2x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -2376,13 +2376,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -2407,13 +2407,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -2440,13 +2440,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -2475,10 +2475,10 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -2501,10 +2501,10 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a10*v1;
     out->y = a01*v0 + a11*v1;
@@ -2527,8 +2527,8 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x4(const CML_Vector2 *v, con
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -2559,10 +2559,10 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -2658,13 +2658,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix3x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f32 t, CML_Matrix3x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -2690,12 +2690,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -2722,12 +2722,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -2757,12 +2757,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -2795,11 +2795,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -2823,11 +2823,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -2848,9 +2848,9 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x2(const CML_Vector3 *v, con
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -2879,9 +2879,9 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -2991,13 +2991,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix3x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f32 t, CML_Matrix3x4 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -3029,14 +3029,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
-    f64 b30 = B->m30, b31 = B->m31;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
+    f32 b30 = B->m30, b31 = B->m31;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -3063,14 +3063,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -3100,14 +3100,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
-    f64 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b30 = B->m30, b31 = B->m31, b32 = B->m32, b33 = B->m33;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20 + a03*b30;
     out->m01 = a00*b01 + a01*b11 + a02*b21 + a03*b31;
@@ -3140,11 +3140,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a01*v1 + a02*v2 + a03*v3;
     out->y = a10*v0 + a11*v1 + a12*v2 + a13*v3;
@@ -3168,11 +3168,11 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a10*v1 + a20*v2;
     out->y = a01*v0 + a11*v1 + a21*v2;
@@ -3195,9 +3195,9 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x4(const CML_Vector3 *v, con
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02, a03 = A->m03;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12, a13 = A->m13;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22, a23 = A->m23;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -3232,12 +3232,12 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m02 - B->m02) <= CML_EPSILON && fabs(A->m03 - B->m03) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m12 - B->m12) <= CML_EPSILON && fabs(A->m13 - B->m13) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m22 - B->m22) <= CML_EPSILON && fabs(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -3339,13 +3339,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix4x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f32 t, CML_Matrix4x2 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m10 = A->m10 * t;
@@ -3373,13 +3373,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -3408,13 +3408,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -3447,13 +3447,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
 
     out->m00 = a00*b00 + a01*b10;
     out->m01 = a00*b01 + a01*b11;
@@ -3490,12 +3490,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 v0 = v->x, v1 = v->y;
+    f32 v0 = v->x, v1 = v->y;
 
     out->x = a00*v0 + a01*v1;
     out->y = a10*v0 + a11*v1;
@@ -3520,12 +3520,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out) {
-    f64 a00 = A->m00, a01 = A->m01;
-    f64 a10 = A->m10, a11 = A->m11;
-    f64 a20 = A->m20, a21 = A->m21;
-    f64 a30 = A->m30, a31 = A->m31;
+    f32 a00 = A->m00, a01 = A->m01;
+    f32 a10 = A->m10, a11 = A->m11;
+    f32 a20 = A->m20, a21 = A->m21;
+    f32 a30 = A->m30, a31 = A->m31;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -3575,10 +3575,10 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 
@@ -3690,13 +3690,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_
  * 
  * Parameters:
  *      CML_Matrix4x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out) {
+CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f32 t, CML_Matrix4x3 *out) {
     out->m00 = A->m00 * t;
     out->m01 = A->m01 * t;
     out->m02 = A->m02 * t;
@@ -3728,14 +3728,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, C
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01;
-    f64 b10 = B->m10, b11 = B->m11;
-    f64 b20 = B->m20, b21 = B->m21;
+    f32 b00 = B->m00, b01 = B->m01;
+    f32 b10 = B->m10, b11 = B->m11;
+    f32 b20 = B->m20, b21 = B->m21;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -3764,14 +3764,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -3804,14 +3804,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
-    f64 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
-    f64 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
+    f32 b00 = B->m00, b01 = B->m01, b02 = B->m02, b03 = B->m03;
+    f32 b10 = B->m10, b11 = B->m11, b12 = B->m12, b13 = B->m13;
+    f32 b20 = B->m20, b21 = B->m21, b22 = B->m22, b23 = B->m23;
 
     out->m00 = a00*b00 + a01*b10 + a02*b20;
     out->m01 = a00*b01 + a01*b11 + a02*b21;
@@ -3848,12 +3848,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A,
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z;
 
     out->x = a00*v0 + a01*v1 + a02*v2;
     out->y = a10*v0 + a11*v1 + a12*v2;
@@ -3878,12 +3878,12 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, c
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
-    f64 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
+    f32 v0 = v->x, v1 = v->y, v2 = v->z, v3 = v->w;
 
     out->x = a00*v0 + a10*v1 + a20*v2 + a30*v3;
     out->y = a01*v0 + a11*v1 + a21*v2 + a31*v3;
@@ -3905,10 +3905,10 @@ CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x3(const CML_Vector4 *v, con
  *      void.
  *****************************************************************************/
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
-    f64 a00 = A->m00, a01 = A->m01, a02 = A->m02;
-    f64 a10 = A->m10, a11 = A->m11, a12 = A->m12;
-    f64 a20 = A->m20, a21 = A->m21, a22 = A->m22;
-    f64 a30 = A->m30, a31 = A->m31, a32 = A->m32;
+    f32 a00 = A->m00, a01 = A->m01, a02 = A->m02;
+    f32 a10 = A->m10, a11 = A->m11, a12 = A->m12;
+    f32 a20 = A->m20, a21 = A->m21, a22 = A->m22;
+    f32 a30 = A->m30, a31 = A->m31, a32 = A->m32;
 
     out->m00 = a00;
     out->m01 = a10;
@@ -3943,10 +3943,10 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const C
         return CML_FALSE;
     }
 
-    return (fabs(A->m00 - B->m00) <= CML_EPSILON && fabs(A->m01 - B->m01) <= CML_EPSILON && fabs(A->m02 - B->m02) <= CML_EPSILON && 
-            fabs(A->m10 - B->m10) <= CML_EPSILON && fabs(A->m11 - B->m11) <= CML_EPSILON && fabs(A->m12 - B->m12) <= CML_EPSILON && 
-            fabs(A->m20 - B->m20) <= CML_EPSILON && fabs(A->m21 - B->m21) <= CML_EPSILON && fabs(A->m22 - B->m22) <= CML_EPSILON && 
-            fabs(A->m30 - B->m30) <= CML_EPSILON && fabs(A->m31 - B->m31) <= CML_EPSILON && fabs(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m02 - B->m02) <= CML_EPSILON && 
+            fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
+            fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON && 
+            fabsf(A->m30 - B->m30) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
 }
 
 

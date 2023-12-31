@@ -69,13 +69,13 @@ void cmlc_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix2x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f64 t, CML_Matrix2x2 *out);
+void cmlc_matrix2x2_scale(const CML_Matrix2x2 *A, f32 t, CML_Matrix2x2 *out);
 
 
 /******************************************************************************
@@ -180,7 +180,7 @@ void cmlc_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, C
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix2x2_det(const CML_Matrix2x2 *A);
+f32 cmlc_matrix2x2_det(const CML_Matrix2x2 *A);
 
 
 /******************************************************************************
@@ -227,7 +227,7 @@ void cmlc_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out);
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A);
+f32 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A);
 
 
 /******************************************************************************
@@ -307,13 +307,13 @@ void cmlc_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix3x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f64 t, CML_Matrix3x3 *out);
+void cmlc_matrix3x3_scale(const CML_Matrix3x3 *A, f32 t, CML_Matrix3x3 *out);
 
 
 /******************************************************************************
@@ -418,7 +418,7 @@ void cmlc_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, C
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix3x3_det(const CML_Matrix3x3 *A);
+f32 cmlc_matrix3x3_det(const CML_Matrix3x3 *A);
 
 
 /******************************************************************************
@@ -465,7 +465,7 @@ void cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out);
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A);
+f32 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A);
 
 
 /******************************************************************************
@@ -545,13 +545,13 @@ void cmlc_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix4x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f64 t, CML_Matrix4x4 *out);
+void cmlc_matrix4x4_scale(const CML_Matrix4x4 *A, f32 t, CML_Matrix4x4 *out);
 
 
 /******************************************************************************
@@ -656,7 +656,7 @@ void cmlc_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, C
  * Returns:
  *      The determinant of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix4x4_det(const CML_Matrix4x4 *A);
+f32 cmlc_matrix4x4_det(const CML_Matrix4x4 *A);
 
 
 /******************************************************************************
@@ -703,7 +703,7 @@ void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
  * Returns:
  *      The trace of the matrix.
  *****************************************************************************/
-f64 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A);
+f32 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A);
 
 
 /******************************************************************************
@@ -783,13 +783,13 @@ void cmlc_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix2x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f64 t, CML_Matrix2x3 *out);
+void cmlc_matrix2x3_scale(const CML_Matrix2x3 *A, f32 t, CML_Matrix2x3 *out);
 
 
 /******************************************************************************
@@ -975,13 +975,13 @@ void cmlc_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix2x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix2x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f64 t, CML_Matrix2x4 *out);
+void cmlc_matrix2x4_scale(const CML_Matrix2x4 *A, f32 t, CML_Matrix2x4 *out);
 
 
 /******************************************************************************
@@ -1167,13 +1167,13 @@ void cmlc_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix3x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f64 t, CML_Matrix3x2 *out);
+void cmlc_matrix3x2_scale(const CML_Matrix3x2 *A, f32 t, CML_Matrix3x2 *out);
 
 
 /******************************************************************************
@@ -1359,13 +1359,13 @@ void cmlc_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix3x4 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix3x4 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f64 t, CML_Matrix3x4 *out);
+void cmlc_matrix3x4_scale(const CML_Matrix3x4 *A, f32 t, CML_Matrix3x4 *out);
 
 
 /******************************************************************************
@@ -1551,13 +1551,13 @@ void cmlc_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix4x2 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x2 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f64 t, CML_Matrix4x2 *out);
+void cmlc_matrix4x2_scale(const CML_Matrix4x2 *A, f32 t, CML_Matrix4x2 *out);
 
 
 /******************************************************************************
@@ -1743,13 +1743,13 @@ void cmlc_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matr
  * 
  * Parameters:
  *      CML_Matrix4x3 *A   - The matrix operand.
- *      double         t   - The scalar.
+ *      f32         t   - The scalar.
  *      CML_Matrix4x3 *out - The output matrix.
  * 
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f64 t, CML_Matrix4x3 *out);
+void cmlc_matrix4x3_scale(const CML_Matrix4x3 *A, f32 t, CML_Matrix4x3 *out);
 
 
 /******************************************************************************
