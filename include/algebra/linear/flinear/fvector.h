@@ -333,7 +333,7 @@ CAMEL_STATIC CAMEL_API void cml_vector2_sub(const CML_Vector2 *v, const CML_Vect
 
 
 /******************************************************************************
- * Function: cml_vector2_sub_scalar
+ * Function: cml_vector2_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector2 and writes the result to the out
@@ -347,7 +347,7 @@ CAMEL_STATIC CAMEL_API void cml_vector2_sub(const CML_Vector2 *v, const CML_Vect
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_vector2_sub_scalar(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
+CAMEL_STATIC CAMEL_API void cml_vector2_sub_f32(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
 }
@@ -660,7 +660,7 @@ CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vect
 
 
 /******************************************************************************
- * Function: cml_vector3_sub_scalar
+ * Function: cml_vector3_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector3 and writes the result to the out.
@@ -673,7 +673,7 @@ CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vect
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_vector3_sub_scalar(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
+CAMEL_STATIC CAMEL_API void cml_vector3_sub_f32(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
     out->z = v->z - t;
@@ -1018,7 +1018,7 @@ CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vect
 
 
 /******************************************************************************
- * Function: cml_vector4_sub_scalar
+ * Function: cml_vector4_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector4 and writes the result to the out
@@ -1031,7 +1031,7 @@ CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vect
  * Returns:
  *      void.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API void cml_vector4_sub_scalar(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
+CAMEL_STATIC CAMEL_API void cml_vector4_sub_f32(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
     out->z = v->z - t;

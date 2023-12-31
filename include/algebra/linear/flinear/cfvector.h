@@ -79,7 +79,7 @@ void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *o
 
 
 /******************************************************************************
- * Function: cmlc_vector2_sub_scalar
+ * Function: cmlc_vector2_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector2 and writes the result to the out
@@ -93,7 +93,7 @@ void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *o
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_vector2_sub_scalar(const CML_Vector2 *v, f32 t, CML_Vector2 *out);
+void cmlc_vector2_sub_f32(const CML_Vector2 *v, f32 t, CML_Vector2 *out);
 
 
 /******************************************************************************
@@ -345,7 +345,7 @@ void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *o
 
 
 /******************************************************************************
- * Function: cmlc_vector3_sub_scalar
+ * Function: cmlc_vector3_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector3 and writes the result to the out.
@@ -358,7 +358,7 @@ void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *o
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_vector3_sub_scalar(const CML_Vector3 *v, f32 t, CML_Vector3 *out);
+void cmlc_vector3_sub_f32(const CML_Vector3 *v, f32 t, CML_Vector3 *out);
 
 
 /******************************************************************************
@@ -627,7 +627,7 @@ void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *o
 
 
 /******************************************************************************
- * Function: cmlc_vector4_sub_scalar
+ * Function: cmlc_vector4_sub_f32
  * 
  * Description:
  *      Subtracts a scalar to all CML_Vector4 and writes the result to the out
@@ -640,7 +640,7 @@ void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *o
  * Returns:
  *      void.
  *****************************************************************************/
-void cmlc_vector4_sub_scalar(const CML_Vector4 *v, f32 t, CML_Vector4 *out);
+void cmlc_vector4_sub_f32(const CML_Vector4 *v, f32 t, CML_Vector4 *out);
 
 
 /******************************************************************************

@@ -32,7 +32,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    int testing = 0;
+    int testing = 1;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 300;
@@ -47,7 +47,7 @@ int main() {
         cml_run_tests(registry, count);
     }
 
-    int profiling = 1;
+    int profiling = 0;
     if (profiling && testing) {
         printf("\n\n");
     }

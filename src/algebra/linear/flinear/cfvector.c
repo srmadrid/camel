@@ -37,7 +37,7 @@ void cmlc_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *o
 }
 
 
-void cmlc_vector2_sub_scalar(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
+void cmlc_vector2_sub_f32(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
 }
@@ -147,7 +147,7 @@ void cmlc_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *o
 }
 
 
-void cmlc_vector3_sub_scalar(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
+void cmlc_vector3_sub_f32(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
     out->z = v->z - t;
@@ -275,7 +275,7 @@ void cmlc_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *o
 }
 
 
-void cmlc_vector4_sub_scalar(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
+void cmlc_vector4_sub_f32(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
     out->z = v->z - t;
