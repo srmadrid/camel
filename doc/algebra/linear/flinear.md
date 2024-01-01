@@ -67,7 +67,7 @@ Vectors can be initiallized in two ways:
 
 ## Matrices
 
-Matrices represent linear transformations. This module includes all matrices of sizes ranging from 2x2 to 4x4.
+Matrices represent linear transformations. This module includes all matrices of sizes ranging from 2x2 to 4x4. **Note**: matrices are stored in column major order, i.e. the first column is stored first, then the second column, and so on. This is the same order as OpenGL and Vulkan, but the opposite of DirectX. This is done for compatibility with OpenGL and Vulkan, but it is important to keep in mind when using this module with DirectX.
 
 ### Matrix File Locations
 
@@ -95,7 +95,7 @@ Matrices can be initiallized in two ways:
   - ```CML_<MATRIX>_IDENTITY```: Initializes a matrix to the identity matrix.
   - ```CML_<MATRIX>_ONE```: Initializes a matrix to one.
   - ```CML_<MATRIX>(f32 m00, f32 m01, f32 m02, f32 m03, f32 m10, f32 m11, f32 m12, f32 m13, f32 m20, f32 m21, f32 m22, f32 m23, f32 m30, f32 m31, f32 m32, f32 m33)```: Initializes a matrix to the specified values. **Note**: takes only the first four values for 2x2 matrices, the first six for 2x3 and 3x2 matrices, and so on.
-- Using standard initialization ```<matrix> m = {{m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33}}```: Initializes a matrix to the specified values using standard notation. **Note**: two braces are needed because of the union.
+- Using standard initialization ```<matrix> m = {{m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33}}```: Initializes a matrix to the specified values using standard notation. **Note**: two braces are needed because of the union. **Note**: matrices are stored in column major order, so the first four values are the first column, the next four are the second column, and so on, meaning the actual matrix will be transposed.
 
 ### Matrix Functions
 

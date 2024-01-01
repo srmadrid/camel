@@ -32,7 +32,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    int testing = 1;
+    int testing = 0;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 300;
@@ -47,7 +47,7 @@ int main() {
         cml_run_tests(registry, count);
     }
 
-    int profiling = 0;
+    int profiling = 1;
     if (profiling && testing) {
         printf("\n\n");
     }
@@ -60,18 +60,18 @@ int main() {
         printf("Total iterations: %d\n", iterations*outIterations);
 
         struct timeval start, end;
-        CML_Matrix4x4 A = {{
+        CML_Matrix4x4 A = CML_MATRIX4X4(
             1.0f, 2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f, 8.0f,
             9.0f, 10.0f, 11.0f, 12.0f,
             13.0f, 14.0f, 15.0f, 16.0f
-        }};
-        CML_Matrix4x4 B = {{
+        );
+        CML_Matrix4x4 B = CML_MATRIX4X4(
             1.0f, 2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f, 8.0f,
             9.0f, 10.0f, 11.0f, 12.0f,
             13.0f, 14.0f, 15.0f, 16.0f
-        }};
+        );
         double totalElapsed = 0.0;
         double elapsed = 0.0;
         for (u32 i = 0; i < outIterations; i++) {
