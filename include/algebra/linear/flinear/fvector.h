@@ -23,6 +23,14 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef CML_USE_SSE
+    #include <xmmintrin.h>
+    #include <smmintrin.h>
+#endif
+#ifdef CML_USE_NEON
+    #include <arm_neon.h>
+#endif
+
 #include "../../../core/macros.h"
 #include "../../../core/err.h"
 #include "../../../core/constants.h"
@@ -198,6 +206,13 @@ typedef union {
         f32 w;
     };
     f32 array[4];
+
+#ifdef CML_USE_SSE
+    __m128 sse;
+#endif
+#ifdef CML_USE_NEON
+    float32x4_t neon;
+#endif
 } CML_Vector4;
 
 

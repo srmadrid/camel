@@ -113,7 +113,7 @@ Matrices can be initiallized in two ways:
 | ```cml_<matrixmxm>_det(<matrixmxm> *A)``` | Calculates the determinant of a square matrix and returns it. | $\lvert A \rvert = \sum_{i=1}^{n} (-1)^{i+j} \cdot a_{ij} \cdot \lvert A_{ij} \rvert$ |
 | ```cml_<matrixmxm>_inv(<matrixmxm> *A, <matrixmxm> *out)``` | Calculates the inverse of a square matrix and stores it in ```out```. If the matrix is singular, it returns a singular matrix error. | $A^{-1} = \frac{1}{\lvert A \rvert} \cdot adj(A)$ |
 | ```cml_<matrixmxn>_transpose(<matrixmxn> *A, <matrixnxm> *out)``` | Calculates the transpose of matrix and stores it in ```out```. | $A^{T} = \begin{bmatrix} a_{11} & a_{21} & \cdots & a_{m1} \\ a_{12} & a_{22} & \cdots & a_{m2} \\ \vdots & \vdots & \ddots & \vdots \\ a_{1n} & a_{2n} & \cdots & a_{mn} \end{bmatrix}$ |
-| ```cml_<matrixmxm>trace(<matrixmxm> *A)``` | Calculates the trace of a square matrix and returns it. | $tr(A) = \sum_{i=1}^{n} a_{ii}$ |
+| ```cml_<matrixmxm>_trace(<matrixmxm> *A)``` | Calculates the trace of a square matrix and returns it. | $tr(A) = \sum_{i=1}^{n} a_{ii}$ |
 | ```cml_<matrix>_eq(<matrix> *A, <matrix> *B)``` | Checks if two matrices are equal and returns ```CML_True``` if they are, ```CML_False``` otherwise. | $A = B$ |
 
 [↑ Back to Top](#fixed-size-linear-algebra)\

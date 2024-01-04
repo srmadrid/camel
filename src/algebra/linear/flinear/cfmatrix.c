@@ -148,6 +148,76 @@ f32 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A) {
 }
 
 
+void cmlc_matrix2x2_gen_scale(f32 x, f32 y, CML_Matrix2x2 *out) {
+    out->m00 = x;
+    out->m10 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = y;
+}
+
+
+void cmlc_matrix2x2_gen_invscale(const CML_Matrix2x2 *scale, CML_Matrix2x2 *out) {
+    out->m00 = 1.0f/scale->m00;
+    out->m10 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f/scale->m11;
+}
+
+
+void cmlc_matrix2x2_gen_shearx(f32 x, CML_Matrix2x2 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m01 = x;
+    out->m11 = 1.0f;
+}
+
+
+void cmlc_matrix2x2_gen_sheary(f32 y, CML_Matrix2x2 *out) {
+    out->m00 = 1.0f;
+    out->m10 = y;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+}
+
+
+void cmlc_matrix2x2_gen_invshear(const CML_Matrix2x2 *shear, CML_Matrix2x2 *out) {
+    out->m00 = 1.0f;
+    out->m10 = -shear->m10;
+    out->m01 = -shear->m01;
+    out->m11 = 1.0f;
+}
+
+
+void cmlc_matrix2x2_genlh_rotation(f32 angle, CML_Matrix2x2 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m01 = -s;
+    out->m11 = c;
+}
+
+
+void cmlc_matrix2x2_genrh_rotation(f32 angle, CML_Matrix2x2 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m01 = -s;
+    out->m11 = c;
+}
+
+
+void cmlc_matrix2x2_gen_invrotation(const CML_Matrix2x2 *rotation, CML_Matrix2x2 *out) {
+    out->m00 = rotation->m00;
+    out->m10 = -rotation->m10;
+    out->m01 = -rotation->m01;
+    out->m11 = rotation->m11;
+}
+
+
 CML_Bool cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
         return CML_FALSE;
@@ -363,6 +433,241 @@ void cmlc_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
 
 f32 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A) {
     return A->m00 + A->m11 + A->m22;
+}
+
+
+void cmlc_matrix3x3_gen_scale(f32 x, f32 y, f32 z, CML_Matrix3x3 *out) {
+    out->m00 = x;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = y;
+    out->m21 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = z;
+}
+
+
+void cmlc_matrix3x3_gen_invscale(const CML_Matrix3x3 *scale, CML_Matrix3x3 *out) {
+    out->m00 = 1.0f/scale->m00;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f/scale->m11;
+    out->m21 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f/scale->m22;
+}
+
+
+void cmlc_matrix3x3_gen_shearx(f32 y, f32 z, CML_Matrix3x3 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m01 = y;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m02 = z;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_gen_sheary(f32 x, f32 z, CML_Matrix3x3 *out) {
+    out->m00 = 1.0f;
+    out->m10 = x;
+    out->m20 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = z;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_gen_shearz(f32 x, f32 y, CML_Matrix3x3 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = x;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = y;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_gen_invshear(const CML_Matrix3x3 *shear, CML_Matrix3x3 *out) {
+    out->m00 = 1.0f;
+    out->m10 = -shear->m10;
+    out->m20 = -shear->m20;
+    out->m01 = -shear->m01;
+    out->m11 = 1.0f;
+    out->m21 = -shear->m21;
+    out->m02 = -shear->m02;
+    out->m12 = -shear->m12;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_genlh_rotationx(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = c;
+    out->m21 = s;
+    out->m02 = 0.0f;
+    out->m12 = -s;
+    out->m22 = c;
+}
+
+
+void cmlc_matrix3x3_genlh_rotationy(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = c;
+    out->m10 = 0.0f;
+    out->m20 = -s;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m02 = s;
+    out->m12 = 0.0f;
+    out->m22 = c;
+}
+
+
+void cmlc_matrix3x3_genlh_rotationz(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m20 = 0.0f;
+    out->m01 = -s;
+    out->m11 = c;
+    out->m21 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+    f32 t = 1.0f - c;
+
+    f32 mag = 1/sqrtf(axis->x*axis->x + axis->y*axis->y + axis->z*axis->z);
+    f32 x = axis->x * mag;
+    f32 y = axis->y * mag;
+    f32 z = axis->z * mag;
+
+    out->m00 = t*x*x + c;
+    out->m10 = t*x*y + s*z;
+    out->m20 = t*x*z - s*y;
+    out->m01 = t*x*y - s*z;
+    out->m11 = t*y*y + c;
+    out->m21 = t*y*z + s*x;
+    out->m02 = t*x*z + s*y;
+    out->m12 = t*y*z - s*x;
+    out->m22 = t*z*z + c;
+}
+
+
+void cmlc_matrix3x3_genrh_rotationx(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = c;
+    out->m21 = s;
+    out->m02 = 0.0f;
+    out->m12 = -s;
+    out->m22 = c;
+}
+
+
+void cmlc_matrix3x3_genrh_rotationy(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = c;
+    out->m10 = 0.0f;
+    out->m20 = -s;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m02 = s;
+    out->m12 = 0.0f;
+    out->m22 = c;
+}
+
+
+void cmlc_matrix3x3_genrh_rotationz(f32 angle, CML_Matrix3x3 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m20 = 0.0f;
+    out->m01 = -s;
+    out->m11 = c;
+    out->m21 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+}
+
+
+void cmlc_matrix3x3_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+    f32 t = 1.0f - c;
+
+    f32 mag = 1/sqrtf(axis->x*axis->x + axis->y*axis->y + axis->z*axis->z);
+    f32 x = axis->x * mag;
+    f32 y = axis->y * mag;
+    f32 z = axis->z * mag;
+
+    out->m00 = t*x*x + c;
+    out->m10 = t*x*y + s*z;
+    out->m20 = t*x*z - s*y;
+    out->m01 = t*x*y - s*z;
+    out->m11 = t*y*y + c;
+    out->m21 = t*y*z + s*x;
+    out->m02 = t*x*z + s*y;
+    out->m12 = t*y*z - s*x;
+    out->m22 = t*z*z + c;
+}
+
+
+void cmlc_matrix3x3_gen_invrotation(const CML_Matrix3x3 *rotation, CML_Matrix3x3 *out) {
+    f32 r00 = rotation->m00, r10 = rotation->m10, r20 = rotation->m20;
+    f32 r01 = rotation->m01, r11 = rotation->m11, r21 = rotation->m21;
+    f32 r02 = rotation->m02, r12 = rotation->m12, r22 = rotation->m22;
+
+    out->m00 = r00;
+    out->m10 = r01;
+    out->m20 = r02;
+    out->m01 = r10;
+    out->m11 = r11;
+    out->m21 = r12;
+    out->m02 = r20;
+    out->m12 = r21;
+    out->m22 = r22;
 }
 
 
@@ -647,6 +952,387 @@ void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
 
 f32 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A) {
     return A->m00 + A->m11 + A->m22 + A->m33;
+}
+
+
+void cmlc_matrix4x4_gen_scale(f32 x, f32 y, f32 z, CML_Matrix4x4 *out) {
+    out->m00 = x;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = y;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = z;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_invscale(const CML_Matrix4x4 *scale, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f/scale->m00;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f/scale->m11;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f/scale->m22;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_shearx(f32 y, f32 z, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = y;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = z;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_sheary(f32 x, f32 z, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = x;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = z;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_shearz(f32 x, f32 y, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = x;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = y;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_invshear(const CML_Matrix4x4 *shear, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = -shear->m10;
+    out->m20 = -shear->m20;
+    out->m30 = 0.0f;
+    out->m01 = -shear->m01;
+    out->m11 = 1.0f;
+    out->m21 = -shear->m21;
+    out->m31 = 0.0f;
+    out->m02 = -shear->m02;
+    out->m12 = -shear->m12;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_translation(f32 x, f32 y, f32 z, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = x;
+    out->m13 = y;
+    out->m23 = z;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_invtranslation(const CML_Matrix4x4 *translation, CML_Matrix4x4 *out) {
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = -translation->m03;
+    out->m13 = -translation->m13;
+    out->m23 = -translation->m23;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genlh_rotationx(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = c;
+    out->m21 = s;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = -s;
+    out->m22 = c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genlh_rotationy(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = c;
+    out->m10 = 0.0f;
+    out->m20 = -s;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = s;
+    out->m12 = 0.0f;
+    out->m22 = c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genlh_rotationz(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = -s;
+    out->m11 = c;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out) {
+    f32 c = cosf(-angle);
+    f32 s = sinf(-angle);
+    f32 t = 1.0f - c;
+
+    f32 mag = 1/sqrtf(axis->x*axis->x + axis->y*axis->y + axis->z*axis->z);
+    f32 x = axis->x * mag;
+    f32 y = axis->y * mag;
+    f32 z = axis->z * mag;
+
+    out->m00 = t*x*x + c;
+    out->m10 = t*x*y + s*z;
+    out->m20 = t*x*z - s*y;
+    out->m30 = 0.0f;
+    out->m01 = t*x*y - s*z;
+    out->m11 = t*y*y + c;
+    out->m21 = t*y*z + s*x;
+    out->m31 = 0.0f;
+    out->m02 = t*x*z + s*y;
+    out->m12 = t*y*z - s*x;
+    out->m22 = t*z*z + c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genrh_rotationx(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = 1.0f;
+    out->m10 = 0.0f;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = c;
+    out->m21 = s;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = -s;
+    out->m22 = c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genrh_rotationy(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = c;
+    out->m10 = 0.0f;
+    out->m20 = -s;
+    out->m30 = 0.0f;
+    out->m01 = 0.0f;
+    out->m11 = 1.0f;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = s;
+    out->m12 = 0.0f;
+    out->m22 = c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genrh_rotationz(f32 angle, CML_Matrix4x4 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+
+    out->m00 = c;
+    out->m10 = s;
+    out->m20 = 0.0f;
+    out->m30 = 0.0f;
+    out->m01 = -s;
+    out->m11 = c;
+    out->m21 = 0.0f;
+    out->m31 = 0.0f;
+    out->m02 = 0.0f;
+    out->m12 = 0.0f;
+    out->m22 = 1.0f;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out) {
+    f32 c = cosf(angle);
+    f32 s = sinf(angle);
+    f32 t = 1.0f - c;
+
+    f32 mag = 1/sqrtf(axis->x*axis->x + axis->y*axis->y + axis->z*axis->z);
+    f32 x = axis->x * mag;
+    f32 y = axis->y * mag;
+    f32 z = axis->z * mag;
+
+    out->m00 = t*x*x + c;
+    out->m10 = t*x*y + s*z;
+    out->m20 = t*x*z - s*y;
+    out->m30 = 0.0f;
+    out->m01 = t*x*y - s*z;
+    out->m11 = t*y*y + c;
+    out->m21 = t*y*z + s*x;
+    out->m31 = 0.0f;
+    out->m02 = t*x*z + s*y;
+    out->m12 = t*y*z - s*x;
+    out->m22 = t*z*z + c;
+    out->m32 = 0.0f;
+    out->m03 = 0.0f;
+    out->m13 = 0.0f;
+    out->m23 = 0.0f;
+    out->m33 = 1.0f;
+}
+
+
+void cmlc_matrix4x4_gen_invrotation(const CML_Matrix4x4 *rotation, CML_Matrix4x4 *out) {
+    f64 r00 = rotation->m00, r10 = rotation->m10, r20 = rotation->m20, r30 = rotation->m30;
+    f64 r01 = rotation->m01, r11 = rotation->m11, r21 = rotation->m21, r31 = rotation->m31;
+    f64 r02 = rotation->m02, r12 = rotation->m12, r22 = rotation->m22, r32 = rotation->m32;
+    f64 r03 = rotation->m03, r13 = rotation->m13, r23 = rotation->m23, r33 = rotation->m33;
+
+    out->m00 = r00;
+    out->m10 = r01;
+    out->m20 = r02;
+    out->m30 = r03;
+    out->m01 = r10;
+    out->m11 = r11;
+    out->m21 = r12;
+    out->m31 = r13;
+    out->m02 = r20;
+    out->m12 = r21;
+    out->m22 = r22;
+    out->m32 = r23;
+    out->m03 = r30;
+    out->m13 = r31;
+    out->m23 = r32;
+    out->m33 = r33;
 }
 
 

@@ -231,6 +231,135 @@ f32 cmlc_matrix2x2_trace(const CML_Matrix2x2 *A);
 
 
 /******************************************************************************
+ * Function: cmlc_matrix2x2_gen_scale
+ * 
+ * Description:
+ *      Generates a scale matrix.
+ * 
+ * Parameters:
+ *      f32 x - The x scale.
+ *      f32 y - The y scale.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_scale(f32 x, f32 y, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_gen_invscale
+ * 
+ * Description:
+ *      Generates the inverse of a scale matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *scale - The scale matrix.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_invscale(const CML_Matrix2x2 *scale, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_gen_shearx
+ * 
+ * Description:
+ *      Generates the shear matrix along the x axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_shearx(f32 x, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_gen_sheary
+ * 
+ * Description:
+ *      Generates the shear matrix along the y axis.
+ * 
+ * Parameters:
+ *      f32 x - The y shear.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_sheary(f32 y, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_gen_invshear
+ * 
+ * Description:
+ *      Generates the inverse of a shear matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *shear - The shear matrix.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_invshear(const CML_Matrix2x2 *shear, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_genlh_rotation
+ * 
+ * Description:
+ *      Generates the left-handed rotation matrix (clockwise).
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_genlh_rotation(f32 angle, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_genrh_rotation
+ * 
+ * Description:
+ *      Generates the right-handed rotation matrix (counter-clockwise).
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_genrh_rotation(f32 angle, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix2x2_gen_invrotation
+ * 
+ * Description:
+ *      Generates the inverse rotation matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix2x2 *rotation - The rotation matrix.
+ *      CML_Matrix2x2 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix2x2_gen_invrotation(const CML_Matrix2x2 *rotation, CML_Matrix2x2 *out);
+
+
+/******************************************************************************
  * Function: cmlc_matrix2x2_eq
  * 
  * Description:
@@ -469,6 +598,257 @@ f32 cmlc_matrix3x3_trace(const CML_Matrix3x3 *A);
 
 
 /******************************************************************************
+ * Function: cmlc_matrix3x3_gen_scale
+ * 
+ * Description:
+ *      Generates a scale matrix.
+ * 
+ * Parameters:
+ *      f32 x - The x scale.
+ *      f32 y - The y scale.
+ *      f32 z - The z scale.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      The trace of the matrix.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_scale(f32 x, f32 y, f32 z, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_invscale
+ * 
+ * Description:
+ *      Generates the inverse of a scale matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *scale - The scale matrix.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_invscale(const CML_Matrix3x3 *scale, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_shearx
+ * 
+ * Description:
+ *      Generates the shear matrix along the x axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_shearx(f32 y, f32 z, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_sheary
+ * 
+ * Description:
+ *      Generates the shear matrix along the y axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      f32 z - The z shear.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_sheary(f32 x, f32 z, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_shearz
+ * 
+ * Description:
+ *      Generates the shear matrix along the z axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      f32 y - The y shear.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_shearz(f32 x, f32 y, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_invshear
+ * 
+ * Description:
+ *      Generates the inverse of a shear matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *shear - The shear matrix.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_invshear(const CML_Matrix3x3 *shear, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genlh_rotationx
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along the x axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genlh_rotationx(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genlh_rotationy
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along the y axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genlh_rotationy(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genlh_rotationz
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along the z axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genlh_rotationz(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genlh_rotation
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along an 
+ *      arbitrary axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Vector3 *axis - The axis of rotation.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genrh_rotationx
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter clockwise) along 
+ *      the x axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genrh_rotationx(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genrh_rotationy
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter clockwise) along 
+ *      the y axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genrh_rotationy(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genrh_rotationz
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter clockwise) along 
+ *      the z axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genrh_rotationz(f32 angle, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_genrh_rotation
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter clockwise) along 
+ *      an arbitrary axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Vector3 *axis - The axis of rotation.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix3x3_gen_invrotation
+ * 
+ * Description:
+ *      Generates the inverse of a rotation matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix3x3 *rotation - The rotation matrix.
+ *      CML_Matrix3x3 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix3x3_gen_invrotation(const CML_Matrix3x3 *rotation, CML_Matrix3x3 *out);
+
+
+/******************************************************************************
  * Function: cmlc_matrix3x3_eq
  * 
  * Description:
@@ -704,6 +1084,294 @@ void cmlc_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out);
  *      The trace of the matrix.
  *****************************************************************************/
 f32 cmlc_matrix4x4_trace(const CML_Matrix4x4 *A);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_scale
+ * 
+ * Description:
+ *      Generates a scale matrix.
+ * 
+ * Parameters:
+ *      f32 x - The x scale.
+ *      f32 y - The y scale.
+ *      f32 z - The z scale.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_scale(f32 x, f32 y, f32 z, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_invscale
+ * 
+ * Description:
+ *      Generates an inverse scale matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *scale - The input matrix.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_invscale(const CML_Matrix4x4 *scale, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_shearx
+ * 
+ * Description:
+ *      Generates a shear matrix along the x axis.
+ * 
+ * Parameters:
+ *      f32 y - The y shear.
+ *      f32 z - The z shear.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_shearx(f32 y, f32 z, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_sheary
+ * 
+ * Description:
+ *      Generates a shear matrix along the y axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      f32 z - The z shear.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_sheary(f32 x, f32 z, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_shearz
+ * 
+ * Description:
+ *      Generates a shear matrix along the z axis.
+ * 
+ * Parameters:
+ *      f32 x - The x shear.
+ *      f32 y - The y shear.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_shearz(f32 x, f32 y, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_invshear
+ * 
+ * Description:
+ *      Generates an inverse shear matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *shear - The shear matrix.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_invshear(const CML_Matrix4x4 *shear, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_translation
+ * 
+ * Description:
+ *      Generates a translation matrix.
+ * 
+ * Parameters:
+ *      f32 x - The x translation.
+ *      f32 y - The y translation.
+ *      f32 z - The z translation.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_translation(f32 x, f32 y, f32 z, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_invtranslation
+ * 
+ * Description:
+ *      Generates an inverse translation matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *translation - The translation matrix.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_invtranslation(const CML_Matrix4x4 *translation, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genlh_rotationx
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along the x axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genlh_rotationx(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genlh_rotationy
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along 
+ *      the y axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genlh_rotationy(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genlh_rotationz
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along 
+ *      the z axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genlh_rotationz(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genlh_rotation
+ * 
+ * Description:
+ *      Generates the left handed rotation matrix (clockwise) along
+ *      an arbitrary axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Vector3 *axis - The axis of rotation.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genrh_rotationx
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter-clockwise) along 
+ *      the x axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genrh_rotationx(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genrh_rotationy
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter-clockwise) along 
+ *      the y axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genrh_rotationy(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genrh_rotationz
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter-clockwise) along 
+ *      the z axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genrh_rotationz(f32 angle, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_genrh_rotation
+ * 
+ * Description:
+ *      Generates the right handed rotation matrix (counter-clockwise) along
+ *      an arbitrary axis.
+ * 
+ * Parameters:
+ *      f32 angle - The angle of rotation in radians.
+ *      CML_Vector3 *axis - The axis of rotation.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out);
+
+
+/******************************************************************************
+ * Function: cmlc_matrix4x4_gen_invrotation
+ * 
+ * Description:
+ *      Generates the inverse of a rotation matrix.
+ * 
+ * Parameters:
+ *      CML_Matrix4x4 *rotation - The rotation matrix.
+ *      CML_Matrix4x4 *out - The output matrix.
+ * 
+ * Returns:
+ *      void.
+ *****************************************************************************/
+void cmlc_matrix4x4_gen_invrotation(const CML_Matrix4x4 *rotation, CML_Matrix4x4 *out);
 
 
 /******************************************************************************

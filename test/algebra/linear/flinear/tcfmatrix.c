@@ -264,6 +264,142 @@ CML_TestResult testc_matrix2x2_trace() {
 }
 
 
+CML_TestResult testc_matrix2x2_gen_scale() {
+    CML_Vector2 v = {{1.0f, 2.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{2.0f, 6.0f}};
+    cmlc_matrix2x2_gen_scale(2.0f, 3.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_gen_invscale() {
+    CML_Vector2 v = {{1.0f, 2.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{1.0f, 2.0f}};
+    cmlc_matrix2x2_gen_scale(2.0f, 3.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    cmlc_matrix2x2_gen_invscale(&out, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_gen_shearx() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{2.0f, 1.0f}};
+    cmlc_matrix2x2_gen_shearx(1.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_gen_sheary() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{1.0f, 2.0f}};
+    cmlc_matrix2x2_gen_sheary(1.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_gen_invshear() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out1;
+    CML_Matrix2x2 out2;
+    CML_Vector2 expected = {{1.0f, 1.0f}};
+    cmlc_matrix2x2_gen_shearx(10.0f, &out1);
+    cmlc_matrix2x2_mult_vector2(&out1, &v, &v);
+    cmlc_matrix2x2_gen_sheary(1.0f, &out2);
+    cmlc_matrix2x2_mult_vector2(&out2, &v, &v);
+    cmlc_matrix2x2_gen_invshear(&out1, &out1);
+    cmlc_matrix2x2_gen_invshear(&out2, &out2);
+    cmlc_matrix2x2_mult_vector2(&out2, &v, &v);
+    cmlc_matrix2x2_mult_vector2(&out1, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_genlh_rotation() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{1.0f, -1.0f}};
+    cmlc_matrix2x2_genlh_rotation(CML_PI/2.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_genrh_rotation() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out;
+    CML_Vector2 expected = {{-1.0f, 1.0f}};
+    cmlc_matrix2x2_genrh_rotation(CML_PI/2.0f, &out);
+    cmlc_matrix2x2_mult_vector2(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix2x2_gen_invrotation() {
+    CML_Vector2 v = {{1.0f, 1.0f}};
+    CML_Matrix2x2 out1;
+    CML_Matrix2x2 out2;
+    CML_Vector2 expected = {{1.0f, 1.0f}};
+    cmlc_matrix2x2_genlh_rotation(CML_PI/2.0f, &out1);
+    cmlc_matrix2x2_mult_vector2(&out1, &v, &v);
+    cmlc_matrix2x2_gen_invrotation(&out1, &out1);
+    cmlc_matrix2x2_mult_vector2(&out1, &v, &v);
+    cmlc_matrix2x2_genrh_rotation(CML_PI/2.0f, &out2);
+    cmlc_matrix2x2_mult_vector2(&out2, &v, &v);
+    cmlc_matrix2x2_gen_invrotation(&out2, &out2);
+    cmlc_matrix2x2_mult_vector2(&out2, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector2_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector2_debug(&expected, &v);
+    }
+    return result;
+}
+
+
 
 CML_TestResult testc_matrix3x3_add() {
     CML_Matrix3x3 A = CML_MATRIX3X3(
@@ -535,6 +671,254 @@ CML_TestResult testc_matrix3x3_trace() {
         test.debugMessage = cml_f32_debug(expected, result);
     }
     return test;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_scale() {
+    CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{2.0f, 6.0f, 12.0f}};
+    cmlc_matrix3x3_gen_scale(2.0f, 3.0f, 4.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_invscale() {
+    CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, 2.0f, 3.0f}};
+    cmlc_matrix3x3_gen_scale(2.0f, 3.0f, 4.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    cmlc_matrix3x3_gen_invscale(&out, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_shearx() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{3.0f, 1.0f, 1.0f}};
+    cmlc_matrix3x3_gen_shearx(1.0f, 1.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_sheary() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, 3.0f, 1.0f}};
+    cmlc_matrix3x3_gen_sheary(1.0f, 1.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_shearz() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, 1.0f, 3.0f}};
+    cmlc_matrix3x3_gen_shearz(1.0f, 1.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_invshear() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out1;
+    CML_Matrix3x3 out2;
+    CML_Matrix3x3 out3;
+    CML_Vector3 expected = {{1.0f, 1.0f, 1.0f}};
+    cmlc_matrix3x3_gen_shearx(10.0f, 10.0f, &out1);
+    cmlc_matrix3x3_mult_vector3(&out1, &v, &v);
+    cmlc_matrix3x3_gen_sheary(10.0f, 10.0f, &out2);
+    cmlc_matrix3x3_mult_vector3(&out2, &v, &v);
+    cmlc_matrix3x3_gen_shearz(10.0f, 10.0f, &out3);
+    cmlc_matrix3x3_mult_vector3(&out3, &v, &v);
+    cmlc_matrix3x3_gen_invshear(&out1, &out1);
+    cmlc_matrix3x3_gen_invshear(&out2, &out2);
+    cmlc_matrix3x3_gen_invshear(&out3, &out3);
+    cmlc_matrix3x3_mult_vector3(&out3, &v, &v);
+    cmlc_matrix3x3_mult_vector3(&out2, &v, &v);
+    cmlc_matrix3x3_mult_vector3(&out1, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genlh_rotationx() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, 1.0f, -1.0f}};
+    cmlc_matrix3x3_genlh_rotationx(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genlh_rotationy() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{-1.0f, 1.0f, 1.0f}};
+    cmlc_matrix3x3_genlh_rotationy(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genlh_rotationz() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, -1.0f, 1.0f}};
+    cmlc_matrix3x3_genlh_rotationz(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genlh_rotation() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 axis = {{1.0f, 1.0f, 0.0f}};
+    CML_Vector3 expected = {{1.0f, 1.0f, -1.0f}};
+    cmlc_matrix3x3_genlh_rotation(CML_PI, &axis, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genrh_rotationx() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, -1.0f, 1.0f}};
+    cmlc_matrix3x3_genrh_rotationx(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genrh_rotationy() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{1.0f, 1.0f, -1.0f}};
+    cmlc_matrix3x3_genrh_rotationy(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genrh_rotationz() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix3x3 out;
+    CML_Vector3 expected = {{-1.0f, 1.0f, 1.0f}};
+    cmlc_matrix3x3_genrh_rotationz(CML_PI/2.0f, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_genrh_rotation() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix3x3 out;
+    CML_Vector3 axis = {{1.0f, 0.0f, 1.0f}};
+    CML_Vector3 expected = {{1.0f, -1.0f, 1.0f}};
+    cmlc_matrix3x3_genrh_rotation(CML_PI, &axis, &out);
+    cmlc_matrix3x3_mult_vector3(&out, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix3x3_gen_invrotation() {
+    CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix3x3 out1;
+    CML_Matrix3x3 out2;
+    CML_Vector3 expected = {{1.0f, 1.0f, 1.0f}};
+    cmlc_matrix3x3_genlh_rotationx(1.75f, &out1);
+    cmlc_matrix3x3_mult_vector3(&out1, &v, &v); 
+    cmlc_matrix3x3_genrh_rotationy(3.0f, &out2);
+    cmlc_matrix3x3_mult_vector3(&out2, &v, &v);
+    cmlc_matrix3x3_gen_invrotation(&out1, &out1);
+    cmlc_matrix3x3_gen_invrotation(&out2, &out2);
+    cmlc_matrix3x3_mult_vector3(&out2, &v, &v); 
+    cmlc_matrix3x3_mult_vector3(&out1, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector3_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector3_debug(&expected, &v);
+    }
+    return result;
 }
 
 
@@ -834,6 +1218,286 @@ CML_TestResult testc_matrix4x4_trace() {
         test.debugMessage = cml_f32_debug(expected, result);
     }
     return test;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_scale() {
+    CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{2.0f, 6.0f, 12.0f, 1.0f}};
+    cmlc_matrix4x4_gen_scale(2.0f, 3.0f, 4.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_invscale() {
+    CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 2.0f, 3.0f, 1.0f}};
+    cmlc_matrix4x4_gen_scale(2.0f, 3.0f, 4.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    cmlc_matrix4x4_gen_invscale(&out, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_shearx() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{3.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_gen_shearx(1.0f, 1.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_sheary() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 3.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_gen_sheary(1.0f, 1.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_shearz() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 1.0f, 3.0f, 1.0f}};
+    cmlc_matrix4x4_gen_shearz(1.0f, 1.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_invshear() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out1;
+    CML_Matrix4x4 out2;
+    CML_Matrix4x4 out3;
+    CML_Vector4 expected = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_gen_shearx(10.0f, 10.0f, &out1);
+    cmlc_matrix4x4_mult_vector4(&out1, &v, &v);
+    cmlc_matrix4x4_gen_sheary(10.0f, 10.0f, &out2);
+    cmlc_matrix4x4_mult_vector4(&out2, &v, &v);
+    cmlc_matrix4x4_gen_shearz(10.0f, 10.0f, &out3);
+    cmlc_matrix4x4_mult_vector4(&out3, &v, &v);
+    cmlc_matrix4x4_gen_invshear(&out1, &out1);
+    cmlc_matrix4x4_gen_invshear(&out2, &out2);
+    cmlc_matrix4x4_gen_invshear(&out3, &out3);
+    cmlc_matrix4x4_mult_vector4(&out3, &v, &v);
+    cmlc_matrix4x4_mult_vector4(&out2, &v, &v);
+    cmlc_matrix4x4_mult_vector4(&out1, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_translation() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{2.0f, 3.0f, 4.0f, 1.0f}};
+    cmlc_matrix4x4_gen_translation(1.0f, 2.0f, 3.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_invtranslation() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_gen_translation(1.0f, 2.0f, 3.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    cmlc_matrix4x4_gen_invtranslation(&out, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genlh_rotationx() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 1.0f, -1.0f, 1.0f}};
+    cmlc_matrix4x4_genlh_rotationx(CML_PI_OVER_2, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genlh_rotationy() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{-1.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genlh_rotationy(CML_PI_OVER_2, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genlh_rotationz() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, -1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genlh_rotationz(CML_PI_OVER_2, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genlh_rotation() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector3 axis = {{1.0f, 1.0f, 0.0f}};
+    CML_Vector4 expected = {{1.0f, 1.0f, -1.0f, 1.0f}};
+    cmlc_matrix4x4_genlh_rotation(CML_PI, &axis, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) {
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genrh_rotationx() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, -1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genrh_rotationx(CML_PI/2.0f, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genrh_rotationy() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{1.0f, 1.0f, -1.0f, 1.0f}};
+    cmlc_matrix4x4_genrh_rotationy(CML_PI_OVER_2, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genrh_rotationz() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    CML_Matrix4x4 out;
+    CML_Vector4 expected = {{-1.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genrh_rotationz(CML_PI_OVER_2, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v);
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_genrh_rotation() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix4x4 out;
+    CML_Vector3 axis = {{1.0f, 0.0f, 1.0f}};
+    CML_Vector4 expected = {{1.0f, -1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genrh_rotation(CML_PI, &axis, &out);
+    cmlc_matrix4x4_mult_vector4(&out, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
+}
+
+
+CML_TestResult testc_matrix4x4_gen_invrotation() {
+    CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
+    CML_Matrix4x4 out1;
+    CML_Matrix4x4 out2;
+    CML_Vector4 expected = {{1.0f, 1.0f, 1.0f, 1.0f}};
+    cmlc_matrix4x4_genlh_rotationx(1.75f, &out1);
+    cmlc_matrix4x4_mult_vector4(&out1, &v, &v); 
+    cmlc_matrix4x4_genrh_rotationy(3.0f, &out2);
+    cmlc_matrix4x4_mult_vector4(&out2, &v, &v); 
+    cmlc_matrix4x4_gen_invrotation(&out1, &out1);
+    cmlc_matrix4x4_gen_invrotation(&out2, &out2);
+    cmlc_matrix4x4_mult_vector4(&out2, &v, &v); 
+    cmlc_matrix4x4_mult_vector4(&out1, &v, &v); 
+    CML_TestResult result;
+    result.passed = cmlc_vector4_eq(&v, &expected);
+    if (!result.passed) { 
+        result.debugMessage = cmlc_vector4_debug(&expected, &v);
+    }
+    return result;
 }
 
 
@@ -2159,6 +2823,14 @@ void cml_register_cfmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_matrix2x2_inv, "testc_matrix2x2_inv");
     cml_test_register(registry, count, testc_matrix2x2_transpose, "testc_matrix2x2_transpose");
     cml_test_register(registry, count, testc_matrix2x2_trace, "testc_matrix2x2_trace");
+    cml_test_register(registry, count, testc_matrix2x2_gen_scale, "testc_matrix2x2_gen_scale");
+    cml_test_register(registry, count, testc_matrix2x2_gen_invscale, "testc_matrix2x2_gen_invscale");
+    cml_test_register(registry, count, testc_matrix2x2_gen_shearx, "testc_matrix2x2_gen_shearx");
+    cml_test_register(registry, count, testc_matrix2x2_gen_sheary, "testc_matrix2x2_gen_sheary");
+    cml_test_register(registry, count, testc_matrix2x2_gen_invshear, "testc_matrix2x2_gen_invshear");
+    cml_test_register(registry, count, testc_matrix2x2_genlh_rotation, "testc_matrix2x2_genlh_rotation");
+    cml_test_register(registry, count, testc_matrix2x2_genrh_rotation, "testc_matrix2x2_genrh_rotation");
+    cml_test_register(registry, count, testc_matrix2x2_gen_invrotation, "testc_matrix2x2_gen_invrotation");
 
     cml_test_register(registry, count, testc_matrix3x3_add, "testc_matrix3x3_add");
     cml_test_register(registry, count, testc_matrix3x3_sub, "testc_matrix3x3_sub");
@@ -2172,6 +2844,21 @@ void cml_register_cfmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_matrix3x3_inv, "testc_matrix3x3_inv");
     cml_test_register(registry, count, testc_matrix3x3_transpose, "testc_matrix3x3_transpose");
     cml_test_register(registry, count, testc_matrix3x3_trace, "testc_matrix3x3_trace");
+    cml_test_register(registry, count, testc_matrix3x3_gen_scale, "testc_matrix3x3_gen_scale");
+    cml_test_register(registry, count, testc_matrix3x3_gen_invscale, "testc_matrix3x3_gen_invscale");
+    cml_test_register(registry, count, testc_matrix3x3_gen_shearx, "testc_matrix3x3_gen_shearx");
+    cml_test_register(registry, count, testc_matrix3x3_gen_sheary, "testc_matrix3x3_gen_sheary");
+    cml_test_register(registry, count, testc_matrix3x3_gen_shearz, "testc_matrix3x3_gen_shearz");
+    cml_test_register(registry, count, testc_matrix3x3_gen_invshear, "testc_matrix3x3_gen_invshear");
+    cml_test_register(registry, count, testc_matrix3x3_genlh_rotationx, "testc_matrix3x3_genlh_rotationx");
+    cml_test_register(registry, count, testc_matrix3x3_genlh_rotationy, "testc_matrix3x3_genlh_rotationy");
+    cml_test_register(registry, count, testc_matrix3x3_genlh_rotationz, "testc_matrix3x3_genlh_rotationz");
+    cml_test_register(registry, count, testc_matrix3x3_genlh_rotation, "testc_matrix3x3_genlh_rotation");
+    cml_test_register(registry, count, testc_matrix3x3_genrh_rotationx, "testc_matrix3x3_genrh_rotationx");
+    cml_test_register(registry, count, testc_matrix3x3_genrh_rotationy, "testc_matrix3x3_genrh_rotationy");
+    cml_test_register(registry, count, testc_matrix3x3_genrh_rotationz, "testc_matrix3x3_genrh_rotationz");
+    cml_test_register(registry, count, testc_matrix3x3_genrh_rotation, "testc_matrix3x3_genrh_rotation");
+    cml_test_register(registry, count, testc_matrix3x3_gen_invrotation, "testc_matrix3x3_gen_invrotation");
 
     cml_test_register(registry, count, testc_matrix4x4_add, "testc_matrix4x4_add");
     cml_test_register(registry, count, testc_matrix4x4_sub, "testc_matrix4x4_sub");
@@ -2185,6 +2872,23 @@ void cml_register_cfmatrix_tests(CML_Test *registry, u32 *count) {
     cml_test_register(registry, count, testc_matrix4x4_inv, "testc_matrix4x4_inv");
     cml_test_register(registry, count, testc_matrix4x4_transpose, "testc_matrix4x4_transpose");
     cml_test_register(registry, count, testc_matrix4x4_trace, "testc_matrix4x4_trace");
+    cml_test_register(registry, count, testc_matrix4x4_gen_scale, "testc_matrix4x4_gen_scale");
+    cml_test_register(registry, count, testc_matrix4x4_gen_invscale, "testc_matrix4x4_gen_invscale");
+    cml_test_register(registry, count, testc_matrix4x4_gen_shearx, "testc_matrix4x4_gen_shearx");
+    cml_test_register(registry, count, testc_matrix4x4_gen_sheary, "testc_matrix4x4_gen_sheary");
+    cml_test_register(registry, count, testc_matrix4x4_gen_shearz, "testc_matrix4x4_gen_shearz");
+    cml_test_register(registry, count, testc_matrix4x4_gen_invshear, "testc_matrix4x4_gen_invshear");
+    cml_test_register(registry, count, testc_matrix4x4_gen_translation, "testc_matrix4x4_gen_translation");
+    cml_test_register(registry, count, testc_matrix4x4_gen_invtranslation, "testc_matrix4x4_gen_invtranslation");
+    cml_test_register(registry, count, testc_matrix4x4_genlh_rotationx, "testc_matrix4x4_genlh_rotationx");
+    cml_test_register(registry, count, testc_matrix4x4_genlh_rotationy, "testc_matrix4x4_genlh_rotationy");
+    cml_test_register(registry, count, testc_matrix4x4_genlh_rotationz, "testc_matrix4x4_genlh_rotationz");
+    cml_test_register(registry, count, testc_matrix4x4_genlh_rotation, "testc_matrix4x4_genlh_rotation");
+    cml_test_register(registry, count, testc_matrix4x4_genrh_rotationx, "testc_matrix4x4_genrh_rotationx");
+    cml_test_register(registry, count, testc_matrix4x4_genrh_rotationy, "testc_matrix4x4_genrh_rotationy");
+    cml_test_register(registry, count, testc_matrix4x4_genrh_rotationz, "testc_matrix4x4_genrh_rotationz");
+    cml_test_register(registry, count, testc_matrix4x4_genrh_rotation, "testc_matrix4x4_genrh_rotation");
+    cml_test_register(registry, count, testc_matrix4x4_gen_invrotation, "testc_matrix4x4_gen_invrotation");
 
     cml_test_register(registry, count, testc_matrix2x3_add, "testc_matrix2x3_add");
     cml_test_register(registry, count, testc_matrix2x3_sub, "testc_matrix2x3_sub");

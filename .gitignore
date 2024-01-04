@@ -6,4 +6,8 @@ lines.sh
 debug_segfault.sh
 
 ideas.md
+handedness.xcf
 
+# SIMD, untracked for now until I decide how to implement it
+include/algebra/linear/flinear/fvector_sse.h
+test/algebra/linear/flinear/tfvector_sse.c
