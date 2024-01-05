@@ -35,7 +35,7 @@
 #include "cfvector.h"
 #include "fmatrix.h"
 #include "cfmatrix.h"
-
+/*
 #ifdef CML_USE_AVX
     #include "fvector_avx.h"
     #include "cfvector_avx.h"
@@ -44,15 +44,15 @@
 #endif
 #ifdef CML_USE_SSE
     #include "fvector_sse.h"
-    /*#include "cfvector_sse.h"
+    #include "cfvector_sse.h"
     #include "fmatrix_sse.h"
-    #include "cfmatrix_sse.h"*/
+    #include "cfmatrix_sse.h"
 #endif
 #ifdef CML_USE_NEON
     #include "fvector_neon.h"
     #include "cfvector_neon.h"
     #include "fmatrix_neon.h"
     #include "cfmatrix_neon.h"
-#endif
+#endif */
 
 #endif /* CAMEL_FIXED_LINEAR_ALGEBRA */

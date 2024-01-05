@@ -29,8 +29,14 @@ TEST_SRC_DIRS = test
 TEST_SOURCES = $(shell find $(TEST_SRC_DIRS) -type f -name '*.c')
 TEST_OBJECTS = $(TEST_SOURCES:%.c=%.o)
 
+# Install settings
+ifeq ($(PREFIX),)
+	PREFIX := /usr/local
+endif
 
 # Default rule (only library)
+lib: $(TARGET)
+
 $(TARGET): $(OBJECTS)
 	@echo "Linking: $@"
 	@$(CC) $(LDFLAGS) -o $@ $^
@@ -39,7 +45,7 @@ $(TARGET): $(OBJECTS)
 	@echo "Build complete."
 
 # All rule
-all: $(TARGET) $(TEST_TARGET)
+all: lib $(TEST_TARGET)
 
 # Rule for test executable
 test: $(TEST_TARGET)
@@ -56,6 +62,22 @@ $(TEST_TARGET): $(TEST_OBJECTS)
 	@echo "Compiling: $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+# Install rule
+install: lib
+	@echo "Installing..."
+	install -d $(DESTDIR)$(PREFIX)/lib/
+	install -m 644 $(TARGET) $(DESTDIR)$(PREFIX)/lib/
+	install -d $(DESTDIR)$(PREFIX)/include/camel/
+	cp -R $(HDR_DIRS)/* $(DESTDIR)$(PREFIX)/include/camel/
+	@echo "Install complete."
+
+# Uninstall rule
+uninstall:
+	@echo "Uninstalling..."
+	@rm -f $(DESTDIR)$(PREFIX)/lib/$(TARGET)
+	@rm -rf $(DESTDIR)$(PREFIX)/include/camel/
+	@echo "Uninstall complete."
+
 # Clean rule
 clean:
 	@echo "Cleaning..."
@@ -69,4 +91,4 @@ clean-test:
 
 clean-all: clean clean-test
 
-.PHONY: all clean clean-test clean-all test
+.PHONY: all clean clean-test clean-all test lib install
