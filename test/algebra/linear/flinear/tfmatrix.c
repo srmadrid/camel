@@ -200,7 +200,7 @@ CML_TestResult test_matrix2x2_det() {
     f32 expected = -2.0f;
     f32 result = cml_matrix2x2_det(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -256,7 +256,7 @@ CML_TestResult test_matrix2x2_trace() {
     f32 expected = 5.0f;
     f32 result = cml_matrix2x2_trace(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -605,7 +605,7 @@ CML_TestResult test_matrix3x3_det() {
     f32 expected = 0.0f;
     f32 result = cml_matrix3x3_det(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -666,7 +666,7 @@ CML_TestResult test_matrix3x3_trace() {
     f32 expected = 15.0f;
     f32 result = cml_matrix3x3_trace(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -1147,7 +1147,7 @@ CML_TestResult test_matrix4x4_det() {
     f32 expected = 0.0f;
     f32 result = cml_matrix4x4_det(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -1213,7 +1213,7 @@ CML_TestResult test_matrix4x4_trace() {
     f32 expected = 34.0f;
     f32 result = cml_matrix4x4_trace(&A);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }

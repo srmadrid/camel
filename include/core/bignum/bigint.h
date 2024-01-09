@@ -179,7 +179,7 @@ char *cml_bigint_to_bin_str(CML_BigInt *bigint);
  * Returns:
  *      CML_TRUE if bigint1 == bigint2, CML_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
+b8 cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
 
 
 /******************************************************************************
@@ -214,7 +214,7 @@ CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2);
  * Returns:
  *      CML_TRUE if bigint == input, CML_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
+b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
 
 
 /******************************************************************************
@@ -249,7 +249,7 @@ CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign);
  * Returns:
  *      CML_TRUE if bigint == str, CML_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str);
+b8 cml_bigint_eq_str(CML_BigInt *bigint, char *str);
 
 
 /******************************************************************************

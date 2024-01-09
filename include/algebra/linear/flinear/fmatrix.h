@@ -1217,13 +1217,13 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invrotation(const CML_Matrix2x2 *r
  * Returns:
  *      CAMEL_TRUE if the matrices are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
-            fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? true : false;
 }
 
 
@@ -2072,14 +2072,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invrotation(const CML_Matrix3x3 *r
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m20 - B->m20) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
-            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? true : false;
 }
 
 
@@ -3169,9 +3169,9 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invrotation(const CML_Matrix4x4 *r
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -3181,7 +3181,7 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x4_eq(const CML_Matrix4x4 *A, const C
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
             fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON && 
             fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
-            fabsf(A->m23 - B->m23) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m23 - B->m23) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? true : false;
 }
 
 
@@ -3491,14 +3491,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
-            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? true : false;
 }
 
 
@@ -3819,15 +3819,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
-            fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? true : false;
 }
 
 
@@ -4136,14 +4136,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
-            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? true : false;
 }
 
 
@@ -4492,9 +4492,9 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -4502,7 +4502,7 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix3x4_eq(const CML_Matrix3x4 *A, const C
             fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
             fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
-            fabsf(A->m13 - B->m13) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m13 - B->m13) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? true : false;
 }
 
 
@@ -4831,15 +4831,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m30 - B->m30) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
-            fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? true : false;
 }
 
 
@@ -5193,9 +5193,9 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
+CAMEL_STATIC CAMEL_API b8 cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -5203,7 +5203,7 @@ CAMEL_STATIC CAMEL_API CML_Bool cml_matrix4x3_eq(const CML_Matrix4x3 *A, const C
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
             fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
-            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? true : false;
 }
 
 

@@ -93,7 +93,7 @@ CML_TestResult test_vector2_mod() {
     f32 expected = 5.0f;
     f32 result = cml_vector2_mod(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -106,7 +106,7 @@ CML_TestResult test_vector2_mod2() {
     f32 expected = 25.0f;
     f32 result = cml_vector2_mod2(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -134,7 +134,7 @@ CML_TestResult test_vector2_dot() {
     f32 expected = 11.0f;
     f32 result = cml_vector2_dot(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -148,7 +148,7 @@ CML_TestResult test_vector2_distance() {
     f32 expected = 2.8284271247461903f;
     f32 result = cml_vector2_distance(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -162,7 +162,7 @@ CML_TestResult test_vector2_distance2() {
     f32 expected = 8.0f;
     f32 result = cml_vector2_distance2(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -176,7 +176,7 @@ CML_TestResult test_vector2_angle() {
     f32 expected = 0.17985349979247847f;
     f32 result = cml_vector2_angle(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -292,7 +292,7 @@ CML_TestResult test_vector3_mod() {
     f32 expected = 7.0710678118654755f;
     f32 result = cml_vector3_mod(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -305,7 +305,7 @@ CML_TestResult test_vector3_mod2() {
     f32 expected = 50.0f;
     f32 result = cml_vector3_mod2(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -333,7 +333,7 @@ CML_TestResult test_vector3_dot() {
     f32 expected = 32.0f;
     f32 result = cml_vector3_dot(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -362,7 +362,7 @@ CML_TestResult test_vector3_distance() {
     f32 expected = 5.196152422706632f;
     f32 result = cml_vector3_distance(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -376,7 +376,7 @@ CML_TestResult test_vector3_distance2() {
     f32 expected = 27.0f;
     f32 result = cml_vector3_distance2(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -390,7 +390,7 @@ CML_TestResult test_vector3_angle() {
     f32 expected = 0.2257261285527342f;
     f32 result = cml_vector3_angle(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(result, expected);
     }
@@ -506,7 +506,7 @@ CML_TestResult test_vector4_mod() {
     f32 expected = 9.273618495495704f;
     f32 result = cml_vector4_mod(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -519,7 +519,7 @@ CML_TestResult test_vector4_mod2() {
     f32 expected = 86.0f;
     f32 result = cml_vector4_mod2(&v);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -547,7 +547,7 @@ CML_TestResult test_vector4_dot() {
     f32 expected = 70.0f;
     f32 result = cml_vector4_dot(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -561,7 +561,7 @@ CML_TestResult test_vector4_distance() {
     f32 expected = 8.0f;
     f32 result = cml_vector4_distance(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -575,7 +575,7 @@ CML_TestResult test_vector4_distance2() {
     f32 expected = 64.0f;
     f32 result = cml_vector4_distance2(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }
@@ -589,7 +589,7 @@ CML_TestResult test_vector4_angle() {
     f32 expected = 0.250195920422511f;
     f32 result = cml_vector4_angle(&v, &w);
     CML_TestResult test;
-    test.passed = ((result - expected) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    test.passed = ((result - expected) <= CML_EPSILON)? true : false;
     if (!test.passed) {
         test.debugMessage = cml_f32_debug(expected, result);
     }

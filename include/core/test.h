@@ -30,7 +30,7 @@
  *      Represents the result of a test.
  *****************************************************************************/
 typedef struct {
-    CML_Bool passed;
+    b8 passed;
     char *debugMessage;
 } CML_TestResult;
 

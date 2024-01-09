@@ -147,22 +147,22 @@ char *cml_bigint_to_bin_str(CML_BigInt *bigint) {
 }
 
 
-CML_Bool cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2) {
+b8 cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2) {
     if (bigint1 == NULL || bigint2 == NULL) {
-        return CML_FALSE;
+        return false;
     }
 
     if (bigint1->size != bigint2->size) {
-        return CML_FALSE;
+        return false;
     }
 
     for (u32 i = 0; i < bigint1->size; ++i) {
         if (bigint1->data[i] != bigint2->data[i]) {
-            return CML_FALSE;
+            return false;
         }
     }
 
-    return CML_TRUE;
+    return true;
 }
 
 
@@ -195,34 +195,34 @@ CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2) {
 }
 
 
-CML_Bool cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign) {
+b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign) {
     if (bigint == NULL) {
-        return CML_FALSE;
+        return false;
     }
 
     if ((input >> 32) & 0xFFFFFFFF) {
         if (bigint->size != 2) {
-            return CML_FALSE;
+            return false;
         }
     } else {
         if (bigint->size != 1) {
-            return CML_FALSE;
+            return false;
         }
     }
 
     if (bigint->data[0] != (input & 0xFFFFFFFF)) {
-        return CML_FALSE;
+        return false;
     }
 
     if (bigint->size == 2 && bigint->data[1] != (input >> 32)) {
-        return CML_FALSE;
+        return false;
     }
 
     if (bigint->sign != sign) {
-        return CML_FALSE;
+        return false;
     }
 
-    return CML_TRUE;
+    return true;
 }
 
 
@@ -238,12 +238,12 @@ CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign) {
 }
 
 
-CML_Bool cml_bigint_eq_str(CML_BigInt *bigint, char *str) {
+b8 cml_bigint_eq_str(CML_BigInt *bigint, char *str) {
     if (bigint == NULL || str == NULL) {
-        return CML_FALSE;
+        return false;
     }
     // To be implemented
-    return CML_FALSE;
+    return false;
 }
 
 

@@ -218,13 +218,13 @@ void cmlc_matrix2x2_gen_invrotation(const CML_Matrix2x2 *rotation, CML_Matrix2x2
 }
 
 
-CML_Bool cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
+b8 cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
-            fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON)? true : false;
 }
 
 
@@ -671,14 +671,14 @@ void cmlc_matrix3x3_gen_invrotation(const CML_Matrix3x3 *rotation, CML_Matrix3x3
 }
 
 
-CML_Bool cmlc_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
+b8 cmlc_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && fabsf(A->m20 - B->m20) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
-            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && fabsf(A->m22 - B->m22) <= CML_EPSILON)? true : false;
 }
 
 
@@ -1336,9 +1336,9 @@ void cmlc_matrix4x4_gen_invrotation(const CML_Matrix4x4 *rotation, CML_Matrix4x4
 }
 
 
-CML_Bool cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
+b8 cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -1348,7 +1348,7 @@ CML_Bool cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
             fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON && 
             fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON && 
-            fabsf(A->m23 - B->m23) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m23 - B->m23) <= CML_EPSILON && fabsf(A->m33 - B->m33) <= CML_EPSILON)? true : false;
 }
 
 
@@ -1500,14 +1500,14 @@ void cmlc_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
 }
 
 
-CML_Bool cmlc_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
+b8 cmlc_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
-            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON)? true : false;
 }
 
 
@@ -1670,15 +1670,15 @@ void cmlc_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
 }
 
 
-CML_Bool cmlc_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
+b8 cmlc_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
-            fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m03 - B->m03) <= CML_EPSILON && fabsf(A->m13 - B->m13) <= CML_EPSILON)? true : false;
 }
 
 
@@ -1829,14 +1829,14 @@ void cmlc_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
 }
 
 
-CML_Bool cmlc_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
+b8 cmlc_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m01 - B->m01) <= CML_EPSILON && 
-            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON)? true : false;
 }
 
 
@@ -2027,9 +2027,9 @@ void cmlc_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
 }
 
 
-CML_Bool cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
+b8 cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -2037,7 +2037,7 @@ CML_Bool cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
             fabsf(A->m11 - B->m11) <= CML_EPSILON && fabsf(A->m21 - B->m21) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
             fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m03 - B->m03) <= CML_EPSILON && 
-            fabsf(A->m13 - B->m13) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m13 - B->m13) <= CML_EPSILON && fabsf(A->m23 - B->m23) <= CML_EPSILON)? true : false;
 }
 
 
@@ -2208,15 +2208,15 @@ void cmlc_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out) {
 }
 
 
-CML_Bool cmlc_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
+b8 cmlc_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
             fabsf(A->m20 - B->m20) <= CML_EPSILON && fabsf(A->m30 - B->m30) <= CML_EPSILON && 
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
-            fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON)? true : false;
 }
 
 
@@ -2412,9 +2412,9 @@ void cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
 }
 
 
-CML_Bool cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
+b8 cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
     if (!A || !B) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(A->m00 - B->m00) <= CML_EPSILON && fabsf(A->m10 - B->m10) <= CML_EPSILON && 
@@ -2422,7 +2422,7 @@ CML_Bool cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
             fabsf(A->m01 - B->m01) <= CML_EPSILON && fabsf(A->m11 - B->m11) <= CML_EPSILON && 
             fabsf(A->m21 - B->m21) <= CML_EPSILON && fabsf(A->m31 - B->m31) <= CML_EPSILON && 
             fabsf(A->m02 - B->m02) <= CML_EPSILON && fabsf(A->m12 - B->m12) <= CML_EPSILON && 
-            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(A->m22 - B->m22) <= CML_EPSILON && fabsf(A->m32 - B->m32) <= CML_EPSILON)? true : false;
 }
 
 

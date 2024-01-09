@@ -100,12 +100,12 @@ void cmlc_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_V
 }
 
 
-CML_Bool cmlc_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
+b8 cmlc_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
-    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON)? true : false;
 }
 
 
@@ -225,12 +225,12 @@ void cmlc_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_V
 }
 
 
-CML_Bool cmlc_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
+b8 cmlc_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
-    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && fabsf(v->z - w->z) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && fabsf(v->z - w->z) <= CML_EPSILON)? true : false;
 }
 
 
@@ -354,13 +354,13 @@ void cmlc_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_V
 }
 
 
-CML_Bool cmlc_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
+b8 cmlc_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && 
-            fabsf(v->z - w->z) <= CML_EPSILON && fabsf(v->w - w->w) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(v->z - w->z) <= CML_EPSILON && fabsf(v->w - w->w) <= CML_EPSILON)? true : false;
 }
 
 

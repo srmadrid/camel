@@ -372,7 +372,7 @@ void cmlc_matrix2x2_gen_invrotation(const CML_Matrix2x2 *rotation, CML_Matrix2x2
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
+b8 cmlc_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B);
 
 
 /******************************************************************************
@@ -861,7 +861,7 @@ void cmlc_matrix3x3_gen_invrotation(const CML_Matrix3x3 *rotation, CML_Matrix3x3
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
+b8 cmlc_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B);
 
 
 /******************************************************************************
@@ -1387,7 +1387,7 @@ void cmlc_matrix4x4_gen_invrotation(const CML_Matrix4x4 *rotation, CML_Matrix4x4
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
+b8 cmlc_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B);
 
 
 /******************************************************************************
@@ -1579,7 +1579,7 @@ void cmlc_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
+b8 cmlc_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B);
 
 
 /******************************************************************************
@@ -1771,7 +1771,7 @@ void cmlc_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
+b8 cmlc_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B);
 
 
 /******************************************************************************
@@ -1963,7 +1963,7 @@ void cmlc_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
+b8 cmlc_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B);
 
 
 /******************************************************************************
@@ -2155,7 +2155,7 @@ void cmlc_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
+b8 cmlc_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B);
 
 
 /******************************************************************************
@@ -2347,7 +2347,7 @@ void cmlc_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
+b8 cmlc_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B);
 
 
 /******************************************************************************
@@ -2539,7 +2539,7 @@ void cmlc_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out);
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
+b8 cmlc_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B);
 
 
 /******************************************************************************

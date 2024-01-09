@@ -273,7 +273,7 @@ void cmlc_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_V
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w);
+b8 cmlc_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w);
 
 
 /******************************************************************************
@@ -555,7 +555,7 @@ void cmlc_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_V
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w);
+b8 cmlc_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w);
 
 
 /******************************************************************************
@@ -820,7 +820,7 @@ void cmlc_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_V
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CML_Bool cmlc_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w);
+b8 cmlc_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w);
 
 
 /******************************************************************************

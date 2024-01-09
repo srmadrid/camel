@@ -65,16 +65,16 @@ $(TEST_TARGET): $(TEST_OBJECTS)
 # Install rule
 install: lib
 	@echo "Installing..."
-	install -d $(DESTDIR)$(PREFIX)/lib/
-	install -m 644 $(TARGET) $(DESTDIR)$(PREFIX)/lib/
-	install -d $(DESTDIR)$(PREFIX)/include/camel/
-	cp -R $(HDR_DIRS)/* $(DESTDIR)$(PREFIX)/include/camel/
+	@install -d $(DESTDIR)$(PREFIX)/lib/
+	@install -m 644 $(TARGET) $(DESTDIR)$(PREFIX)/lib/
+	@install -d $(DESTDIR)$(PREFIX)/include/camel/
+	@cp -R $(HDR_DIRS)/* $(DESTDIR)$(PREFIX)/include/camel/
 	@echo "Install complete."
 
 # Uninstall rule
 uninstall:
 	@echo "Uninstalling..."
-	@rm -f $(DESTDIR)$(PREFIX)/lib/$(TARGET)
+	@rm -f $(DESTDIR)$(PREFIX)/lib/libcamel.so
 	@rm -rf $(DESTDIR)$(PREFIX)/include/camel/
 	@echo "Uninstall complete."
 

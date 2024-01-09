@@ -43,7 +43,7 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
     for (u32 i = 0; i < testCount; i++) {
         printf("[%i/%i] Running test: %s\n", i + 1, testCount, testRegistry[i].name);
         CML_TestResult result = testRegistry[i].func();
-        if (result.passed == CML_TRUE) {
+        if (result.passed) {
             printf("\t%sPASSED%s\n\n", CML_TERMINAL_GREEN, CML_TERMINAL_RESET);
             passedCount++;
         } else {

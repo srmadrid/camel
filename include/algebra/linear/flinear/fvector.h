@@ -572,12 +572,12 @@ CAMEL_STATIC CAMEL_API void cml_vector2_reflect(const CML_Vector2 *v, const CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
+CAMEL_STATIC CAMEL_API b8 cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
-    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON)? true : false;
 }
 
 
@@ -927,12 +927,12 @@ CAMEL_STATIC CAMEL_API void cml_vector3_reflect(const CML_Vector3 *v, const CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
+CAMEL_STATIC CAMEL_API b8 cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
-    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && fabsf(v->z - w->z) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+    return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && fabsf(v->z - w->z) <= CML_EPSILON)? true : false;
 }
 
 
@@ -1272,13 +1272,13 @@ CAMEL_STATIC CAMEL_API void cml_vector4_reflect(const CML_Vector4 *v, const CML_
  * Returns:
  *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
  *****************************************************************************/
-CAMEL_STATIC CAMEL_API CML_Bool cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
+CAMEL_STATIC CAMEL_API b8 cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
     if (!v || !w) {
-        return CML_FALSE;
+        return false;
     }
 
     return (fabsf(v->x - w->x) <= CML_EPSILON && fabsf(v->y - w->y) <= CML_EPSILON && 
-            fabsf(v->z - w->z) <= CML_EPSILON && fabsf(v->w - w->w) <= CML_EPSILON)? CML_TRUE : CML_FALSE;
+            fabsf(v->z - w->z) <= CML_EPSILON && fabsf(v->w - w->w) <= CML_EPSILON)? true : false;
 }
 
 
