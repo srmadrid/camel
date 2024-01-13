@@ -1,20 +1,18 @@
-/******************************************************************************
- * Filename: fvector.h
+/**
+ * @file fvector.h
  * 
- * Description:
- *      Declarations and implementations for the fixed vector manipulation 
- *      functions of CAMEL.
+ * @brief Declarations and implementations for the fixed vector manipulation 
+ *        functions of CAMEL.
  * 
- * Notes: 
- *      This module is header only.
+* @note This module is header only. Vectors are column major.
  *
- * Author: Sergio Madrid
- * Created on: 7/11/2023
+ * @author Sergio Madrid
+ * @date 7/11/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_FIXED_VECTOR
 #define CAMEL_FIXED_VECTOR
@@ -36,175 +34,134 @@
 #include "../../../core/constants.h"
 
 
-/******************************************************************************
- * Type: CML_Vector2
+/**
+ * @brief Represents a 2 dimensional vector.
  * 
- * Description:
- *      Represents a 2 dimensional vector.
- *
- * Fields:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *****************************************************************************/
-typedef union {
+ * @note The vector is stored in column major order.
+ */
+typedef union CML_Vector2 {
     struct {
+        /** @brief The x component of the vector. */
         f32 x;
+        /** @brief The y component of the vector. */
         f32 y;
     };
+    /** @brief The vector as an array of 2 elements. */
     f32 array[2];
 } CML_Vector2;
 
 
-/******************************************************************************
- * Macro: CML_VECTOR2_ZERO
- * 
- * Description:
- *      Initializes a CML_Vector2 to 0.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector2 to the zero vector.
+ */
 #define CML_VECTOR2_ZERO {{0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR2_I
- * 
- * Description:
- *      Initializes a CML_Vector2 to the unit vector in the i direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector2 to the unit vector in the i direction.
+ */
 #define CML_VECTOR2_I {{1.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR2_J
- * 
- * Description:
- *      Initializes a CML_Vector2 to the unit vector in the j direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector2 to the unit vector in the j direction.
+ */
 #define CML_VECTOR2_J {{0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR2_ONE
- * 
- * Description:
- *      Initializes a CML_Vector2 to 1.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector2 to the one vector.
+ */
 #define CML_VECTOR2_ONE {{1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR2
+/**
+ * @brief Initializes a CML_Vector2 to the given values.
  * 
- * Description:
- *      Initializes a CML_Vector2 to the given values.
- *
- * Parameters:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *****************************************************************************/
+ * @param x The x component of the vector.
+ * @param y The y component of the vector.
+ */
 #define CML_VECTOR2(x, y) {{x, y}}
 
 
 
-/******************************************************************************
- * Type: CML_Vector3
+/**
+ * @brief Represents a 3 dimensional vector.
  * 
- * Description:
- *      Represents a 3 dimensional vector.
- *
- * Fields:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *      f32 z - The z component of the vector.
- *****************************************************************************/
-typedef union {
+ * @note The vector is stored in column major order.
+ */
+typedef union CML_Vector3 {
     struct {
+        /** @brief The x component of the vector. */
         f32 x;
+        /** @brief The y component of the vector. */
         f32 y;
+        /** @brief The z component of the vector. */
         f32 z;
     };
+    /** @brief The vector as an array of 3 elements. */
     f32 array[3];
 } CML_Vector3;
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3_ZERO
- * 
- * Description:
- *      Initializes a CML_Vector3 to 0.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector3 to the zero vector.
+ */
 #define CML_VECTOR3_ZERO {{0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3_I
- * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the i direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector3 to the unit vector in the i direction.
+ */
 #define CML_VECTOR3_I {{1.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3_J
- * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the j direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector3 to the unit vector in the j direction.
+ */
 #define CML_VECTOR3_J {{0.0f, 1.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3_K
- * 
- * Description:
- *      Initializes a CML_Vector3 to the unit vector in the k direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector3 to the unit vector in the k direction.
+ */
 #define CML_VECTOR3_K {{0.0f, 0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3_ONE
- * 
- * Description:
- *      Initializes a CML_Vector3 to 1.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector3 to the one vector.
+ */
 #define CML_VECTOR3_ONE {{1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR3
+/**
+ * @brief Initializes a CML_Vector3 to the given values.
  * 
- * Description:
- *      Initializes a CML_Vector3 to the given values.
- *
- * Parameters:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *      f32 z - The z component of the vector.
- *****************************************************************************/
+ * @param x The x component of the vector.
+ * @param y The y component of the vector.
+ * @param z The z component of the vector.
+ */
 #define CML_VECTOR3(x, y, z) {{x, y, z}}
 
 
 
-/******************************************************************************
- * Type: CML_Vector4
+/**
+ * @brief Represents a 4 dimensional vector.
  * 
- * Description:
- *      Represents a 4 dimensional vector.
- *
- * Fields:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *      f32 z - The z component of the vector.
- *      f32 w - The w component of the vector.
- *****************************************************************************/
-typedef union {
+ * @note The vector is stored in column major order.
+ */
+typedef union CML_Vector4 {
     struct {
+        /** @brief The x component of the vector. */
         f32 x;
+        /** @brief The y component of the vector. */
         f32 y;
+        /** @brief The z component of the vector. */
         f32 z;
+        /** @brief The w component of the vector. */
         f32 w;
     };
+    /** @brief The vector as an array of 4 elements. */
     f32 array[4];
 
 #ifdef CML_USE_SSE
@@ -216,226 +173,165 @@ typedef union {
 } CML_Vector4;
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_ZERO
- * 
- * Description:
- *      Initializes a CML_Vector4 to 0.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the zero vector.
+ */
 #define CML_VECTOR4_ZERO {{0.0f, 0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_I
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the i direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the unit vector in the i direction.
+ */
 #define CML_VECTOR4_I {{1.0f, 0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_J
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the j direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the unit vector in the j direction.
+ */
 #define CML_VECTOR4_J {{0.0f, 1.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_K
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the k direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the unit vector in the k direction.
+ */
 #define CML_VECTOR4_K {{0.0f, 0.0f, 1.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_L
- * 
- * Description:
- *      Initializes a CML_Vector4 to the unit vector in the l direction.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the unit vector in the l direction.
+ */
 #define CML_VECTOR4_L {{0.0f, 0.0f, 0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4_ONE
- * 
- * Description:
- *      Initializes a CML_Vector4 to 1.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Vector4 to the one vector.
+ */
 #define CML_VECTOR4_ONE {{1.0f, 1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_VECTOR4
+/**
+ * @brief Initializes a CML_Vector4 to the given values.
  * 
- * Description:
- *      Initializes a CML_Vector4 to the given values.
- *
- * Parameters:
- *      f32 x - The x component of the vector.
- *      f32 y - The y component of the vector.
- *      f32 z - The z component of the vector.
- *      f32 w - The w component of the vector.
- *****************************************************************************/
+ * @param x The x component of the vector.
+ * @param y The y component of the vector.
+ * @param z The z component of the vector.
+ * @param w The w component of the vector.
+ */
 #define CML_VECTOR4(x, y, z, w) {{x, y, z, w}}
 
 
 
-/******************************************************************************
- * Function: cml_vector2_add
- * 
- * Description:
- *      Adds two CML_Vector2 and writes the result to the out CML_Vector2.
+/**
+ * @brief Adds two CML_Vector2 and writes the result to the out CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      CML_Vector2 *w   - The second vector operand.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_add(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_add_f32
- * 
- * Description:
- *      Adds a scalar to all CML_Vector2 and writes the result to the out
- *      CML_Vector2.
+/**
+ * @brief Adds a scalar to all CML_Vector2 and writes the result to the out
+ *        CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_add_f32(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
     out->x = v->x + t;
     out->y = v->y + t;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_sub
- * 
- * Description:
- *      Subtracts two CML_Vector2 and writes the result to the out CML_Vector2.
+/**
+ * @brief Subtracts two CML_Vector2 and writes the result to the out 
+ *        CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      CML_Vector2 *w   - The second vector operand.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_sub(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_sub_f32
- * 
- * Description:
- *      Subtracts a scalar to all CML_Vector2 and writes the result to the out
- *      CML_Vector2.
+/**
+ * @brief Subtracts a scalar to all CML_Vector2 and writes the result to the out
+ *        CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_sub_f32(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_scale
- * 
- * Description:
- *      Multiplies a CML_Vector2 by a scalar, and writes the result to the out 
- *      CML_Vector2.
+/**
+ * @brief Multiplies a CML_Vector2 by a scalar, and writes the result to the out 
+ *        CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The vector operand.
- *      double       t   - The scalar.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_scale(const CML_Vector2 *v, f32 t, CML_Vector2 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_mod
- * 
- * Description:
- *      Calculates the modulus of the input CML_Vector2.
+/**
+ * @brief Calculates the modulus of the input CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The modulus of the input CML_Vector2.
- *****************************************************************************/
+ * @return The modulus of the input CML_Vector2.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_mod(const CML_Vector2 *v) {
     return sqrtf(v->x * v->x + v->y * v->y);
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_mod2
- * 
- * Description:
- *      Calculates the squared modulus of the input CML_Vector2.
+/**
+ * @brief Calculates the squared modulus of the input CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The squared modulus of the input CML_Vector2.
- *****************************************************************************/
+ * @return The squared modulus of the input CML_Vector2.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_mod2(const CML_Vector2 *v) {
     return v->x * v->x + v->y * v->y;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_norm
- * 
- * Description:
- *      Normalizes the input CML_Vector2 and writes it to the out CML_Vector2.
+/**
+ * @brief Normalizes the input CML_Vector2 and writes it to the out CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The input vector.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The input vector.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *out) {
     f32 mod = 1/sqrtf(v->x * v->x + v->y * v->y);
     out->x = v->x * mod;
@@ -443,93 +339,68 @@ CAMEL_STATIC CAMEL_API void cml_vector2_norm(const CML_Vector2 *v, CML_Vector2 *
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_dot
- * 
- * Description:
- *      Calculates the dot product of the input CML_Vector2s.
+/**
+ * @brief Calculates the dot product of the input CML_Vector2s.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first input vector.
- *      CML_Vector2 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The dot product of the input vectors.
- *****************************************************************************/
+ * @return The dot product of the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_dot(const CML_Vector2 *v, const CML_Vector2 *w) {
     return v->x * w->x + v->y * w->y;
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_distance
- * 
- * Description:
- *      Calculates the distance between two CML_Vector2s.
+/**
+ * @brief Calculates the distance between two CML_Vector2s.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first input vector.
- *      CML_Vector2 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The distance between the input vectors.
- *****************************************************************************/
+ * @return The distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_distance(const CML_Vector2 *v, const CML_Vector2 *w) {
     return sqrtf((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y));
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_distance2
- * 
- * Description:
- *      Calculates the squared distance between two CML_Vector2s.
+/**
+ * @brief Calculates the squared distance between two CML_Vector2s.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first input vector.
- *      CML_Vector2 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The squared distance between the input vectors.
- *****************************************************************************/
+ * @return The squared distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_distance2(const CML_Vector2 *v, const CML_Vector2 *w) {
     return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y);
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_angle
- * 
- * Description:
- *      Calculates the angle between two CML_Vector2s in radians.
+/**
+ * @brief Calculates the angle between two CML_Vector2s in radians.
  *
- * Parameters:
- *      CML_Vector2 *v   - The first input vector.
- *      CML_Vector2 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The angle between the input vectors in radians.
- *****************************************************************************/
+ * @return The angle between the input vectors in radians.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector2_angle(const CML_Vector2 *v, const CML_Vector2 *w) {
     return acosf((v->x * w->x + v->y * w->y) / (sqrtf(v->x * v->x + v->y * v->y) * sqrtf(w->x * w->x + w->y * w->y)));
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_project
- * 
- * Description:
- *      Projects the first CML_Vector2 onto the second CML_Vector2 and writes
- *      the result to the out CML_Vector2.
+/**
+ * @brief Projects the first CML_Vector2 onto the second CML_Vector2 and writes
+ *        the result to the out CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The vector operand.
- *      CML_Vector2 *w   - The vector to project onto.
- *      CML_Vector2 *out - The output vector.
+ * @param v   The vector operand.
+ * @param w   The vector to project onto.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_project(const CML_Vector2 *v, const CML_Vector2 *w, CML_Vector2 *out) {
     f32 mod = (v->x * w->x + v->y * w->y) / (w->x * w->x + w->y * w->y);
     out->x = mod * w->x;
@@ -537,21 +408,16 @@ CAMEL_STATIC CAMEL_API void cml_vector2_project(const CML_Vector2 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_reflect
- * 
- * Description:
- *      Reflects the first CML_Vector2 across the surface defined by the normal
- *      CML_Vector2 and writes the result to the out CML_Vector2.
+/**
+ * @brief Reflects the first CML_Vector2 across the surface defined by the 
+ *        normal CML_Vector2 and writes the result to the out CML_Vector2.
  *
- * Parameters:
- *      CML_Vector2 *v   - The vector operand.
- *      CML_Vector2 *normal   - The normal of the surface to reflect across.
- *      CML_Vector2 *out - The output vector.
+ * @param v      The vector operand.
+ * @param normal The normal of the surface to reflect across.
+ * @param out    The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_reflect(const CML_Vector2 *v, const CML_Vector2 *normal, CML_Vector2 *out) {
     f32 mod = 2 * (v->x * normal->x + v->y * normal->y) / (normal->x * normal->x + normal->y * normal->y);
     out->x = v->x - mod * normal->x;
@@ -559,19 +425,14 @@ CAMEL_STATIC CAMEL_API void cml_vector2_reflect(const CML_Vector2 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_eq
+/**
+ * @brief Compares two CML_Vector2s for equality.
  * 
- * Description:
- *      Compares two CML_Vector4s for equality.
+ * @param v The left input vector.
+ * @param w The right input vector.
  * 
- * Parameters:
- *      CML_Vector2 *v - The first input vector.
- *      CML_Vector2 *w - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the vectors are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2 *w) {
     if (!v || !w) {
         return false;
@@ -581,19 +442,14 @@ CAMEL_STATIC CAMEL_API b8 cml_vector2_eq(const CML_Vector2 *v, const CML_Vector2
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Vector2s.
+/**
+ * @brief Returns a debug message comparing the input CML_Vector2s.
  *
- * Parameters:
- *      CML_Vector2 *expected - Expected vector.
- *      CML_Vector2 *got - Result vector.
+ * @param expected Expected vector.
+ * @param got      Result vector.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, const CML_Vector2 *got) {
     if (!expected || !got) {
         return NULL;
@@ -611,20 +467,15 @@ CAMEL_STATIC CAMEL_API char *cml_vector2_debug(const CML_Vector2 *expected, cons
 
 
 
-/******************************************************************************
- * Function: cml_vector3_add
- * 
- * Description:
- *      Adds two CML_Vector3 and writes the result to the out CML_Vector3.
+/**
+ * @brief Adds two CML_Vector3 and writes the result to the out CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      CML_Vector3 *w   - The second vector operand.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_add(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
@@ -632,20 +483,16 @@ CAMEL_STATIC CAMEL_API void cml_vector3_add(const CML_Vector3 *v, const CML_Vect
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_add_f32
- * 
- * Description:
- *      Adds a scalar to all CML_Vector3 and writes the result to the out.
+/**
+ * @brief Adds a scalar to all CML_Vector3 and writes the result to the out
+ *        CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_add_f32(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
     out->x = v->x + t;
     out->y = v->y + t;
@@ -653,20 +500,16 @@ CAMEL_STATIC CAMEL_API void cml_vector3_add_f32(const CML_Vector3 *v, f32 t, CML
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_sub
- * 
- * Description:
- *      Subtracts two CML_Vector3 and writes the result to the out CML_Vector3.
+/**
+ * @brief Subtracts two CML_Vector3 and writes the result to the out 
+ *        CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      CML_Vector3 *w   - The second vector operand.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
@@ -674,20 +517,16 @@ CAMEL_STATIC CAMEL_API void cml_vector3_sub(const CML_Vector3 *v, const CML_Vect
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_sub_f32
- * 
- * Description:
- *      Subtracts a scalar to all CML_Vector3 and writes the result to the out.
+/**
+ * @brief Subtracts a scalar to all CML_Vector3 and writes the result to the out
+ *        CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_sub_f32(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
@@ -695,21 +534,16 @@ CAMEL_STATIC CAMEL_API void cml_vector3_sub_f32(const CML_Vector3 *v, f32 t, CML
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_scale
- * 
- * Description:
- *      Multiplies a CML_Vector3 by a scalar, and writes the result to the out 
- *      CML_Vector3.
+/**
+ * @brief Multiplies a CML_Vector3 by a scalar, and writes the result to the out 
+ *        CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The vector operand.
- *      double       t   - The scalar.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_scale(const CML_Vector3 *v, f32 t, CML_Vector3 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
@@ -717,53 +551,38 @@ CAMEL_STATIC CAMEL_API void cml_vector3_scale(const CML_Vector3 *v, f32 t, CML_V
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_mod
- * 
- * Description:
- *      Calculates the modulus of the input CML_Vector3.
+/**
+ * @brief Calculates the modulus of the input CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The modulus of the input CML_Vector3.
- *****************************************************************************/
+ * @return The modulus of the input CML_Vector3.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_mod(const CML_Vector3 *v) {
     return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_mod2
- * 
- * Description:
- *      Calculates the squared modulus of the input CML_Vector3.
+/**
+ * @brief Calculates the squared modulus of the input CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The squared modulus of the input CML_Vector3.
- *****************************************************************************/
+ * @return The squared modulus of the input CML_Vector3.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_mod2(const CML_Vector3 *v) {
     return v->x * v->x + v->y * v->y + v->z * v->z;
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_norm
- * 
- * Description:
- *      Normalizes the input CML_Vector3 and writes it to the out CML_Vector3.
+/**
+ * @brief Normalizes the input CML_Vector3 and writes it to the out CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The input vector.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The input vector.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *out) {
     f32 mod = 1/sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
     out->x = v->x * mod;
@@ -772,38 +591,29 @@ CAMEL_STATIC CAMEL_API void cml_vector3_norm(const CML_Vector3 *v, CML_Vector3 *
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_dot
- * 
- * Description:
- *      Calculates the dot product of the input CML_Vector3s.
+/**
+ * @brief Calculates the dot product of the input CML_Vector3s.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The dot product of the input vectors.
- *****************************************************************************/
+ * @return The dot product of the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_dot(const CML_Vector3 *v, const CML_Vector3 *w) {
     return v->x * w->x + v->y * w->y + v->z * w->z;
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_cross
- * 
- * Description:
- *      Calculates the cross product of the input CML_Vector3s.
+/**
+ * @brief Calculates the cross product of the input CML_Vector3s and writes the
+ *        result to the out CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_cross(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     out->x = v->y * w->z - v->z * w->y;
     out->y = v->z * w->x - v->x * w->z;
@@ -811,55 +621,40 @@ CAMEL_STATIC CAMEL_API void cml_vector3_cross(const CML_Vector3 *v, const CML_Ve
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_distance
- * 
- * Description:
- *      Calculates the distance between two CML_Vector3s.
+/**
+ * @brief Calculates the distance between two CML_Vector3s.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The distance between the input vectors.
- *****************************************************************************/
+ * @return The distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_distance(const CML_Vector3 *v, const CML_Vector3 *w) {
     return sqrtf((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z));
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_distance2
- * 
- * Description:
- *      Calculates the squared distance between two CML_Vector3s.
+/**
+ * @brief Calculates the squared distance between two CML_Vector3s.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The squared distance between the input vectors.
- *****************************************************************************/
+ * @return The squared distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_distance2(const CML_Vector3 *v, const CML_Vector3 *w) {
     return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + (v->z - w->z) * (v->z - w->z);
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_angle
- * 
- * Description:
- *      Calculates the angle between two CML_Vector3s in radians.
+/**
+ * @brief Calculates the angle between two CML_Vector3s in radians.
  *
- * Parameters:
- *      CML_Vector3 *v   - The first input vector.
- *      CML_Vector3 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The angle between the input vectors in radians.
- *****************************************************************************/
+ * @return The angle between the input vectors in radians.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector3_angle(const CML_Vector3 *v, const CML_Vector3 *w) {
     return acosf((v->x * w->x + v->y * w->y + v->z * w->z) / 
                 (sqrtf(v->x * v->x + v->y * v->y + v->z * v->z) * 
@@ -867,21 +662,16 @@ CAMEL_STATIC CAMEL_API f32 cml_vector3_angle(const CML_Vector3 *v, const CML_Vec
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_project
- * 
- * Description:
- *      Projects the first CML_Vector3 onto the second CML_Vector3 and writes
- *      the result to the out CML_Vector3.
+/**
+ * @brief Projects the first CML_Vector3 onto the second CML_Vector3 and writes
+ *        the result to the out CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The vector operand.
- *      CML_Vector3 *w   - The vector to project onto.
- *      CML_Vector3 *out - The output vector.
+ * @param v   The vector operand.
+ * @param w   The vector to project onto.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_project(const CML_Vector3 *v, const CML_Vector3 *w, CML_Vector3 *out) {
     f32 mod = (v->x * w->x + v->y * w->y + v->z * w->z) / (w->x * w->x + w->y * w->y + w->z * w->z);
     out->x = mod * w->x;
@@ -890,21 +680,16 @@ CAMEL_STATIC CAMEL_API void cml_vector3_project(const CML_Vector3 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_reflect
- * 
- * Description:
- *      Reflects the first CML_Vector3 across the surface defined by the normal
- *      CML_Vector3 and writes the result to the out CML_Vector3.
+/**
+ * @brief Reflects the first CML_Vector3 across the surface defined by the 
+ *        normal CML_Vector3 and writes the result to the out CML_Vector3.
  *
- * Parameters:
- *      CML_Vector3 *v   - The vector operand.
- *      CML_Vector3 *normal   - The normal of the surface to reflect across.
- *      CML_Vector3 *out - The output vector.
+ * @param v      The vector operand.
+ * @param normal The normal of the surface to reflect across.
+ * @param out    The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_reflect(const CML_Vector3 *v, const CML_Vector3 *normal, CML_Vector3 *out) {
     f32 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z) / 
                   (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z);
@@ -914,19 +699,14 @@ CAMEL_STATIC CAMEL_API void cml_vector3_reflect(const CML_Vector3 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_eq
+/**
+ * @brief Compares two CML_Vector3s for equality.
  * 
- * Description:
- *      Compares two CML_Vector4s for equality.
+ * @param v The left input vector.
+ * @param w The right input vector.
  * 
- * Parameters:
- *      CML_Vector3 *v - The first input vector.
- *      CML_Vector3 *w - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the vectors are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3 *w) {
     if (!v || !w) {
         return false;
@@ -936,19 +716,14 @@ CAMEL_STATIC CAMEL_API b8 cml_vector3_eq(const CML_Vector3 *v, const CML_Vector3
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Vector3s.
+/**
+ * @brief Returns a debug message comparing the input CML_Vector3s.
  *
- * Parameters:
- *      CML_Vector3 *expected - Expected vector.
- *      CML_Vector3 *got - Result vector.
+ * @param expected Expected vector.
+ * @param got      Result vector.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, const CML_Vector3 *got) {
     if (!expected || !got) {
         return NULL;
@@ -966,20 +741,15 @@ CAMEL_STATIC CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, cons
 
 
 
-/******************************************************************************
- * Function: cml_vector4_add
- * 
- * Description:
- *      Adds two CML_Vector4 and writes the result to the out CML_Vector4.
+/**
+ * @brief Adds two CML_Vector4 and writes the result to the out CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      CML_Vector4 *w   - The second vector operand.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x + w->x;
     out->y = v->y + w->y;
@@ -988,20 +758,16 @@ CAMEL_STATIC CAMEL_API void cml_vector4_add(const CML_Vector4 *v, const CML_Vect
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_add_f32
- * 
- * Description:
- *      Adds a scalar to all CML_Vector4 and writes the result to the out
+/**
+ * @brief Adds a scalar to all CML_Vector4 and writes the result to the out
+ *        CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_add_f32(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
     out->x = v->x + t;
     out->y = v->y + t;
@@ -1010,20 +776,16 @@ CAMEL_STATIC CAMEL_API void cml_vector4_add_f32(const CML_Vector4 *v, f32 t, CML
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_sub
- * 
- * Description:
- *      Subtracts two CML_Vector4 and writes the result to the out CML_Vector4.
+/**
+ * @brief Subtracts two CML_Vector4 and writes the result to the out 
+ *        CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      CML_Vector4 *w   - The second vector operand.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The left vector operand.
+ * @param w   The right vector operand.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     out->x = v->x - w->x;
     out->y = v->y - w->y;
@@ -1032,20 +794,16 @@ CAMEL_STATIC CAMEL_API void cml_vector4_sub(const CML_Vector4 *v, const CML_Vect
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_sub_f32
- * 
- * Description:
- *      Subtracts a scalar to all CML_Vector4 and writes the result to the out
+/**
+ * @brief Subtracts a scalar to all CML_Vector4 and writes the result to the out
+ *        CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first vector operand.
- *      f32          t   - The scalar.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_sub_f32(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
     out->x = v->x - t;
     out->y = v->y - t;
@@ -1054,21 +812,16 @@ CAMEL_STATIC CAMEL_API void cml_vector4_sub_f32(const CML_Vector4 *v, f32 t, CML
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_scale
- * 
- * Description:
- *      Multiplies a CML_Vector4 by a scalar, and writes the result to the out 
- *      CML_Vector4.
+/**
+ * @brief Multiplies a CML_Vector4 by a scalar, and writes the result to the out 
+ *        CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The vector operand.
- *      double       t   - The scalar.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The vector operand.
+ * @param t   The scalar.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_scale(const CML_Vector4 *v, f32 t, CML_Vector4 *out) {
     out->x = v->x * t;
     out->y = v->y * t;
@@ -1077,53 +830,38 @@ CAMEL_STATIC CAMEL_API void cml_vector4_scale(const CML_Vector4 *v, f32 t, CML_V
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_mod
- * 
- * Description:
- *      Calculates the modulus of the input CML_Vector4.
+/**
+ * @brief Calculates the modulus of the input CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The modulus of the input CML_Vector4.
- *****************************************************************************/
+ * @return The modulus of the input CML_Vector4.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_mod(const CML_Vector4 *v) {
     return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_mod2
- * 
- * Description:
- *      Calculates the squared modulus of the input CML_Vector4.
+/**
+ * @brief Calculates the squared modulus of the input CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v - The input vector.
+ * @param v The input vector.
  * 
- * Returns:
- *      The squared modulus of the input CML_Vector4.
- *****************************************************************************/
+ * @return The squared modulus of the input CML_Vector4.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_mod2(const CML_Vector4 *v) {
     return v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_norm
- * 
- * Description:
- *      Normalizes the input CML_Vector4 and writes it to the out CML_Vector4.
+/**
+ * @brief Normalizes the input CML_Vector4 and writes it to the out CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The input vector.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The input vector.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *out) {
     f32 mod = 1/sqrtf(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
     out->x = v->x * mod;
@@ -1133,75 +871,55 @@ CAMEL_STATIC CAMEL_API void cml_vector4_norm(const CML_Vector4 *v, CML_Vector4 *
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_dot
- * 
- * Description:
- *      Calculates the dot product of the input CML_Vector4s.
+/**
+ * @brief Calculates the dot product of the input CML_Vector4s.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first input vector.
- *      CML_Vector4 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The dot product of the input vectors.
- *****************************************************************************/
+ * @return The dot product of the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_dot(const CML_Vector4 *v, const CML_Vector4 *w) {
     return v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w;
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_distance
- * 
- * Description:
- *      Calculates the distance between two CML_Vector4s.
+/**
+ * @brief Calculates the distance between two CML_Vector4s.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first input vector.
- *      CML_Vector4 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The distance between the input vectors.
- *****************************************************************************/
+ * @return The distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_distance(const CML_Vector4 *v, const CML_Vector4 *w) {
     return sqrtf((v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
                 (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w));
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_distance2
- * 
- * Description:
- *      Calculates the squared distance between two CML_Vector4s.
+/**
+ * @brief Calculates the squared distance between two CML_Vector4s.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first input vector.
- *      CML_Vector4 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The squared distance between the input vectors.
- *****************************************************************************/
+ * @return The squared distance between the input vectors.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_distance2(const CML_Vector4 *v, const CML_Vector4 *w) {
     return (v->x - w->x) * (v->x - w->x) + (v->y - w->y) * (v->y - w->y) + 
            (v->z - w->z) * (v->z - w->z) + (v->w - w->w) * (v->w - w->w);
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_angle
- * 
- * Description:
- *      Calculates the angle between two CML_Vector4s in radians.
+/**
+ * @brief Calculates the angle between two CML_Vector4s in radians.
  *
- * Parameters:
- *      CML_Vector4 *v   - The first input vector.
- *      CML_Vector4 *w   - The second input vector.
+ * @param v The left vector operand.
+ * @param w The right vector operand.
  * 
- * Returns:
- *      The angle between the input vectors in radians.
- *****************************************************************************/
+ * @return The angle between the input vectors in radians.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_vector4_angle(const CML_Vector4 *v, const CML_Vector4 *w) {
     return acosf((v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
                 (sqrtf(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w) * 
@@ -1209,21 +927,16 @@ CAMEL_STATIC CAMEL_API f32 cml_vector4_angle(const CML_Vector4 *v, const CML_Vec
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_project
- * 
- * Description:
- *      Projects the first CML_Vector4 onto the second CML_Vector4 and writes
- *      the result to the out CML_Vector4.
+/**
+ * @brief Projects the first CML_Vector4 onto the second CML_Vector4 and writes
+ *        the result to the out CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The vector operand.
- *      CML_Vector4 *w   - The vector to project onto.
- *      CML_Vector4 *out - The output vector.
+ * @param v   The vector operand.
+ * @param w   The vector to project onto.
+ * @param out The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_project(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
     f32 mod = (v->x * w->x + v->y * w->y + v->z * w->z + v->w * w->w) / 
               (w->x * w->x + w->y * w->y + w->z * w->z + w->w * w->w);
@@ -1234,21 +947,16 @@ CAMEL_STATIC CAMEL_API void cml_vector4_project(const CML_Vector4 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_reflect
- * 
- * Description:
- *      Reflects the first CML_Vector4 across the surface defined by the normal
- *      CML_Vector4 and writes the result to the out CML_Vector4.
+/**
+ * @brief Reflects the first CML_Vector4 across the surface defined by the 
+ *        normal CML_Vector4 and writes the result to the out CML_Vector4.
  *
- * Parameters:
- *      CML_Vector4 *v   - The vector operand.
- *      CML_Vector4 *normal   - The normal of the surface to reflect across.
- *      CML_Vector4 *out - The output vector.
+ * @param v      The vector operand.
+ * @param normal The normal of the surface to reflect across.
+ * @param out    The output vector.
  * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_reflect(const CML_Vector4 *v, const CML_Vector4 *normal, CML_Vector4 *out) {
     f32 mod = 2 * (v->x * normal->x + v->y * normal->y + v->z * normal->z + v->w * normal->w) / 
                   (normal->x * normal->x + normal->y * normal->y + normal->z * normal->z + normal->w * normal->w);
@@ -1259,19 +967,14 @@ CAMEL_STATIC CAMEL_API void cml_vector4_reflect(const CML_Vector4 *v, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_eq
+/**
+ * @brief Compares two CML_Vector4s for equality.
  * 
- * Description:
- *      Compares two CML_Vector4s for equality.
+ * @param v The left input vector.
+ * @param w The right input vector.
  * 
- * Parameters:
- *      CML_Vector4 *v - The first input vector.
- *      CML_Vector4 *w - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the vectors are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4 *w) {
     if (!v || !w) {
         return false;
@@ -1282,19 +985,14 @@ CAMEL_STATIC CAMEL_API b8 cml_vector4_eq(const CML_Vector4 *v, const CML_Vector4
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Vector4s.
+/**
+ * @brief Returns a debug message comparing the input CML_Vector4s.
  *
- * Parameters:
- *      CML_Vector4 *expected - Expected vector.
- *      CML_Vector4 *got - Result vector.
+ * @param expected Expected vector.
+ * @param got      Result vector.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_vector4_debug(const CML_Vector4 *expected, const CML_Vector4 *got) {
     if (!expected || !got) {
         return NULL;

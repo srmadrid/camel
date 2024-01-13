@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: exparser.h
+/**
+ * @file exparser.h
  * 
- * Description:
- *      Declaration for expression parsing and manupulation of CAMEL.
+ * @brief Declaration for expression parsing and manupulation of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 16/11/2023
+ * @author Sergio Madrid
+ * @date 16/11/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_EXPARSER
 #define CAMEL_EXPARSER
@@ -22,33 +21,25 @@
 #include "../macros.h"
 
 
-/******************************************************************************
- * Struct: CML_ExpressionToken
- * 
- * Description:
- *      Token that stores information of each toke of a tokenized expression.
+/**
+ * @brief Token that stores information of each toke of a tokenized expression.
  *
- * Fields:
- *      int charType     - The type stored (refer to Notes).
- *      char *characters - String of the token stored.
- *      u32 len     - Length of the string stored in characters.
- *
- * Notes:
- *      Character types:
- *          1:  Number
- *          2:  Low precedence operator (+, -)
- *          3:  Medium precedence operator (*, /)
- *          4:  High precedence operator (^)
- *          5:  Letter (auxiliary for identifying function operators, variables
- *                and constants)
- *          6:  Function operator (log, sin, cos, etc.)
- *          7:  Variable (any letter not interpreted as a constant)
- *          8:  Constant (pi, e, i, etc.)
- *          9:  Opening parenthesis
- *          10: Closing parenthesis
- *          11: Space
- *          -1: Undefined
- *****************************************************************************/
+ * @details
+ * Character types:
+ *     1:  Number
+ *     2:  Low precedence operator (+, -)
+ *     3:  Medium precedence operator (*, /)
+ *     4:  High precedence operator (^)
+ *     5:  Letter (auxiliary for identifying function operators, variables
+ *         and constants)
+ *     6:  Function operator (log, sin, cos, etc.)
+ *     7:  Variable (any letter not interpreted as a constant)
+ *     8:  Constant (pi, e, i, etc.)
+ *     9:  Opening parenthesis
+ *     10: Closing parenthesis
+ *     11: Space
+ *     -1: Undefined
+ */
 typedef struct {
     int charType;
     char *characters;
@@ -56,92 +47,61 @@ typedef struct {
 } CML_ExpressionToken;
 
 
-/******************************************************************************
- * Function: cml_exptkn_init
- * 
- * Description:
- *      Initializes a CML_ExpressionToken with the input string.
+/**
+ * @brief Initializes a CML_ExpressionToken with the input string.
  *
- * Parameters:
- *      char **input - Pointer to the input string.
- *      int  size    - Size of the input string.
+ * @param input Pointer to the input string.
+ * @param size  Size of the input string.
  * 
- * Returns:
- *      A pointer to the initialized CML_ExpressionToken.
- *
- * Notes:
- *      The input string is a double pointer, since after embedding it into 
- *      the CML_ExpressionToken the reference will be edited to point to NULL,
- *      so the original memory can only be accessed through the token.
- *      Therefore this should be called like:
- *          cml_exptkn_init(&string, charType, size);.
- *****************************************************************************/
-// Yet to change to return CML_Status and initialize input CML_ExpressionToken *
+ * @return void.
+ */
+// Yet to change to return CML_Status and initialize input CML_ExpressionToken * and remove the string double pointer
 CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 size);
 
 
-/******************************************************************************
- * Function: cml_exptkn_free
- * 
- * Description:
- *      Frees the input CML_ExpressionToken.
+/**
+ * @brief Frees the memory of a CML_ExpressionToken.
  *
- * Parameters:
- *      CML_ExpressionToken *token - Input token.
+ * @param token The CML_ExpressionToken to be freed.
  * 
- * Returns:
- *      Void.
- *****************************************************************************/
+ * @return void.
+ */
 void cml_exptkn_free(CML_ExpressionToken *token);
 
 
-/******************************************************************************
- * Function: cml_read_char
- * 
- * Description:
- *      Reads the type of a char (key in Notes in CML_ExpressionToken).
+/**
+ * @brief Reads the type of a char (key in Notes in CML_ExpressionToken).
  *
- * Parameters:
- *      char input - Input character.
+ * @param input Input character.
  * 
- * Returns:
- *      The type of the character input.
- *****************************************************************************/
-int cml_read_char(char input);
+ * @return The type of the character input.
+ */
+i32 cml_read_char(char input);
 
 
-/******************************************************************************
- * Function: cml_lex_expression
- * 
- * Description:
- *      Tokenizes the input expression (string) into an array of 
- *      CML_ExpressionToken and writes it to the out array.
+/**
+ * @brief Tokenizes the input expression (string) into an array of 
+ *        CML_ExpressionToken and writes it to the out array.
  *
- * Parameters:
- *      char                *expression - Input expression.
- *      uint32_t            size        - Size of the output expression array.
+ * @param expression Input expression.
+ * @param size       Size of the output expression array.
  * 
- * Returns:
- *      The tokenized expression (**: pointer to pointer array).
- *****************************************************************************/
+ * @return The tokenized expression (**: pointer to pointer array).
+ */
+// To edit to return CML_Status and edit the input CML_ExpressionToken **
 #define INITIAL_EXP_SIZE 10
 #define INITIAL_NUM_SIZE 20
 CML_ExpressionToken **cml_lex_expression(const char *expression, u32 *size);
 
 
-/******************************************************************************
- * Function: cml_infix_postfix
- * 
- * Description:
- *      Converts to infix the input postfix expression. 
+/**
+ * @brief Converts to infix the input postfix expression. 
  *
- * Parameters: // To be decided
- *      char                *expression - Input expression.
- *      uint32_t            size        - Size of the output expression array.
+ * @param expression Input expression.
+ * @param size       Size of the output expression array.
  * 
- * Returns:
- *      The tokenized expression (**: pointer to pointer array).
- *****************************************************************************/
+ * @return The tokenized expression (**: pointer to pointer array).
+ */
 // To be implemented
 
 

@@ -1,17 +1,16 @@
-/******************************************************************************
- * Filename: cfvector.h
+/**
+ * @file cfvector.h
  * 
- * Description:
- *      Implementations for the compilef version of the fixed vector manipulation 
- *      functions of CAMEL.
+ * @brief Implementations for the compilef version of the fixed vector manipulation 
+ *        functions of CAMEL.
  * 
- * Author: Sergio Madrid
- * Created on: 25/12/2023
+ * @author Sergio Madrid
+ * @date 25/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include <math.h>

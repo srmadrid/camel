@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: macros.h
+/**
+ * @file macros.h
  * 
- * Description:
- *      Declaration of most macros of CAMEL.
+ * @brief Declaration of most macros of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 8/11/2023
+ * @author Sergio Madrid
+ * @date 8/11/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_MACROS
 #define CAMEL_MACROS
@@ -24,7 +23,7 @@
 #define CAMEL_STATIC static
 
 
-typedef enum {
+typedef enum CML_Comparison {
     CML_LOWER = -1,
     CML_EQUAL = 0,
     CML_GREATER = 1,
@@ -33,24 +32,24 @@ typedef enum {
 
 
 // Unsigned int types.
-typedef uint8_t  u8;  /** @brief Unsigned 8-bit integer */
-typedef uint16_t u16; /** @brief Unsigned 16-bit integer */
-typedef uint32_t u32; /** @brief Unsigned 32-bit integer */
-typedef uint64_t u64; /** @brief Unsigned 64-bit integer */
+typedef uint8_t  u8;  /** @brief Unsigned 8-bit integer. */
+typedef uint16_t u16; /** @brief Unsigned 16-bit integer. */
+typedef uint32_t u32; /** @brief Unsigned 32-bit integer. */
+typedef uint64_t u64; /** @brief Unsigned 64-bit integer. */
 
 // Signed int types.
-typedef int8_t  i8;   /** @brief Signed 8-bit integer */
-typedef int16_t i16;  /** @brief Signed 16-bit integer */
-typedef int32_t i32;  /** @brief Signed 32-bit integer */
-typedef int64_t i64;  /** @brief Signed 64-bit integer */
+typedef int8_t  i8;   /** @brief Signed 8-bit integer. */
+typedef int16_t i16;  /** @brief Signed 16-bit integer. */
+typedef int32_t i32;  /** @brief Signed 32-bit integer. */
+typedef int64_t i64;  /** @brief Signed 64-bit integer. */
 
 // Floating point types.
-typedef float  f32;   /** @brief 32-bit floating point number */
-typedef double f64;   /** @brief 64-bit floating point number */
+typedef float  f32;   /** @brief 32-bit floating point number. */
+typedef double f64;   /** @brief 64-bit floating point number. */
 
 // Boolean types.
-typedef _Bool b8;     /** @brief 8-bit boolean */
-typedef i32 b32;      /** @brief 32-bit boolean */
+typedef _Bool b8;     /** @brief 8-bit boolean. */
+typedef i32 b32;      /** @brief 32-bit boolean. */
 
 
 // Ensure type sizes.
@@ -63,24 +62,24 @@ typedef i32 b32;      /** @brief 32-bit boolean */
 #endif
 
 // Unsigned int types.
-CML_STATIC_ASSERT(sizeof(u8)  == 1, "u8 is not 1 byte");
-CML_STATIC_ASSERT(sizeof(u16) == 2, "u16 is not 2 bytes");
-CML_STATIC_ASSERT(sizeof(u32) == 4, "u32 is not 4 bytes");
-CML_STATIC_ASSERT(sizeof(u64) == 8, "u64 is not 8 bytes");
+CML_STATIC_ASSERT(sizeof(u8)  == 1, "u8 is not 1 byte.");
+CML_STATIC_ASSERT(sizeof(u16) == 2, "u16 is not 2 bytes.");
+CML_STATIC_ASSERT(sizeof(u32) == 4, "u32 is not 4 bytes.");
+CML_STATIC_ASSERT(sizeof(u64) == 8, "u64 is not 8 bytes.");
 
 // Signed int types.
-CML_STATIC_ASSERT(sizeof(i8)  == 1, "i8 is not 1 byte");
-CML_STATIC_ASSERT(sizeof(i16) == 2, "i16 is not 2 bytes");
-CML_STATIC_ASSERT(sizeof(i32) == 4, "i32 is not 4 bytes");
-CML_STATIC_ASSERT(sizeof(i64) == 8, "i64 is not 8 bytes");
+CML_STATIC_ASSERT(sizeof(i8)  == 1, "i8 is not 1 byte.");
+CML_STATIC_ASSERT(sizeof(i16) == 2, "i16 is not 2 bytes.");
+CML_STATIC_ASSERT(sizeof(i32) == 4, "i32 is not 4 bytes.");
+CML_STATIC_ASSERT(sizeof(i64) == 8, "i64 is not 8 bytes.");
 
 // Floating point types.
-CML_STATIC_ASSERT(sizeof(f32) == 4, "f32 is not 4 bytes");
-CML_STATIC_ASSERT(sizeof(f64) == 8, "f64 is not 8 bytes");
+CML_STATIC_ASSERT(sizeof(f32) == 4, "f32 is not 4 bytes.");
+CML_STATIC_ASSERT(sizeof(f64) == 8, "f64 is not 8 bytes.");
 
 // Boolean types.
-CML_STATIC_ASSERT(sizeof(b8)  == 1, "b8 is not 1 byte");
-CML_STATIC_ASSERT(sizeof(b32) == 4, "b32 is not 4 bytes");
+CML_STATIC_ASSERT(sizeof(b8)  == 1, "b8 is not 1 byte.");
+CML_STATIC_ASSERT(sizeof(b32) == 4, "b32 is not 4 bytes.");
 
 
 // Maximum and minimum values.
@@ -109,6 +108,53 @@ CML_STATIC_ASSERT(sizeof(b32) == 4, "b32 is not 4 bytes");
 #define MIN_F32 0xFF7FFFFF          /** @brief Minimum value of f32 */
 #define MAX_F64 0x7FEFFFFFFFFFFFFF  /** @brief Maximum value of f64 */
 #define MIN_F64 0xFFEFFFFFFFFFFFFF  /** @brief Minimum value of f64 */
+
+
+
+// Type helper macros.
+/** @brief Get the name of a type. */
+#define typename(x) _Generic((x),                                        \
+        /* Built-in types */                                             \
+        void *: "pointer to void", \
+        /* CML basic types */                                            \
+        u8: "u8", \
+        u16: "u16", \
+        u32: "u32", \
+        u64: "u64", \
+        i8: "i8", \
+        i16: "i16", \
+        i32: "i32", \
+        i64: "i64", \
+        f32: "f32", \
+        f64: "f64", \
+        b8: "b8", \
+        u8 *: "pointer to u8", \
+        u16 *: "pointer to u16", \
+        u32 *: "pointer to u32", \
+        u64 *: "pointer to u64", \
+        i8 *: "pointer to i8", \
+        i16 *: "pointer to i16", \
+        i32 *: "pointer to i32", \
+        i64 *: "pointer to i64", \
+        f32 *: "pointer to f32", \
+        f64 *: "pointer to f64", \
+        b8 *: "pointer to b8", \
+        /* CML complex types */ \
+        CML_Vector: "CML_Vector", \
+        CML_Vector2: "CML_Vector2", \
+        CML_Vector3: "CML_Vector3", \
+        CML_Vector4: "CML_Vector4", \
+        CML_Matrix: "CML_Matrix", \
+        CML_Matrix2x2: "CML_Matrix2x2", \
+        CML_Matrix2x3: "CML_Matrix2x3", \
+        CML_Matrix2x4: "CML_Matrix2x4", \
+        CML_Matrix3x2: "CML_Matrix3x2", \
+        CML_Matrix3x3: "CML_Matrix3x3", \
+        CML_Matrix3x4: "CML_Matrix3x4", \
+        CML_Matrix4x2: "CML_Matrix4x2", \
+        CML_Matrix4x3: "CML_Matrix4x3", \
+        CML_Matrix4x4: "CML_Matrix4x4", \
+        default: "unknown")
 
 
 

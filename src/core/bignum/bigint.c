@@ -1,22 +1,21 @@
-/******************************************************************************
- * Filename: bigint.c
+/**
+ * @file bigint.c
  * 
- * Description:
- *      Implementations for arbitrary precision integers of CAMEL.
+ * @brief Implementations for arbitrary precision integers of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 9/12/2023
+ * @author Sergio Madrid
+ * @date 9/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../../include/core/bignum/bigint.h"
 
 
-CML_Status cml_bigint_init(CML_BigInt *bigint, u32 capacity) {
+CML_Status cml_bigint_init(u32 capacity, CML_BigInt *bigint) {
     if (capacity < CML_INITIAL_BIGINT_CAP) {
         capacity = CML_INITIAL_BIGINT_CAP;
     }
@@ -53,28 +52,28 @@ void cml_bigint_free(CML_BigInt *bigint) {
 }
 
 
-CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign) {
-    if (bigint == NULL) {
+CML_Status cml_bigint_set_int(u64 input, i32 sign, CML_BigInt *out) {
+    if (out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
     if ((input >> 32) & 0xFFFFFFFF) {
-        bigint->size = 2;
+        out->size = 2;
     } else {
-        bigint->size = 1;
+        out->size = 1;
     }
 
-    bigint->data[0] = input & 0xFFFFFFFF;
-    bigint->data[1] = input >> 32;
+    out->data[0] = input & 0xFFFFFFFF;
+    out->data[1] = input >> 32;
 
-    bigint->sign = sign > 0 ? 1 : -1;
+    out->sign = sign > 0 ? 1 : -1;
 
     return CML_SUCCESS;
 }
 
 
-CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input) {
-    if (bigint == NULL || input == NULL) {
+CML_Status cml_bigint_set_str(char *input, CML_BigInt *out) {
+    if (out == NULL || input == NULL) {
         return CML_ERR_NULL_PTR;
     }
     return CML_SUCCESS;
@@ -82,26 +81,26 @@ CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input) {
 }
 
 
-CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input) {
-    if (bigint == NULL || input == NULL) {
+CML_Status cml_bigint_set(CML_BigInt *input, CML_BigInt *out) {
+    if (out == NULL || input == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (bigint->capacity < input->capacity) {
-        bigint->data = (u32*)realloc(bigint->data, input->capacity * sizeof(u32));
-        if (bigint->data == NULL) {
-            bigint->capacity = 0;
-            bigint->size = 0;
+    if (out->capacity < input->capacity) {
+        out->data = (u32*)realloc(out->data, input->capacity * sizeof(u32));
+        if (out->data == NULL) {
+            out->capacity = 0;
+            out->size = 0;
             return CML_ERR_NULL_PTR;
         }
-        bigint->capacity = input->capacity;
+        out->capacity = input->capacity;
     }
 
-    bigint->size = input->size;
-    bigint->sign = input->sign;
+    out->size = input->size;
+    out->sign = input->sign;
 
     for (u32 i = 0; i < input->size; ++i) {
-        bigint->data[i] = input->data[i];
+        out->data[i] = input->data[i];
     }
 
     return CML_SUCCESS;
@@ -195,7 +194,7 @@ CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2) {
 }
 
 
-b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign) {
+b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i32 sign) {
     if (bigint == NULL) {
         return false;
     }
@@ -226,7 +225,7 @@ b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign) {
 }
 
 
-CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign) {
+CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i32 sign) {
     if (bigint == NULL) {
         return CML_EQUAL;
     }
@@ -253,8 +252,8 @@ CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str) {
     }
 
     CML_BigInt bigint2;
-    cml_bigint_init(&bigint2, 0);
-    cml_bigint_set_str(&bigint2, str);
+    cml_bigint_init(0, &bigint2);
+    cml_bigint_set_str(str, &bigint2);
 
     CML_Comparison result = cml_bigint_compare(bigint, &bigint2);
 

@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: err.c
+/**
+ * @file err.c
  * 
- * Description:
- *      Implementations for the functions for errors of CAMEL.
+ * @brief Implementations for the functions for errors of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 17/12/2023
+ * @author Sergio Madrid
+ * @date 17/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../include/core/err.h"

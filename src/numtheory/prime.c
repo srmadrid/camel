@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: prime.h
+/**
+ * @file prime.h
  * 
- * Description:
- *      Declaration of all functions related to prime numbers in CAMEL.
+ * @brief Declaration of all functions related to prime numbers in CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 9/12/2023
+ * @author Sergio Madrid
+ * @date 9/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../include/numtheory/prime.h"

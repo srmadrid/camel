@@ -1,20 +1,18 @@
-/******************************************************************************
- * Filename: fmatrix.h
+/**
+ * @file fmatrix.h
  * 
- * Description:
- *      Declarations and implementations for the fixed matrix manipulation 
- *      functions of CAMEL.
+ * @brief Declarations and implementations for the fixed matrix manipulation 
+ *        functions of CAMEL.
  * 
- * Notes:
- *      This module is header only. Matrices are column major.
+ * @note This module is header only. Matrices are column major.
  *
- * Author: Sergio Madrid
- * Created on: 8/11/2023
+ * @author Sergio Madrid
+ * @date 8/11/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_FIXED_MATRIX
 #define CAMEL_FIXED_MATRIX
@@ -29,142 +27,135 @@
 #include "fvector.h"
 
 
-/******************************************************************************
- * Struct: CML_Matrix2x2
+/**
+ * @brief Represents a 2x2 matrix.
  * 
- * Description:
- *      Represents a 2x2 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x and y are in the range 
- *                [0, 1].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix2x2 {
     struct {
-        f32 m00, m10;
-        f32 m01, m11;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
     };
+    /** @brief The matrix as an array of 4 elements. */
     f32 array[4];
 } CML_Matrix2x2;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X2_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix2x2 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x2 to the zero matrix.
+ */
 #define CML_MATRIX2X2_ZERO {{0.0f, 0.0f, \
                              0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X2_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix2x2 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x2 to the identity matrix.
+ */
 #define CML_MATRIX2X2_IDENTITY {{1.0f, 0.0f, \
                                  0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X2_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix2x2 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x2 to the one matrix.
+ */
 #define CML_MATRIX2X2_ONE {{1.0f, 1.0f, \
                             1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X2
+/**
+ * @brief Initializes a CML_Matrix2x2 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix2x2 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ */
 #define CML_MATRIX2X2(m00, m01, m10, m11) {{m00, m10, \
                                             m01, m11}}
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix3x3
+/**
+ * @brief Represents a 3x3 matrix.
  * 
- * Description:
- *      Represents a 3x3 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x and y are in the range
- *                [0, 2].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix3x3 {
     struct {
-        f32 m00, m10, m20;
-        f32 m01, m11, m21;
-        f32 m02, m12, m22;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
+        /** @brief The element at row 2, column 2. */
+        f32 m22;
     };
+    /** @brief The matrix as an array of 9 elements. */
     f32 array[9];
 } CML_Matrix3x3;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X3_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x3 to the zero matrix.
+ */
 #define CML_MATRIX3X3_ZERO {{0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X3_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x3 to the identity matrix.
+ */
 #define CML_MATRIX3X3_IDENTITY {{1.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f, \
                                  0.0f, 0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x3 to the one matrix.
+ */
 #define CML_MATRIX3X3_ONE {{1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X3
+/**
+ * @brief Initializes a CML_Matrix3x3 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix3x3 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *      f32 m22 - The element at row 2, column 2.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ * @param m22 The element at row 2, column 2.
+ */
 #define CML_MATRIX3X3(m00, m01, m02, \
                       m10, m11, m12, \
                       m20, m21, m22) {{m00, m10, m20, \
@@ -173,87 +164,101 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix4x4
+/**
+ * @brief Represents a 4x4 matrix.
  * 
- * Description:
- *      Represents a 4x4 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x and y are in the range
- *                [0, 3].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix4x4 {
     struct {
-        f32 m00, m10, m20, m30;
-        f32 m01, m11, m21, m31;
-        f32 m02, m12, m22, m32;
-        f32 m03, m13, m23, m33;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 3, column 0. */
+        f32 m30;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
+        /** @brief The element at row 3, column 1. */
+        f32 m31;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
+        /** @brief The element at row 2, column 2. */
+        f32 m22;
+        /** @brief The element at row 3, column 2. */
+        f32 m32;
+        /** @brief The element at row 0, column 3. */
+        f32 m03;
+        /** @brief The element at row 1, column 3. */
+        f32 m13;
+        /** @brief The element at row 2, column 3. */
+        f32 m23;
+        /** @brief The element at row 3, column 3. */
+        f32 m33;
     };
+    /** @brief The matrix as an array of 16 elements. */
     f32 array[16];
 } CML_Matrix4x4;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X4_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x4 to the zero matrix.
+ */
 #define CML_MATRIX4X4_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X4_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x4 to the identity matrix.
+ */
 #define CML_MATRIX4X4_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f, 0.0f, \
                                  0.0f, 0.0f, 1.0f, 0.0f, \
                                  0.0f, 0.0f, 0.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x4 to the one matrix.
+ */
 #define CML_MATRIX4X4_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X4
+/**
+ * @brief Initializes a CML_Matrix4x4 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix4x4 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m03 - The element at row 0, column 3.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *      f32 m13 - The element at row 1, column 3.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *      f32 m22 - The element at row 2, column 2.
- *      f32 m23 - The element at row 2, column 3.
- *      f32 m30 - The element at row 3, column 0.
- *      f32 m31 - The element at row 3, column 1.
- *      f32 m32 - The element at row 3, column 2.
- *      f32 m33 - The element at row 3, column 3.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m03 The element at row 0, column 3.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ * @param m13 The element at row 1, column 3.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ * @param m22 The element at row 2, column 2.
+ * @param m23 The element at row 2, column 3.
+ * @param m30 The element at row 3, column 0.
+ * @param m31 The element at row 3, column 1.
+ * @param m32 The element at row 3, column 2.
+ * @param m33 The element at row 3, column 3.
+ */
 #define CML_MATRIX4X4(m00, m01, m02, m03, \
                       m10, m11, m12, m13, \
                       m20, m21, m22, m23, \
@@ -264,73 +269,68 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix2x3
+/**
+ * @brief Represents a 2x3 matrix.
  * 
- * Description:
- *      Represents a 2x3 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 1] and
- *                y in [0, 2].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix2x3 {
     struct {
-        f32 m00, m10;
-        f32 m01, m11;
-        f32 m02, m12;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
     };
+    /** @brief The matrix as an array of 6 elements. */
     f32 array[6];
 } CML_Matrix2x3;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X3_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x3 to the zero matrix.
+ */
 #define CML_MATRIX2X3_ZERO {{0.0f, 0.0f, \
                              0.0f, 0.0f, \
                              0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X3_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x3 to the identity matrix.
+ */
 #define CML_MATRIX2X3_IDENTITY {{1.0f, 0.0f, \
                                  0.0f, 1.0f, \
                                  0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x3 to the one matrix.
+ */
 #define CML_MATRIX2X3_ONE {{1.0f, 1.0f, \
                             1.0f, 1.0f, \
                             1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X3
+/**
+ * @brief Initializes a CML_Matrix2x3 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix2x3 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ */
 #define CML_MATRIX2X3(m00, m01, m02, \
                       m10, m11, m12) {{m00, m10, \
                                        m01, m11, \
@@ -338,79 +338,77 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix2x4
+/**
+ * @brief Represents a 2x4 matrix.
  * 
- * Description:
- *      Represents a 2x4 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 1] and
- *                y in [0, 3].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix2x4 {
     struct {
-        f32 m00, m10;
-        f32 m01, m11;
-        f32 m02, m12;
-        f32 m03, m13;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
+        /** @brief The element at row 0, column 3. */
+        f32 m03;
+        /** @brief The element at row 1, column 3. */
+        f32 m13;
     };
+    /** @brief The matrix as an array of 8 elements. */
     f32 array[8];
 } CML_Matrix2x4;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X4_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x4 to the zero matrix.
+ */
 #define CML_MATRIX2X4_ZERO {{0.0f, 0.0f, \
                              0.0f, 0.0f, \
                              0.0f, 0.0f, \
                              0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X4_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x4 to the identity matrix.
+ */
 #define CML_MATRIX2X4_IDENTITY {{1.0f, 0.0f, \
                                  0.0f, 1.0f, \
                                  0.0f, 0.0f, \
                                  0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix2x4 to the one matrix.
+ */
 #define CML_MATRIX2X4_ONE {{1.0f, 1.0f, \
                             1.0f, 1.0f, \
                             1.0f, 1.0f, \
                             1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX2X4
+/**
+ * @brief Initializes a CML_Matrix2x4 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix2x4 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m03 - The element at row 0, column 3.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *      f32 m13 - The element at row 1, column 3.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m03 The element at row 0, column 3.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ * @param m13 The element at row 1, column 3.
+ */
 #define CML_MATRIX2X4(m00, m01, m02, m03, \
                       m10, m11, m12, m13) {{m00, m10, \
                                             m01, m11, \
@@ -419,69 +417,65 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix3x2
+/**
+ * @brief Represents a 3x2 matrix.
  * 
- * Description:
- *      Represents a 3x2 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 2] and
- *                y in [0, 1].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix3x2 {
     struct {
-        f32 m00, m10, m20;
-        f32 m01, m11, m21;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
     };
+    /** @brief The matrix as an array of 6 elements. */
     f32 array[6];
 } CML_Matrix3x2;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X2_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x2 to the zero matrix.
+ */
 #define CML_MATRIX3X2_ZERO {{0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X2_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x2 to the identity matrix.
+ */
 #define CML_MATRIX3X2_IDENTITY {{1.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X2_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x2 to the one matrix.
+ */
 #define CML_MATRIX3X2_ONE {{1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X2
+/**
+ * @brief Initializes a CML_Matrix3x2 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix3x2 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ */
 #define CML_MATRIX3X2(m00, m01, \
                       m10, m11, \
                       m20, m21) {{m00, m10, m20, \
@@ -489,83 +483,89 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix3x4
+/**
+ * @brief Represents a 3x4 matrix.
  * 
- * Description:
- *      Represents a 3x4 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 2] and
- *                y in [0, 3].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix3x4 {
     struct {
-        f32 m00, m10, m20;
-        f32 m01, m11, m21;
-        f32 m02, m12, m22;
-        f32 m03, m13, m23;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
+        /** @brief The element at row 2, column 2. */
+        f32 m22;
+        /** @brief The element at row 0, column 3. */
+        f32 m03;
+        /** @brief The element at row 1, column 3. */
+        f32 m13;
+        /** @brief The element at row 2, column 3. */
+        f32 m23;
     };
+    /** @brief The matrix as an array of 12 elements. */
     f32 array[12];
 } CML_Matrix3x4;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X4_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x4 to the zero matrix.
+ */
 #define CML_MATRIX3X4_ZERO {{0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X4_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x4 to the identity matrix.
+ */
 #define CML_MATRIX3X4_IDENTITY {{1.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f, \
                                  0.0f, 0.0f, 1.0f, \
                                  0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X4_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix3x4 to the one matrix.
+ */
 #define CML_MATRIX3X4_ONE {{1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX3X4
+/**
+ * @brief Initializes a CML_Matrix3x4 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix3x4 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m03 - The element at row 0, column 3.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *      f32 m13 - The element at row 1, column 3.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *      f32 m22 - The element at row 2, column 2.
- *      f32 m23 - The element at row 2, column 3.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m03 The element at row 0, column 3.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ * @param m13 The element at row 1, column 3.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ * @param m22 The element at row 2, column 2.
+ * @param m23 The element at row 2, column 3.
+ */
 #define CML_MATRIX3X4(m00, m01, m02, m03, \
                       m10, m11, m12, m13, \
                       m20, m21, m22, m23) {{m00, m10, m20, \
@@ -575,71 +575,71 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix4x2
+/**
+ * @brief Represents a 4x2 matrix.
  * 
- * Description:
- *      Represents a 4x2 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 3] and
- *                y in [0, 1].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix4x2 {
     struct {
-        f32 m00, m10, m20, m30;
-        f32 m01, m11, m21, m31;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 3, column 0. */
+        f32 m30;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
+        /** @brief The element at row 3, column 1. */
+        f32 m31;
     };
+    /** @brief The matrix as an array of 8 elements. */
     f32 array[8];
 } CML_Matrix4x2;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X2_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x2 to the zero matrix.
+ */
 #define CML_MATRIX4X2_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X2_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x2 to the identity matrix.
+ */
 #define CML_MATRIX4X2_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X2_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x2 to the one matrix.
+ */
 #define CML_MATRIX4X2_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X2
+/**
+ * @brief Initializes a CML_Matrix4x2 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix4x2 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *      f32 m30 - The element at row 3, column 0.
- *      f32 m31 - The element at row 3, column 1.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ * @param m30 The element at row 3, column 0.
+ * @param m31 The element at row 3, column 1.
+ */
 #define CML_MATRIX4X2(m00, m01, \
                       m10, m11, \
                       m20, m21, \
@@ -648,79 +648,86 @@ typedef union {
 
 
 
-/******************************************************************************
- * Struct: CML_Matrix4x3
+/**
+ * @brief Represents a 4x3 matrix.
  * 
- * Description:
- *      Represents a 4x3 matrix.
- *
- * Fields:
- *      f32 mxy - The element at row x, column y. x is in the range [0, 3] and
- *                y in [0, 2].
- *****************************************************************************/
-typedef union {
+ * @note The matrix is stored in column major order.
+ */
+typedef union CML_Matrix4x3 {
     struct {
-        f32 m00, m10, m20, m30;
-        f32 m01, m11, m21, m31;
-        f32 m02, m12, m22, m32;
+        /** @brief The element at row 0, column 0. */
+        f32 m00;
+        /** @brief The element at row 1, column 0. */
+        f32 m10;
+        /** @brief The element at row 2, column 0. */
+        f32 m20;
+        /** @brief The element at row 3, column 0. */
+        f32 m30;
+        /** @brief The element at row 0, column 1. */
+        f32 m01;
+        /** @brief The element at row 1, column 1. */
+        f32 m11;
+        /** @brief The element at row 2, column 1. */
+        f32 m21;
+        /** @brief The element at row 3, column 1. */
+        f32 m31;
+        /** @brief The element at row 0, column 2. */
+        f32 m02;
+        /** @brief The element at row 1, column 2. */
+        f32 m12;
+        /** @brief The element at row 2, column 2. */
+        f32 m22;
+        /** @brief The element at row 3, column 2. */
+        f32 m32;
     };
+    /** @brief The matrix as an array of 12 elements. */
     f32 array[12];
 } CML_Matrix4x3;
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X3_ZERO
- * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the zero matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x3 to the zero matrix.
+ */
 #define CML_MATRIX4X3_ZERO {{0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f, \
                              0.0f, 0.0f, 0.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X3_IDENTITY
- * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the identity matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x3 to the identity matrix.
+ */
 #define CML_MATRIX4X3_IDENTITY {{1.0f, 0.0f, 0.0f, 0.0f, \
                                  0.0f, 1.0f, 0.0f, 0.0f, \
                                  0.0f, 0.0f, 1.0f, 0.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X3_ONE
- * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the one matrix.
- *****************************************************************************/
+/**
+ * @brief Initializes a CML_Matrix4x3 to the one matrix.
+ */
 #define CML_MATRIX4X3_ONE {{1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f, \
                             1.0f, 1.0f, 1.0f, 1.0f}}
 
 
-/******************************************************************************
- * Macro: CML_MATRIX4X3
+/**
+ * @brief Initializes a CML_Matrix4x3 to the given values.
  * 
- * Description:
- *      Initializes a CML_Matrix4x3 to the given values.
- *
- * Parameters:
- *      f32 m00 - The element at row 0, column 0.
- *      f32 m01 - The element at row 0, column 1.
- *      f32 m02 - The element at row 0, column 2.
- *      f32 m10 - The element at row 1, column 0.
- *      f32 m11 - The element at row 1, column 1.
- *      f32 m12 - The element at row 1, column 2.
- *      f32 m20 - The element at row 2, column 0.
- *      f32 m21 - The element at row 2, column 1.
- *      f32 m22 - The element at row 2, column 2.
- *      f32 m30 - The element at row 3, column 0.
- *      f32 m31 - The element at row 3, column 1.
- *      f32 m32 - The element at row 3, column 2.
- *****************************************************************************/
+ * @note The matrix is stored in column major order, but the parameters are
+ *       given in row major order for convenience.
+ * 
+ * @param m00 The element at row 0, column 0.
+ * @param m01 The element at row 0, column 1.
+ * @param m02 The element at row 0, column 2.
+ * @param m10 The element at row 1, column 0.
+ * @param m11 The element at row 1, column 1.
+ * @param m12 The element at row 1, column 2.
+ * @param m20 The element at row 2, column 0.
+ * @param m21 The element at row 2, column 1.
+ * @param m22 The element at row 2, column 2.
+ * @param m30 The element at row 3, column 0.
+ * @param m31 The element at row 3, column 1.
+ * @param m32 The element at row 3, column 2.
+ */
 #define CML_MATRIX4X3(m00, m01, m02, \
                       m10, m11, m12, \
                       m20, m21, m22, \
@@ -730,20 +737,15 @@ typedef union {
 
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_add
+/**
+ * @brief Adds two CML_Matrix2x2 and writes the result to the out CML_Matrix2x2.
  * 
- * Description:
- *     Adds two CML_Matrix2x2 and writes the result to the out CML_Matrix2x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -752,21 +754,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_add(const CML_Matrix2x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_sub
+/**
+ * @brief Subtracts two CML_Matrix2x2 and writes the result to the out 
+ *        CML_Matrix2x2.
  * 
- * Description:
- *     Subtracts two CML_Matrix2x2 and writes the result to the out 
- *     CML_Matrix2x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -775,21 +772,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_sub(const CML_Matrix2x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_scale
+/**
+ * @brief Multiplies a CML_Matrix2x2 by a scalar, and writes the result to the 
+ *        out CML_Matrix2x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x2 by a scalar, and writes the result to the out 
- *     CML_Matrix2x2.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f32 t, CML_Matrix2x2 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -798,21 +790,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_scale(const CML_Matrix2x2 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_mult
+/**
+ * @brief Multiplies two CML_Matrix2x2, and writes the result to the out 
+ *        CML_Matrix2x2.
  * 
- * Description:
- *     Multiplies two CML_Matrix2x2, and writes the result to the out 
- *     CML_Matrix2x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B, CML_Matrix2x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
     f32 b00 = B->m00, b10 = B->m10, b01 = B->m01, b11 = B->m11;
@@ -824,21 +811,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult(const CML_Matrix2x2 *A, const CML
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_mult_matrix2x3
+/**
+ * @brief Multiplies a CML_Matrix2x2 by a CML_Matrix2x3, and writes the result 
+ *        to the out CML_Matrix2x3.
  * 
- * Description:
- *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x3, and writes the result to 
- *      the out CML_Matrix2x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
 
@@ -855,21 +837,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x3(const CML_Matrix2x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_mult_matrix2x4
+/**
+ * @brief Multiplies a CML_Matrix2x2 by a CML_Matrix2x4, and writes the result 
+ *        to the out CML_Matrix2x4.
  * 
- * Description:
- *      Multiplies a CML_Matrix2x2 by a CML_Matrix2x4, and writes the result to 
- *      the out CML_Matrix2x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
 
@@ -889,21 +866,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_matrix2x4(const CML_Matrix2x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_mult_vector2
+/**
+ * @brief Multiplies a CML_Matrix2x2 by a CML_Vector2, and writes the result to 
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x2 by a CML_Vector2, and writes the result to 
- *     the out CML_Vector2.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, const CML_Vector2 *v, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
 
@@ -914,21 +886,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_mult_vector2(const CML_Matrix2x2 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_mult_matrix2x2
+/**
+ * @brief Multiplies a CML_Vector2 by a CML_Matrix2x2, and writes the result to 
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Vector2 by a CML_Matrix2x2, and writes the result to 
- *     the out CML_Vector2.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x2(const CML_Vector2 *v, const CML_Matrix2x2 *A, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
     
@@ -939,36 +906,27 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x2(const CML_Vector2 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_det
+/**
+ * @brief Calculates the determinant of a CML_Matrix2x2.
  * 
- * Description:
- *     Calculates the determinant of a CML_Matrix2x2.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A - The matrix operand.
- * 
- * Returns:
- *      The determinant of the matrix.
- *****************************************************************************/
+ * @return The determinant of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix2x2_det(const CML_Matrix2x2 *A) {
     return A->m00*A->m11 - A->m01*A->m10;
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_inv
+/**
+ * @brief Calculates the inverse of a CML_Matrix2x2 and writes the result to
+ *        the out CML_Matrix2x2.
  * 
- * Description:
- *     Calculates the inverse of a CML_Matrix2x2.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code if the matrix is invertible.
- *****************************************************************************/
+ * @return Success or error code if the matrix is invertible.
+ */
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
 
@@ -989,19 +947,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix2x2_inv(const CML_Matrix2x2 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix2x2 and writes the result to
+ *        the out CML_Matrix2x2.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix2x2.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A   - The matrix operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_Matrix2x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a01 = A->m01, a11 = A->m11;
 
@@ -1012,37 +966,28 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_transpose(const CML_Matrix2x2 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_trace
+/**
+ * @brief Calculates the trace of a CML_Matrix2x2.
  * 
- * Description:
- *     Calculates the trace of a CML_Matrix2x2.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A - The matrix operand.
- * 
- * Returns:
- *      The trace of the matrix.
- *****************************************************************************/
+ * @return The trace of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix2x2_trace(const CML_Matrix2x2 *A) {
     return A->m00 + A->m11;
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_scale
+/**
+ * @brief Generates a scale matrix and writes the result to the out
+ *        CML_Matrix2x2.
  * 
- * Description:
- *      Generates a scale matrix.
+ * @param x   The x scale.
+ * @param y   The y scale.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x scale.
- *      f32 y - The y scale.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_scale(f32 x, f32 y, CML_Matrix2x2 *out) {
     out->m00 = x;
     out->m10 = 0.0f;
@@ -1051,19 +996,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_scale(f32 x, f32 y, CML_Matrix2x2 
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_invscale
+/**
+ * @brief Generates the inverse of a scale matrix and writes the result to the
+ *        out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the inverse of a scale matrix.
+ * @param scale The input scale matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *scale - The scale matrix.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invscale(const CML_Matrix2x2 *scale, CML_Matrix2x2 *out) {
     out->m00 = 1.0f/scale->m00;
     out->m10 = 0.0f;
@@ -1072,19 +1013,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invscale(const CML_Matrix2x2 *scal
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_shearx
+/**
+ * @brief Generates the shear matrix along the x axis and writes the result to
+ *        the out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the shear matrix along the x axis.
+ * @param x   The x shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x shear.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_shearx(f32 x, CML_Matrix2x2 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -1093,19 +1030,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_shearx(f32 x, CML_Matrix2x2 *out) 
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_sheary
+/**
+ * @brief Generates the shear matrix along the y axis and writes the result to
+ *        the out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the shear matrix along the y axis.
+ * @param y   The y shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The y shear.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_sheary(f32 y, CML_Matrix2x2 *out) {
     out->m00 = 1.0f;
     out->m10 = y;
@@ -1114,19 +1047,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_sheary(f32 y, CML_Matrix2x2 *out) 
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_invshear
+/**
+ * @brief Generates the inverse of a shear matrix and writes the result to the
+ *        out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the inverse of a shear matrix.
+ * @param shear The input shear matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *shear - The shear matrix.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invshear(const CML_Matrix2x2 *shear, CML_Matrix2x2 *out) {
     out->m00 = 1.0f;
     out->m10 = -shear->m10;
@@ -1135,19 +1064,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invshear(const CML_Matrix2x2 *shea
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_genlh_rotation
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) and writes the
+ *        result to the out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the left-handed rotation matrix (clockwise).
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_genlh_rotation(f32 angle, CML_Matrix2x2 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -1159,19 +1084,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_genlh_rotation(f32 angle, CML_Matrix2x
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_genrh_rotation
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) and
+ *        writes the result to the out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the right-handed rotation matrix (counter-clockwise).
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_genrh_rotation(f32 angle, CML_Matrix2x2 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -1183,19 +1104,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_genrh_rotation(f32 angle, CML_Matrix2x
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_gen_invrotation
+/**
+ * @brief Generates the inverse of a rotation matrix and writes the result to
+ *        the out CML_Matrix2x2.
  * 
- * Description:
- *      Generates the inverse rotation matrix.
+ * @param rotation The input rotation matrix.
+ * @param out      The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x2 *rotation - The rotation matrix.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invrotation(const CML_Matrix2x2 *rotation, CML_Matrix2x2 *out) {
     out->m00 = rotation->m00;
     out->m10 = -rotation->m10;
@@ -1204,19 +1121,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x2_gen_invrotation(const CML_Matrix2x2 *r
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_eq
+/**
+ * @brief Compares two CML_Matrix2x2s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix2x2s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix2x2 *A - The first input vector.
- *      CML_Matrix2x2 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the matrices are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Matrix2x2 *B) {
     if (!A || !B) {
         return false;
@@ -1228,19 +1140,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix2x2_eq(const CML_Matrix2x2 *A, const CML_Mat
 
 
 
-/******************************************************************************
- * Function: cml_matrix2x2_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix2x2s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix2x2s.
  *
- * Parameters:
- *      CML_Matrix2x2 *expected - Expected matrix.
- *      CML_Matrix2x2 *got - Result matrix.
+ * @param expected The expected matrix.
+ * @param got      The result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, const CML_Matrix2x2 *got) {
     if (!expected || !got) {
         return NULL;
@@ -1262,20 +1169,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x2_debug(const CML_Matrix2x2 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_add
+/**
+ * @brief Adds two CML_Matrix3x3 and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *     Adds two CML_Matrix3x3 and writes the result to the out CML_Matrix3x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -1289,21 +1191,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_add(const CML_Matrix3x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_sub
+/**
+ * @brief Subtracts two CML_Matrix3x3 and writes the result to the out 
+ *        CML_Matrix3x3.
  * 
- * Description:
- *     Subtracts two CML_Matrix3x3 and writes the result to the out 
- *     CML_Matrix3x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -1317,21 +1214,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_sub(const CML_Matrix3x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_scale
+/**
+ * @brief Multiplies a CML_Matrix3x3 by a scalar, and writes the result to the 
+ *        out CML_Matrix3x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x3 by a scalar, and writes the result to the out 
- *     CML_Matrix3x3.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f32 t, CML_Matrix3x3 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -1345,21 +1237,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_scale(const CML_Matrix3x3 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_mult
+/**
+ * @brief Multiplies two CML_Matrix3x3, and writes the result to the out 
+ *        CML_Matrix3x3.
  * 
- * Description:
- *     Multiplies two CML_Matrix3x3, and writes the result to the out 
- *     CML_Matrix3x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B, CML_Matrix3x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1381,21 +1268,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult(const CML_Matrix3x3 *A, const CML
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_mult_matrix3x2
+/**
+ * @brief Multiplies a CML_Matrix3x3 by a CML_Matrix3x2, and writes the result 
+ *        to the out CML_Matrix3x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x2, and writes the result to the out 
- *     CML_Matrix3x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1413,21 +1295,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x2(const CML_Matrix3x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_mult_matrix3x4
+/**
+ * @brief Multiplies a CML_Matrix3x3 by a CML_Matrix3x4, and writes the result 
+ *        to the out CML_Matrix3x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x3 by a CML_Matrix3x4, and writes the result to the out 
- *     CML_Matrix3x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1453,21 +1330,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_matrix3x4(const CML_Matrix3x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_mult_vector3
+/**
+ * @brief Multiplies a CML_Matrix3x3 by a CML_Vector3, and writes the result to 
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x3 by a CML_Vector3, and writes the result to 
- *     the out CML_Vector3.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, const CML_Vector3 *v, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1481,21 +1353,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_mult_vector3(const CML_Matrix3x3 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_mult_matrix3x3
+/**
+ * @brief Multiplies a CML_Vector3 by a CML_Matrix3x3, and writes the result to 
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Vector3 by a CML_Matrix3x3, and writes the result to 
- *     the out CML_Vector3.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x3(const CML_Vector3 *v, const CML_Matrix3x3 *A, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1509,18 +1376,13 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x3(const CML_Vector3 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_det
+/**
+ * @brief Calculates the determinant of a CML_Matrix3x3.
  * 
- * Description:
- *     Calculates the determinant of a CML_Matrix3x3.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A - The matrix operand.
- * 
- * Returns:
- *      The determinant of the matrix.
- *****************************************************************************/
+ * @return The determinant of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1530,19 +1392,15 @@ CAMEL_STATIC CAMEL_API f32 cml_matrix3x3_det(const CML_Matrix3x3 *A) {
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_inv
+/**
+ * @brief Calculates the inverse of a CML_Matrix3x3 and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *     Calculates the inverse of a CML_Matrix3x3.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code if the matrix is invertible.
- *****************************************************************************/
+ * @return Success or error code if the matrix is invertible.
+ */
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1570,19 +1428,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix3x3_inv(const CML_Matrix3x3 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix3x3 and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix3x3.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A   - The matrix operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_Matrix3x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -1600,38 +1454,29 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_transpose(const CML_Matrix3x3 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_trace
+/**
+ * @brief Calculates the trace of a CML_Matrix3x3.
  * 
- * Description:
- *     Calculates the trace of a CML_Matrix3x3.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A - The matrix operand.
- * 
- * Returns:
- *      The trace of the matrix.
- *****************************************************************************/
+ * @return The trace of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix3x3_trace(const CML_Matrix3x3 *A) {
     return A->m00 + A->m11 + A->m22;
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_scale
+/**
+ * @brief Generates a scale matrix and writes the result to the out
+ *        CML_Matrix3x3.
  * 
- * Description:
- *      Generates a scale matrix.
+ * @param x   The x scale.
+ * @param y   The y scale.
+ * @param z   The z scale.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x scale.
- *      f32 y - The y scale.
- *      f32 z - The z scale.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      The trace of the matrix.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_scale(f32 x, f32 y, f32 z, CML_Matrix3x3 *out) {
     out->m00 = x;
     out->m10 = 0.0f;
@@ -1645,19 +1490,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_scale(f32 x, f32 y, f32 z, CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_invscale
+/**
+ * @brief Generates the inverse of a scale matrix and writes the result to the
+ *        out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the inverse of a scale matrix.
+ * @param scale The input scale matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *scale - The scale matrix.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invscale(const CML_Matrix3x3 *scale, CML_Matrix3x3 *out) {
     out->m00 = 1.0f/scale->m00;
     out->m10 = 0.0f;
@@ -1671,20 +1512,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invscale(const CML_Matrix3x3 *scal
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_shearx
+/**
+ * @brief Generates the shear matrix along the x axis and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the shear matrix along the x axis.
+ * @param y   The y shear.
+ * @param z   The z shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 y - The y shear.
- *      f32 z - The z shear.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_shearx(f32 y, f32 z, CML_Matrix3x3 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -1698,20 +1535,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_shearx(f32 y, f32 z, CML_Matrix3x3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_sheary
+/**
+ * @brief Generates the shear matrix along the y axis and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the shear matrix along the y axis.
+ * @param x   The x shear.
+ * @param z   The z shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x shear.
- *      f32 z - The z shear.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_sheary(f32 x, f32 z, CML_Matrix3x3 *out) {
     out->m00 = 1.0f;
     out->m10 = x;
@@ -1725,20 +1558,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_sheary(f32 x, f32 z, CML_Matrix3x3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_shearz
+/**
+ * @brief Generates the shear matrix along the z axis and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the shear matrix along the z axis.
+ * @param x   The x shear.
+ * @param y   The y shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x shear.
- *      f32 y - The y shear.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_shearz(f32 x, f32 y, CML_Matrix3x3 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -1752,19 +1581,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_shearz(f32 x, f32 y, CML_Matrix3x3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_invshear
+/**
+ * @brief Generates the inverse of a shear matrix and writes the result to the
+ *        out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the inverse of a shear matrix.
+ * @param shear The input shear matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *shear - The shear matrix.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invshear(const CML_Matrix3x3 *shear, CML_Matrix3x3 *out) {
     out->m00 = 1.0f;
     out->m10 = -shear->m10;
@@ -1778,19 +1603,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invshear(const CML_Matrix3x3 *shea
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genlh_rotationx
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the x 
+ *        axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along the x axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationx(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -1807,19 +1628,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationx(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genlh_rotationy
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the y 
+ *        axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along the y axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationy(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -1836,19 +1653,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationy(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genlh_rotationz
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the z 
+ *        axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along the z axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationz(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -1865,21 +1678,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotationz(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genlh_rotation
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along an 
+ *        arbitrary axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along an 
- *      arbitrary axis.
+ * @param angle The angle of rotation in radians.
+ * @param axis  The axis of rotation.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Vector3 *axis - The axis of rotation.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -1902,20 +1710,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genlh_rotation(f32 angle, const CML_Ve
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genrh_rotationx
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the x axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter clockwise) along 
- *      the x axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationx(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -1932,20 +1735,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationx(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genrh_rotationy
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the y axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter clockwise) along 
- *      the y axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationy(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -1962,20 +1760,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationy(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genrh_rotationz
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the z axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter clockwise) along 
- *      the z axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationz(f32 angle, CML_Matrix3x3 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -1992,21 +1785,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotationz(f32 angle, CML_Matrix3
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_genrh_rotation
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        an arbitrary axis and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter clockwise) along 
- *      an arbitrary axis.
+ * @param angle The angle of rotation in radians.
+ * @param axis  The axis of rotation.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Vector3 *axis - The axis of rotation.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix3x3 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -2029,19 +1817,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_genrh_rotation(f32 angle, const CML_Ve
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_gen_invrotation
+/**
+ * @brief Generates the inverse of a rotation matrix and writes the result to
+ *        the out CML_Matrix3x3.
  * 
- * Description:
- *      Generates the inverse of a rotation matrix.
+ * @param rotation The input rotation matrix.
+ * @param out      The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x3 *rotation - The rotation matrix.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invrotation(const CML_Matrix3x3 *rotation, CML_Matrix3x3 *out) {
     f32 r00 = rotation->m00, r10 = rotation->m10, r20 = rotation->m20;
     f32 r01 = rotation->m01, r11 = rotation->m11, r21 = rotation->m21;
@@ -2059,19 +1843,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x3_gen_invrotation(const CML_Matrix3x3 *r
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_eq
+/**
+ * @brief Compares two CML_Matrix3x3s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix3x3s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix3x3 *A - The first input vector.
- *      CML_Matrix3x3 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Matrix3x3 *B) {
     if (!A || !B) {
         return false;
@@ -2083,19 +1862,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix3x3_eq(const CML_Matrix3x3 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x3_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix3x3s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix3x3s.
  *
- * Parameters:
- *      CML_Matrix3x3 *expected - Expected matrix.
- *      CML_Matrix3x3 *got - Result matrix.
+ * @param expected The expected matrix.
+ * @param got      The result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, const CML_Matrix3x3 *got) {
     if (!expected || !got) {
         return NULL;
@@ -2119,20 +1893,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x3_debug(const CML_Matrix3x3 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_add
+/**
+ * @brief Adds two CML_Matrix4x4 and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *     Adds two CML_Matrix4x4 and writes the result to the out CML_Matrix4x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -2153,21 +1922,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_add(const CML_Matrix4x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_sub
+/**
+ * @brief Subtracts two CML_Matrix4x4 and writes the result to the out 
+ *        CML_Matrix4x4.
  * 
- * Description:
- *     Subtracts two CML_Matrix4x4 and writes the result to the out 
- *     CML_Matrix4x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -2188,21 +1952,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_sub(const CML_Matrix4x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_scale
+/**
+ * @brief Multiplies a CML_Matrix4x4 by a scalar, and writes the result to the 
+ *        out CML_Matrix4x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x4 by a scalar, and writes the result to the out 
- *     CML_Matrix4x4.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f32 t, CML_Matrix4x4 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -2223,21 +1982,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_scale(const CML_Matrix4x4 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_mult
+/**
+ * @brief Multiplies two CML_Matrix4x4, and writes the result to the out 
+ *        CML_Matrix4x4.
  * 
- * Description:
- *     Multiplies two CML_Matrix4x4, and writes the result to the out 
- *     CML_Matrix4x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B, CML_Matrix4x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2268,21 +2022,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult(const CML_Matrix4x4 *A, const CML
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_mult_matrix4x2
+/**
+ * @brief Multiplies a CML_Matrix4x4 by a CML_Matrix4x2, and writes the result 
+ *        to the out CML_Matrix4x2.
  * 
- * Description:
- *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x2, and writes the result to 
- *      the out CML_Matrix4x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2303,21 +2052,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x2(const CML_Matrix4x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_mult_matrix4x3
+/**
+ * @brief Multiplies a CML_Matrix4x4 by a CML_Matrix4x3, and writes the result 
+ *        to the out CML_Matrix4x3.
  * 
- * Description:
- *      Multiplies a CML_Matrix4x4 by a CML_Matrix4x3, and writes the result to 
- *      the out CML_Matrix4x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2343,21 +2087,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_matrix4x3(const CML_Matrix4x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_mult_vector4
+/**
+ * @brief Multiplies a CML_Matrix4x4 by a CML_Vector4, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x4 by a CML_Vector4, and writes the result to 
- *     the out CML_Vector4.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, const CML_Vector4 *v, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2373,21 +2112,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_mult_vector4(const CML_Matrix4x4 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_mult_matrix4x4
+/**
+ * @brief Multiplies a CML_Vector4 by a CML_Matrix4x4, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Vector4 by a CML_Matrix4x4, and writes the result to 
- *     the out CML_Vector4.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x4(const CML_Vector4 *v, const CML_Matrix4x4 *A, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2403,18 +2137,13 @@ CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x4(const CML_Vector4 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_det
+/**
+ * @brief Calculates the determinant of a CML_Matrix4x4.
  * 
- * Description:
- *     Calculates the determinant of a CML_Matrix4x4.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A - The matrix operand.
- * 
- * Returns:
- *      The determinant of the matrix.
- *****************************************************************************/
+ * @return The determinant of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2430,19 +2159,15 @@ CAMEL_STATIC CAMEL_API f32 cml_matrix4x4_det(const CML_Matrix4x4 *A) {
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_inv
+/**
+ * @brief Calculates the inverse of a CML_Matrix4x4 and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *     Calculates the inverse of a CML_Matrix4x4.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      Success or error code if the matrix is invertible.
- *****************************************************************************/
+ * @return Success or error code if the matrix is invertible.
+ */
 CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2483,19 +2208,15 @@ CAMEL_STATIC CAMEL_API CML_Status cml_matrix4x4_inv(const CML_Matrix4x4 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix4x4 and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix4x4.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A   - The matrix operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_Matrix4x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -2521,38 +2242,29 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_transpose(const CML_Matrix4x4 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_trace
+/**
+ * @brief Calculates the trace of a CML_Matrix4x4.
  * 
- * Description:
- *     Calculates the trace of a CML_Matrix4x4.
+ * @param A The matrix operand.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A - The matrix operand.
- * 
- * Returns:
- *      The trace of the matrix.
- *****************************************************************************/
+ * @return The trace of the matrix.
+ */
 CAMEL_STATIC CAMEL_API f32 cml_matrix4x4_trace(const CML_Matrix4x4 *A) {
     return A->m00 + A->m11 + A->m22 + A->m33;
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_scale
+/**
+ * @brief Generates a scale matrix and writes the result to the out
+ *        CML_Matrix4x4.
  * 
- * Description:
- *      Generates a scale matrix.
+ * @param x   The x scale.
+ * @param y   The y scale.
+ * @param z   The z scale.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x scale.
- *      f32 y - The y scale.
- *      f32 z - The z scale.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_scale(f32 x, f32 y, f32 z, CML_Matrix4x4 *out) {
     out->m00 = x;
     out->m10 = 0.0f;
@@ -2573,19 +2285,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_scale(f32 x, f32 y, f32 z, CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_invscale
+/**
+ * @brief Generates the inverse of a scale matrix and writes the result to the
+ *        out CML_Matrix4x4.
  * 
- * Description:
- *      Generates an inverse scale matrix.
+ * @param scale The input scale matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *scale - The input matrix.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invscale(const CML_Matrix4x4 *scale, CML_Matrix4x4 *out) {
     out->m00 = 1.0f/scale->m00;
     out->m10 = 0.0f;
@@ -2606,20 +2314,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invscale(const CML_Matrix4x4 *scal
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_shearx
+/**
+ * @brief Generates the shear matrix along the x axis and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates a shear matrix along the x axis.
+ * @param y   The y shear.
+ * @param z   The z shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 y - The y shear.
- *      f32 z - The z shear.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_shearx(f32 y, f32 z, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -2640,20 +2344,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_shearx(f32 y, f32 z, CML_Matrix4x4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_sheary
+/**
+ * @brief Generates the shear matrix along the y axis and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates a shear matrix along the y axis.
+ * @param x   The x shear.
+ * @param z   The z shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x shear.
- *      f32 z - The z shear.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_sheary(f32 x, f32 z, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = x;
@@ -2674,20 +2374,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_sheary(f32 x, f32 z, CML_Matrix4x4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_shearz
+/**
+ * @brief Generates the shear matrix along the z axis and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates a shear matrix along the z axis.
+ * @param x   The x shear.
+ * @param y   The y shear.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x shear.
- *      f32 y - The y shear.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_shearz(f32 x, f32 y, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -2708,19 +2404,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_shearz(f32 x, f32 y, CML_Matrix4x4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_invshear
+/**
+ * @brief Generates the inverse of a shear matrix and writes the result to the
+ *        out CML_Matrix4x4.
  * 
- * Description:
- *      Generates an inverse shear matrix.
+ * @param shear The input shear matrix.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *shear - The shear matrix.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invshear(const CML_Matrix4x4 *shear, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = -shear->m10;
@@ -2741,21 +2433,17 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invshear(const CML_Matrix4x4 *shea
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_translation
+/**
+ * @brief Generates a translation matrix and writes the result to the out
+ *        CML_Matrix4x4.
  * 
- * Description:
- *      Generates a translation matrix.
+ * @param x   The x translation.
+ * @param y   The y translation.
+ * @param z   The z translation.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      f32 x - The x translation.
- *      f32 y - The y translation.
- *      f32 z - The z translation.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_translation(f32 x, f32 y, f32 z, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -2776,19 +2464,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_translation(f32 x, f32 y, f32 z, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_invtranslation
+/**
+ * @brief Generates the inverse of a translation matrix and writes the result 
+ *        to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates an inverse translation matrix.
+ * @param translation The input translation matrix.
+ * @param out         The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *translation - The translation matrix.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invtranslation(const CML_Matrix4x4 *translation, CML_Matrix4x4 *out) {
     out->m00 = 1.0f;
     out->m10 = 0.0f;
@@ -2809,19 +2493,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invtranslation(const CML_Matrix4x4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genlh_rotationx
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the x 
+ *        axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along the x axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationx(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -2845,20 +2525,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationx(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genlh_rotationy
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the y 
+ *        axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along 
- *      the y axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationy(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -2882,20 +2557,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationy(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genlh_rotationz
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along the z 
+ *        axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along 
- *      the z axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationz(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -2919,21 +2589,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotationz(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genlh_rotation
+/**
+ * @brief Generates the left-handed rotation matrix (clockwise) along an 
+ *        arbitrary axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the left handed rotation matrix (clockwise) along
- *      an arbitrary axis.
+ * @param angle The angle of rotation in radians.
+ * @param axis  The axis of rotation.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Vector3 *axis - The axis of rotation.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out) {
     f32 c = cosf(-angle);
     f32 s = sinf(-angle);
@@ -2963,20 +2628,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genlh_rotation(f32 angle, const CML_Ve
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genrh_rotationx
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the x axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter-clockwise) along 
- *      the x axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationx(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -3000,20 +2660,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationx(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genrh_rotationy
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the y axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter-clockwise) along 
- *      the y axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationy(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -3037,20 +2692,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationy(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genrh_rotationz
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        the z axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter-clockwise) along 
- *      the z axis.
+ * @param angle The angle of rotation in radians.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationz(f32 angle, CML_Matrix4x4 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -3074,21 +2724,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotationz(f32 angle, CML_Matrix4
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_genrh_rotation
+/**
+ * @brief Generates the right-handed rotation matrix (counter clockwise) along 
+ *        an arbitrary axis and writes the result to the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the right handed rotation matrix (counter-clockwise) along
- *      an arbitrary axis.
+ * @param angle The angle of rotation in radians.
+ * @param axis  The axis of rotation.
+ * @param out   The output matrix.
  * 
- * Parameters:
- *      f32 angle - The angle of rotation in radians.
- *      CML_Vector3 *axis - The axis of rotation.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotation(f32 angle, const CML_Vector3 *axis, CML_Matrix4x4 *out) {
     f32 c = cosf(angle);
     f32 s = sinf(angle);
@@ -3118,19 +2763,15 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_genrh_rotation(f32 angle, const CML_Ve
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_gen_invrotation
+/**
+ * @brief Generates the inverse of a rotation matrix and writes the result to
+ *        the out CML_Matrix4x4.
  * 
- * Description:
- *      Generates the inverse of a rotation matrix.
+ * @param rotation The input rotation matrix.
+ * @param out      The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x4 *rotation - The rotation matrix.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invrotation(const CML_Matrix4x4 *rotation, CML_Matrix4x4 *out) {
     f64 r00 = rotation->m00, r10 = rotation->m10, r20 = rotation->m20, r30 = rotation->m30;
     f64 r01 = rotation->m01, r11 = rotation->m11, r21 = rotation->m21, r31 = rotation->m31;
@@ -3156,19 +2797,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x4_gen_invrotation(const CML_Matrix4x4 *r
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_eq
+/**
+ * @brief Compares two CML_Matrix4x4s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix4x4s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix4x4 *A - The first input vector.
- *      CML_Matrix4x4 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Matrix4x4 *B) {
     if (!A || !B) {
         return false;
@@ -3185,19 +2821,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix4x4_eq(const CML_Matrix4x4 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x4_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix4x4s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix4x4s.
  *
- * Parameters:
- *      CML_Matrix4x4 *expected - Expected matrix.
- *      CML_Matrix4x4 *got - Result matrix.
+ * @param expected The expected matrix.
+ * @param got      The result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, const CML_Matrix4x4 *got) {
     if (!expected || !got) {
         return NULL;
@@ -3223,20 +2854,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix4x4_debug(const CML_Matrix4x4 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_add
+/**
+ * @brief Adds two CML_Matrix2x3 and writes the result to the out CML_Matrix2x3.
  * 
- * Description:
- *     Adds two CML_Matrix2x3 and writes the result to the out CML_Matrix2x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -3247,21 +2873,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_add(const CML_Matrix2x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_sub
+/**
+ * @brief Subtracts two CML_Matrix2x3 and writes the result to the out 
+ *        CML_Matrix2x3.
  * 
- * Description:
- *     Subtracts two CML_Matrix2x3 and writes the result to the out 
- *     CML_Matrix2x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B, CML_Matrix2x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -3272,21 +2893,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_sub(const CML_Matrix2x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_scale
+/**
+ * @brief Multiplies a CML_Matrix2x3 by a scalar, and writes the result to the 
+ *        out CML_Matrix2x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x3 by a scalar, and writes the result to the out 
- *     CML_Matrix2x3.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f32 t, CML_Matrix2x3 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -3297,21 +2913,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_scale(const CML_Matrix2x3 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_mult_matrix3x2
+/**
+ * @brief Multiplies a CML_Matrix2x3 by a CML_Matrix3x2, and writes the result 
+ *        to the out CML_Matrix2x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x3 by a CML_Matrix3x2, and writes the result to 
- *     the out CML_Matrix2x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A, const CML_Matrix3x2 *B, CML_Matrix2x2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3327,21 +2938,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x2(const CML_Matrix2x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_mult_matrix3x3
+/**
+ * @brief Multiplies a CML_Matrix2x3 by a CML_Matrix3x3, and writes the result 
+ *        to the out CML_Matrix2x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x3 by a CML_Matrix3x3, and writes the result to 
- *     the out CML_Matrix2x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A, const CML_Matrix3x3 *B, CML_Matrix2x3 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3360,21 +2966,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x3(const CML_Matrix2x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_mult_matrix3x4
+/**
+ * @brief Multiplies a CML_Matrix2x3 by a CML_Matrix3x4, and writes the result 
+ *        to the out CML_Matrix2x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x3 by a CML_Matrix3x4, and writes the result to 
- *     the out CML_Matrix2x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A, const CML_Matrix3x4 *B, CML_Matrix2x4 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3396,21 +2997,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_matrix3x4(const CML_Matrix2x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_mult_vector3
+/**
+ * @brief Multiplies a CML_Matrix2x3 by a CML_Vector3, and writes the result to 
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x3 by a CML_Vector3, and writes the result to 
- *     the out CML_Vector2.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, const CML_Vector3 *v, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3423,21 +3019,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_mult_vector3(const CML_Matrix2x3 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_mult_matrix2x3
+/**
+ * @brief Multiplies a CML_Vector2 by a CML_Matrix2x3, and writes the result to 
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Vector2 by a CML_Matrix2x3, and writes the result to 
- *     the out CML_Vector3.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x3(const CML_Vector2 *v, const CML_Matrix2x3 *A, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3451,19 +3042,15 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x3(const CML_Vector2 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix2x3 and writes the result to
+ *        the out CML_Matrix3x2.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix2x3.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A   - The matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_Matrix3x2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3478,19 +3065,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x3_transpose(const CML_Matrix2x3 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_eq
+/**
+ * @brief Compares two CML_Matrix2x3s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix2x3s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix2x3 *A - The first input vector.
- *      CML_Matrix2x3 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Matrix2x3 *B) {
     if (!A || !B) {
         return false;
@@ -3502,19 +3084,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix2x3_eq(const CML_Matrix2x3 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x3_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix2x3s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix2x3s.
  *
- * Parameters:
- *      CML_Matrix2x3 *expected - Expected matrix.
- *      CML_Matrix2x3 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, const CML_Matrix2x3 *got) {
     if (!expected || !got) {
         return NULL;
@@ -3536,20 +3113,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x3_debug(const CML_Matrix2x3 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_add
+/**
+ * @brief Adds two CML_Matrix2x4 and writes the result to the out CML_Matrix2x4.
  * 
- * Description:
- *     Adds two CML_Matrix2x4 and writes the result to the out CML_Matrix2x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -3562,21 +3134,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_add(const CML_Matrix2x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_sub
+/**
+ * @brief Subtracts two CML_Matrix2x4 and writes the result to the out 
+ *        CML_Matrix2x4.
  * 
- * Description:
- *     Subtracts two CML_Matrix2x4 and writes the result to the out 
- *     CML_Matrix2x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B, CML_Matrix2x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -3589,21 +3156,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_sub(const CML_Matrix2x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_scale
+/**
+ * @brief Multiplies a CML_Matrix2x4 by a scalar, and writes the result to the 
+ *        out CML_Matrix2x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x4 by a scalar, and writes the result to the out 
- *     CML_Matrix2x4.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f32 t, CML_Matrix2x4 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -3616,21 +3178,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_scale(const CML_Matrix2x4 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_mult_matrix4x2
+/**
+ * @brief Multiplies a CML_Matrix2x4 by a CML_Matrix4x2, and writes the result 
+ *        to the out CML_Matrix2x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x4 by a CML_Matrix4x2, and writes the result to 
- *     the out CML_Matrix2x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second vector operand.
- *      CML_Matrix2x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A, const CML_Matrix4x2 *B, CML_Matrix2x2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3647,21 +3204,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x2(const CML_Matrix2x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_mult_matrix4x3
+/**
+ * @brief Multiplies a CML_Matrix2x4 by a CML_Matrix4x3, and writes the result 
+ *        to the out CML_Matrix2x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x4 by a CML_Matrix4x3, and writes the result to 
- *     the out CML_Matrix2x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second vector operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A, const CML_Matrix4x3 *B, CML_Matrix2x3 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3681,21 +3233,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x3(const CML_Matrix2x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_mult_matrix4x4
+/**
+ * @brief Multiplies a CML_Matrix2x4 by a CML_Matrix4x4, and writes the result 
+ *        to the out CML_Matrix2x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x4 by a CML_Matrix4x4, and writes the result to 
- *     the out CML_Matrix2x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second vector operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A, const CML_Matrix4x4 *B, CML_Matrix2x4 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3718,21 +3265,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_matrix4x4(const CML_Matrix2x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_mult_vector4
+/**
+ * @brief Multiplies a CML_Matrix2x4 by a CML_Vector4, and writes the result to 
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Matrix2x4 by a CML_Vector4, and writes the result to 
- *     the out CML_Vector2.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, const CML_Vector4 *v, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3746,21 +3288,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_mult_vector4(const CML_Matrix2x4 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector2_mult_matrix2x4
+/**
+ * @brief Multiplies a CML_Vector2 by a CML_Matrix2x4, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Vector2 by a CML_Matrix2x4, and writes the result to 
- *     the out CML_Vector4.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x4(const CML_Vector2 *v, const CML_Matrix2x4 *A, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3776,19 +3313,15 @@ CAMEL_STATIC CAMEL_API void cml_vector2_mult_matrix2x4(const CML_Vector2 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix2x4 and writes the result to
+ *        the out CML_Matrix4x2.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix2x4.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A   - The matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_Matrix4x2 *out) {
     f32 a00 = A->m00, a10 = A->m10;
     f32 a01 = A->m01, a11 = A->m11;
@@ -3806,19 +3339,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix2x4_transpose(const CML_Matrix2x4 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_eq
+/**
+ * @brief Compares two CML_Matrix2x4s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix2x4s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix2x4 *A - The first input vector.
- *      CML_Matrix2x4 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Matrix2x4 *B) {
     if (!A || !B) {
         return false;
@@ -3831,19 +3359,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix2x4_eq(const CML_Matrix2x4 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix2x4_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix2x4s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix2x4s.
  *
- * Parameters:
- *      CML_Matrix2x4 *expected - Expected matrix.
- *      CML_Matrix2x4 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, const CML_Matrix2x4 *got) {
     if (!expected || !got) {
         return NULL;
@@ -3865,20 +3388,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix2x4_debug(const CML_Matrix2x4 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_add
+/**
+ * @brief Adds two CML_Matrix3x2 and writes the result to the out CML_Matrix3x2.
  * 
- * Description:
- *     Adds two CML_Matrix3x2 and writes the result to the out CML_Matrix3x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -3889,21 +3407,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_add(const CML_Matrix3x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_sub
+/**
+ * @brief Subtracts two CML_Matrix3x2 and writes the result to the out 
+ *        CML_Matrix3x2.
  * 
- * Description:
- *     Subtracts two CML_Matrix3x2 and writes the result to the out 
- *     CML_Matrix3x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second matrix operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B, CML_Matrix3x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -3914,21 +3427,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_sub(const CML_Matrix3x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_scale
+/**
+ * @brief Multiplies a CML_Matrix3x2 by a scalar, and writes the result to the 
+ *        out CML_Matrix3x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x2 by a scalar, and writes the result to the out 
- *     CML_Matrix3x2.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f32 t, CML_Matrix3x2 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -3939,21 +3447,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_scale(const CML_Matrix3x2 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_mult_matrix2x2
+/**
+ * @brief Multiplies a CML_Matrix3x2 by a CML_Matrix2x2, and writes the result
+ *        to the out CML_Matrix3x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x2 by a CML_Matrix2x2, and writes the result to 
- *     the out CML_Matrix3x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second vector operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A, const CML_Matrix2x2 *B, CML_Matrix3x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -3970,21 +3473,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x2(const CML_Matrix3x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_mult_matrix2x3
+/**
+ * @brief Multiplies a CML_Matrix3x2 by a CML_Matrix2x3, and writes the result
+ *        to the out CML_Matrix3x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x2 by a CML_Matrix2x3, and writes the result to 
- *     the out CML_Matrix3x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second vector operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A, const CML_Matrix2x3 *B, CML_Matrix3x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4005,21 +3503,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x3(const CML_Matrix3x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_mult_matrix2x4
+/**
+ * @brief Multiplies a CML_Matrix3x2 by a CML_Matrix2x4, and writes the result
+ *        to the out CML_Matrix3x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x2 by a CML_Matrix2x4, and writes the result to 
- *     the out CML_Matrix3x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second vector operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A, const CML_Matrix2x4 *B, CML_Matrix3x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4044,21 +3537,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_matrix2x4(const CML_Matrix3x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_mult_vector2
+/**
+ * @brief Multiplies a CML_Matrix3x2 by a CML_Vector2, and writes the result to
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x2 by a CML_Vector2, and writes the result to 
- *     the out CML_Vector3.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, const CML_Vector2 *v, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4071,21 +3559,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_mult_vector2(const CML_Matrix3x2 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_mult_matrix3x2
+/**
+ * @brief Multiplies a CML_Vector3 by a CML_Matrix3x2, and writes the result to
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Vector3 by a CML_Matrix3x2, and writes the result to 
- *     the out CML_Vector2.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x2(const CML_Vector3 *v, const CML_Matrix3x2 *A, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4097,19 +3580,15 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x2(const CML_Vector3 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix3x2 and writes the result to
+ *        the out CML_Matrix2x3.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix3x2.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A   - The matrix operand.
- *      CML_Matrix2x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_Matrix2x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4123,19 +3602,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x2_transpose(const CML_Matrix3x2 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_eq
+/**
+ * @brief Compares two CML_Matrix3x2s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix3x2s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix3x2 *A - The first input vector.
- *      CML_Matrix3x2 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Matrix3x2 *B) {
     if (!A || !B) {
         return false;
@@ -4147,19 +3621,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix3x2_eq(const CML_Matrix3x2 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x2_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix3x2s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix3x2s.
  *
- * Parameters:
- *      CML_Matrix3x2 *expected - Expected matrix.
- *      CML_Matrix3x2 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, const CML_Matrix3x2 *got) {
     if (!expected || !got) {
         return NULL;
@@ -4183,20 +3652,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x2_debug(const CML_Matrix3x2 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_add
+/**
+ * @brief Adds two CML_Matrix3x4 and writes the result to the out CML_Matrix3x3.
  * 
- * Description:
- *     Adds two CML_Matrix3x4 and writes the result to the out CML_Matrix3x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -4213,21 +3677,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_add(const CML_Matrix3x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_sub
+/**
+ * @brief Subtracts two CML_Matrix3x4 and writes the result to the out 
+ *        CML_Matrix3x4.
  * 
- * Description:
- *     Subtracts two CML_Matrix3x4 and writes the result to the out 
- *     CML_Matrix3x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B, CML_Matrix3x4 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -4244,21 +3703,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_sub(const CML_Matrix3x4 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_scale
+/**
+ * @brief Multiplies a CML_Matrix3x4 by a scalar, and writes the result to the 
+ *        out CML_Matrix3x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x4 by a scalar, and writes the result to the out 
- *     CML_Matrix3x4.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f32 t, CML_Matrix3x4 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -4275,21 +3729,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_scale(const CML_Matrix3x4 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_mult_matrix4x2
+/**
+ * @brief Multiplies a CML_Matrix3x4 by a CML_Matrix4x2, and writes the result 
+ *        to the out CML_Matrix3x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x4 by a CML_Matrix4x2, and writes the result to 
- *     the out CML_Matrix3x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second vector operand.
- *      CML_Matrix3x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A, const CML_Matrix4x2 *B, CML_Matrix3x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4308,21 +3757,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x2(const CML_Matrix3x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_mult_matrix4x3
+/**
+ * @brief Multiplies a CML_Matrix3x4 by a CML_Matrix4x3, and writes the result 
+ *        to the out CML_Matrix3x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x4 by a CML_Matrix4x3, and writes the result to 
- *     the out CML_Matrix3x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second vector operand.
- *      CML_Matrix3x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A, const CML_Matrix4x3 *B, CML_Matrix3x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4345,21 +3789,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x3(const CML_Matrix3x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_mult_matrix4x4
+/**
+ * @brief Multiplies a CML_Matrix3x4 by a CML_Matrix4x4, and writes the result 
+ *        to the out CML_Matrix3x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x4 by a CML_Matrix4x4, and writes the result to 
- *     the out CML_Matrix3x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The first matrix operand.
- *      CML_Matrix4x4 *B   - The second vector operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A, const CML_Matrix4x4 *B, CML_Matrix3x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4386,21 +3825,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_matrix4x4(const CML_Matrix3x4 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_mult_vector4
+/**
+ * @brief Multiplies a CML_Matrix3x4 by a CML_Vector4, and writes the result to 
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Matrix3x4 by a CML_Vector4, and writes the result to 
- *     the out CML_Vector3.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, const CML_Vector4 *v, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4415,21 +3849,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_mult_vector4(const CML_Matrix3x4 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector3_mult_matrix3x4
+/**
+ * @brief Multiplies a CML_Vector3 by a CML_Matrix3x4, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Vector3 by a CML_Matrix3x4, and writes the result to 
- *     the out CML_Vector4.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x4(const CML_Vector3 *v, const CML_Matrix3x4 *A, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4445,19 +3874,15 @@ CAMEL_STATIC CAMEL_API void cml_vector3_mult_matrix3x4(const CML_Vector3 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix3x4 and writes the result to
+ *        the out CML_Matrix4x3.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix3x4.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A   - The matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_Matrix4x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21;
@@ -4479,19 +3904,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix3x4_transpose(const CML_Matrix3x4 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_eq
+/**
+ * @brief Compares two CML_Matrix3x4s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix3x4s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix3x4 *A - The first input vector.
- *      CML_Matrix3x4 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Matrix3x4 *B) {
     if (!A || !B) {
         return false;
@@ -4506,19 +3926,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix3x4_eq(const CML_Matrix3x4 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix3x4_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix3x4s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix3x4s.
  *
- * Parameters:
- *      CML_Matrix3x4 *expected - Expected matrix.
- *      CML_Matrix3x4 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, const CML_Matrix3x4 *got) {
     if (!expected || !got) {
         return NULL;
@@ -4542,20 +3957,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix3x4_debug(const CML_Matrix3x4 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_add
+/**
+ * @brief Adds two CML_Matrix4x2 and writes the result to the out CML_Matrix4x2.
  * 
- * Description:
- *     Adds two CML_Matrix4x2 and writes the result to the out CML_Matrix4x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -4568,21 +3978,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_add(const CML_Matrix4x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_sub
+/**
+ * @brief Subtracts two CML_Matrix4x2 and writes the result to the out 
+ *        CML_Matrix4x2.
  * 
- * Description:
- *     Subtracts two CML_Matrix4x2 and writes the result to the out 
- *     CML_Matrix4x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix4x2 *B   - The second matrix operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B, CML_Matrix4x2 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -4595,21 +4000,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_sub(const CML_Matrix4x2 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_scale
+/**
+ * @brief Multiplies a CML_Matrix4x2 by a scalar, and writes the result to the 
+ *        out CML_Matrix4x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x2 by a scalar, and writes the result to the out 
- *     CML_Matrix4x2.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f32 t, CML_Matrix4x2 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -4622,21 +4022,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_scale(const CML_Matrix4x2 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_mult_matrix2x2
+/**
+ * @brief Multiplies a CML_Matrix4x2 by a CML_Matrix2x2, and writes the result 
+ *        to the out CML_Matrix4x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x2 by a CML_Matrix2x2, and writes the result to 
- *     the out CML_Matrix4x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x2 *B   - The second vector operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A, const CML_Matrix2x2 *B, CML_Matrix4x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4655,21 +4050,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x2(const CML_Matrix4x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_mult_matrix2x3
+/**
+ * @brief Multiplies a CML_Matrix4x2 by a CML_Matrix2x3, and writes the result 
+ *        to the out CML_Matrix4x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x2 by a CML_Matrix2x3, and writes the result to 
- *     the out CML_Matrix4x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x3 *B   - The second vector operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A, const CML_Matrix2x3 *B, CML_Matrix4x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4693,21 +4083,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x3(const CML_Matrix4x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_mult_matrix2x4
+/**
+ * @brief Multiplies a CML_Matrix4x2 by a CML_Matrix2x4, and writes the result 
+ *        to the out CML_Matrix4x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x2 by a CML_Matrix2x4, and writes the result to 
- *     the out CML_Matrix4x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The first matrix operand.
- *      CML_Matrix2x4 *B   - The second vector operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A, const CML_Matrix2x4 *B, CML_Matrix4x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4736,21 +4121,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_matrix2x4(const CML_Matrix4x2 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_mult_vector2
+/**
+ * @brief Multiplies a CML_Matrix4x2 by a CML_Vector2, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x2 by a CML_Vector2, and writes the result to 
- *     the out CML_Vector4.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Vector2   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, const CML_Vector2 *v, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4764,21 +4144,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_mult_vector2(const CML_Matrix4x2 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_mult_matrix4x2
+/**
+ * @brief Multiplies a CML_Vector4 by a CML_Matrix4x2, and writes the result to 
+ *        the out CML_Vector2.
  * 
- * Description:
- *     Multiplies a CML_Vector4 by a CML_Matrix4x2, and writes the result to 
- *     the out CML_Vector2.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Vector2   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x2(const CML_Vector4 *v, const CML_Matrix4x2 *A, CML_Vector2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4790,19 +4165,15 @@ CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x2(const CML_Vector4 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix4x2 and writes the result to
+ *        the out CML_Matrix2x4.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix4x2.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A   - The matrix operand.
- *      CML_Matrix2x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_Matrix2x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -4818,19 +4189,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x2_transpose(const CML_Matrix4x2 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_eq
+/**
+ * @brief Compares two CML_Matrix4x2s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix4x2s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix4x2 *A - The first input vector.
- *      CML_Matrix4x2 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Matrix4x2 *B) {
     if (!A || !B) {
         return false;
@@ -4843,19 +4209,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix4x2_eq(const CML_Matrix4x2 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x2_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix4x2s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix4x2s.
  *
- * Parameters:
- *      CML_Matrix4x2 *expected - Expected matrix.
- *      CML_Matrix4x2 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, const CML_Matrix4x2 *got) {
     if (!expected || !got) {
         return NULL;
@@ -4881,20 +4242,15 @@ CAMEL_STATIC CAMEL_API char *cml_matrix4x2_debug(const CML_Matrix4x2 *expected, 
 
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_add
+/**
+ * @brief Adds two CML_Matrix4x3 and writes the result to the out CML_Matrix4x3.
  * 
- * Description:
- *     Adds two CML_Matrix4x3 and writes the result to the out CML_Matrix4x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
     out->m00 = A->m00 + B->m00;
     out->m10 = A->m10 + B->m10;
@@ -4911,21 +4267,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_add(const CML_Matrix4x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_sub
+/**
+ * @brief Subtracts two CML_Matrix4x3 and writes the result to the out 
+ *        CML_Matrix4x3.
  * 
- * Description:
- *     Subtracts two CML_Matrix4x3 and writes the result to the out 
- *     CML_Matrix4x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix4x3 *B   - The second matrix operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B, CML_Matrix4x3 *out) {
     out->m00 = A->m00 - B->m00;
     out->m10 = A->m10 - B->m10;
@@ -4942,21 +4293,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_sub(const CML_Matrix4x3 *A, const CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_scale
+/**
+ * @brief Multiplies a CML_Matrix4x3 by a scalar, and writes the result to the 
+ *        out CML_Matrix4x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x3 by a scalar, and writes the result to the out 
- *     CML_Matrix4x3.
+ * @param A   The matrix operand.
+ * @param t   The scalar.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      f32         t   - The scalar.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f32 t, CML_Matrix4x3 *out) {
     out->m00 = A->m00 * t;
     out->m10 = A->m10 * t;
@@ -4973,21 +4319,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_scale(const CML_Matrix4x3 *A, f32 t, C
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_mult_matrix3x2
+/**
+ * @brief Multiplies a CML_Matrix4x3 by a CML_Matrix3x2, and writes the result 
+ *        to the out CML_Matrix4x2.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x3 by a CML_Matrix3x2, and writes the result to 
- *     the out CML_Matrix4x2.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x2 *B   - The second vector operand.
- *      CML_Matrix4x2 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A, const CML_Matrix3x2 *B, CML_Matrix4x2 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5007,21 +4348,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x2(const CML_Matrix4x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_mult_matrix3x3
+/**
+ * @brief Multiplies a CML_Matrix4x3 by a CML_Matrix3x3, and writes the result 
+ *        to the out CML_Matrix4x3.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x3 by a CML_Matrix3x3, and writes the result to 
- *     the out CML_Matrix4x3.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x3 *B   - The second vector operand.
- *      CML_Matrix4x3 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A, const CML_Matrix3x3 *B, CML_Matrix4x3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5046,21 +4382,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x3(const CML_Matrix4x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_mult_matrix3x4
+/**
+ * @brief Multiplies a CML_Matrix4x3 by a CML_Matrix3x4, and writes the result 
+ *        to the out CML_Matrix4x4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x3 by a CML_Matrix3x4, and writes the result to 
- *     the out CML_Matrix4x4.
+ * @param A   The left matrix operand.
+ * @param B   The right matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The first matrix operand.
- *      CML_Matrix3x4 *B   - The second vector operand.
- *      CML_Matrix4x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A, const CML_Matrix3x4 *B, CML_Matrix4x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5090,21 +4421,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_matrix3x4(const CML_Matrix4x3 *A,
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_mult_vector3
+/**
+ * @brief Multiplies a CML_Matrix4x3 by a CML_Vector3, and writes the result to 
+ *        the out CML_Vector4.
  * 
- * Description:
- *     Multiplies a CML_Matrix4x3 by a CML_Vector3, and writes the result to 
- *     the out CML_Vector4.
+ * @param A   The left matrix operand.
+ * @param v   The right vector operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Vector3   *v   - The vector operand.
- *      CML_Vector4   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, const CML_Vector3 *v, CML_Vector4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5119,21 +4445,16 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_mult_vector3(const CML_Matrix4x3 *A, c
 }
 
 
-/******************************************************************************
- * Function: cml_vector4_mult_matrix4x3
+/**
+ * @brief Multiplies a CML_Vector4 by a CML_Matrix4x3, and writes the result to 
+ *        the out CML_Vector3.
  * 
- * Description:
- *     Multiplies a CML_Vector4 by a CML_Matrix4x3, and writes the result to 
- *     the out CML_Vector3.
+ * @param v   The left transposed vector operand.
+ * @param A   The right matrix operand.
+ * @param out The output vector.
  * 
- * Parameters:
- *      CML_Vector4   *v   - The vector operand.
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Vector3   *out - The output vector.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x3(const CML_Vector4 *v, const CML_Matrix4x3 *A, CML_Vector3 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5147,19 +4468,15 @@ CAMEL_STATIC CAMEL_API void cml_vector4_mult_matrix4x3(const CML_Vector4 *v, con
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_transpose
+/**
+ * @brief Calculates the transpose of a CML_Matrix4x3 and writes the result to
+ *        the out CML_Matrix3x4.
  * 
- * Description:
- *     Calculates the transpose of a CML_Matrix4x3.
+ * @param A   The matrix operand.
+ * @param out The output matrix.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A   - The matrix operand.
- *      CML_Matrix3x4 *out - The output matrix.
- * 
- * Returns:
- *      void.
- *****************************************************************************/
+ * @return void.
+ */
 CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_Matrix3x4 *out) {
     f32 a00 = A->m00, a10 = A->m10, a20 = A->m20, a30 = A->m30;
     f32 a01 = A->m01, a11 = A->m11, a21 = A->m21, a31 = A->m31;
@@ -5180,19 +4497,14 @@ CAMEL_STATIC CAMEL_API void cml_matrix4x3_transpose(const CML_Matrix4x3 *A, CML_
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_eq
+/**
+ * @brief Compares two CML_Matrix4x3s for equality.
  * 
- * Description:
- *      Compares two CML_Matrix4x3s for equality.
+ * @param A The left matrix operand.
+ * @param B The right matrix operand.
  * 
- * Parameters:
- *      CML_Matrix4x3 *A - The first input vector.
- *      CML_Matrix4x3 *B - The second input vector.
- * 
- * Returns:
- *      CAMEL_TRUE if the vectors are equal, CAMEL_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the matrices are equal.
+ */
 CAMEL_STATIC CAMEL_API b8 cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Matrix4x3 *B) {
     if (!A || !B) {
         return false;
@@ -5207,19 +4519,14 @@ CAMEL_STATIC CAMEL_API b8 cml_matrix4x3_eq(const CML_Matrix4x3 *A, const CML_Mat
 }
 
 
-/******************************************************************************
- * Function: cml_matrix4x3_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_Matrix4x3s.
+/**
+ * @brief Returns a debug message comparing the input CML_Matrix4x3s.
  *
- * Parameters:
- *      CML_Matrix4x3 *expected - Expected matrix.
- *      CML_Matrix4x3 *got - Result matrix.
+ * @param expected Expected matrix.
+ * @param got      Result matrix.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 CAMEL_STATIC CAMEL_API char *cml_matrix4x3_debug(const CML_Matrix4x3 *expected, const CML_Matrix4x3 *got) {
     if (!expected || !got) {
         return NULL;

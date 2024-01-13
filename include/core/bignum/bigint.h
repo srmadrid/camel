@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: bigint.h
+/**
+ * @file bigint.h
  * 
- * Description:
- *      Declaration for arbitrary precision integers of CAMEL.
+ * @brief Declaration for arbitrary precision integers of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 23/11/2023
+ * @author Sergio Madrid
+ * @date 23/11/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_BIGINT
 #define CAMEL_BIGINT
@@ -22,266 +21,197 @@
 #include "../macros.h"
 #include "../err.h"
 
+
+/** @brief Default capacity of a bigint. */
 #define CML_INITIAL_BIGINT_CAP  2
 
-/******************************************************************************
- * Struct: CML_BigInt
+
+/**
+ * @brief Represents an arbitrary precision integer.
  * 
- * Description:
- *      Arbitrary precision integer.
- *
- * Fields:
- *      u32 *data    - Array holding the number data.
- *      u32   size     - Number of elements with data (>0x00000001).
- *      u32   capacity - Current size of the array, maximum amount of elements
- *                          that can fit until a resize is needed.
- *      i8       sign     - Sign of the number (-1: Negative; 1: Positive).
- *****************************************************************************/
-typedef struct {
+ * @note The integer is represented as an array of u32s, with the least
+ *       significant digit at index 0.
+ */
+typedef struct CML_BigInt {
+    /** @brief Array of u32s representing the integer. */
     u32 *data;
+    /** @brief Number of used indices in the array. */
     u32 size;
+    /** @brief Number of allocated indices in the array. */
     u32 capacity;
-    i8 sign;
+    /** @brief Sign of the integer. */
+    i32 sign;
 } CML_BigInt;
 
 
-/******************************************************************************
- * Function: cml_bigint_init
- * 
- * Description:
- *      Initializes the input CML_BigInt with the input capacity, and sets its 
- *      value to 0. If a size under 2 is passed, the default initial size of 
- *      2 will be used.
+/**
+ * @brief Initializes the input CML_BigInt with the input capacity, and sets its 
+ *        value to 0. If a size under 2 is passed, the default initial size of 
+ *        2 will be used.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to be initialized.
- *      u32 capacity    - Initial capacity of the bigint.
+ * @param capacity Initial capacity of the bigint.
+ * @param bigint   Big int to initialize.
  * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CML_Status cml_bigint_init(CML_BigInt *bigint, u32 capacity);
+ * @return Success or error code.
+ */
+CML_Status cml_bigint_init(u32 capacity, CML_BigInt *bigint);
 
 
-/******************************************************************************
- * Function: cml_bigint_free
- * 
- * Description:
- *      Frees the input CML_BigInt.
+/**
+ * @brief Frees the memory allocated for the input CML_BigInt.
  *
- * Parameters:
- *      CML_BigInt *bigint - Input big int.
+ * @param bigint Big int to free.
  * 
- * Returns:
- *      Void.
- *****************************************************************************/
+ * @return void.
+ */
 void cml_bigint_free(CML_BigInt *bigint);
 
 
-/******************************************************************************
- * Function: cml_bigint_set_int
- * 
- * Description:
- *      Sets the input CML_BigInt to the input uint64_t.
+/**
+ * @brief Sets the input CML_BigInt to the input int.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to set.
- *      u64   input   - Number to be set into the big int.
- *      int        sign    - Sign of the input number. Done separately to be
- *                           able to input a higher range of numbers.
+ * @param input Number to be set into the big int.
+ * @param sign  Sign of the input number. Done separately to be able to input a
+ *              higher range of numbers.
+ * @param out   Big int to set.
  * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CML_Status cml_bigint_set_int(CML_BigInt *bigint, u64 input, int sign);
-
-
-/******************************************************************************
- * Function: cml_bigint_set_str
- * 
- * Description:
- *      Sets the input CML_BigInt to the input char array (string).
+ * @return Success or error code.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to set.
- *      char       *input  - Number to be set into the big int.
+
+ */
+CML_Status cml_bigint_set_int(u64 input, i32 sign, CML_BigInt *out);
+
+
+/**
+ * @brief Sets the input CML_BigInt to the input string.
  * 
- * Returns:
- *      Success or error code.
+ * @note While with an int the sign is entered separately to allow for a bigger
+ *       range of numbers, here the sign must be included in the number. If no
+ *       sign is there, positive will be assumed, otherwise a - must be at the 
+ *       beginning, like "-20".
  *
- * Notes:
- *      While with an int the sign is entered separately to allow for a bigger
- *      range of numbers, here the sign must be included in the number. If no
- *      sign is there, positive will be assumed, otherwise a - must be at the 
- *      beginning, like "-20".
- *****************************************************************************/
-CML_Status cml_bigint_set_str(CML_BigInt *bigint, char *input);
-
-
-/******************************************************************************
- * Function: cml_bigint_set
+ * @param input Number to be set into the big int.
+ * @param out   Big int to set.
  * 
- * Description:
- *      Sets the input CML_BigInt to the input CML_BigInt.
+ * @return Success or error code.
+ */
+CML_Status cml_bigint_set_str(char *input, CML_BigInt *out);
+
+
+/**
+ * @brief Sets the input CML_BigInt to the input CML_BigInt.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to set.
- *      CML_BigInt *input  - Number to be set into the big int.
+ * @param input Big int to be set into the big int.
+ * @param out   Big int to set.
  * 
- * Returns:
- *      Success or error code.
- *****************************************************************************/
-CML_Status cml_bigint_set(CML_BigInt *bigint, CML_BigInt *input);
+ * @return Success or error code.
+ */
+CML_Status cml_bigint_set(CML_BigInt *input, CML_BigInt *out);
 
 
-/******************************************************************************
- * Function: cml_bigint_to_str
- * 
- * Description:
- *      Converts the input CML_BigInt to a string.
+/**
+ * @brief Converts the input CML_BigInt to a string.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to convert.
+ * @param bigint Big int to convert.
  * 
- * Returns:
- *      String representation of the big int.
- *****************************************************************************/
+ * @return The string representation of the big int.
+ */
 char *cml_bigint_to_str(CML_BigInt *bigint);
 
 
-/******************************************************************************
- * Function: cml_bigint_to_bin_str
- * 
- * Description:
- *      Converts the input CML_BigInt to a binary string.
+/**
+ * @brief Converts the input CML_BigInt to a binary string.
  *
- * Parameters:
- *      CML_BigInt *bigint - Big int to convert.
+ * @param bigint Big int to convert.
  * 
- * Returns:
- *      Binary string representation of the big int.
- *****************************************************************************/
+ * @return The binary string representation of the big int.
+ */
 char *cml_bigint_to_bin_str(CML_BigInt *bigint);
 
 // Implement addition, subtraction, multiplication, division, exponentiation, etc.
 
 
-/******************************************************************************
- * Function: cml_bigint_eq
+/**
+ * @brief Compares two CML_BigInts for equality.
  * 
- * Description:
- *      Compares two CML_BigInts for equality.
+ * @param bigint1 First big int to compare.
+ * @param bigint2 Second big int to compare.
  * 
- * Parameters:
- *      CML_BigInt *bigint1 - First big int to compare.
- *      CML_BigInt *bigint2 - Second big int to compare.
- * 
- * Returns:
- *      CML_TRUE if bigint1 == bigint2, CML_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the two big ints are equal.
+ */
 b8 cml_bigint_eq(CML_BigInt *bigint1, CML_BigInt *bigint2);
 
 
-/******************************************************************************
- * Function: cml_bigint_compare
+/**
+ * @brief Compares two CML_BigInts.
  * 
- * Description:
- *      Compares two CML_BigInts.
- *
- * Parameters:
- *      CML_BigInt *bigint1 - First big int to compare.
- *      CML_BigInt *bigint2 - Second big int to compare.
+ * @param bigint1 First big int to compare.
+ * @param bigint2 Second big int to compare.
  * 
- * Returns:
- *      CML_LOWER if bigint1 < bigint2, CML_EQUAL if bigint1 == bigint2,
- *      CML_GREATER if bigint1 > bigint2.
- *****************************************************************************/
+ * @return CML_LOWER if bigint1 < bigint2, CML_EQUAL if bigint1 == bigint2,
+ *         CML_GREATER if bigint1 > bigint2.
+ */
 CML_Comparison cml_bigint_compare(CML_BigInt *bigint1, CML_BigInt *bigint2);
 
 
-/******************************************************************************
- * Function: cml_bigint_eq_int
+/**
+ * @brief Compares a CML_BigInt to an int for equality.
  * 
- * Description:
- *      Compares a CML_BigInt to an int for equality.
+ * @param bigint Big int to compare.
+ * @param input  Number to be compared to the big int.
+ * @param sign   Sign of the input number. Done separately to be able to input a
+ *               higher range of numbers.
  * 
- * Parameters:
- *      CML_BigInt *bigint - Big int to compare.
- *      u64   input   - Number to be compared to the big int.
- *      i8    sign    - Sign of the input number. Done separately to be
- *                      able to input a higher range of numbers.
- * 
- * Returns:
- *      CML_TRUE if bigint == input, CML_FALSE otherwise.
- *****************************************************************************/
-b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i8 sign);
+ * @return CML_TRUE if bigint == input, CML_FALSE otherwise.
+ */
+b8 cml_bigint_eq_int(CML_BigInt *bigint, u64 input, i32 sign);
 
 
-/******************************************************************************
- * Function: cml_bigint_compare_int
+/**
+ * @brief Compares a CML_BigInt to an int.
  * 
- * Description:
- *      Compares a CML_BigInt to an int.
+ * @param bigint Big int to compare.
+ * @param input  Number to be compared to the big int.
+ * @param sign   Sign of the input number. Done separately to be able to input a
+ *               higher range of numbers.
  * 
- * Parameters:
- *      CML_BigInt *bigint - Big int to compare.
- *      u64   input   - Number to be compared to the big int.
- *      i8    sign    - Sign of the input number. Done separately to be
- *                      able to input a higher range of numbers.
- * 
- * Returns:
- *      CML_LOWER if bigint < input, CML_EQUAL if bigint == input,
- *      CML_GREATER if bigint > input.
- *****************************************************************************/
-CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i8 sign);
+ * @return CML_LOWER if bigint < input, CML_EQUAL if bigint == input,
+ *         CML_GREATER if bigint > input.
+ */
+CML_Comparison cml_bigint_compare_int(CML_BigInt *bigint, u64 input, i32 sign);
 
 
-/******************************************************************************
- * Function: cml_bigint_eq_str
+/**
+ * @brief Compares a CML_BigInt to a string for equality.
  * 
- * Description:
- *      Compares a CML_BigInt to a string for equality.
- *
- * Parameters:
- *      CML_BigInt *bigint - Big int to compare.
- *      char       *str    - String to compare.
+ * @param bigint Big int to compare.
+ * @param str    String to be compared to the big int.
  * 
- * Returns:
- *      CML_TRUE if bigint == str, CML_FALSE otherwise.
- *****************************************************************************/
+ * @return Boolean value indicating whether the big int is equal to the string.
+ */
 b8 cml_bigint_eq_str(CML_BigInt *bigint, char *str);
 
 
-/******************************************************************************
- * Function: cml_bigint_compare_str
+/**
+ * @brief Compares a CML_BigInt to a string.
  * 
- * Description:
- *      Compares a CML_BigInt to a string.
- *
- * Parameters:
- *      CML_BigInt *bigint - Big int to compare.
- *      char       *str    - String to compare.
+ * @param bigint Big int to compare.
+ * @param str    String to be compared to the big int.
  * 
- * Returns:
- *      CML_LOWER if bigint < str, CML_EQUAL if bigint == str,
- *      CML_GREATER if bigint > str.
- *****************************************************************************/
+ * @return CML_LOWER if bigint < str, CML_EQUAL if bigint == str,
+ *         CML_GREATER if bigint > str.
+ */
 CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str);
 
 
-/******************************************************************************
- * Function: cml_bigint_debug
- * 
- * Description:
- *      Returns a debug message comparing the input CML_BigInts.
+/**
+ * @brief Returns a debug message comparing the input CML_BigInts.
  *
- * Parameters:
- *      char *expected - Expected big int.
- *      CML_BigInt *got      - Result big int.
+ * @param expected Expected big int.
+ * @param got      Result big int.
  * 
- * Returns:
- *      A string containing the debug message.
- *****************************************************************************/
+ * @return A string containing the debug message.
+ */
 char *cml_bigint_debug(char *expected_str, CML_BigInt *got);
 
 

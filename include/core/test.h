@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: test.h
+/**
+ * @file test.h
  * 
- * Description:
- *      Testing suite for the Camel library.
+ * @brief Testing suite for the Camel library.
  *
- * Author: Sergio Madrid
- * Created on: 12/12/2023
+ * @author Sergio Madrid
+ * @date 12/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #ifndef CAMEL_TEST
 #define CAMEL_TEST
@@ -23,67 +22,63 @@
 #include "err.h"
 
 
-/******************************************************************************
- * Type: CML_TestResult
- * 
- * Description:
- *      Represents the result of a test.
- *****************************************************************************/
-typedef struct {
+/**
+ * @brief Represents the result of a test.
+ */
+typedef struct CML_TestResult {
     b8 passed;
     char *debugMessage;
 } CML_TestResult;
 
 
-/******************************************************************************
- * Type: CML_TestFunction
- * 
- * Description:
- *      Represents a function pointer for a test function.
- *****************************************************************************/
+/**
+ * @brief Represents a function pointer for a test function.
+ */
 typedef CML_TestResult (*CML_TestFunction)();
 
 
-/******************************************************************************
- * Type: CML_Test
- * 
- * Description:
- *      Represents a test case, including the test function and its name.
- *****************************************************************************/
-typedef struct {
+/**
+ * @brief Represents a test case, including the test function and its name.
+ */
+typedef struct CML_Test {
     CML_TestFunction func;
     const char *name;
 } CML_Test;
 
 
-/******************************************************************************
- * Function: cml_test_init
+/**
+ * @brief Initializes the test registry.
  * 
- * Description:
- *      Initializes the test registry.
- *****************************************************************************/
+ * @param registry      The test registry to initialize.
+ * @param count         The number of tests.
+ * @param expectedCount The number of tests to expect.
+ * 
+ * @return Status code.
+ */
 CML_Status cml_test_init(CML_Test *registry, u32 *count, u32 expectedCount);
 
 
-/******************************************************************************
- * Function: cml_test_register
+/**
+ * @brief Registers a test function.
  * 
- * Description:
- *      Registers a test function and its name to the test registry.
- *
- * Parameters:
- *      TestFunc func - The test function to register.
- *      const char *name - The name of the test function.
- *****************************************************************************/
+ * @param testRegistry  The test registry to register the test function to.
+ * @param testCount     The number of tests.
+ * @param func          The test function to register.
+ * @param name          The name of the test function.
+ * 
+ * @return void.
+ */
 void cml_test_register(CML_Test *testRegistry, u32 *testCount, CML_TestFunction func, const char *name);
 
 
-/******************************************************************************
- * Function: cml_run_tests
+/**
+ * @brief Runs all tests in the test registry.
  * 
- * Description:
- *      Runs all registered test functions.
- *****************************************************************************/
+ * @param testRegistry  The test registry to run.
+ * @param testCount     The number of tests.
+ * 
+ * @return void.
+ */
 void cml_run_tests(CML_Test *testRegistry, u32 testCount);
 
 

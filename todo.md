@@ -46,3 +46,8 @@
 - [ ] Have a look at maybe offering a fortran interface, like ```cml_f90_function``` or f99 depending on if I use a specific fortran standard or not.
 - [ ] Add a ```CML_Quaternion``` type.
 - [ ] Separate all function implementations into separate files, like ```cmlc_vector2_add.c```, ```cmlc_vector2_add_f32.c```, etc. like glibc does.
+
+## Investigate
+
+- [ ] Investigate the possibility of using ```__builtin_cpu_supports``` to detect the available SIMD instructions.
+- [ ] Investigate _BigInt(N).

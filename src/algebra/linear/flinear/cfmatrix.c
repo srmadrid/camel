@@ -1,17 +1,16 @@
-/******************************************************************************
- * Filename: cfmatrix.h
+/**
+ * @file cfmatrix.h
  * 
- * Description:
- *      Implementations for the compiled version of the fixed matrix manipulation 
- *      functions of CAMEL.
+ * @brief Implementations for the compiled version of the fixed matrix manipulation 
+ *        functions of CAMEL.
  * 
- * Author: Sergio Madrid
- * Created on: 26/12/2023
+ * @author Sergio Madrid
+ * @date 26/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 #include <math.h>
 

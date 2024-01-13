@@ -1,48 +1,47 @@
-/******************************************************************************
- * Filename: vvector.c
+/**
+ * @file vvector.c
  * 
- * Description:
- *      Implementations for the variable vector manipulation functions of CAMEL.
+ * @brief Implementations for the variable vector manipulation functions of CAMEL.
  * 
- * Author: Sergio Madrid
- * Created on: 25/12/2023
+ * @author Sergio Madrid
+ * @date 25/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../../../include/algebra/linear/vlinear/vvector.h"
 
 
-CML_Status clm_vector_init(CML_Vector *v, u32 n) {
+CML_Status clm_vector_init(u32 n, CML_Vector *vector) {
     if (n <= 0) {
         return CML_ERR_INVALID_SIZE;
     }
 
-    if (v == NULL) {
+    if (vector == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    v->data = (f64*)calloc(n, sizeof(f64));
-    if (v->data == NULL) {
-        v->n = 0;
+    vector->data = (f64*)calloc(n, sizeof(f64));
+    if (vector->data == NULL) {
+        vector->n = 0;
         return CML_ERR_NULL_PTR;
     }
 
-    v->n = n;
+    vector->n = n;
 
     return CML_SUCCESS;
 }
 
 
-void cml_vector_free(CML_Vector *v) {
-    if (v != NULL) {
-        if (v->data != NULL) {
-            free(v->data);
+void cml_vector_free(CML_Vector *vector) {
+    if (vector != NULL) {
+        if (vector->data != NULL) {
+            free(vector->data);
         }
-        v->n = 0;
+        vector->n = 0;
     }
 }
 

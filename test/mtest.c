@@ -1,17 +1,16 @@
-/******************************************************************************
- * Filename: mtest.c
+/**
+ * @file mtest.c
  * 
- * Description:
- *      Main test file for the project. This file runs all tests for all modules
- *      in the project.
+ * @brief Main test file for the project. This file runs all tests for all modules
+ *        in the project.
  *
- * Author: Sergio Madrid
- * Created on: 12/12/2023
+ * @author Sergio Madrid
+ * @date 12/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include <sys/time.h>
@@ -79,6 +78,11 @@ int main() {
         printf("Average elapsed time per %u iterations: %fs\n", iterations, elapsed);
         printf("Average elapsed time per iteration: %.12fs\n", elapsed / iterations);
         printf("Average iterations per second: %f\n", 1.0 / (elapsed / iterations));
+    }
+
+    int individualTesting = 0;
+    if (individualTesting) {
+        
     }
 
     return 0;

@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: exparser.h
+/**
+ * @file exparser.h
  * 
- * Description:
- *      Declaration for expression parsing and manupulation of CAMEL.
+ * @brief Declaration for expression parsing and manupulation of CAMEL.
  *
- * Author: Sergio Madrid
- * Created on: 9/12/2023
+ * @author Sergio Madrid
+ * @date 9/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../../include/core/expression/exparser.h"
@@ -48,7 +47,7 @@ void cml_exptkn_free(CML_ExpressionToken *token) {
 }
 
 
-int cml_read_char(char input) {
+i32 cml_read_char(char input) {
     switch (input) {
         case '0':
         case '1':
@@ -146,7 +145,7 @@ CML_ExpressionToken **cml_lex_expression(const char *expression, u32 *size) {
             }
             result = temp;
         }
-        int charType = cml_read_char(expression[i]);
+        i32 charType = cml_read_char(expression[i]);
         if (charType != -1 && charType != 11) {
             if (charType == 1) {
                 aux = (char*)malloc(INITIAL_NUM_SIZE * sizeof(char));

@@ -1,16 +1,15 @@
-/******************************************************************************
- * Filename: tbigint.c
+/**
+ * @file tbigint.c
  * 
- * Description:
- *      Test file for the bigint module.
+ * @brief Test file for the bigint module.
  *
- * Author: Sergio Madrid
- * Created on: 17/12/2023
+ * @author Sergio Madrid
+ * @date 17/12/2023
  * 
- * Copyright (c) 2023 Sergio Madrid. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
- *****************************************************************************/
+ * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
+ *            under the MIT License. See LICENSE in the project root for license
+ *            information.
+ */
 
 
 #include "../../../include/camel.h"
@@ -18,9 +17,9 @@
 
 CML_TestResult test_bigint_set_int() {
     CML_BigInt bigint;
-    cml_bigint_init(&bigint, 0);
+    cml_bigint_init(0, &bigint);
     char *expected = "200345";
-    cml_bigint_set_int(&bigint, 200345, 1);
+    cml_bigint_set_int(200345, 1, &bigint);
     CML_TestResult result;
     result.passed = cml_bigint_eq_int(&bigint, 200345, 1);
     if (!result.passed) {
