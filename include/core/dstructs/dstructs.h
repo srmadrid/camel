@@ -15,5 +15,6 @@
 #define CAMEL_DATA_STRUCTURES
 
 #include "stack.h"
+#include "string.h"
 
 #endif /* CAMEL_DATA_STRUCTURES */

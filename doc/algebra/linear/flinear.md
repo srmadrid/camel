@@ -1,9 +1,8 @@
-
 # Fixed Size Linear Algebra
 
 This module deals with fixed size vectors and matrices, up to 4x4 (for variable size vectors and matrices, see [Variable Size Linear Algebra](vlinear.md)). This module is optimized for speed, and is offered as header only or compiled, to give the user maximum flexibility and performance; for this same reason, the functions in this module are not generic, and only work with the types specified below and do not check for errors (except for matrix inversion, where invertibility is checked beforehand), if the inputs are correctly allocated they will work as expected, but if they are not, the behavior is undefined.
 
-**Module Location**: ```include/algebra/linear/flinear/flinear.h```
+**Module Location**: ```include/algebra/linear/flinear/flinear.h```.
 
 **Usage Options:** Header only or compiled.
 
@@ -18,8 +17,8 @@ Vectors represent a point in space, or a direction. This module includes vectors
 
 ### Vector File Locations
 
-- Header only: ```include/algebra/linear/flinear/fvector.h```
-- Compiled: ```include/algebra/linear/flinear/cfvector.h``` and ```src/algebra/linear/flinear/cfvector.c```
+- Header only: ```include/algebra/linear/flinear/fvector.h```.
+- Compiled: ```include/algebra/linear/flinear/cfvector.h``` and ```src/algebra/linear/flinear/cfvector.c```.
 
 ### Vector Types
 

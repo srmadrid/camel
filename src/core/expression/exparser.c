@@ -42,7 +42,9 @@ void cml_exptkn_free(CML_ExpressionToken *token) {
         if (token->characters != NULL) {
             free(token->characters);
         }
-        free(token);
+        token->characters = NULL;
+        token->len = 0;
+        token->charType = -1;
     }
 }
 

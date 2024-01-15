@@ -1,7 +1,7 @@
 /**
  * @file stack.h
  * 
- * @brief Declaration for expression parsing and manupulation of CAMEL.
+ * @brief Declaration for the stack data structure.
  *
  * @author Sergio Madrid
  * @date 20/11/2023
