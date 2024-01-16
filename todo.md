@@ -2,9 +2,6 @@
 
 ## Priority
 
-- [ ] Change all functions' parameters order so they are (output, input, input, ...) instead of (input, input, ..., output).
-- [ ] String tests.
-
 ## Documentation
 
 - [ ] Explain in documentation that debug functions return c strings because they are intended to be printed directly to the console.

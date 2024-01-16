@@ -157,7 +157,6 @@ CML_STATIC_ASSERT(sizeof(b32) == 4, "b32 is not 4 bytes.");
         default: "unknown")
 
 
-
 // Terminal colors.
 #define CML_TERMINAL_RED     "\x1b[31m"  /** @brief Red terminal color */
 #define CML_TERMINAL_GREEN   "\x1b[32m"  /** @brief Green terminal color */

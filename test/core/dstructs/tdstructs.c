@@ -16,8 +16,10 @@
 
 
 void cml_register_string_tests(CML_Test *registry, u32 *count);
+void cml_register_darray_tests(CML_Test *registry, u32 *count);
 
 
 void cml_register_dstructs_tests(CML_Test *registry, u32 *count) {
     cml_register_string_tests(registry, count);
+    cml_register_darray_tests(registry, count);
 }

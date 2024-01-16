@@ -79,7 +79,7 @@ CML_Status cml_string_alloc(CML_String *string);
  * 
  * @return void.
  */
-void cml_string_free(CML_String *string);
+void cml_string_free(void *string);
 
 
 /**

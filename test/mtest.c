@@ -31,7 +31,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    int testing = 1;
+    int testing = 0;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 400;
@@ -90,15 +90,21 @@ int main() {
         printf("Average iterations per second: %f\n", 1.0 / (elapsed / iterations));
     }
 
-    int individualTesting = 0;
+    int individualTesting = 1;
     if (individualTesting) {
-        CML_String s1;
-        cml_string_init(" World", &s1);
-        CML_String s2;
-        cml_string_init("Hello", &s2);
-        cml_string_ncat_char(" World", 10, &s2);
+        CML_DArray darray;
+        CML_String expression;
+        cml_string_init("x + y^(log2(z))", &expression);
+        cml_lex_expression(&expression, &darray);
 
-        printf("%s", cml_string_debug(cml_string_temp("Hello World"), &s2, true));
+        printf("Expression: %s\n", expression.data);
+        for (u32 i = 0; i < darray.length; ++i) {
+            CML_ExpressionToken *token = cml_darray_get(i, &darray);
+            printf("[CharType: %i, String: %s]\n", token->charType, token->characters.data);
+        }
+
+        cml_string_free(&expression);
+        cml_darray_free(&darray, cml_exptkn_free);
     }
 
     return 0;

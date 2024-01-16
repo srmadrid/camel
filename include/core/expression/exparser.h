@@ -19,6 +19,16 @@
 #include <math.h>
 
 #include "../macros.h"
+#include "../../../include/core/dstructs/string.h"
+#include "../../../include/core/dstructs/darray.h"
+
+
+/** @brief Default size of the expression token array. */
+#define CML_INITIAL_EXP_SIZE 10
+
+
+/** @brief Default size of the number array. */
+#define CML_INITIAL_NUM_SIZE 5
 
 
 /**
@@ -40,23 +50,22 @@
  *     11: Space
  *     -1: Undefined
  */
-typedef struct {
+typedef struct CML_ExpressionToken{
     int charType;
-    char *characters;
-    u32 len;
+    CML_String characters;
 } CML_ExpressionToken;
 
 
 /**
  * @brief Initializes a CML_ExpressionToken with the input string.
  *
- * @param input Pointer to the input string.
- * @param size  Size of the input string.
+ * @param input    Pointer to the input string.
+ * @param charType Type of the character.
+ * @param expToken Pointer to the CML_ExpressionToken to be initialized.
  * 
- * @return void.
+ * @return Status code.
  */
-// Yet to change to return CML_Status and initialize input CML_ExpressionToken * and remove the string double pointer
-CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 size);
+CML_Status cml_exptkn_init(CML_String *characters, int charType, CML_ExpressionToken *expToken);
 
 
 /**
@@ -66,7 +75,7 @@ CML_ExpressionToken *cml_exptkn_init(char **input, int charType, u32 size);
  * 
  * @return void.
  */
-void cml_exptkn_free(CML_ExpressionToken *token);
+void cml_exptkn_free(void *token);
 
 
 /**
@@ -84,14 +93,11 @@ i32 cml_read_char(char input);
  *        CML_ExpressionToken and writes it to the out array.
  *
  * @param expression Input expression.
- * @param size       Size of the output expression array.
+ * @param out        Output CML_ExpressionToken dynamic array.
  * 
- * @return The tokenized expression (**: pointer to pointer array).
+ * @return Status code.
  */
-// To edit to return CML_Status and edit the input CML_ExpressionToken **
-#define INITIAL_EXP_SIZE 10
-#define INITIAL_NUM_SIZE 20
-CML_ExpressionToken **cml_lex_expression(const char *expression, u32 *size);
+CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out);
 
 
 /**

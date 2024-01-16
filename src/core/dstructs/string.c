@@ -59,15 +59,16 @@ CML_Status cml_string_alloc(CML_String *string) {
 }
 
 
-void cml_string_free(CML_String *string) {
-    if (string != NULL) {
-        if (string->data != NULL) {
-            free(string->data);
+void cml_string_free(void *string) {
+    CML_String *str = (CML_String*)string;
+    if (str != NULL) {
+        if (str->data != NULL) {
+            free(str->data);
         }
-        string->data = NULL;
-        string->length = 0;
-        string->capacity = 0;
-        string->refCount = 0;
+        str->data = NULL;
+        str->length = 0;
+        str->capacity = 0;
+        str->refCount = 0;
     }
 }
 
