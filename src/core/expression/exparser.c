@@ -25,6 +25,7 @@ CML_Status cml_exptkn_init(CML_String *characters, int charType, CML_ExpressionT
     }
 
     expToken->charType = charType;
+    //expToken->characters = (CML_String*)malloc(sizeof(CML_String));
     cml_string_alloc(&expToken->characters);
     // cml_string_checkref is ran in cml_string_copy
     cml_string_copy(characters, &expToken->characters);
@@ -134,6 +135,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 cml_exptkn_init(&aux, charType, &token);
                 cml_darray_push(&token, out);
                 i += aux.length; // Move i the length of the digit chain
+                cml_string_free(&aux);
             } else if (charType == 2 || charType == 3 || charType == 4 || charType == 9 || charType == 10) {
                 CML_String aux;
                 cml_string_alloc(&aux);
@@ -142,6 +144,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 cml_exptkn_init(&aux, charType, &token);
                 cml_darray_push(&token, out);
                 ++i; // increment here since we've processed the character
+                cml_string_free(&aux);
             } else if (charType == 5) {
                 // Standard if else chain. Future plans may include using a map 
                 // or other more efficient data structure to more effitiently
@@ -187,10 +190,10 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, charType, &token);
                 cml_darray_push(&token, out);
-                cml_string_free(&aux);
                 i += letterAuxLen; // increment here since we've processed the character
                 // Maybe add a way to more quickly identify variables and constants 
                 // once in the token to optimize evaluations
+                cml_string_free(&aux);
             } 
         } else {
             ++i; // If the charType is -1 or 10, just move to the next character

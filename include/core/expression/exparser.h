@@ -21,6 +21,7 @@
 #include "../macros.h"
 #include "../../../include/core/dstructs/string.h"
 #include "../../../include/core/dstructs/darray.h"
+#include "../../../include/core/dstructs/btree.h"
 
 
 /** @brief Default size of the expression token array. */
@@ -51,13 +52,31 @@
  *     -1: Undefined
  */
 typedef struct CML_ExpressionToken{
+    /** @brief Type of the character. */
     int charType;
+    /** @brief String that holds the characters of the token. */
     CML_String characters;
 } CML_ExpressionToken;
 
 
 /**
- * @brief Initializes a CML_ExpressionToken with the input string.
+ * @brief Struture that holds an expression.
+ * 
+ * @note Not implemented yet.
+ */
+typedef struct CML_Expression {
+    /** @brief Binary tree that holds the expression in tokens. */
+    CML_BTree data;
+    /** @brief Dynamic array that holds the expression in tokens. */
+    CML_DArray tokens;
+    /** @brief String that holds the original expression in characters. */
+    CML_String expression;
+} CML_Expression;
+
+
+
+/**
+ * @brief Initializes a CML_ExpressionToken with a copy of the input string.
  *
  * @param input    Pointer to the input string.
  * @param charType Type of the character.
@@ -91,6 +110,8 @@ i32 cml_read_char(char input);
 /**
  * @brief Tokenizes the input expression (string) into an array of 
  *        CML_ExpressionToken and writes it to the out array.
+ * 
+ * @note The function initializes the out array.
  *
  * @param expression Input expression.
  * @param out        Output CML_ExpressionToken dynamic array.

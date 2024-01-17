@@ -101,6 +101,8 @@ int main() {
         for (u32 i = 0; i < darray.length; ++i) {
             CML_ExpressionToken *token = cml_darray_get(i, &darray);
             printf("[CharType: %i, String: %s]\n", token->charType, token->characters.data);
+            // Only free external token, not internal string
+            free(token);
         }
 
         cml_string_free(&expression);

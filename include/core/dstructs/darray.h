@@ -93,55 +93,55 @@ void cml_darray_free(CML_DArray *darray, void (*freeFn)(void *element));
  * @brief Resizes a CML_DArray to the input size.
  * 
  * @param capacity The new capacity of the array.
- * @param darray   The CML_DArray to be resized.
+ * @param out      The CML_DArray to be resized.
  * 
  * @return Status code.
  */
-CML_Status cml_darray_resize(u32 capacity, CML_DArray *darray);
+CML_Status cml_darray_resize(u32 capacity, CML_DArray *out);
 
 
 /**
- * @brief Pushes an element to the end of a CML_DArray.
+ * @brief Pushes a copy of an element to the end of a CML_DArray.
  * 
  * @param element Pointer to the element to be pushed.
- * @param darray The CML_DArray to be pushed to.
+ * @param out     The CML_DArray to be pushed to.
  * 
  * @return Status code.
  */
-CML_Status cml_darray_push(void *element, CML_DArray *darray);
+CML_Status cml_darray_push(void *element, CML_DArray *out);
 
 
 /**
- * @brief Inserts an element at the input index of a CML_DArray.
+ * @brief Inserts a copy of an element at the input index of a CML_DArray.
  * 
  * @param element Pointer to the element to be inserted.
  * @param index   Index at which the element will be inserted.
- * @param darray  The CML_DArray to be inserted to.
+ * @param out     The CML_DArray to be inserted to.
  * 
  * @return Status code.
  */
-CML_Status cml_darray_insert(void *element, u32 index, CML_DArray *darray);
+CML_Status cml_darray_insert(void *element, u32 index, CML_DArray *out);
 
 
 /**
  * @brief Pops an element from the end of a CML_DArray.
  * 
- * @param darray The CML_DArray to be popped from.
+ * @param out The CML_DArray to be popped from.
  * 
  * @return The popped element.
  */
-void *cml_darray_pop(CML_DArray *darray);
+void *cml_darray_pop(CML_DArray *out);
 
 
 /**
  * @brief Pops an element at the input index of a CML_DArray.
  * 
- * @param index  Index at which the element will be removed.
- * @param darray The CML_DArray to be removed from.
+ * @param index Index at which the element will be removed.
+ * @param out   The CML_DArray to be removed from.
  * 
  * @return The removed element.
  */
-void *cml_darray_remove(u32 index, CML_DArray *darray);
+void *cml_darray_remove(u32 index, CML_DArray *out);
 
 
 /**
@@ -152,12 +152,12 @@ void *cml_darray_remove(u32 index, CML_DArray *darray);
  *       the memory of the copied structure, but not the data pointed to by the
  *       pointers, that is freed by the freeing function of the CML_DArray.
  * 
- * @param index  Index of the element to be retrieved.
- * @param darray The CML_DArray to be retrieved from.
+ * @param index Index of the element to be retrieved.
+ * @param out   The CML_DArray to be retrieved from.
  * 
  * @return A copy of the element at the input index.
  */
-void *cml_darray_get(u32 index, CML_DArray *darray);
+void *cml_darray_get(u32 index, CML_DArray *out);
 
 
 /**
@@ -165,11 +165,11 @@ void *cml_darray_get(u32 index, CML_DArray *darray);
  * 
  * @param element Pointer to the element to be set.
  * @param index   Index of the element to be set.
- * @param darray  The CML_DArray to be set.
+ * @param out     The CML_DArray to be set.
  * 
  * @return Status code.
  */
-CML_Status cml_darray_set(void *element, u32 index, CML_DArray *darray);
+CML_Status cml_darray_set(void *element, u32 index, CML_DArray *out);
 
 
 /**
