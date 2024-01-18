@@ -22,7 +22,7 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTNode *node) {
 
     node->data = malloc(stride);
     if (node->data == NULL) {
-        return CML_ERR_NULL_PTR;
+        return CML_ERR_MALLOC;
     }
     memcpy(node->data, element, stride);
     node->left = NULL;
@@ -43,7 +43,7 @@ CML_Status _cml_btree_init(void *element, u32 stride, CML_BTree *btree) {
     } else {
         CML_BTNode *newNode = malloc(sizeof(CML_BTNode));
         if (newNode == NULL) {
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_MALLOC;
         }
         btree->root = newNode;
         cml_btnode_init(element, stride, btree->root);
@@ -93,6 +93,9 @@ CML_Status cml_btnode_insert(void *element, b8 left, CML_BTNode *out) {
     }
 
     CML_BTNode *newNode = malloc(sizeof(CML_BTNode));
+    if (newNode == NULL) {
+        return CML_ERR_MALLOC;
+    }
 
     cml_btnode_init(element, out->stride, newNode);
 

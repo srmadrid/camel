@@ -29,7 +29,7 @@ CML_Status cml_string_init(const char *input, CML_String *string) {
     string->length = length;
     string->data = (char*)malloc(sizeof(char)*(length+1));
     if (string->data == NULL) {
-        return CML_ERR_NULL_PTR;
+        return CML_ERR_MALLOC;
     }
 
     for (u32 i = 0; i < length; i++) {
@@ -111,19 +111,18 @@ CML_Status cml_string_copy(CML_String *input, CML_String *out) {
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_MALLOC;
         }
         out->capacity = input->capacity;
         out->length = input->length;
     }
 
     if (input->capacity != out->capacity) {
-        out->data = (char*)realloc(out->data, sizeof(char)*input->capacity);
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*input->capacity);
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = input->capacity;
         out->length = input->length;
     }
@@ -155,18 +154,17 @@ CML_Status cml_string_ncopy(CML_String *input, u32 n, CML_String *out) {
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_MALLOC;
         }
         out->capacity = n + 1;
     }
 
     if (out->capacity < n + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(n + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(n + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = n + 1;
     }
 
@@ -199,18 +197,17 @@ CML_Status cml_string_copy_char(const char *input, CML_String *out) {
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_MALLOC;
         }
         out->capacity = length + 1;
     }
 
     if (out->capacity < length + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(length + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = length + 1;
     }
 
@@ -244,18 +241,17 @@ CML_Status cml_string_ncopy_char(const char *input, u32 n, CML_String *out) {
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_MALLOC;
         }
         out->capacity = n + 1;
     }
 
     if (out->capacity < n + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(n + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(n + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = n + 1;
     }
 
@@ -278,12 +274,11 @@ CML_Status cml_string_cat(CML_String *input, CML_String *out) {
     u32 length = input->length + out->length;
 
     if (out->capacity < length + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(length + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = length + 1;
     }
 
@@ -313,12 +308,11 @@ CML_Status cml_string_ncat(CML_String *input, u32 n, CML_String *out) {
     u32 length = n + out->length;
 
     if (out->capacity < length + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(length + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = length + 1;
     }
 
@@ -349,12 +343,11 @@ CML_Status cml_string_cat_char(const char *input, CML_String *out) {
     length += out->length;
 
     if (out->capacity < length + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(length + 1));
-        if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        if (tmp == NULL) {
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = length + 1;
     }
 
@@ -386,12 +379,11 @@ CML_Status cml_string_ncat_char(const char *input, u32 n, CML_String *out) {
     length = n + out->length;
 
     if (out->capacity < length + 1) {
-        out->data = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
         if (out->data == NULL) {
-            out->capacity = 0;
-            out->length = 0;
-            return CML_ERR_NULL_PTR;
+            return CML_ERR_REALLOC;
         }
+        out->data = tmp;
         out->capacity = length + 1;
     }
 

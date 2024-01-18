@@ -24,20 +24,26 @@
 
 /**
  * @brief Status codes for CAMEL.
- * 
- * @details
- * CML_SUCCESS:           Operation was successful.
- * CML_ERR_INVALID_SIZE:  Invalid size for the input.
- * CML_ERR_NULL_PTR:      Null pointer passed as input.
- * CML_ERR_SINGULAR_MATRIX: Matrix is singular.
  */
-typedef enum {
+typedef enum CML_Status {
+    /** @brief Operation was successful. */
     CML_SUCCESS = 1,
-    CML_ERR_INVALID_SIZE = -1,
-    CML_ERR_NULL_PTR = -2,
-    CML_ERR_SINGULAR_MATRIX = -3,
-    CML_ERR_INVALID_CHAR = -4,
-    CML_ERR_INVALID_INDEX = -5,
+    /** @brief Null pointer passed as input. */
+    CML_ERR_NULL_PTR = -1,
+    /** @brief Malloc failed. */
+    CML_ERR_MALLOC = -2,
+    /** @brief Realloc failed. */
+    CML_ERR_REALLOC = -3,
+    /** @brief Invalid capacity. */
+    CML_ERR_INVALID_CAPACITY = -4,
+    /** @brief Invalid size for the input. */
+    CML_ERR_INVALID_SIZE = -5,
+    /** @brief Matrix is singular. */
+    CML_ERR_SINGULAR_MATRIX = -6,
+    /** @brief Invalid character. */
+    CML_ERR_INVALID_CHAR = -7,
+    /** @brief Invalid index. */
+    CML_ERR_INVALID_INDEX = -8,
 } CML_Status;
 
 

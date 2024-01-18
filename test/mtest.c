@@ -94,7 +94,7 @@ int main() {
     if (individualTesting) {
         CML_DArray darray;
         CML_String expression;
-        cml_string_init("x + y^(log2(z))", &expression);
+        cml_string_init("867x + y^(log2(z))", &expression);
         cml_lex_expression(&expression, &darray);
 
         printf("Expression: %s\n", expression.data);
