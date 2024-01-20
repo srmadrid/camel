@@ -15,7 +15,7 @@
 #include "../../../include/core/expression/exparser.h"
 
 
-CML_Status cml_exptkn_init(CML_String *characters, int charType, CML_ExpressionToken *expToken) {
+CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_ExpressionToken *expToken) {
     if (charType <= -1 || charType > 11) {
         return CML_ERR_INVALID_CHAR;
     }
@@ -43,7 +43,7 @@ void cml_exptkn_free(void *token) {
 }
 
 
-i32 cml_read_char(char input) {
+CML_CharType cml_read_char(char input) {
     switch (input) {
         case '0':
         case '1':
@@ -55,18 +55,18 @@ i32 cml_read_char(char input) {
         case '7':
         case '8':
         case '9':
-            return 1;
+            return CML_CHAR_NUMBER;
 
         case '+':
         case '-':
-            return 2;
+            return CML_CHAR_LOW_PRECEDENCE_OP;
 
         case '*':
         case '/':
-            return 3;
+            return CML_CHAR_MEDIUM_PRECEDENCE_OP;
 
         case '^':
-            return 4;
+            return CML_CHAR_HIGH_PRECEDENCE_OP;
 
         // Add uppercase letters later to maybe implement functions with matrices
         case 'a':
@@ -95,36 +95,65 @@ i32 cml_read_char(char input) {
         case 'x':
         case 'y':
         case 'z':
-            return 5;
+            return CML_CHAR_LETTER;
 
         case '(':
         case '[':
         case '{':
-            return 9;
+            return CML_CHAR_OPENING_PARENTHESIS;
 
         case ')':
         case ']':
         case '}':
-            return 10;
+            return CML_CHAR_CLOSING_PARENTHESIS;
 
         case ' ':
-            return 11;
+            return CML_CHAR_SPACE;
 
         default:
-            return -1;
+            return CML_CHAR_UNDEFINED;
     }
 }
 
 
 CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
-    cml_darray_init_default(CML_ExpressionToken, out);
-    int letterAuxLen = 0; // For charType == 5, to be removed when a something better is implemented
+    cml_darray_init_default(CML_ExpressionToken, cml_exptkn_free, out);
+    u32 letterAuxLen = 0; // For charType == 5, to be removed when a something better is implemented
+    CML_CharType charType = CML_CHAR_UNDEFINED;
+    CML_CharType prevCharType = CML_CHAR_UNDEFINED;
 
     // Iterate through the expression
     for (u32 i = 0; i < expression->length;) {
-        i32 charType = cml_read_char(expression->data[i]);
-        if (charType != -1 && charType != 11) {
-            if (charType == 1) {
+        if (charType != CML_CHAR_UNDEFINED && charType != CML_CHAR_SPACE) {
+            prevCharType = charType;
+        }
+        charType = cml_read_char(expression->data[i]);
+
+        if (charType != CML_CHAR_UNDEFINED && charType != CML_CHAR_SPACE) {
+
+            // Check if the previous character was not an operator and if the
+            // current character is also not an operator, then add a multiplication
+            // operator, unless both characters are the same parenthesis type
+            // (opening or closing).
+            if ((prevCharType != CML_CHAR_LOW_PRECEDENCE_OP    && 
+                 prevCharType != CML_CHAR_MEDIUM_PRECEDENCE_OP && 
+                 prevCharType != CML_CHAR_HIGH_PRECEDENCE_OP)   &&
+                (charType != CML_CHAR_LOW_PRECEDENCE_OP        && 
+                 charType != CML_CHAR_MEDIUM_PRECEDENCE_OP     && 
+                 charType != CML_CHAR_HIGH_PRECEDENCE_OP)       &&
+                 prevCharType != CML_CHAR_OPENING_PARENTHESIS   && 
+                 charType != CML_CHAR_CLOSING_PARENTHESIS       &&
+                 prevCharType != CML_CHAR_FUNCTION_OP           &&
+                 prevCharType != CML_CHAR_UNDEFINED) {
+                CML_String aux;
+                cml_string_init("*", &aux);
+                CML_ExpressionToken token;
+                cml_exptkn_init(&aux, CML_CHAR_MEDIUM_PRECEDENCE_OP, &token);
+                cml_darray_push(&token, out);
+                cml_string_free(&aux);
+            }
+
+            if (charType == CML_CHAR_NUMBER) {
                 CML_String aux;
                 cml_string_alloc(&aux);
                 cml_string_ncopy_char(&expression->data[i], 1, &aux);
@@ -136,7 +165,11 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 cml_darray_push(&token, out);
                 i += aux.length; // Move i the length of the digit chain
                 cml_string_free(&aux);
-            } else if (charType == 2 || charType == 3 || charType == 4 || charType == 9 || charType == 10) {
+            } else if (charType == CML_CHAR_LOW_PRECEDENCE_OP    || 
+                       charType == CML_CHAR_MEDIUM_PRECEDENCE_OP || 
+                       charType == CML_CHAR_HIGH_PRECEDENCE_OP   || 
+                       charType == CML_CHAR_OPENING_PARENTHESIS  || 
+                       charType == CML_CHAR_CLOSING_PARENTHESIS) {
                 CML_String aux;
                 cml_string_alloc(&aux);
                 cml_string_ncopy_char(&expression->data[i], 1, &aux);

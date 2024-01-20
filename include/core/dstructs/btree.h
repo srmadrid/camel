@@ -30,8 +30,8 @@ typedef struct CML_BTNode {
     struct CML_BTNode *left;
     /** @brief Pointer to the right child of the node. */
     struct CML_BTNode *right;
-    /** @brief Size of each element in the node in bytes. */
-    u32 stride;
+    /** @brief Tree the node belongs to. */
+    struct CML_BTree *tree;
 } CML_BTNode;
 
 
@@ -43,6 +43,8 @@ typedef struct CML_BTree {
     CML_BTNode *root;
     /** @brief Size of each element in the tree in bytes. */
     u32 stride;
+    /** @brief Freeing function for the elements of the tree. */
+    void (*freeFn)(void *element);
 } CML_BTree;
 
 
@@ -51,11 +53,12 @@ typedef struct CML_BTree {
  * 
  * @param element Pointer to the element to be stored in the node.
  * @param stride  Size of the element in bytes.
+ * @param tree    Pointer to the CML_BTree the node belongs to.
  * @param node    Pointer to the CML_BTNode to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_btnode_init(void *element, u32 stride, CML_BTNode *node);
+CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node);
 
 
 /**
@@ -63,11 +66,12 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTNode *node);
  * 
  * @param element Pointer to the element to be stored in the root node.
  * @param stride  Size of each element in the tree in bytes.
+ * @param freeFn  Freeing function for the elements of the tree.
  * @param btree   Pointer to the CML_BTree to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_btree_init(void *element, u32 stride, CML_BTree *btree);
+CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *element), CML_BTree *btree);
 
 
 /**
@@ -75,33 +79,34 @@ CML_Status _cml_btree_init(void *element, u32 stride, CML_BTree *btree);
  * 
  * @param element Pointer to the element to be stored in the root node.
  * @param type    Type of the tree.
+ * @param freeFn  Freeing function for the elements of the tree.
  * @param btree   Pointer to the CML_BTree to be initialized.
  * 
  * @return Status code.
  */
-#define cml_btree_init(element, type, btree) _cml_btree_init(element, sizeof(type), btree)
+#define cml_btree_init(element, type, freeFn, btree) _cml_btree_init(element, sizeof(type), freeFn, btree)
 
 
 /**
- * @brief Frees the memory allocated by the input CML_BTNode and its subtrees.
+ * @brief Frees the memory allocated by the input CML_BTNode and its subtrees 
+ *        using the freeing function stored in the CML_BTree the node belongs
+ *        to.
  * 
- * @param node   Pointer to the CML_BTNode to be freed.
- * @param freeFn Pointer to the freeing function of the elements of the node.
+ * @param node Pointer to the CML_BTNode to be freed.
  * 
  * @return void.
  */
-void cml_btnode_free(CML_BTNode *node, void (*freeFn)(void *element));
+void cml_btnode_free(CML_BTNode *node);
 
 
 /**
  * @brief Frees the memory allocated by the input CML_BTree.
  * 
  * @param btree  Pointer to the CML_BTree to be freed.
- * @param freeFn Pointer to the freeing function of the elements of the tree.
  * 
  * @return void.
  */
-void cml_btree_free(CML_BTree *btree, void (*freeFn)(void *element));
+void cml_btree_free(CML_BTree *btree);
 
 
 /**

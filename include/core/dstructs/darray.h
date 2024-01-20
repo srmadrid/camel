@@ -40,6 +40,8 @@ typedef struct CML_DArray {
     u32 capacity;
     /** @brief Size of each element in the array in bytes. */
     u32 stride;
+    /** @brief Freeing function for the elements of the array. */
+    void (*freeFn)(void *element);
 } CML_DArray;
 
 
@@ -48,11 +50,12 @@ typedef struct CML_DArray {
  * 
  * @param capacity Capacity of the array.
  * @param stride   Size of each element in the array in bytes.
+ * @param freeFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_darray_init(u32 capacity, u32 stride, CML_DArray *darray);
+CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *element), CML_DArray *darray);
 
 
 /**
@@ -60,33 +63,35 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, CML_DArray *darray);
  * 
  * @param capacity Size of the array.
  * @param type     Type of the array.
+ * @param freeFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init(capacity, type, darray) _cml_darray_init(capacity, sizeof(type), darray)
+#define cml_darray_init(capacity, type, freeFn, darray) _cml_darray_init(capacity, sizeof(type), freeFn, darray)
 
 
 /**
  * @brief Initializes a CML_DArray with the input type and default capacity.
  * 
  * @param type   Type of the array.
+ * @param freeFn Freeing function for the elements of the array.
  * @param darray Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init_default(type, darray) _cml_darray_init(CML_INITIAL_DARRAY_CAPACITY, sizeof(type), darray)
+#define cml_darray_init_default(type, freeFn, darray) _cml_darray_init(CML_INITIAL_DARRAY_CAPACITY, sizeof(type), freeFn, darray)
 
 
 /**
- * @brief Frees the memory of a CML_DArray.
+ * @brief Frees the memory of a CML_DArray and its elements using the freeing
+ *        function stored in the CML_DArray.
  * 
  * @param darray The CML_DArray to be freed.
- * @param freeFn Pointer to the freeing function of the elements of the array.
  * 
  * @return void.
  */
-void cml_darray_free(CML_DArray *darray, void (*freeFn)(void *element));
+void cml_darray_free(CML_DArray *darray);
 
 
 /**

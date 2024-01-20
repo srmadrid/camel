@@ -2,6 +2,10 @@
 
 ## Priority
 
+- [ ] Put the freeing function as a struct member in trees (already done for lists).
+- [ ] Look at maybe removing all `void *` and replacing with a sort of `CML_Data` type that has a `void *`, a stride and a `CML_Data_Type` enum that specifies what type the `void *` is.
+- [ ] Maybe make the freeing functions take double pointers to also free the pointer itself (maybe pass as double pointer and take a bool to specify if the pointer should be freed or not).
+
 ## Documentation
 
 - [ ] Explain in documentation that debug functions return c strings because they are intended to be printed directly to the console.

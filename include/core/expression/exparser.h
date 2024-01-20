@@ -32,28 +32,42 @@
 #define CML_INITIAL_NUM_SIZE 5
 
 
+/** @brief Character types. */
+typedef enum CML_CharType {
+    /** @brief Number. */
+    CML_CHAR_NUMBER = 1,
+    /** @brief Low precedence operator (+, -). */
+    CML_CHAR_LOW_PRECEDENCE_OP = 2,
+    /** @brief Medium precedence operator (*, /). */
+    CML_CHAR_MEDIUM_PRECEDENCE_OP = 3,
+    /** @brief High precedence operator (^). */
+    CML_CHAR_HIGH_PRECEDENCE_OP = 4,
+    /** @brief Letter (auxiliary for identifying function operators, variables
+     *         and constants). */
+    CML_CHAR_LETTER = 5,
+    /** @brief Function operator (log, sin, cos, etc.). */
+    CML_CHAR_FUNCTION_OP = 6,
+    /** @brief Variable (any letter not interpreted as a constant). */
+    CML_CHAR_VARIABLE = 7,
+    /** @brief Constant (pi, e, i, etc.). */
+    CML_CHAR_CONSTANT = 8,
+    /** @brief Opening parenthesis. */
+    CML_CHAR_OPENING_PARENTHESIS = 9,
+    /** @brief Closing parenthesis. */
+    CML_CHAR_CLOSING_PARENTHESIS = 10,
+    /** @brief Space. */
+    CML_CHAR_SPACE = 11,
+    /** @brief Undefined. */
+    CML_CHAR_UNDEFINED = -1
+} CML_CharType;
+
+
 /**
  * @brief Token that stores information of each toke of a tokenized expression.
- *
- * @details
- * Character types:
- *     1:  Number
- *     2:  Low precedence operator (+, -)
- *     3:  Medium precedence operator (*, /)
- *     4:  High precedence operator (^)
- *     5:  Letter (auxiliary for identifying function operators, variables
- *         and constants)
- *     6:  Function operator (log, sin, cos, etc.)
- *     7:  Variable (any letter not interpreted as a constant)
- *     8:  Constant (pi, e, i, etc.)
- *     9:  Opening parenthesis
- *     10: Closing parenthesis
- *     11: Space
- *     -1: Undefined
  */
 typedef struct CML_ExpressionToken{
     /** @brief Type of the character. */
-    int charType;
+    CML_CharType charType;
     /** @brief String that holds the characters of the token. */
     CML_String characters;
 } CML_ExpressionToken;
@@ -84,7 +98,7 @@ typedef struct CML_Expression {
  * 
  * @return Status code.
  */
-CML_Status cml_exptkn_init(CML_String *characters, int charType, CML_ExpressionToken *expToken);
+CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_ExpressionToken *expToken);
 
 
 /**
@@ -104,7 +118,7 @@ void cml_exptkn_free(void *token);
  * 
  * @return The type of the character input.
  */
-i32 cml_read_char(char input);
+CML_CharType cml_read_char(char input);
 
 
 /**

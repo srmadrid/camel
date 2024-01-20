@@ -15,7 +15,7 @@
 #include "../../../include/core/dstructs/btree.h"
 
 
-CML_Status cml_btnode_init(void *element, u32 stride, CML_BTNode *node) {
+CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node) {
     if (node == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -27,13 +27,13 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTNode *node) {
     memcpy(node->data, element, stride);
     node->left = NULL;
     node->right = NULL;
-    node->stride = stride;
+    node->tree = tree;
 
     return CML_SUCCESS;
 }
 
 
-CML_Status _cml_btree_init(void *element, u32 stride, CML_BTree *btree) {
+CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *element), CML_BTree *btree) {
     if (btree == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -46,40 +46,42 @@ CML_Status _cml_btree_init(void *element, u32 stride, CML_BTree *btree) {
             return CML_ERR_MALLOC;
         }
         btree->root = newNode;
-        cml_btnode_init(element, stride, btree->root);
+        cml_btnode_init(element, stride, btree, btree->root);
     }
     btree->stride = stride;
+    btree->freeFn = freeFn;
 
     return CML_SUCCESS;
 }
 
 
-void cml_btnode_free(CML_BTNode *node, void (*freeFn)(void *element)) {
+void cml_btnode_free(CML_BTNode *node) {
     if (node != NULL) {
         if (node->left != NULL) {
-            cml_btnode_free(node->left, freeFn);
+            cml_btnode_free(node->left);
             free(node->left);
         }
 
         if (node->right != NULL) {
-            cml_btnode_free(node->right, freeFn);
+            cml_btnode_free(node->right);
             free(node->right);
         }
 
-        if (freeFn != NULL) {
-            freeFn(node->data);
+        if (node->tree->freeFn != NULL) {
+            node->tree->freeFn(node->data);
         }
         free(node->data);
         node->data = NULL;
         node->left = NULL;
         node->right = NULL;
+        node->tree = NULL;
     }
 }
 
 
-void cml_btree_free(CML_BTree *btree, void (*freeFn)(void *element)) {
+void cml_btree_free(CML_BTree *btree) {
     if (btree != NULL) {
-        cml_btnode_free(btree->root, freeFn);
+        cml_btnode_free(btree->root);
         free(btree->root);
         btree->root = NULL;
         btree->stride = 0;
@@ -97,7 +99,7 @@ CML_Status cml_btnode_insert(void *element, b8 left, CML_BTNode *out) {
         return CML_ERR_MALLOC;
     }
 
-    cml_btnode_init(element, out->stride, newNode);
+    cml_btnode_init(element, out->tree->stride, out->tree, newNode);
 
     if (left) {
         out->left = newNode;
