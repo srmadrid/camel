@@ -31,7 +31,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    b8 testing = false;
+    b8 testing = true;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 400;
@@ -90,7 +90,7 @@ int main() {
         printf("Average iterations per second: %f\n", 1.0 / (elapsed / iterations));
     }
 
-    b8 individualTesting = true;
+    b8 individualTesting = false;
     if (individualTesting) {
         CML_DArray darray;
         CML_String expression;
@@ -99,12 +99,10 @@ int main() {
 
         printf("Expression: %s\n", expression.data);
         for (u32 i = 0; i < darray.length; ++i) {
-            //CML_ExpressionToken *token = cml_darray_get(i, &darray);
-            CML_ExpressionToken token = ((CML_ExpressionToken*)darray.data)[i];
-            //printf("[CharType: %i, String: %s]\n", token->charType, token->characters.data);
-            printf("[CharType: %i, String: %s]\n", token.charType, token.characters.data);
-            // Only free external token, not internal string
-            //free(token);
+            CML_ExpressionToken *token = cml_darray_get(i, &darray);
+            //CML_ExpressionToken token = ((CML_ExpressionToken*)darray.data)[i];
+            printf("[CharType: %i, String: %s]\n", token->charType, token->characters.data);
+            //printf("[CharType: %i, String: %s]\n", token.charType, token.characters.data);
         }
 
         cml_string_free(&expression);

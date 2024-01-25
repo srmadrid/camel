@@ -27,8 +27,12 @@ CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_Ex
     expToken->charType = charType;
     //expToken->characters = (CML_String*)malloc(sizeof(CML_String));
     cml_string_alloc(&expToken->characters);
-    // cml_string_checkref is ran in cml_string_copy
-    cml_string_copy(characters, &expToken->characters);
+    expToken->characters.capacity = characters->capacity;
+    expToken->characters.data = characters->data;
+    expToken->characters.length = characters->length;
+    expToken->characters.refCount = -1;
+
+    cml_string_checkref(&characters);
 
     return CML_SUCCESS;
 }
@@ -150,7 +154,6 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, CML_CHAR_MEDIUM_PRECEDENCE_OP, &token);
                 cml_darray_push(&token, out);
-                cml_string_free(&aux);
             }
 
             if (charType == CML_CHAR_NUMBER) {
@@ -164,7 +167,6 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 cml_exptkn_init(&aux, charType, &token);
                 cml_darray_push(&token, out);
                 i += aux.length; // Move i the length of the digit chain
-                cml_string_free(&aux);
             } else if (charType == CML_CHAR_LOW_PRECEDENCE_OP    || 
                        charType == CML_CHAR_MEDIUM_PRECEDENCE_OP || 
                        charType == CML_CHAR_HIGH_PRECEDENCE_OP   || 
@@ -177,7 +179,6 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 cml_exptkn_init(&aux, charType, &token);
                 cml_darray_push(&token, out);
                 ++i; // increment here since we've processed the character
-                cml_string_free(&aux);
             } else if (charType == 5) {
                 // Standard if else chain. Future plans may include using a map 
                 // or other more efficient data structure to more effitiently
@@ -226,7 +227,6 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 i += letterAuxLen; // increment here since we've processed the character
                 // Maybe add a way to more quickly identify variables and constants 
                 // once in the token to optimize evaluations
-                cml_string_free(&aux);
             } 
         } else {
             ++i; // If the charType is -1 or 10, just move to the next character

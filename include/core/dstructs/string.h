@@ -70,7 +70,7 @@ CML_Status cml_string_alloc(CML_String *string);
 
 
 /**
- * @brief Frees the memory of a CML_String.
+ * @brief Frees the internal memory of a CML_String.
  * 
  * @note The function frees internal data only, the pointer to the string
  *       itself is not freed and must be freed by the user.

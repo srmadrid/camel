@@ -194,12 +194,7 @@ void *cml_darray_get(u32 index, CML_DArray *out) {
         return NULL;
     }
 
-    void *element = malloc(out->stride);
-    if (element == NULL) {
-        return NULL;
-    }
-
-    memcpy(element, (u8*)out->data + index*out->stride, out->stride);
+    void *element = (u8*)out->data + index*out->stride;
 
     return element;
 }

@@ -90,7 +90,10 @@ typedef struct CML_Expression {
 
 
 /**
- * @brief Initializes a CML_ExpressionToken with a copy of the input string.
+ * @brief Initializes a CML_ExpressionToken with the input string.
+ *
+ * @note After using it as input, don't reuse the string, as it is now owned
+ *       by the token.
  *
  * @param input    Pointer to the input string.
  * @param charType Type of the character.
@@ -102,7 +105,7 @@ CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_Ex
 
 
 /**
- * @brief Frees the memory of a CML_ExpressionToken.
+ * @brief Frees the internal memory of a CML_ExpressionToken.
  *
  * @param token The CML_ExpressionToken to be freed.
  * 

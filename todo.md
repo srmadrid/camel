@@ -2,8 +2,21 @@
 
 ## Priority
 
-- [ ] Put the freeing function as a struct member in trees (already done for lists).
-- [ ] Look at maybe removing all `void *` and replacing with a sort of `CML_Data` type that has a `void *`, a stride and a `CML_Data_Type` enum that specifies what type the `void *` is.
+- [ ] Change any function that returns a copy of an object to just return a pointer to the object, like `cml_darray_get`. Also, for functions that take objects, intead of making a copy (copying the pointers inside, so not really deep copyig) just use the input object, like in `cml_exptkn_init`.`
+- [ ] Make a new library for visualization (graphs, charts, etc.). Like `svisual` but following the same naming style and conventions as Camel (animals, 3 letter prefixes, etc.).
+- [ ] Make the following data structures:
+  - [ ] ```CML_Stack``` - A stack.
+  - [ ] ```CML_Queue``` - A queue.
+  - [ ] ```CML_PriorityQueue``` - A priority queue.
+  - [ ] ```CML_HashMap``` - A hash map.
+  - [ ] ```CML_HashSet``` - A hash set.WW
+  - [ ] ```CML_BSTree``` - A binary search tree.
+  - [ ] ```CML_RBTree``` - A red black tree.
+  - [ ] ```CML_AVLTree``` - An AVL tree.
+  - [ ] ```CML_Trie``` - A trie.
+  - [ ] ```CML_Graph``` - A graph.
+  - [ ] Other more advanced or less common data structures, and others that require very complex algorithms for learning purposes.
+- [ ] Create the same data structures but holding `CML_Element`, which would have `void *data`, `stride`, so the data structures can hold elements of different types, sort of like python.
 - [ ] Maybe make the freeing functions take double pointers to also free the pointer itself (maybe pass as double pointer and take a bool to specify if the pointer should be freed or not).
 
 ## Documentation

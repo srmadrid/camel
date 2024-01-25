@@ -84,8 +84,8 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *eleme
 
 
 /**
- * @brief Frees the memory of a CML_DArray and its elements using the freeing
- *        function stored in the CML_DArray.
+ * @brief Frees the internal memory of a CML_DArray and its elements using the 
+ *        freeing function stored in the CML_DArray.
  * 
  * @param darray The CML_DArray to be freed.
  * 
@@ -160,7 +160,7 @@ void *cml_darray_remove(u32 index, CML_DArray *out);
  * @param index Index of the element to be retrieved.
  * @param out   The CML_DArray to be retrieved from.
  * 
- * @return A copy of the element at the input index.
+ * @return A pointer to the element at the input index.
  */
 void *cml_darray_get(u32 index, CML_DArray *out);
 

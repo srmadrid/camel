@@ -88,9 +88,9 @@ CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *eleme
 
 
 /**
- * @brief Frees the memory allocated by the input CML_BTNode and its subtrees 
- *        using the freeing function stored in the CML_BTree the node belongs
- *        to.
+ * @brief Frees the internal memory allocated by the input CML_BTNode and its 
+ *        subtrees using the freeing function stored in the CML_BTree the node 
+ *        belongs to.
  * 
  * @param node Pointer to the CML_BTNode to be freed.
  * 
@@ -100,7 +100,7 @@ void cml_btnode_free(CML_BTNode *node);
 
 
 /**
- * @brief Frees the memory allocated by the input CML_BTree.
+ * @brief Frees the internal memory allocated by the input CML_BTree.
  * 
  * @param btree  Pointer to the CML_BTree to be freed.
  * 
