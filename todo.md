@@ -2,6 +2,7 @@
 
 ## Priority
 
+- [ ] For the dstructs debug and eq functions, take eq and print functions for the elements.
 - [ ] Change any function that returns a copy of an object to just return a pointer to the object, like `cml_darray_get`. Also, for functions that take objects, intead of making a copy (copying the pointers inside, so not really deep copyig) just use the input object, like in `cml_exptkn_init`.`
 - [ ] Make a new library for visualization (graphs, charts, etc.). Like `svisual` but following the same naming style and conventions as Camel (animals, 3 letter prefixes, etc.).
 - [ ] Make the following data structures:

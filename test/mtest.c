@@ -92,6 +92,7 @@ int main() {
 
     b8 individualTesting = true;
     if (individualTesting) {
+        /*
         CML_DArray darray;
         CML_String expression;
         cml_string_init("867x + y^(sin(z)) / (291(xlog(y + z)))", &expression);
@@ -107,6 +108,7 @@ int main() {
 
         cml_string_destroy(&expression);
         cml_darray_destroy(&darray);
+        */
     }
 
     return 0;

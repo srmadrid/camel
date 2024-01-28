@@ -55,9 +55,9 @@ CML_DArray *cml_darray_new();
 
 
 /**
- * @brief Initializes a CML_DArray with the input size and stride.
+ * @brief Initializes a CML_DArray with the input capacity and stride.
  * 
- * @param capacity Capacity of the array.
+ * @param capacity Initial capacity of the array.
  * @param stride   Size of each element in the array in bytes.
  * @param freeFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
@@ -172,11 +172,6 @@ void *cml_darray_remove(u32 index, CML_DArray *out);
 
 /**
  * @brief Gets the element at the input index of a CML_DArray.
- * 
- * @note If the elements are structs holding pointers, the pointers will be
- *       copied, not the data they point to. The user is responsible for freeing
- *       the memory of the copied structure, but not the data pointed to by the
- *       pointers, that is freed by the freeing function of the CML_DArray.
  * 
  * @param index Index of the element to be retrieved.
  * @param out   The CML_DArray to be retrieved from.
