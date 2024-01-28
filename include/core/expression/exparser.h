@@ -90,6 +90,14 @@ typedef struct CML_Expression {
 
 
 /**
+ * @brief Creates a new CML_ExpressionToken on the heap.
+ * 
+ * @return Pointer to the new CML_ExpressionToken.
+ */
+CML_ExpressionToken *cml_exptkn_new();
+
+
+/**
  * @brief Initializes a CML_ExpressionToken with the input string.
  *
  * @note After using it as input, don't reuse the string, as it is now owned
@@ -111,7 +119,7 @@ CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_Ex
  * 
  * @return void.
  */
-void cml_exptkn_free(void *token);
+void cml_exptkn_destroy(void *token);
 
 
 /**

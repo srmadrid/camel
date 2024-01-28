@@ -48,6 +48,15 @@ typedef struct CML_BTree {
 } CML_BTree;
 
 
+
+/**
+ * @brief Creates a new CML_BTNode on the heap.
+ * 
+ * @return Pointer to the new CML_BTNode.
+ */
+CML_BTNode *cml_btnode_new();
+
+
 /**
  * @brief Initializes a CML_BTNode with the input element.
  * 
@@ -59,6 +68,15 @@ typedef struct CML_BTree {
  * @return Status code.
  */
 CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node);
+
+
+
+/**
+ * @brief Creates a new CML_BTree on the heap.
+ * 
+ * @return Pointer to the new CML_BTree.
+ */
+CML_BTree *cml_btree_new();
 
 
 /**
@@ -96,13 +114,37 @@ CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *eleme
  * 
  * @return void.
  */
-void cml_btnode_free(CML_BTNode *node);
+void cml_btnode_destroy(CML_BTNode *node);
 
 
 /**
  * @brief Frees the internal memory allocated by the input CML_BTree.
  * 
  * @param btree  Pointer to the CML_BTree to be freed.
+ * 
+ * @return void.
+ */
+void cml_btree_destroy(CML_BTree *btree);
+
+
+/**
+ * @brief Frees the pointer to the CML_BTNode.
+ * 
+ * @note Use only on CML_BTNodes on the heap and after destroying them.
+ *
+ * @param node Pointer to the CML_BTNode to be freed.
+ * 
+ * @return void.
+ */
+void cml_btnode_free(CML_BTNode *node);
+
+
+/**
+ * @brief Frees the pointer to the CML_BTree.
+ * 
+ * @note Use only on CML_BTres on the heap and after destroying them.
+ *
+ * @param btree Pointer to the CML_BTree to be freed.
  * 
  * @return void.
  */

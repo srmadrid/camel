@@ -45,6 +45,15 @@ typedef struct CML_DArray {
 } CML_DArray;
 
 
+
+/**
+ * @brief Creates a new CML_DArray on the heap.
+ * 
+ * @return Pointer to the new CML_DArray.
+ */
+CML_DArray *cml_darray_new();
+
+
 /**
  * @brief Initializes a CML_DArray with the input size and stride.
  * 
@@ -88,6 +97,18 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *eleme
  *        freeing function stored in the CML_DArray.
  * 
  * @param darray The CML_DArray to be freed.
+ * 
+ * @return void.
+ */
+void cml_darray_destroy(CML_DArray *darray);
+
+
+/**
+ * @brief Frees the pointer to the CML_DArray.
+ * 
+ * @note Use only on CML_DArrays on the heap and after destroying them.
+ *
+ * @param node Pointer to the CML_DArray to be freed.
  * 
  * @return void.
  */

@@ -1,16 +1,16 @@
 # Camel
 
-Camel is a C mathematics library, which aims to provide a simple and easy to use API for a wide array of mathematical operations. It is written in C99, and is cross-platform. It is currently in development, so it is not recommended to use it in production. It is licensed under the MIT license.
+Camel is a C general purpose and mathematics library, which aims to provide a simple and easy to use API for a wide array of facilities and mathematical operations. It is currently in development, so it is not recommended to use it in production. It is licensed under the MIT license.
 
 ## Table of Contents
 
-- [Notation](#notation)
+- [Naming Conventions](#naming-conventions)
 - [Features](#features)
 - [Installation](#installation)
 - [Compile](#compile)
 - [Usage](#usage)
 
-## Notation
+## Naming Conventions
 
 The functions and types in the library follow a specific naming convention.
 
@@ -33,13 +33,22 @@ For a complete list of functions, see [Functions](doc/functions.md).
 
 For a complete list of types, see [Types](doc/types.md).
 
+### Type Manipulation
+
+For almost all structures, there are several initialization and destruction functions that follow the same naming conventions:
+
+- `cml_<Type>_create(void)`: Creates a new object of `Type` on the heap, and returns a pointer to it. Internally, it uses a simple `malloc`. Notes: it doesn't initialize the object, the respective `init` function must still be called.
+- `cml_<Type>_init(Type *object, ...)`: Initializes the internal memory of the input object. The input object must be valid, i.e. it must point to an already created object, either on the stack or the heap.
+- `cml_<Type>_destroy(Type *object)`: Frees the internal memory of the object, and resets its values to 0.
+- `cml_<Type>_free(Type *object)`: Frees the pointer to the object. Use only if the object was allocated on the heap and after destroying it.
+
 ## Features
 
 The library is structured in modules, each module centered around a specific mathematical branch. The modules are:
 
 - [Core](doc/core/core.md)
-  - [Arbitrary Precision Arithmetic](doc/core/bignum.md)
   - [Data Structures](doc/core/dstructs.md)
+  - [Arbitrary Precision Arithmetic](doc/core/bignum.md)
   - [Expression Parsing](doc/core/expression.md)
 - [Algebra](doc/algebra/algebra.md)
   - [Linear Algebra](doc/algebra/linear/linear.md)

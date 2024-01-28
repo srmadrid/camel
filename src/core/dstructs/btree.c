@@ -15,6 +15,13 @@
 #include "../../../include/core/dstructs/btree.h"
 
 
+CML_BTNode *cml_btnode_new() {
+    CML_BTNode *node = (CML_BTNode*)malloc(sizeof(CML_BTNode));
+
+    return node;
+}
+
+
 CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node) {
     if (node == NULL) {
         return CML_ERR_NULL_PTR;
@@ -30,6 +37,13 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNod
     node->tree = tree;
 
     return CML_SUCCESS;
+}
+
+
+CML_BTree *cml_btree_new() {
+    CML_BTree *tree = (CML_BTree*)malloc(sizeof(CML_BTree));
+
+    return tree;
 }
 
 
@@ -55,15 +69,15 @@ CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *eleme
 }
 
 
-void cml_btnode_free(CML_BTNode *node) {
+void cml_btnode_destroy(CML_BTNode *node) {
     if (node != NULL) {
         if (node->left != NULL) {
-            cml_btnode_free(node->left);
+            cml_btnode_destroy(node->left);
             free(node->left);
         }
 
         if (node->right != NULL) {
-            cml_btnode_free(node->right);
+            cml_btnode_destroy(node->right);
             free(node->right);
         }
 
@@ -79,12 +93,26 @@ void cml_btnode_free(CML_BTNode *node) {
 }
 
 
-void cml_btree_free(CML_BTree *btree) {
+void cml_btree_destroy(CML_BTree *btree) {
     if (btree != NULL) {
-        cml_btnode_free(btree->root);
+        cml_btnode_destroy(btree->root);
         free(btree->root);
         btree->root = NULL;
         btree->stride = 0;
+    }
+}
+
+
+void cml_btnode_free(CML_BTNode *node) {
+    if (node) {
+        free(node);
+    }
+}
+
+
+void cml_btree_free(CML_BTree *btree) {
+    if (btree) {
+        free(btree);
     }
 }
 

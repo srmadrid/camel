@@ -16,6 +16,13 @@
 #include "../../../include/core/dstructs/string.h"
 
 
+CML_String *cml_string_new() {
+    CML_String *string = (CML_String*)malloc(sizeof(CML_String));
+
+    return string;
+}
+
+
 CML_Status cml_string_init(const char *input, CML_String *string) {
     if (input == NULL || string == NULL) {
         return CML_ERR_NULL_PTR;
@@ -59,7 +66,7 @@ CML_Status cml_string_alloc(CML_String *string) {
 }
 
 
-void cml_string_free(void *string) {
+void cml_string_destroy(void *string) {
     CML_String *str = (CML_String*)string;
     if (str != NULL) {
         if (str->data != NULL) {
@@ -69,6 +76,13 @@ void cml_string_free(void *string) {
         str->length = 0;
         str->capacity = 0;
         str->refCount = 0;
+    }
+}
+
+
+void cml_string_free(CML_String *string) {
+    if (string) {
+        free(string);
     }
 }
 
@@ -92,8 +106,8 @@ void cml_string_checkref(CML_String **string) {
     }
 
     if ((*string)->refCount == 1) {
+        cml_string_destroy(*string);
         cml_string_free(*string);
-        free(*string);
         *string = NULL;
     } else if ((*string)->refCount > 1) {
         (*string)->refCount--;

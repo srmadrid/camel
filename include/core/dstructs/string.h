@@ -21,6 +21,10 @@
 #include "../err.h"
 
 
+/** @brief Default resize factor of the string. */
+#define CML_STRING_RESIZE_FACTOR 2
+
+
 /**
  * @brief Represents a string.
  * 
@@ -38,6 +42,15 @@ typedef struct CML_String {
     /** @brief Remaining allowed references to the string. */
     i32 refCount;
 } CML_String;
+
+
+
+/**
+ * @brief Creates a new CML_String on the heap.
+ * 
+ * @return Pointer to the new CML_String.
+ */
+CML_String *cml_string_new();
 
 
 /**
@@ -79,7 +92,19 @@ CML_Status cml_string_alloc(CML_String *string);
  * 
  * @return void.
  */
-void cml_string_free(void *string);
+void cml_string_destroy(void *string);
+
+
+/**
+ * @brief Frees the pointer to the CML_String.
+ * 
+ * @note Use only on CML_Strings on the heap and after destroying them.
+ *
+ * @param node Pointer to the CML_String to be freed.
+ * 
+ * @return void.
+ */
+void cml_string_free(CML_String *string);
 
 
 /**

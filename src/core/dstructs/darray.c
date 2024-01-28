@@ -15,6 +15,13 @@
 #include "../../../include/core/dstructs/darray.h"
 
 
+CML_DArray *cml_darray_new() {
+    CML_DArray *darray = (CML_DArray*)malloc(sizeof(CML_DArray));
+
+    return darray;
+}
+
+
 CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *element), CML_DArray *darray) {
     if (darray == NULL) {
         return CML_ERR_NULL_PTR;
@@ -38,7 +45,7 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *eleme
 }
 
 
-void cml_darray_free(CML_DArray *darray) {
+void cml_darray_destroy(CML_DArray *darray) {
     if (darray != NULL) {
         if (darray->freeFn != NULL) {
             for (u32 i = 0; i < darray->length; ++i) {
@@ -50,6 +57,13 @@ void cml_darray_free(CML_DArray *darray) {
         darray->length = 0;
         darray->capacity = 0;
         darray->stride = 0;
+    }
+}
+
+
+void cml_darray_free(CML_DArray *darray) {
+    if (darray) {
+        free(darray);
     }
 }
 
