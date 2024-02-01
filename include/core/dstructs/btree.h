@@ -18,6 +18,7 @@
 
 #include "../macros.h"
 #include "../err.h"
+#include "../memory/allocator.h"
 
 
 /**
@@ -43,18 +44,13 @@ typedef struct CML_BTree {
     CML_BTNode *root;
     /** @brief Size of each element in the tree in bytes. */
     u32 stride;
-    /** @brief Freeing function for the elements of the tree. */
-    void (*freeFn)(void *element);
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
+    /** @brief Destroying function for the elements of the tree. */
+    void (*destroyFn)(void *element);
 } CML_BTree;
 
-
-
-/**
- * @brief Creates a new CML_BTNode on the heap.
- * 
- * @return Pointer to the new CML_BTNode.
- */
-CML_BTNode *cml_btnode_new();
 
 
 /**
@@ -70,26 +66,18 @@ CML_BTNode *cml_btnode_new();
 CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node);
 
 
-
-/**
- * @brief Creates a new CML_BTree on the heap.
- * 
- * @return Pointer to the new CML_BTree.
- */
-CML_BTree *cml_btree_new();
-
-
 /**
  * @brief Initializes a CML_BTree with the input stride.
  * 
  * @param element Pointer to the element to be stored in the root node.
  * @param stride  Size of each element in the tree in bytes.
- * @param freeFn  Freeing function for the elements of the tree.
+ * @param allocator Allocator for the tree.
+ * @param destroyFn  Freeing function for the elements of the tree.
  * @param btree   Pointer to the CML_BTree to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *element), CML_BTree *btree);
+CML_Status _cml_btree_init(void *element, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_BTree *btree);
 
 
 /**
@@ -97,12 +85,12 @@ CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *eleme
  * 
  * @param element Pointer to the element to be stored in the root node.
  * @param type    Type of the tree.
- * @param freeFn  Freeing function for the elements of the tree.
+ * @param destroyFn  Freeing function for the elements of the tree.
  * @param btree   Pointer to the CML_BTree to be initialized.
  * 
  * @return Status code.
  */
-#define cml_btree_init(element, type, freeFn, btree) _cml_btree_init(element, sizeof(type), freeFn, btree)
+#define cml_btree_init(element, type, allocator, destroyFn, btree) _cml_btree_init(element, sizeof(type), allocator, destroyFn, btree)
 
 
 /**
@@ -125,30 +113,6 @@ void cml_btnode_destroy(CML_BTNode *node);
  * @return void.
  */
 void cml_btree_destroy(CML_BTree *btree);
-
-
-/**
- * @brief Frees the pointer to the CML_BTNode.
- * 
- * @note Use only on CML_BTNodes on the heap and after destroying them.
- *
- * @param node Pointer to the CML_BTNode to be freed.
- * 
- * @return void.
- */
-void cml_btnode_free(CML_BTNode *node);
-
-
-/**
- * @brief Frees the pointer to the CML_BTree.
- * 
- * @note Use only on CML_BTres on the heap and after destroying them.
- *
- * @param btree Pointer to the CML_BTree to be freed.
- * 
- * @return void.
- */
-void cml_btree_free(CML_BTree *btree);
 
 
 /**

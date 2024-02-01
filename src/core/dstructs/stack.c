@@ -15,15 +15,8 @@
 #include "../../../include/core/dstructs/stack.h"
 
 
-CML_Stack *cml_stack_new() {
-    CML_Stack *stack = (CML_Stack*)malloc(sizeof(CML_Stack));
-
-    return stack;
-}
-
-
-CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *element), CML_Stack *stack) {
-    if (stack == NULL) {
+CML_Status _cml_stack_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_Stack *stack) {
+    if (stack == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
@@ -31,13 +24,14 @@ CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *elemen
         return CML_ERR_INVALID_CAPACITY;
     }
 
-    stack->data = malloc(capacity*stride);
+    stack->data = allocator->malloc(capacity*stride, allocator->context);
     if (stack->data == NULL) {
         return CML_ERR_MALLOC;
     }
 
-    stack->freeFn = freeFn;
+    stack->destroyFn = destroyFn;
     stack->length = 0;
+    stack->allocator = allocator;
     stack->capacity = capacity;
     stack->stride = stride;
 
@@ -47,23 +41,17 @@ CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *elemen
 
 void cml_stack_destroy(CML_Stack *stack) {
     if (stack != NULL) {
-        if (stack->freeFn != NULL) {
+        if (stack->destroyFn != NULL) {
             for (u32 i = 0; i < stack->length; ++i) {
-                stack->freeFn((u8*)stack->data + i*stack->stride);
+                stack->destroyFn((u8*)stack->data + i*stack->stride);
             }
         }
-        free(stack->data);
+        stack->allocator->free(stack->data, stack->allocator->context);
         stack->data = NULL;
         stack->length = 0;
+        stack->allocator = NULL;
         stack->capacity = 0;
         stack->stride = 0;
-    }
-}
-
-
-void cml_stack_free(CML_Stack *stack) {
-    if (stack) {
-        free(stack);
     }
 }
 
@@ -77,7 +65,7 @@ CML_Status cml_stack_resize(u32 capacity, CML_Stack *out) {
         return CML_ERR_INVALID_CAPACITY;
     }
 
-    void *tmp = realloc(out->data, capacity*out->stride);
+    void *tmp = out->allocator->realloc(out->data, capacity*out->stride, out->allocator->context);
     if (tmp== NULL) {
         return CML_ERR_REALLOC;
     }
@@ -95,7 +83,7 @@ CML_Status cml_stack_push(void *element, CML_Stack *out) {
     }
 
     if (out->length == out->capacity) {
-        void *tmp = realloc(out->data, out->capacity*CML_STACK_RESIZE_FACTOR*out->stride);
+        void *tmp = out->allocator->realloc(out->data, out->capacity*CML_STACK_RESIZE_FACTOR*out->stride, out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -119,7 +107,7 @@ void *cml_stack_pop(CML_Stack *out) {
         return NULL;
     }
 
-    void *element = malloc(out->stride);
+    void *element = out->allocator->malloc(out->stride, out->allocator->context);
     if (element == NULL) {
         return NULL;
     }
@@ -128,9 +116,9 @@ void *cml_stack_pop(CML_Stack *out) {
     out->length--;
 
     if (out->length < out->capacity/(CML_STACK_RESIZE_FACTOR*CML_STACK_RESIZE_FACTOR)) {
-        void *tmp = realloc(out->data, out->capacity/(CML_STACK_RESIZE_FACTOR*out->stride));
+        void *tmp = out->allocator->realloc(out->data, out->capacity/(CML_STACK_RESIZE_FACTOR*out->stride), out->allocator->context);
         if (tmp == NULL) {
-            free(element);
+            out->allocator->free(element, out->allocator->context);
             return NULL;
         }
         out->data = tmp;

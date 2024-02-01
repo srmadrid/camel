@@ -15,19 +15,12 @@
 #include "../../../include/core/dstructs/btree.h"
 
 
-CML_BTNode *cml_btnode_new() {
-    CML_BTNode *node = (CML_BTNode*)malloc(sizeof(CML_BTNode));
-
-    return node;
-}
-
-
 CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNode *node) {
     if (node == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    node->data = malloc(stride);
+    node->data = tree->allocator->malloc(stride, tree->allocator->context);
     if (node->data == NULL) {
         return CML_ERR_MALLOC;
     }
@@ -40,22 +33,15 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNod
 }
 
 
-CML_BTree *cml_btree_new() {
-    CML_BTree *tree = (CML_BTree*)malloc(sizeof(CML_BTree));
-
-    return tree;
-}
-
-
-CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *element), CML_BTree *btree) {
-    if (btree == NULL) {
+CML_Status _cml_btree_init(void *element, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_BTree *btree) {
+    if (btree == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
     if (element == NULL) {
         btree->root = NULL;
     } else {
-        CML_BTNode *newNode = malloc(sizeof(CML_BTNode));
+        CML_BTNode *newNode = allocator->malloc(sizeof(CML_BTNode), allocator->context);
         if (newNode == NULL) {
             return CML_ERR_MALLOC;
         }
@@ -63,7 +49,8 @@ CML_Status _cml_btree_init(void *element, u32 stride, void (*freeFn)(void *eleme
         cml_btnode_init(element, stride, btree, btree->root);
     }
     btree->stride = stride;
-    btree->freeFn = freeFn;
+    btree->allocator = allocator;
+    btree->destroyFn = destroyFn;
 
     return CML_SUCCESS;
 }
@@ -73,18 +60,18 @@ void cml_btnode_destroy(CML_BTNode *node) {
     if (node != NULL) {
         if (node->left != NULL) {
             cml_btnode_destroy(node->left);
-            free(node->left);
+            node->tree->allocator->free(node->left, node->tree->allocator->context);
         }
 
         if (node->right != NULL) {
             cml_btnode_destroy(node->right);
-            free(node->right);
+            node->tree->allocator->free(node->right, node->tree->allocator->context);
         }
 
-        if (node->tree->freeFn != NULL) {
-            node->tree->freeFn(node->data);
+        if (node->tree->destroyFn != NULL) {
+            node->tree->destroyFn(node->data);
         }
-        free(node->data);
+        node->tree->allocator->free(node->data, node->tree->allocator->context);
         node->data = NULL;
         node->left = NULL;
         node->right = NULL;
@@ -96,23 +83,10 @@ void cml_btnode_destroy(CML_BTNode *node) {
 void cml_btree_destroy(CML_BTree *btree) {
     if (btree != NULL) {
         cml_btnode_destroy(btree->root);
-        free(btree->root);
+        btree->allocator->free(btree->root, btree->allocator->context);
         btree->root = NULL;
+        btree->allocator = NULL;
         btree->stride = 0;
-    }
-}
-
-
-void cml_btnode_free(CML_BTNode *node) {
-    if (node) {
-        free(node);
-    }
-}
-
-
-void cml_btree_free(CML_BTree *btree) {
-    if (btree) {
-        free(btree);
     }
 }
 
@@ -122,7 +96,7 @@ CML_Status cml_btnode_insert(void *element, b8 left, CML_BTNode *out) {
         return CML_ERR_NULL_PTR;
     }
 
-    CML_BTNode *newNode = malloc(sizeof(CML_BTNode));
+    CML_BTNode *newNode = out->tree->allocator->malloc(sizeof(CML_BTNode), out->tree->allocator->context);
     if (newNode == NULL) {
         return CML_ERR_MALLOC;
     }

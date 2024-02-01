@@ -16,11 +16,12 @@
 
 
 CML_TestResult test_darray_resize() {
+    CML_Allocator a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(2, i32, NULL, &darray);
+    cml_darray_init(2, i32, &a, NULL, &darray);
     cml_darray_resize(10, &darray);
     CML_DArray expected;
-    cml_darray_init(4, i32, NULL, &expected);
+    cml_darray_init(4, i32, &a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
         cml_darray_push(&i, &expected);
@@ -30,17 +31,18 @@ CML_TestResult test_darray_resize() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_push() {
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -53,17 +55,18 @@ CML_TestResult test_darray_push() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_insert() {
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_insert(&i, 0, &darray);
     }
@@ -76,17 +79,18 @@ CML_TestResult test_darray_insert() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_pop() {
+    CML_Allocator _a;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_insert(&i, 0, &darray);
     }
@@ -100,17 +104,18 @@ CML_TestResult test_darray_pop() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_remove() {
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -124,17 +129,18 @@ CML_TestResult test_darray_remove() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_get() {
+    CML_Allocator _a;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -148,17 +154,18 @@ CML_TestResult test_darray_get() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 
 
 CML_TestResult test_darray_set() {
+    CML_Allocator _a;
     CML_DArray darray;
-    cml_darray_init(5, i32, NULL, &darray);
+    cml_darray_init(5, i32, &_a, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, NULL, &expected);
+    cml_darray_init(5, i32, &_a, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -173,8 +180,8 @@ CML_TestResult test_darray_set() {
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    cml_darray_free(&darray);
-    cml_darray_free(&expected);
+    cml_darray_destroy(&darray);
+    cml_darray_destroy(&expected);
     return result;
 }
 

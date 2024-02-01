@@ -8,8 +8,13 @@ This module offers the most common data structures used in computer science, as 
 
 ## Table of Contents
 
+- [Design Choices](#design-choices)
 - [String](#string)
 - [Stack](#stack)
+
+## Design Choices
+
+When adding an element, or creating any data structure that holds another data structure, the data structure creates a shallow copy of the element top be added, i.e., the structure takes ownership of the element and is now responsible of freeing its internal data; if it was allocated on the heap, you will still need to free the pointer, but if it was allocated on the stack, after inserting the element you should do nothing.
 
 ## String
 

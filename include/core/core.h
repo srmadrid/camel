@@ -21,5 +21,6 @@
 #include "expression/expression.h"
 #include "dstructs/dstructs.h"
 #include "bignum/bignum.h"
+#include "memory/memory.h"
 
 #endif /* CAMEL_CORE */

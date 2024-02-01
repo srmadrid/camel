@@ -15,13 +15,6 @@
 #include "../../../include/core/expression/exparser.h"
 
 
-CML_ExpressionToken *cml_exptkn_new() {
-    CML_ExpressionToken *token = (CML_ExpressionToken*)malloc(sizeof(CML_ExpressionToken));
-
-    return token;
-}
-
-
 CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_ExpressionToken *expToken) {
     if (charType <= -1 || charType > 11) {
         return CML_ERR_INVALID_CHAR;
@@ -32,14 +25,17 @@ CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_Ex
     }
 
     expToken->charType = charType;
-    //expToken->characters = (CML_String*)malloc(sizeof(CML_String));
-    cml_string_alloc(&expToken->characters);
-    expToken->characters.capacity = characters->capacity;
-    expToken->characters.data = characters->data;
-    expToken->characters.length = characters->length;
+    memcpy(&expToken->characters, characters, sizeof(CML_String));
     expToken->characters.refCount = -1;
 
-    cml_string_checkref(&characters);
+    // No need to call checkref: the token takes ownership of the string, so
+    // it does not matter if it is temporary, no internal memory should be 
+    // freed. But the pointer of the temporary string must.
+    // cml_string_checkref(&characters);
+    if (characters->refCount == 1) {
+        characters->allocator->free(characters, characters->allocator->context);
+        characters = NULL;
+    }
 
     return CML_SUCCESS;
 }
@@ -127,8 +123,8 @@ CML_CharType cml_read_char(char input) {
 }
 
 
-CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
-    cml_darray_init_default(CML_ExpressionToken, cml_exptkn_destroy, out);
+CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, CML_DArray *out) {
+    cml_darray_init_default(CML_ExpressionToken, allocator, cml_exptkn_destroy, out);
     u32 letterAuxLen = 0; // For charType == 5, to be removed when a something better is implemented
     CML_CharType charType = CML_CHAR_UNDEFINED;
     CML_CharType prevCharType = CML_CHAR_UNDEFINED;
@@ -157,7 +153,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                  prevCharType != CML_CHAR_FUNCTION_OP           &&
                  prevCharType != CML_CHAR_UNDEFINED) {
                 CML_String aux;
-                cml_string_init("*", &aux);
+                cml_string_init("*", allocator, &aux);
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, CML_CHAR_MEDIUM_PRECEDENCE_OP, &token);
                 cml_darray_push(&token, out);
@@ -166,7 +162,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
             if (charType == CML_CHAR_NUMBER) {
                 letterAuxLen = 1;
                 CML_String aux;
-                cml_string_alloc(&aux);
+                cml_string_init0(allocator, &aux);
                 while (i + letterAuxLen < expression->length && cml_read_char(expression->data[i + letterAuxLen]) == 1) {
                     letterAuxLen++;
                 }
@@ -181,7 +177,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                        charType == CML_CHAR_OPENING_PARENTHESIS  || 
                        charType == CML_CHAR_CLOSING_PARENTHESIS) {
                 CML_String aux;
-                cml_string_alloc(&aux);
+                cml_string_init0(allocator, &aux);
                 cml_string_ncopy_char(&expression->data[i], 1, &aux);
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, charType, &token);
@@ -227,7 +223,7 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
                 // To be implemented (log, ln, sin, cos, etc. (6) and variables (7) and constants (8))
                 // Right now placeholder code
                 CML_String aux;
-                cml_string_alloc(&aux);
+                cml_string_init0(allocator, &aux);
                 cml_string_ncopy_char(&expression->data[i], letterAuxLen, &aux);
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, charType, &token);
@@ -246,3 +242,14 @@ CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out) {
 
     return CML_SUCCESS;
 }
+
+
+CML_Status cml_expression_parse(CML_DArray *expression, CML_Allocator *allocator, CML_BTree *out) {
+    CML_Stack operatorStack;
+    cml_stack_init_default(CML_ExpressionToken, allocator, cml_exptkn_destroy, &operatorStack);
+
+    out->stride = 1;
+    expression->stride = 1;
+    return CML_SUCCESS;
+}
+

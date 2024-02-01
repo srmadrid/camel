@@ -20,6 +20,7 @@
 
 #include "../macros.h"
 #include "../err.h"
+#include "../memory/allocator.h"
 
 
 /** @brief Default capacity of a stack. */
@@ -42,17 +43,13 @@ typedef struct CML_Stack {
     u32 capacity;
     /** @brief Size of each element in the stack in bytes. */
     u32 stride;
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
     /** @brief Freeing function for the elements of the stack. */
-    void (*freeFn)(void *element);
+    void (*destroyFn)(void *element);
 } CML_Stack;
 
-
-/**
- * @brief Creates a new CML_Stack on the heap.
- * 
- * @return Pointer to the new CML_Stack.
- */
-CML_Stack *cml_stack_new();
 
 
 /**
@@ -60,12 +57,13 @@ CML_Stack *cml_stack_new();
  * 
  * @param capacity Initial capacity of the stack.
  * @param stride   Size of each element in the stack in bytes.
- * @param freeFn   Freeing function for the elements of the stack.
+ * @param allocator Allocator for the stack.
+ * @param destroyFn   Freeing function for the elements of the stack.
  * @param darray   Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *element), CML_Stack *stack);
+CML_Status _cml_stack_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_Stack *stack);
 
 
 /**
@@ -73,24 +71,26 @@ CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *elemen
  * 
  * @param capacity Initial capacity of the stack.
  * @param type     Type of the stack.
- * @param freeFn   Freeing function for the elements of the stack.
+ * @param allocator Allocator for the stack.
+ * @param destroyFn   Freeing function for the elements of the stack.
  * @param stack    Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-#define cml_stack_init(capacity, type, freeFn, stack) _cml_stack_init(capacity, sizeof(type), freeFn, stack)
+#define cml_stack_init(capacity, type, allocator, destroyFn, stack) _cml_stack_init(capacity, sizeof(type), allocator, destroyFn, stack)
 
 
 /**
  * @brief Initializes a CML_Stack with the input type and default capacity.
  * 
  * @param type   Type of the array.
- * @param freeFn Freeing function for the elements of the array.
+ * @param allocator Allocator for the stack.
+ * @param destroyFn Freeing function for the elements of the array.
  * @param stack  Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-#define cml_stack_init_default(type, freeFn, stack) _cml_stack_init(CML_INITIAL_stack_CAPACITY, sizeof(type), freeFn, stack)
+#define cml_stack_init_default(type, allocator, destroyFn, stack) _cml_stack_init(CML_INITIAL_STACK_CAPACITY, sizeof(type), allocator, destroyFn, stack)
 
 
 /**
@@ -102,18 +102,6 @@ CML_Status _cml_stack_init(u32 capacity, u32 stride, void (*freeFn)(void *elemen
  * @return void.
  */
 void cml_stack_destroy(CML_Stack *stack);
-
-
-/**
- * @brief Frees the pointer to the CML_Stack.
- * 
- * @note Use only on CML_Stacks on the heap and after destroying them.
- *
- * @param node Pointer to the CML_Stack to be freed.
- * 
- * @return void.
- */
-void cml_stack_free(CML_Stack *stack);
 
 
 /**

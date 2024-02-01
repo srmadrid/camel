@@ -68,6 +68,21 @@ To compile the project, run ```make``` in the root directory of the project. Thi
 
 ## Usage
 
+Before doing anything, if you are going to use any module that requires allocators (allmost all except a few, like fixed linear algebra), you must create one, either the default one (if you have no business using custom allocators) or your own custom one. For people who want to use a default allocator, they can use the default macro:
+```{c}
+#include <camel/camel.h>
+
+int main() {
+    CML_Allocator _a_ = CML_ALLOCATOR_DEFAULT;
+    // You can now use this allocator for anything, it uses typical C functions
+    // like malloc and free.
+
+    CML_Darray d;
+    // Use the default allocator.
+    cml_darray_init(10, int, _a_, NULL, &d);
+}
+```
+
 ### Matrices
 
 Vectors are represented as row vectors inside matrices.

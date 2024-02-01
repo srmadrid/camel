@@ -13,7 +13,7 @@
  */
 
 
-#include "../../include/camel.h"
+#include "../include/camel.h"
 
 
 int main() {
@@ -25,7 +25,7 @@ int main() {
     // Use the lexer to extract the tokens from the expression. The CML_DArray
     // can be initialized or not, if it is not initialized, it will be
     // initialized within the lexer.
-    cml_lex_expression(&expression, &darray);
+    cml_expression_lex(&expression, &darray);
 
     // To print the expression, there are two options, extract the data from the
     // CML_DArray using cml_darray_get, or directly accessing the data pointer

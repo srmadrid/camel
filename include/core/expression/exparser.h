@@ -19,8 +19,10 @@
 #include <math.h>
 
 #include "../macros.h"
+#include "../memory/allocator.h"
 #include "../../../include/core/dstructs/string.h"
 #include "../../../include/core/dstructs/darray.h"
+#include "../../../include/core/dstructs/stack.h"
 #include "../../../include/core/dstructs/btree.h"
 
 
@@ -70,6 +72,7 @@ typedef struct CML_ExpressionToken{
     CML_CharType charType;
     /** @brief String that holds the characters of the token. */
     CML_String characters;
+    // No allocator because there is no internal dynamic memory.
 } CML_ExpressionToken;
 
 
@@ -85,16 +88,11 @@ typedef struct CML_Expression {
     CML_DArray tokens;
     /** @brief String that holds the original expression in characters. */
     CML_String expression;
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
 } CML_Expression;
 
-
-
-/**
- * @brief Creates a new CML_ExpressionToken on the heap.
- * 
- * @return Pointer to the new CML_ExpressionToken.
- */
-CML_ExpressionToken *cml_exptkn_new();
 
 
 /**
@@ -139,22 +137,26 @@ CML_CharType cml_read_char(char input);
  * @note The function initializes the out array.
  *
  * @param expression Input expression.
+ * @param allocator  Allocator for the internal structures.
  * @param out        Output CML_ExpressionToken dynamic array.
  * 
  * @return Status code.
  */
-CML_Status cml_lex_expression(CML_String *expression, CML_DArray *out);
+CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, CML_DArray *out);
 
 
 /**
- * @brief Converts to infix the input postfix expression. 
+ * @brief Parses the input tokenized expression (as it comes out from 
+ *        cml_expression_lex) and inserts it into the out CML_BTree.
  *
- * @param expression Input expression.
- * @param size       Size of the output expression array.
- * 
- * @return The tokenized expression (**: pointer to pointer array).
+ * @note The function initializes the out binary tree.
+ *
+ * @param expression Input tokenized expression.
+ * @param out        Output CML_ExpressionToken binary tree.
+ *
+ * @return Status code.
  */
-// To be implemented
+CML_Status cml_expression_parse(CML_DArray *expression, CML_Allocator *allocator, CML_BTree *out);
 
 
 #endif /* CAMEL_EXPARSER */

@@ -92,11 +92,12 @@ int main() {
 
     b8 individualTesting = true;
     if (individualTesting) {
-        /*
+        CML_Allocator allocator = CML_ALLOCATOR_DEFAULT;
+
         CML_DArray darray;
         CML_String expression;
-        cml_string_init("867x + y^(sin(z)) / (291(xlog(y + z)))", &expression);
-        cml_lex_expression(&expression, &darray);
+        cml_string_init("867x + y^(sin(z)) / (291(xlog(y + z)))", &allocator, &expression);
+        cml_expression_lex(&expression, &allocator, &darray);
 
         printf("Expression: %s\n", expression.data);
         for (u32 i = 0; i < darray.length; ++i) {
@@ -108,7 +109,6 @@ int main() {
 
         cml_string_destroy(&expression);
         cml_darray_destroy(&darray);
-        */
     }
 
     return 0;

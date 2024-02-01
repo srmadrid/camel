@@ -6,6 +6,7 @@ lines.sh
 debug_segfault.sh
 
 ideas.md
+references.md
 handedness.xcf
 
 # SIMD, untracked for now until I decide how to implement it

@@ -4,16 +4,16 @@ ifeq ($(OS),Linux)
     TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fPIC -msse3 # -g #(to debug if something like a segfault occurs)
-    LDFLAGS = -shared -lm
-    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors # -g #(to debug if something like a segfault occurs)
+    LDFLAGS = -shared -lm -fsanitize=address,undefined
+    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined
 else
     TARGET = bin/windows/camel.dll
     TEST_TARGET = test/bin/windows/test.exe
     EXT = dll
-    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude
-    LDFLAGS = -shared -lm
-    LIB_LINK = -Lbin/win -lcamel -lm
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fsanitize=address,undefined -pedantic-errors
+    LDFLAGS = -shared -lm -fsanitize=address,undefined 
+    LIB_LINK = -Lbin/win -lcamel -lm -fsanitize=address,undefined
 endif
 
 # Compiler settings

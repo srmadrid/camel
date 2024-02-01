@@ -16,15 +16,8 @@
 #include "../../../include/core/dstructs/string.h"
 
 
-CML_String *cml_string_new() {
-    CML_String *string = (CML_String*)malloc(sizeof(CML_String));
-
-    return string;
-}
-
-
-CML_Status cml_string_init(const char *input, CML_String *string) {
-    if (input == NULL || string == NULL) {
+CML_Status cml_string_init(const char *input, CML_Allocator *allocator, CML_String *string) {
+    if (input == NULL || string == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
@@ -34,7 +27,7 @@ CML_Status cml_string_init(const char *input, CML_String *string) {
     }
 
     string->length = length;
-    string->data = (char*)malloc(sizeof(char)*(length+1));
+    string->data = (char*)allocator->malloc(sizeof(char)*(length+1), allocator->context);
     if (string->data == NULL) {
         return CML_ERR_MALLOC;
     }
@@ -47,13 +40,14 @@ CML_Status cml_string_init(const char *input, CML_String *string) {
 
     // Infinite references
     string->refCount = -1;
+    string->allocator = allocator;
 
     return CML_SUCCESS;
 }
 
 
-CML_Status cml_string_alloc(CML_String *string) {
-    if (string == NULL) {
+CML_Status cml_string_init0(CML_Allocator *allocator, CML_String *string) {
+    if (string == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
@@ -61,6 +55,7 @@ CML_Status cml_string_alloc(CML_String *string) {
     string->length = 0;
     string->capacity = 0;
     string->refCount = -1;
+    string->allocator = allocator;
 
     return CML_SUCCESS;
 }
@@ -70,30 +65,27 @@ void cml_string_destroy(void *string) {
     CML_String *str = (CML_String*)string;
     if (str != NULL) {
         if (str->data != NULL) {
-            free(str->data);
+            str->allocator->free(str->data, str->allocator->context);
         }
         str->data = NULL;
         str->length = 0;
         str->capacity = 0;
         str->refCount = 0;
+        str->allocator = NULL;
     }
 }
 
 
-void cml_string_free(CML_String *string) {
-    if (string) {
-        free(string);
+CML_String *cml_string_temp(const char *input, CML_Allocator *allocator) {
+    if (allocator == NULL) {
+        return NULL;
     }
-}
-
-
-CML_String *cml_string_temp(const char *input) {
-    CML_String *string = (CML_String*)malloc(sizeof(CML_String));
+    CML_String *string = (CML_String*)allocator->malloc(sizeof(CML_String), allocator->context);
     if (string == NULL) {
         return NULL;
     }
 
-    cml_string_init(input, string);
+    cml_string_init(input, allocator, string);
     string->refCount = 1;
 
     return string;
@@ -106,8 +98,9 @@ void cml_string_checkref(CML_String **string) {
     }
 
     if ((*string)->refCount == 1) {
+        CML_Allocator *a = (*string)->allocator;
         cml_string_destroy(*string);
-        cml_string_free(*string);
+        a->free(*string, a->context);
         *string = NULL;
     } else if ((*string)->refCount > 1) {
         (*string)->refCount--;
@@ -121,7 +114,7 @@ CML_Status cml_string_copy(CML_String *input, CML_String *out) {
     }
 
     if (out->data == NULL) {
-        out->data = (char*)malloc(sizeof(char)*(input->capacity));
+        out->data = (char*)out->allocator->malloc(sizeof(char)*(input->capacity), out->allocator->context);
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
@@ -132,7 +125,7 @@ CML_Status cml_string_copy(CML_String *input, CML_String *out) {
     }
 
     if (input->capacity != out->capacity) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*input->capacity);
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*input->capacity, out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -164,7 +157,7 @@ CML_Status cml_string_ncopy(CML_String *input, u32 n, CML_String *out) {
     }
 
     if (out->data == NULL) {
-        out->data = (char*)malloc(sizeof(char)*(n+1));
+        out->data = (char*)out->allocator->malloc(sizeof(char)*(n+1), out->allocator->context);
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
@@ -174,7 +167,7 @@ CML_Status cml_string_ncopy(CML_String *input, u32 n, CML_String *out) {
     }
 
     if (out->capacity < n + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(n + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(n + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -207,7 +200,7 @@ CML_Status cml_string_copy_char(const char *input, CML_String *out) {
     }
 
     if (out->data == NULL) {
-        out->data = (char*)malloc(sizeof(char)*(length+1));
+        out->data = (char*)out->allocator->malloc(sizeof(char)*(length+1), out->allocator->context);
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
@@ -217,7 +210,7 @@ CML_Status cml_string_copy_char(const char *input, CML_String *out) {
     }
 
     if (out->capacity < length + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(length + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -251,7 +244,7 @@ CML_Status cml_string_ncopy_char(const char *input, u32 n, CML_String *out) {
     }
 
     if (out->data == NULL) {
-        out->data = (char*)malloc(sizeof(char)*(n+1));
+        out->data = (char*)out->allocator->malloc(sizeof(char)*(n+1), out->allocator->context);
         if (out->data == NULL) {
             out->capacity = 0;
             out->length = 0;
@@ -261,7 +254,7 @@ CML_Status cml_string_ncopy_char(const char *input, u32 n, CML_String *out) {
     }
 
     if (out->capacity < n + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(n + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(n + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -288,7 +281,7 @@ CML_Status cml_string_cat(CML_String *input, CML_String *out) {
     u32 length = input->length + out->length;
 
     if (out->capacity < length + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(length + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -322,7 +315,7 @@ CML_Status cml_string_ncat(CML_String *input, u32 n, CML_String *out) {
     u32 length = n + out->length;
 
     if (out->capacity < length + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(length + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -357,7 +350,7 @@ CML_Status cml_string_cat_char(const char *input, CML_String *out) {
     length += out->length;
 
     if (out->capacity < length + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(length + 1), out->allocator->context);
         if (tmp == NULL) {
             return CML_ERR_REALLOC;
         }
@@ -393,7 +386,7 @@ CML_Status cml_string_ncat_char(const char *input, u32 n, CML_String *out) {
     length = n + out->length;
 
     if (out->capacity < length + 1) {
-        char *tmp = (char*)realloc(out->data, sizeof(char)*(length + 1));
+        char *tmp = (char*)out->allocator->realloc(out->data, sizeof(char)*(length + 1), out->allocator->context);
         if (out->data == NULL) {
             return CML_ERR_REALLOC;
         }

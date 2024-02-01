@@ -18,6 +18,7 @@
 
 #include "../macros.h"
 #include "../err.h"
+#include "../memory/allocator.h"
 
 
 /** @brief Default size of the dynamic array. */
@@ -40,18 +41,13 @@ typedef struct CML_DArray {
     u32 capacity;
     /** @brief Size of each element in the array in bytes. */
     u32 stride;
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
     /** @brief Freeing function for the elements of the array. */
-    void (*freeFn)(void *element);
+    void (*destroyFn)(void *element);
 } CML_DArray;
 
-
-
-/**
- * @brief Creates a new CML_DArray on the heap.
- * 
- * @return Pointer to the new CML_DArray.
- */
-CML_DArray *cml_darray_new();
 
 
 /**
@@ -59,12 +55,13 @@ CML_DArray *cml_darray_new();
  * 
  * @param capacity Initial capacity of the array.
  * @param stride   Size of each element in the array in bytes.
- * @param freeFn   Freeing function for the elements of the array.
+ * @param allocator Allocator for the array.
+ * @param destroyFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *element), CML_DArray *darray);
+CML_Status _cml_darray_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_DArray *darray);
 
 
 /**
@@ -72,24 +69,26 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *eleme
  * 
  * @param capacity Size of the array.
  * @param type     Type of the array.
- * @param freeFn   Freeing function for the elements of the array.
+ * @param allocator Allocator for the array.
+ * @param destroyFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init(capacity, type, freeFn, darray) _cml_darray_init(capacity, sizeof(type), freeFn, darray)
+#define cml_darray_init(capacity, type, allocator, destroyFn, darray) _cml_darray_init(capacity, sizeof(type), allocator, destroyFn, darray)
 
 
 /**
  * @brief Initializes a CML_DArray with the input type and default capacity.
  * 
  * @param type   Type of the array.
- * @param freeFn Freeing function for the elements of the array.
+ * @param allocator Allocator for the tree.
+ * @param destroyFn Freeing function for the elements of the array.
  * @param darray Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init_default(type, freeFn, darray) _cml_darray_init(CML_INITIAL_DARRAY_CAPACITY, sizeof(type), freeFn, darray)
+#define cml_darray_init_default(type, allocator, destroyFn, darray) _cml_darray_init(CML_INITIAL_DARRAY_CAPACITY, sizeof(type), allocator, destroyFn, darray)
 
 
 /**
@@ -101,18 +100,6 @@ CML_Status _cml_darray_init(u32 capacity, u32 stride, void (*freeFn)(void *eleme
  * @return void.
  */
 void cml_darray_destroy(CML_DArray *darray);
-
-
-/**
- * @brief Frees the pointer to the CML_DArray.
- * 
- * @note Use only on CML_DArrays on the heap and after destroying them.
- *
- * @param node Pointer to the CML_DArray to be freed.
- * 
- * @return void.
- */
-void cml_darray_free(CML_DArray *darray);
 
 
 /**
@@ -182,7 +169,8 @@ void *cml_darray_get(u32 index, CML_DArray *out);
 
 
 /**
- * @brief Sets the element at the input index of a CML_DArray.
+ * @brief Sets the element at the input index of a CML_DArray and frees the 
+ *        previous element.
  * 
  * @param element Pointer to the element to be set.
  * @param index   Index of the element to be set.

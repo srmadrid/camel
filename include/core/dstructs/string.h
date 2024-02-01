@@ -19,6 +19,7 @@
 
 #include "../macros.h"
 #include "../err.h"
+#include "../memory/allocator.h"
 
 
 /** @brief Default resize factor of the string. */
@@ -41,16 +42,11 @@ typedef struct CML_String {
     u32 capacity;
     /** @brief Remaining allowed references to the string. */
     i32 refCount;
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
 } CML_String;
 
-
-
-/**
- * @brief Creates a new CML_String on the heap.
- * 
- * @return Pointer to the new CML_String.
- */
-CML_String *cml_string_new();
 
 
 /**
@@ -60,11 +56,12 @@ CML_String *cml_string_new();
  *       string literal.
  *
  * @param input  Pointer to the input string.
+ * @param allocator Allocator for the string.
  * @param string Pointer to the CML_String to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_string_init(const char *input, CML_String *string);
+CML_Status cml_string_init(const char *input, CML_Allocator *allocator, CML_String *string);
 
 
 /**
@@ -75,11 +72,12 @@ CML_Status cml_string_init(const char *input, CML_String *string);
  *       etc. that will initialize the string themselves if it is not
  *       initialized.
  * 
+ * @param allocator Allocator for the string.
  * @param string Pointer to the CML_String to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_string_alloc(CML_String *string);
+CML_Status cml_string_init0(CML_Allocator *allocator, CML_String *string);
 
 
 /**
@@ -96,18 +94,6 @@ void cml_string_destroy(void *string);
 
 
 /**
- * @brief Frees the pointer to the CML_String.
- * 
- * @note Use only on CML_Strings on the heap and after destroying them.
- *
- * @param node Pointer to the CML_String to be freed.
- * 
- * @return void.
- */
-void cml_string_free(CML_String *string);
-
-
-/**
  * @brief Creates a temporary CML_String from the input string. It will have a
  *        refCount of 1.
  * 
@@ -118,10 +104,11 @@ void cml_string_free(CML_String *string);
  *       function, and not to be stored in a variable.
  * 
  * @param input Pointer to the input string.
+ * @param allocator Allocator for the string.
  * 
  * @return The temporary CML_String.
  */
-CML_String *cml_string_temp(const char *input);
+CML_String *cml_string_temp(const char *input, CML_Allocator *allocator);
 
 
 /**
