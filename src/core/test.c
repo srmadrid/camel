@@ -48,6 +48,7 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
         } else {
             printf("\t%sFAILED%s\n", CML_TERMINAL_RED, CML_TERMINAL_RESET);
             printf("%s\n", result.debugMessage);
+            free(result.debugMessage);
             failed[failedCount++] = i;
         }
     }
@@ -59,4 +60,5 @@ void cml_run_tests(CML_Test *testRegistry, u32 testCount) {
             printf("\t[%i]: %s\n",failed[i] + 1, testRegistry[failed[i]].name);
         }
     }
+    free(failed);
 }

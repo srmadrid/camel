@@ -136,13 +136,13 @@ CML_CharType cml_read_char(char input);
  * 
  * @note The function initializes the out array.
  *
- * @param expression Input expression.
  * @param allocator  Allocator for the internal structures.
+ * @param expression Input expression.
  * @param out        Output CML_ExpressionToken dynamic array.
  * 
  * @return Status code.
  */
-CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, CML_DArray *out);
+CML_Status cml_expression_lex(CML_Allocator *allocator, CML_String *expression, CML_DArray *out);
 
 
 /**
@@ -151,12 +151,13 @@ CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, 
  *
  * @note The function initializes the out binary tree.
  *
+ * @param allocator  Allocator for the internal structures.
  * @param expression Input tokenized expression.
  * @param out        Output CML_ExpressionToken binary tree.
  *
  * @return Status code.
  */
-CML_Status cml_expression_parse(CML_DArray *expression, CML_Allocator *allocator, CML_BTree *out);
+CML_Status cml_expression_parse(CML_Allocator *allocator, CML_DArray *expression, CML_BTree *out);
 
 
 #endif /* CAMEL_EXPARSER */

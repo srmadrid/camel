@@ -15,7 +15,7 @@
 #include "../../../include/core/dstructs/darray.h"
 
 
-CML_Status _cml_darray_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_DArray *darray) {
+CML_Status _cml_darray_init(CML_Allocator *allocator, u32 capacity, u32 stride, void (*destroyFn)(void *element), CML_DArray *darray) {
     if (darray == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }

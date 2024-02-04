@@ -17,7 +17,7 @@
 
 CML_TestResult test_string_temp() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
-    CML_String *string = cml_string_temp("Hello, world!", &_a);
+    CML_String *string = cml_string_temp(&_a, "Hello, world!");
     cml_string_checkref(&string);
     CML_TestResult result;
     result.passed = string == NULL;
@@ -32,12 +32,12 @@ CML_TestResult test_string_temp() {
 CML_TestResult test_string_checkref() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string1;
-    cml_string_init("Hello, world!", &_a, &string1);
+    cml_string_init(&_a, "Hello, world!", &string1);
     string1.refCount = 5;
     CML_String *string1ptr = &string1;
     cml_string_checkref(&string1ptr);
     CML_String string2;
-    cml_string_init("Hello, world!", &_a, &string2);
+    cml_string_init(&_a, "Hello, world!", &string2);
     CML_String *string2ptr = &string2;
     cml_string_checkref(&string2ptr);
     CML_TestResult result;
@@ -55,11 +55,11 @@ CML_TestResult test_string_copy() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
-    cml_string_copy(cml_string_temp("Hello, world!", &_a), &string);
+    cml_string_copy(cml_string_temp(&_a, "Hello, world!"), &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello, world!", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello, world!"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, world!", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, world!"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -70,11 +70,11 @@ CML_TestResult test_string_ncopy() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
-    cml_string_ncopy(cml_string_temp("Hello, world!", &_a), 6, &string);
+    cml_string_ncopy(cml_string_temp(&_a, "Hello, world!"), 6, &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello,", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello,"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello,", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello,"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -87,9 +87,9 @@ CML_TestResult test_string_copy_char() {
     cml_string_init0(&_a, &string);
     cml_string_copy_char("Hello, world!", &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello, world!", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello, world!"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, world!", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, world!"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -102,9 +102,9 @@ CML_TestResult test_string_ncopy_char() {
     cml_string_init0(&_a, &string);
     cml_string_ncopy_char("Hello, world!", 6, &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello,", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello,"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello,", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello,"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -114,12 +114,12 @@ CML_TestResult test_string_ncopy_char() {
 CML_TestResult test_string_cat() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
-    cml_string_init("Hello", &_a, &string);
-    cml_string_cat(cml_string_temp(", world!", &_a), &string);
+    cml_string_init(&_a, "Hello", &string);
+    cml_string_cat(cml_string_temp(&_a, ", world!"), &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello, world!", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello, world!"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, world!", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, world!"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -129,12 +129,12 @@ CML_TestResult test_string_cat() {
 CML_TestResult test_string_ncat() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
-    cml_string_init("Hello", &_a, &string);
-    cml_string_ncat(cml_string_temp(", world!", &_a), 3, &string);
+    cml_string_init(&_a, "Hello", &string);
+    cml_string_ncat(cml_string_temp(&_a, ", world!"), 3, &string);
     CML_TestResult result;
-    result.passed = cml_string_eq(cml_string_temp("Hello, w", &_a), &string);
+    result.passed = cml_string_eq(cml_string_temp(&_a, "Hello, w"), &string);
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, w", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, w"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -144,12 +144,12 @@ CML_TestResult test_string_ncat() {
 CML_TestResult test_string_cat_char() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
-    cml_string_init("Hello", &_a, &string);
+    cml_string_init(&_a, "Hello", &string);
     cml_string_cat_char(", world!", &string);
     CML_TestResult result;
     result.passed = cml_string_eq_char(&string, "Hello, world!");
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, world!", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, world!"), &string, true);
     }
     cml_string_destroy(&string);
     return result;
@@ -159,12 +159,12 @@ CML_TestResult test_string_cat_char() {
 CML_TestResult test_string_ncat_char() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
-    cml_string_init("Hello", &_a, &string);
+    cml_string_init(&_a, "Hello", &string);
     cml_string_ncat_char(", world!", 3, &string);
     CML_TestResult result;
     result.passed = cml_string_eq_char(&string, "Hello, w");
     if (!result.passed) {
-        result.debugMessage = cml_string_debug(cml_string_temp("Hello, w", &_a), &string, true);
+        result.debugMessage = cml_string_debug(cml_string_temp(&_a, "Hello, w"), &string, true);
     }
     cml_string_destroy(&string);
     return result;

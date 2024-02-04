@@ -55,42 +55,42 @@ typedef struct CML_Stack {
 /**
  * @brief Initializes a CML_Stack with the input capacity and stride.
  * 
+ * @param allocator Allocator for the stack.
  * @param capacity Initial capacity of the stack.
  * @param stride   Size of each element in the stack in bytes.
- * @param allocator Allocator for the stack.
  * @param destroyFn   Freeing function for the elements of the stack.
  * @param darray   Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_stack_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_Stack *stack);
+CML_Status _cml_stack_init(CML_Allocator *allocator, u32 capacity, u32 stride, void (*destroyFn)(void *element), CML_Stack *stack);
 
 
 /**
  * @brief Initializes a CML_Stack with the input type and size.
  * 
+ * @param allocator Allocator for the stack.
  * @param capacity Initial capacity of the stack.
  * @param type     Type of the stack.
- * @param allocator Allocator for the stack.
  * @param destroyFn   Freeing function for the elements of the stack.
  * @param stack    Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-#define cml_stack_init(capacity, type, allocator, destroyFn, stack) _cml_stack_init(capacity, sizeof(type), allocator, destroyFn, stack)
+#define cml_stack_init(allocator, capacity, type, destroyFn, stack) _cml_stack_init(allocator, capacity, sizeof(type), destroyFn, stack)
 
 
 /**
  * @brief Initializes a CML_Stack with the input type and default capacity.
  * 
- * @param type   Type of the array.
  * @param allocator Allocator for the stack.
+ * @param type   Type of the array.
  * @param destroyFn Freeing function for the elements of the array.
  * @param stack  Pointer to the CML_Stack to be initialized.
  * 
  * @return Status code.
  */
-#define cml_stack_init_default(type, allocator, destroyFn, stack) _cml_stack_init(CML_INITIAL_STACK_CAPACITY, sizeof(type), allocator, destroyFn, stack)
+#define cml_stack_init_default(allocator, type, destroyFn, stack) _cml_stack_init(allocator, CML_INITIAL_STACK_CAPACITY, sizeof(type), destroyFn, stack)
 
 
 /**

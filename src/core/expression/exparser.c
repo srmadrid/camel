@@ -123,8 +123,8 @@ CML_CharType cml_read_char(char input) {
 }
 
 
-CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, CML_DArray *out) {
-    cml_darray_init_default(CML_ExpressionToken, allocator, cml_exptkn_destroy, out);
+CML_Status cml_expression_lex(CML_Allocator *allocator, CML_String *expression, CML_DArray *out) {
+    cml_darray_init_default(allocator, CML_ExpressionToken, cml_exptkn_destroy, out);
     u32 letterAuxLen = 0; // For charType == 5, to be removed when a something better is implemented
     CML_CharType charType = CML_CHAR_UNDEFINED;
     CML_CharType prevCharType = CML_CHAR_UNDEFINED;
@@ -153,7 +153,7 @@ CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, 
                  prevCharType != CML_CHAR_FUNCTION_OP           &&
                  prevCharType != CML_CHAR_UNDEFINED) {
                 CML_String aux;
-                cml_string_init("*", allocator, &aux);
+                cml_string_init(allocator, "*", &aux);
                 CML_ExpressionToken token;
                 cml_exptkn_init(&aux, CML_CHAR_MEDIUM_PRECEDENCE_OP, &token);
                 cml_darray_push(&token, out);
@@ -244,9 +244,9 @@ CML_Status cml_expression_lex(CML_String *expression, CML_Allocator *allocator, 
 }
 
 
-CML_Status cml_expression_parse(CML_DArray *expression, CML_Allocator *allocator, CML_BTree *out) {
+CML_Status cml_expression_parse(CML_Allocator *allocator, CML_DArray *expression, CML_BTree *out) {
     CML_Stack operatorStack;
-    cml_stack_init_default(CML_ExpressionToken, allocator, cml_exptkn_destroy, &operatorStack);
+    cml_stack_init_default(allocator, CML_ExpressionToken, cml_exptkn_destroy, &operatorStack);
 
     out->stride = 1;
     expression->stride = 1;

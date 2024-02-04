@@ -55,13 +55,13 @@ typedef struct CML_String {
  * @note The input string is expected to be null-terminated, and ideally is a
  *       string literal.
  *
- * @param input  Pointer to the input string.
  * @param allocator Allocator for the string.
+ * @param input  Pointer to the input string.
  * @param string Pointer to the CML_String to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_string_init(const char *input, CML_Allocator *allocator, CML_String *string);
+CML_Status cml_string_init(CML_Allocator *allocator, const char *input, CML_String *string);
 
 
 /**
@@ -103,12 +103,12 @@ void cml_string_destroy(void *string);
  * @note This function is expected to be used directly as an argument to a
  *       function, and not to be stored in a variable.
  * 
- * @param input Pointer to the input string.
  * @param allocator Allocator for the string.
+ * @param input Pointer to the input string.
  * 
  * @return The temporary CML_String.
  */
-CML_String *cml_string_temp(const char *input, CML_Allocator *allocator);
+CML_String *cml_string_temp(CML_Allocator *allocator, const char *input);
 
 
 /**

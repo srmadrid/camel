@@ -31,7 +31,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    b8 testing = false;
+    b8 testing = true;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 400;
@@ -90,14 +90,14 @@ int main() {
         printf("Average iterations per second: %f\n", 1.0 / (elapsed / iterations));
     }
 
-    b8 individualTesting = true;
+    b8 individualTesting = false;
     if (individualTesting) {
-        CML_Allocator allocator = CML_ALLOCATOR_DEFAULT;
+        CML_Allocator a = CML_ALLOCATOR_DEFAULT;
 
         CML_DArray darray;
         CML_String expression;
-        cml_string_init("867x + y^(sin(z)) / (291(xlog(y + z)))", &allocator, &expression);
-        cml_expression_lex(&expression, &allocator, &darray);
+        cml_string_init(&a, "867x + y^(sin(z)) / (291(xlog(y + z)))", &expression);
+        cml_expression_lex(&a, &expression, &darray);
 
         printf("Expression: %s\n", expression.data);
         for (u32 i = 0; i < darray.length; ++i) {

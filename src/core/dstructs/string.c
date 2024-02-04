@@ -16,7 +16,7 @@
 #include "../../../include/core/dstructs/string.h"
 
 
-CML_Status cml_string_init(const char *input, CML_Allocator *allocator, CML_String *string) {
+CML_Status cml_string_init(CML_Allocator *allocator, const char *input, CML_String *string) {
     if (input == NULL || string == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -76,7 +76,7 @@ void cml_string_destroy(void *string) {
 }
 
 
-CML_String *cml_string_temp(const char *input, CML_Allocator *allocator) {
+CML_String *cml_string_temp(CML_Allocator *allocator, const char *input) {
     if (allocator == NULL) {
         return NULL;
     }
@@ -85,7 +85,7 @@ CML_String *cml_string_temp(const char *input, CML_Allocator *allocator) {
         return NULL;
     }
 
-    cml_string_init(input, allocator, string);
+    cml_string_init(allocator, input, string);
     string->refCount = 1;
 
     return string;
@@ -347,6 +347,7 @@ CML_Status cml_string_cat_char(const char *input, CML_String *out) {
         length++;
     }
 
+    u32 olength = length;
     length += out->length;
 
     if (out->capacity < length + 1) {
@@ -358,7 +359,7 @@ CML_Status cml_string_cat_char(const char *input, CML_String *out) {
         out->capacity = length + 1;
     }
 
-    for (u32 i = 0; i < length; i++) {
+    for (u32 i = 0; i < olength; i++) {
         out->data[out->length + i] = input[i];
     }
     out->data[length] = '\0';

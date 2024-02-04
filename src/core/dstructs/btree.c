@@ -33,7 +33,7 @@ CML_Status cml_btnode_init(void *element, u32 stride, CML_BTree *tree, CML_BTNod
 }
 
 
-CML_Status _cml_btree_init(void *element, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_BTree *btree) {
+CML_Status _cml_btree_init(CML_Allocator *allocator, void *element, u32 stride, void (*destroyFn)(void *element), CML_BTree *btree) {
     if (btree == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }

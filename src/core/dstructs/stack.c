@@ -15,7 +15,7 @@
 #include "../../../include/core/dstructs/stack.h"
 
 
-CML_Status _cml_stack_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_Stack *stack) {
+CML_Status _cml_stack_init(CML_Allocator *allocator, u32 capacity, u32 stride, void (*destroyFn)(void *element), CML_Stack *stack) {
     if (stack == NULL || allocator == NULL) {
         return CML_ERR_NULL_PTR;
     }

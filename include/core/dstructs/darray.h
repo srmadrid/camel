@@ -53,42 +53,42 @@ typedef struct CML_DArray {
 /**
  * @brief Initializes a CML_DArray with the input capacity and stride.
  * 
+ * @param allocator Allocator for the array.
  * @param capacity Initial capacity of the array.
  * @param stride   Size of each element in the array in bytes.
- * @param allocator Allocator for the array.
  * @param destroyFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-CML_Status _cml_darray_init(u32 capacity, u32 stride, CML_Allocator *allocator, void (*destroyFn)(void *element), CML_DArray *darray);
+CML_Status _cml_darray_init(CML_Allocator *allocator, u32 capacity, u32 stride, void (*destroyFn)(void *element), CML_DArray *darray);
 
 
 /**
  * @brief Initializes a CML_DArray with the input type and size.
  * 
+ * @param allocator Allocator for the array.
  * @param capacity Size of the array.
  * @param type     Type of the array.
- * @param allocator Allocator for the array.
  * @param destroyFn   Freeing function for the elements of the array.
  * @param darray   Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init(capacity, type, allocator, destroyFn, darray) _cml_darray_init(capacity, sizeof(type), allocator, destroyFn, darray)
+#define cml_darray_init(allocator, capacity, type, destroyFn, darray) _cml_darray_init(allocator, capacity, sizeof(type), destroyFn, darray)
 
 
 /**
  * @brief Initializes a CML_DArray with the input type and default capacity.
  * 
- * @param type   Type of the array.
  * @param allocator Allocator for the tree.
+ * @param type   Type of the array.
  * @param destroyFn Freeing function for the elements of the array.
  * @param darray Pointer to the CML_DArray to be initialized.
  * 
  * @return Status code.
  */
-#define cml_darray_init_default(type, allocator, destroyFn, darray) _cml_darray_init(CML_INITIAL_DARRAY_CAPACITY, sizeof(type), allocator, destroyFn, darray)
+#define cml_darray_init_default(allocator, type, destroyFn, darray) _cml_darray_init(allocator, CML_INITIAL_DARRAY_CAPACITY, sizeof(type), destroyFn, darray)
 
 
 /**
@@ -138,6 +138,10 @@ CML_Status cml_darray_insert(void *element, u32 index, CML_DArray *out);
 
 /**
  * @brief Pops an element from the end of a CML_DArray.
+ *
+ * @note The returned element is allocated in the heap using the darray's 
+ *       allocator, and the user becomes respondisle to free it and its 
+ *       contents, its ownership is transferred to the user.
  * 
  * @param out The CML_DArray to be popped from.
  * 
@@ -148,6 +152,10 @@ void *cml_darray_pop(CML_DArray *out);
 
 /**
  * @brief Pops an element at the input index of a CML_DArray.
+ *
+ * @note The returned element is allocated in the heap using the darray's 
+ *       allocator, and the user becomes respondisle to free it and its 
+ *       contents, its ownership is transferred to the user.
  * 
  * @param index Index at which the element will be removed.
  * @param out   The CML_DArray to be removed from.

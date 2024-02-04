@@ -18,10 +18,10 @@
 CML_TestResult test_darray_resize() {
     CML_Allocator a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(2, i32, &a, NULL, &darray);
+    cml_darray_init(&a, 2, i32, NULL, &darray);
     cml_darray_resize(10, &darray);
     CML_DArray expected;
-    cml_darray_init(4, i32, &a, NULL, &expected);
+    cml_darray_init(&a, 4, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
         cml_darray_push(&i, &expected);
@@ -40,9 +40,9 @@ CML_TestResult test_darray_resize() {
 CML_TestResult test_darray_push() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -64,9 +64,9 @@ CML_TestResult test_darray_push() {
 CML_TestResult test_darray_insert() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_insert(&i, 0, &darray);
     }
@@ -86,11 +86,11 @@ CML_TestResult test_darray_insert() {
 
 
 CML_TestResult test_darray_pop() {
-    CML_Allocator _a;
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_insert(&i, 0, &darray);
     }
@@ -98,12 +98,13 @@ CML_TestResult test_darray_pop() {
     i32 data[] = {d, c, b};
     memcpy(expected.data, data, 3*sizeof(i32));
     expected.length = 3;
-    i32 element = *(i32*)cml_darray_pop(&darray);
+    i32 *element = (i32*)cml_darray_pop(&darray);
     CML_TestResult result;
-    result.passed = cml_darray_eq(&expected, &darray) && element == 0;
+    result.passed = cml_darray_eq(&expected, &darray) && *element == 0;
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
+    _a.free(element, _a.context);
     cml_darray_destroy(&darray);
     cml_darray_destroy(&expected);
     return result;
@@ -113,9 +114,9 @@ CML_TestResult test_darray_pop() {
 CML_TestResult test_darray_remove() {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -123,12 +124,13 @@ CML_TestResult test_darray_remove() {
     i32 data[] = {b, c, d};
     memcpy(expected.data, data, 3*sizeof(i32));
     expected.length = 3;
-    i32 element = *(i32*)cml_darray_remove(0, &darray);
+    i32 *element = (i32*)cml_darray_remove(0, &darray);
     CML_TestResult result;
-    result.passed = cml_darray_eq(&expected, &darray) && element == 0;
+    result.passed = cml_darray_eq(&expected, &darray) && *element == 0;
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
+    _a.free(element, _a.context);
     cml_darray_destroy(&darray);
     cml_darray_destroy(&expected);
     return result;
@@ -136,11 +138,11 @@ CML_TestResult test_darray_remove() {
 
 
 CML_TestResult test_darray_get() {
-    CML_Allocator _a;
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
@@ -161,11 +163,11 @@ CML_TestResult test_darray_get() {
 
 
 CML_TestResult test_darray_set() {
-    CML_Allocator _a;
+    CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
-    cml_darray_init(5, i32, &_a, NULL, &darray);
+    cml_darray_init(&_a, 5, i32, NULL, &darray);
     CML_DArray expected;
-    cml_darray_init(5, i32, &_a, NULL, &expected);
+    cml_darray_init(&_a, 5, i32, NULL, &expected);
     for (u32 i = 0; i < 4; ++i) {
         cml_darray_push(&i, &darray);
     }
