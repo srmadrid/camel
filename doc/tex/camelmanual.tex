@@ -1,0 +1,140 @@
+\documentclass[a4paper,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{chngcntr}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+
+% Page margins
+\usepackage[margin=1in]{geometry}
+
+
+
+% Part and section formatting
+\titleformat{\part}[display]{\huge\bfseries}{\centering Part \thepart}{0pt}{\Huge\centering}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+
+% Continuous section numbering
+\counterwithout{section}{part}
+
+% Roman numerals for parts
+\renewcommand{\thepart}{\Roman{part}}
+
+% Command for starting a new part with author name
+\newcommand{\authoredpart}[2]{
+  \clearpage
+  \part{#1}
+  \vspace{-1em} % Adjust vertical space as needed
+  \large{\textit{by #2}}
+  \vspace{2em} % Adjust vertical space as needed
+}
+
+
+% Title
+\title{\textbf{Camel}}
+\author{\textbf{Manual for Version 0.0}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
+
+
+% Part I
+\authoredpart{Introduction and Setup}{Sergio Madrid}
+
+\section{Overview of Camel Library}
+\subsection{Design Goals}
+\subsection{Core Features}
+
+\section{Installation}
+\subsection{Prerequisites}
+\subsection{Installation Steps}
+\subsection{Verifying the Installation}
+
+\section{Getting Started}
+\subsection{Hello World with Camel}
+\subsection{Basic Concepts}
+
+
+% Part II
+\authoredpart{Library Reference}{Sergio Madrid}
+
+\section{Naming Conventions}
+
+\section{Core}
+
+\subsection{Memory Management}
+
+\subsection{Data Structures}
+
+\subsubsection{String}
+
+\subsubsection{Stack}
+
+\subsubsection{Queue}
+
+\subsubsection{Dynamic Array}
+
+\subsubsection{Singly Linked List}
+
+\subsubsection{Doubly Linked List}
+
+\subsubsection{Binary Tree}
+
+\subsubsection{Binary Search Tree}
+
+\subsubsection{Hash Table}
+
+\subsubsection{Graph}
+
+\subsection{Expression Parsing}
+
+\subsection{Arbitrary Precision Arithmetic}
+
+\section{Algebra}
+
+\subsection{Linear Algebra}
+
+\subsubsection{Fixed-Size Linear Algebra}
+
+\subsubsection{Variable-Size Linear Algebra}
+
+\subsection{Abstract Algebra}
+
+\section{Calculus}
+
+\section{Geometry}
+
+\section{Number Theory}
+
+\section{Statistics}
+
+
+% Part III
+\authoredpart{Performance}{Sergio Madrid}
+
+Every single function in the library has been tested for performance. The following sections provide a detailed analysis of the performance of each function.
+
+% Part III
+\authoredpart{Examples}{Sergio Madrid}
+
+\section{Basic Examples}
+% Simple usage examples to get started
+
+\section{Advanced Usage}
+% More complex examples
+
+\section{Exercises}
+% Hands-on exercises for the reader
+
+% Continue with more sections as needed...
+
+
+
+\end{document}
