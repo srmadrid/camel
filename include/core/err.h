@@ -44,6 +44,8 @@ typedef enum CML_Status {
     CML_ERR_INVALID_CHAR = -7,
     /** @brief Invalid index. */
     CML_ERR_INVALID_INDEX = -8,
+    /** @brief Empty structure. */
+    CML_ERR_EMPTY_STRUCTURE = -9,
 } CML_Status;
 
 

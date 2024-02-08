@@ -98,7 +98,8 @@ CML_TestResult test_darray_pop() {
     i32 data[] = {d, c, b};
     memcpy(expected.data, data, 3*sizeof(i32));
     expected.length = 3;
-    i32 *element = (i32*)cml_darray_pop(&darray);
+    i32 *element = _a.malloc(sizeof(i32), _a.context);
+    cml_darray_pop(&darray, element);
     CML_TestResult result;
     result.passed = cml_darray_eq(&expected, &darray) && *element == 0;
     if (!result.passed) {
@@ -124,13 +125,13 @@ CML_TestResult test_darray_remove() {
     i32 data[] = {b, c, d};
     memcpy(expected.data, data, 3*sizeof(i32));
     expected.length = 3;
-    i32 *element = (i32*)cml_darray_remove(0, &darray);
+    i32 element;
+    cml_darray_remove(0, &darray, &element);
     CML_TestResult result;
-    result.passed = cml_darray_eq(&expected, &darray) && *element == 0;
+    result.passed = cml_darray_eq(&expected, &darray) && element == 0;
     if (!result.passed) {
         result.debugMessage = cml_darray_debug(&expected, &darray, true);
     }
-    _a.free(element, _a.context);
     cml_darray_destroy(&darray);
     cml_darray_destroy(&expected);
     return result;

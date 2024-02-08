@@ -124,66 +124,54 @@ CML_Status cml_darray_insert(void *element, u32 index, CML_DArray *out) {
 }
 
 
-void *cml_darray_pop(CML_DArray *out) {
-    if (out == NULL) {
-        return NULL;
+CML_Status cml_darray_pop(CML_DArray *darray, void *out) {
+    if (darray == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
     }
 
-    if (out->length == 0) {
-        return NULL;
+    if (darray->length == 0) {
+        return CML_ERR_EMPTY_STRUCTURE;
     }
 
-    void *element = out->allocator->malloc(out->stride, out->allocator->context);
-    if (element == NULL) {
-        return NULL;
-    }
+    memcpy(out, (u8*)darray->data + (darray->length - 1)*darray->stride, darray->stride);
+    darray->length--;
 
-    memcpy(element, (u8*)out->data + (out->length - 1)*out->stride, out->stride);
-    out->length--;
-
-    if (out->length < out->capacity/(CML_DARRAY_RESIZE_FACTOR*CML_DARRAY_RESIZE_FACTOR)) {
-        void *tmp = out->allocator->realloc(out->data, out->capacity/(CML_DARRAY_RESIZE_FACTOR*out->stride), out->allocator->context);
+    if (darray->length < darray->capacity/(CML_DARRAY_RESIZE_FACTOR*CML_DARRAY_RESIZE_FACTOR)) {
+        void *tmp = darray->allocator->realloc(darray->data, darray->capacity/(CML_DARRAY_RESIZE_FACTOR*darray->stride), darray->allocator->context);
         if (tmp == NULL) {
-            out->allocator->free(element, out->allocator->context);
-            return NULL;
+            return CML_ERR_REALLOC;
         }
-        out->data = tmp;
-        out->capacity /= CML_DARRAY_RESIZE_FACTOR;
+        darray->data = tmp;
+        darray->capacity /= CML_DARRAY_RESIZE_FACTOR;
     }
 
-    return element;
+    return CML_SUCCESS;
 }
 
 
-void *cml_darray_remove(u32 index, CML_DArray *out) {
-    if (out == NULL) {
-        return NULL;
+CML_Status cml_darray_remove(u32 index, CML_DArray *darray, void *out) {
+    if (darray == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
     }
 
-    if (index >= out->length) {
-        return NULL;
+    if (index >= darray->length) {
+        return CML_ERR_INVALID_INDEX;
     }
 
-    void *element = out->allocator->malloc(out->stride, out->allocator->context);
-    if (element == NULL) {
-        return NULL;
-    }
+    memcpy(out, (u8*)darray->data + index*darray->stride, darray->stride);
+    memmove((u8*)darray->data + index*darray->stride, (u8*)darray->data + (index + 1)*darray->stride, (darray->length - index - 1)*darray->stride);
+    darray->length--;
 
-    memcpy(element, (u8*)out->data + index*out->stride, out->stride);
-    memmove((u8*)out->data + index*out->stride, (u8*)out->data + (index + 1)*out->stride, (out->length - index - 1)*out->stride);
-    out->length--;
-
-    if (out->length < out->capacity/(CML_DARRAY_RESIZE_FACTOR*CML_DARRAY_RESIZE_FACTOR)) {
-        void *tmp = out->allocator->realloc(out->data, out->capacity/(CML_DARRAY_RESIZE_FACTOR*out->stride), out->allocator->context);
+    if (darray->length < darray->capacity/(CML_DARRAY_RESIZE_FACTOR*CML_DARRAY_RESIZE_FACTOR)) {
+        void *tmp = darray->allocator->realloc(darray->data, darray->capacity/(CML_DARRAY_RESIZE_FACTOR*darray->stride), darray->allocator->context);
         if (tmp == NULL) {
-            out->allocator->free(element, out->allocator->context);
-            return NULL;
+            return CML_ERR_REALLOC;
         }
-        out->data = tmp;
-        out->capacity /= CML_DARRAY_RESIZE_FACTOR;
+        darray->data = tmp;
+        darray->capacity /= CML_DARRAY_RESIZE_FACTOR;
     }
 
-    return element;
+    return CML_SUCCESS;
 }
 
 

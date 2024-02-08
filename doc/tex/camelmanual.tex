@@ -1,19 +1,39 @@
-\documentclass[a4paper,oneside]{article}
+\documentclass[a4paper,oneside,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{titlesec}
 \usepackage{titletoc}
 \usepackage{chngcntr}
 \usepackage{etoolbox}
 \usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+
 
 % Page margins
 \usepackage[margin=1in]{geometry}
 
-
+% Commands
+\newcommand{\struct}[1]{
+  \noindent\textcolor{purple}{\texttt{#1}}
+  \vspace{-0.3em}
+}
+\newcommand{\function}[1]{
+  \noindent\textcolor{blue}{\texttt{#1}}
+  \vspace{-0.3em}
+}
+\newcommand{\macro}[1]{
+  \noindent\textcolor{orange}{\texttt{#1}}
+  \vspace{-0.3em}
+}
+\renewcommand{\dot}{\raisebox{0.3ex}{\scalebox{0.6}{$\bullet$}}}
 
 % Part and section formatting
-\titleformat{\part}[display]{\huge\bfseries}{\centering Part \thepart}{0pt}{\Huge\centering}
-\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\part}[display]{\huge\bfseries}{\noindent Part \thepart}{0pt}{\Huge\noindent}
+\titleformat{\section}{\huge\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\LARGE\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\Large\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\Large\bfseries}{\theparagraph}{1em}{}
 
 % Continuous section numbering
 \counterwithout{section}{part}
@@ -26,13 +46,22 @@
   \clearpage
   \part{#1}
   \vspace{-1em} % Adjust vertical space as needed
-  \large{\textit{by #2}}
+  \Large{\textit{by #2}}
   \vspace{2em} % Adjust vertical space as needed
 }
 
 
+% Environments
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{xcolor}
+
+\theoremstyle{definition}
+% Structs
+
+
 % Title
-\title{\textbf{Camel}}
+\title{\textbf{CAMEL}}
 \author{\textbf{Manual for Version 0.0}}
 
 \begin{document}
@@ -48,14 +77,75 @@
 % Part I
 \authoredpart{Introduction and Setup}{Sergio Madrid}
 
-\section{Overview of Camel Library}
+\section{Introduction}
+
+Welcome to the documentation for CAMEL, a high-performance C library for symbolic and numerical computation. This manual provides a comprehensive reference for the library, including installation instructions, usage examples, and performance analysis.
+
+You might now be wondering ``What is CAMEL?'' and ``Why should I use it?'' Let's start by answering these questions. CAMEL aims to be a powerful and efficient library for symbolic and numerical computation, as well as a versatile tool for a wide range of applications, including scientific computing, data analysis, and machine learning. The library places a focus on performance and ease of use and is designed to be a versatile tool for a wide range of applications, including scientific computing, data structure manipulation, and machine learning. The library is written in C, which makes it easy to integrate with other languages and systems, and it is designed to be efficient and scalable, making it suitable for both small-scale and large-scale computations.
+
+This manual aims not only to provide a comprehensive reference for the usage of the library, but also a detailed and rigurous mathematical background for the algorithms and data structures implemented in the library, so that the reader can understand the inner workings of the library, and have a theoretical background before using the library or having a look at the source code. This manual assumes that the reader has a basic understanding of mathematics and computer science, and is familiar with the C programming language. At the points where the manual assumes a deeper understanding of a topic, it will provide references to external sources where the reader can learn more about it.
+
 \subsection{Design Goals}
+
+CAMEL first appeared as a personal project of mine (Sergio Madrid) to expand my mathematical knowledge by implementing a wide range of mathematical algorithms and data structures, but over time, the scope of the library has expanded until what it is now, but since I began making it, most of the main goals of the library have remained the same.
+
+The first main goal of mine was to create an understandable and intuitive API that would give easy access to the library's features, and a low entry point for anyone interested in the topics covered by the library. I also wished to provide easy to read an understand source code, so that anyone interested in the implementation of the algorithms, whether a beginner or a seasoned veteran, could easily understand them, and that way feel encouraged to keep digging deeper instead of ending up discouraged. Finally, I aimed to provide a high-performance library, with a focus on performance and efficiency, so that the library could be used in a wide range of applications, from small-scale computations or academic demonstration, to large-scale computing, data analysis or machine learning.
+
+Finally, I aimed to provide full symbolic and numerical computation capabilities throughout all modules of the library, based all on the same core for easy interoperation.
+
 \subsection{Core Features}
 
+The library is divided into several modules, each of which provides a set of related functions and data structures. These modules are explained thoroughly in Part \ref{part:library_reference}, and this section will serve as a brief overview of the main features of the library. The modules are as follows:
+\begin{enumerate}
+  \item \textbf{\hyperref[sec:core]{Core}}: The core module provides the building blocks for the entire library, including basic types, error handling, memory management, data structures, expression parsing, and other core tools.
+  \item \textbf{\hyperref[sec:algebra]{Algebra}}: The algebra module includes linear algebra, abstract algebra, polynomial manipulation, and other algebra tools.
+  \item \textbf{\hyperref[sec:calculus]{Calculus}}: The calculus module provides from simple functions, to complex calculus tools such as signal processing, differential equations, and other tools.
+  \item \textbf{\hyperref[sec:geometry]{Geometry}}: The geometry module offers general geometric tools that range from simple geometric operations to complex geometric algorithms.
+  \item \textbf{\hyperref[sec:number_theory]{Number Theory}}: The nujber theory module deals with everything related to integers, including prime numbers, sets, or other number theory tools.
+  \item \textbf{\hyperref[sec:statistics]{Statistics}}: The statistics module is filled with statistical tools, including probability distributions, hypothesis testing, and other statistical tools.
+\end{enumerate}
+
+\subsection{License}
+
+CAMEL is licensed under the MIT License, which is a permissive open-source license that allows you to use the library for any purpose, including commercial applications, as long as you include the original copyright notice.
+
+
 \section{Installation}
+
+This section provides detailed instructions for installing CAMEL on your system. The library is designed to be easy to install and use, and it is compatible with a wide range of systems and compilers. The following sections provide step-by-step instructions for installing the library on various platforms, including Windows, macOS, and Linux.
+
 \subsection{Prerequisites}
+
+Before installing CAMEL, you will need to have the following software installed on your system:
+\begin{itemize}
+  \item \textbf{C Compiler}: You will need a C compiler to build the library. The library is compatible with a wide range of compilers, including GCC, Clang, and MSVC.
+  \item \textbf{Make}: You will need the \texttt{make} utility to build the library. The library includes a Makefile that automates the build process, making it easy to compile the library on a wide range of systems.
+  \item \textbf{Git}: You will optionally need Git to clone the library's source code from the repository. Git is a version control system that is widely used for open-source projects, and it is available for all major operating systems.
+\end{itemize}
+
 \subsection{Installation Steps}
+
+You can install CAMEL in one of two ways: by downloading the source code from the repository or by downloading a precompiled binary. The following sections provide detailed instructions for each method.
+
+\subsubsection{Downloading the Source Code}
+
+To download the source code from the repository, you will need to have Git installed on your system. Once you have Git installed, you can clone the repository by running the following command in your terminal:
+
+\begin{verbatim}
+git clone https://github.com/srmadrid/camel.git
+\end{verbatim}
+
+This will create a new directory called \texttt{camel} in your current working directory, which contains the source code for the library. Navigate to the \texttt{camel} directory and run the following command to build the library:
+
 \subsection{Verifying the Installation}
+
+To verify that the library has been installed correctly, create a directory \texttt{bin/os} in \texttt{camel/test}, where \texttt{os} is the name of your operating system.Then you can run the following command in your terminal to build the test suite:
+
+\begin{verbatim}
+make test
+\end{verbatim}
+
+Once it has compiled, you can run the test suite executable, which will be located in the created directory, to verify that the library is working correctly.
 
 \section{Getting Started}
 \subsection{Hello World with Camel}
@@ -63,11 +153,23 @@
 
 
 % Part II
-\authoredpart{Library Reference}{Sergio Madrid}
+\authoredpart{Library Reference}{Sergio Madrid} \label{part:library_reference}
 
-\section{Naming Conventions}
+\section{Notation}
 
-\section{Core}
+This manual includes complex mathematical explanations and algorithms, and to make it easier to understand, we will use a set of notation and conventions that will be used throughout the manual:
+\begin{itemize}
+  \item \textbf{Sets}: Sets will be denoted with capital letters, such as $A$, $B$, $C$, etc.
+  \item \textbf{Vectors}: Vectors will be denoted with lowercase bold letters, such as $\mathbf{v}$, $\mathbf{w}$, $\mathbf{x}$, etc. And their components will be denoted with subscripts, such as $v_1$, $v_2$, $v_3$, etc.
+  \item \textbf{Matrices}: Matrices will be denoted with uppercase bold letters, such as $\mathbf{A}$, $\mathbf{B}$, $\mathbf{C}$, etc.
+  \item \textbf{Scalars}: Scalars will be denoted with lowercase letters, such as $a$, $b$, $c$, etc.
+\end{itemize}
+
+\section{Naming Conventions} \label{sec:naming_conventions}
+
+The library uses a set of naming conventions to make the code more readable and to provide a consistent API. The following sections provide an overview of the naming conventions used in the library.
+
+\section{Core} \label{sec:core}
 
 \subsection{Memory Management}
 
@@ -75,11 +177,645 @@
 
 \subsubsection{String}
 
+The string data structures serves as a replacement for the standard C string, and provides a wide range of string manipulation functions. The string data structure is defined as follows: \newline
+
+\struct{CML\_String}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \texttt{char *data}: A pointer to the string's data. \\
+  $\dot$ \texttt{u32 length}: The length of the string. \\
+  $\dot$ \texttt{u32 capacity}: The allocated capacity of the string. \\
+  $\dot$ \texttt{i32 refCount}: Remaining allowed references to the string. \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the string. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a string data structure containing information about the string's data, length, capacity, and allocator. When \texttt{refCount} is -1, the string has infinite references. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+\end{quote}
+
+
+\function{cml\_string\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Pointer to the allocator to use in the string. \\
+  $\dot$ \texttt{const char *input}: The initial data for the string. \\
+  $\dot$ \texttt{CML\_String *string}: The string to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new string with the input string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+  $\dot$ \texttt{string} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator}, \texttt{input}, or \texttt{string} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_string\_init0}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Pointer to the allocator to use in the string. \\
+  $\dot$ \texttt{CML\_String *string}: The string to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new string with all values set to 0, and \texttt{data} set to \texttt{NULL}. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{string} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{string} was \texttt{NULL}. \\
+\end{quote}
+
+\function{cml\_string\_destroy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *string}: The string to destroy. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Destroys a string, freeing its internal memory. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{string} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+\end{quote}
+
+\function{cml\_string\_temp}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Pointer to the allocator to use in the string. \\
+  $\dot$ \texttt{const char *input}: The data for the string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_String*} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Creates a temporary string (\texttt{refCount} $=1$) with the input string. It is dynamically allocated using the provided allocator. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_String*}: A pointer to the newly created string. \\
+  $\dot$ \texttt{NULL}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_string\_checkref}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String **string}: The string to check. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Checks if the string has any remaining references, and if not, destroys it. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{string} \textbf{must} be a valid pointer to a pointer to a \texttt{CML\_String} structure, and \texttt{*string} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+\end{quote}
+
+\function{cml\_string\_copy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *input}: The source string. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Copies the input string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. It need not be initialized. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully copied. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_ncopy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *input}: The source string. \\
+  $\dot$ \texttt{u32 n}: The number of characters to copy. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Copies the first \texttt{n} characters of the input string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. It need not be initialized. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully copied. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_copy\_char}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const char *input}: The source string. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Copies the input \texttt{char} string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. It need not be initialized. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully copied. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_ncopy\_char}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const char *input}: The source string. \\
+  $\dot$ \texttt{u32 n}: The number of characters to copy. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Copies the first \texttt{n} characters of the input \texttt{char} string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. It need not be initialized. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully copied. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_cat}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *input}: The source string. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Concatenates the input string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to an initialized \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully concatenated. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_ncat}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *input}: The source string. \\
+  $\dot$ \texttt{u32 n}: The number of characters to concatenate. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Concatenates the first \texttt{n} characters of the input string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to an initialized \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully concatenated. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_cat\_char}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const char *input}: The source string. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Concatenates the input \texttt{char} string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to an initialized \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully concatenated. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_ncat\_char}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const char *input}: The source string. \\
+  $\dot$ \texttt{u32 n}: The number of characters to concatenate. \\
+  $\dot$ \texttt{CML\_String *out}: The destination string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Concatenates the first \texttt{n} characters of the input \texttt{char} string into the out string. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{input} \textbf{must} be a valid pointer to a null-terminated string. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to an initialized \texttt{CML\_String} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The string was successfully concatenated. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{input} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_string\_eq}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *s1}: The first string. \\
+  $\dot$ \texttt{CML\_String *s2}: The second string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the strings are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares two strings for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{s1} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{s2} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+\end{quote}
+
+\function{cml\_string\_eq\_char}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *s1}: The first string. \\
+  $\dot$ \texttt{const char *s2}: The second string. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the strings are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares a string and a \texttt{char} string for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{s1} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{s2} \textbf{must} be a valid pointer to a null-terminated string. \\
+\end{quote}
+
+\function{cml\_string\_debug}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_String *expected}: The expected string. \\
+  $\dot$ \texttt{CML\_String *got}: The got string. \\
+  $\dot$ \texttt{b8 verbose}: Whether to print the internal information of the strings. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{char*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns a \texttt{char} string with the debug information of the strings. Designed to be used directly in \texttt{printf}. \\
+  
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{expected} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+  $\dot$ \texttt{got} \textbf{must} be a valid pointer to a \texttt{CML\_String} structure. \\
+\end{quote}
+
 \subsubsection{Stack}
+
+A stack is a data structure that follows the Last In, First Out (LIFO) principle, and is used to store data in a way that the last element added is the first one to be removed. The stack data structure is defined as follows: \newline
+
+\struct{CML\_Stack}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \texttt{void *data}: A pointer to the stack's data. \\
+  $\dot$ \texttt{u32 length}: The length of the stack. \\
+  $\dot$ \texttt{u32 capacity}: The allocated capacity of the stack. \\
+  $\dot$ \texttt{u32 stride}: The size of each element in the stack in bytes. \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the stack. \\
+  $\dot$ \texttt{void (*destroyFn)(void *)}: Function to destroy the elements of the stack. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a stack data structure containing information about the stack's data, length, capacity, and allocator. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+\end{quote}
+
+\function{\_cml\_stack\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Pointer to the allocator to use in the stack. \\
+  $\dot$ \texttt{u32 capacity}: The initial capacity of the stack. \\
+  $\dot$ \texttt{u32 stride}: The size of each element in the stack in bytes. \\
+  $\dot$ \texttt{void (*destroyFn)(void *)}: Function to destroy the elements of the stack. \\
+  $\dot$ \texttt{CML\_Stack *stack}: The stack to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new stack. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the stack do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The stack was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{stack} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\macro{cml\_stack\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{allocator}: Pointer to the allocator to use in the stack. \\
+  $\dot$ \texttt{capacity}: The initial capacity of the stack. \\
+  $\dot$ \texttt{type}: The type of the elements in the stack. \\
+  $\dot$ \texttt{destroyFn}: Function to destroy the elements of the stack. \\
+  $\dot$ \texttt{stack}: The stack to initialize. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new stack. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the stack do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The stack was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{stack} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\macro{cml\_stack\_init\_default}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{allocator}: Pointer to the allocator to use in the stack. \\
+  $\dot$ \texttt{type}: The type of the elements in the stack. \\
+  $\dot$ \texttt{destroyFn}: Function to destroy the elements of the stack. \\
+  $\dot$ \texttt{stack}: The stack to initialize. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new stack with a default capacity of 2. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the stack do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The stack was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{stack} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_stack\_destroy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *stack}: The stack to destroy. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Destroys a stack, freeing its internal memory and calling the destroy function on each element. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+\end{quote}
+
+\function{cml\_stack\_resize}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 capacity}: The new capacity of the stack. \\
+  $\dot$ \texttt{CML\_Stack *out}: The stack to resize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Resizes the stack to the new capacity. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The stack was successfully resized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{stack} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_stack\_push}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *element}: The element to push. \\
+  $\dot$ \texttt{CML\_Stack *out}: The stack to push into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Pushes an element into the stack. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{element} \textbf{must} be a valid pointer to an element of the stack's type. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully pushed. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{element} or \texttt{stack} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_stack\_pop}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Stack *stack}: The stack to pop from. \\
+  $\dot$ \texttt{void *out}: The element to pop into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Pops an element from the stack and stores it in \texttt{out}. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to an element of the stack's type. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully popped. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{stack} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_EMPTY\_STRUCTURE}: The stack was empty. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_stack\_peek}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Stack *stack}: The stack to peek from. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void*} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Peeks at the top element of the stack and returns a pointer to it. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{stack} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{void*}: If \texttt{stack} was not \texttt{NULL}. \\
+  $\dot$ \texttt{NULL}: If \texttt{stack} was \texttt{NULL} or empty. \\
+\end{quote}
+
+\function{cml\_stack\_eq}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Stack *stack1}: The first stack. \\
+  $\dot$ \texttt{CML\_Stack *stack2}: The second stack. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the stacks are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares two stacks for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{stack1} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+  $\dot$ \texttt{stack2} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+\end{quote}
+
+\function{cml\_stack\_debug}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Stack *expected}: The expected stack. \\
+  $\dot$ \texttt{CML\_Stack *got}: The got stack. \\
+  $\dot$ \texttt{b8 verbose}: Whether to print the internal information of the stacks. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{char*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns a \texttt{char} string with the debug information of the stacks. Designed to be used directly in \texttt{printf}. \\
+  
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{expected} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+  $\dot$ \texttt{got} \textbf{must} be a valid pointer to a \texttt{CML\_Stack} structure. \\
+\end{quote}
 
 \subsubsection{Queue}
 
 \subsubsection{Dynamic Array}
+
+A dynamic array is a data structure that allows for the storage of a variable number of elements by dynamically resizing the array as needed. The dynamic array data structure is defined as follows: \newline
 
 \subsubsection{Singly Linked List}
 
@@ -97,7 +833,7 @@
 
 \subsection{Arbitrary Precision Arithmetic}
 
-\section{Algebra}
+\section{Algebra} \label{sec:algebra}
 
 \subsection{Linear Algebra}
 
@@ -107,13 +843,13 @@
 
 \subsection{Abstract Algebra}
 
-\section{Calculus}
+\section{Calculus} \label{sec:calculus}
 
-\section{Geometry}
+\section{Geometry} \label{sec:geometry}
 
-\section{Number Theory}
+\section{Number Theory} \label{sec:number_theory}
 
-\section{Statistics}
+\section{Statistics} \label{sec:statistics}
 
 
 % Part III
@@ -134,7 +870,5 @@ Every single function in the library has been tested for performance. The follow
 % Hands-on exercises for the reader
 
 % Continue with more sections as needed...
-
-
 
 \end{document}

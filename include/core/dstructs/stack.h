@@ -101,7 +101,7 @@ CML_Status _cml_stack_init(CML_Allocator *allocator, u32 capacity, u32 stride, v
  * 
  * @return void.
  */
-void cml_stack_destroy(CML_Stack *stack);
+void cml_stack_destroy(void *stack);
 
 
 /**
@@ -129,11 +129,12 @@ CML_Status cml_stack_push(void *element, CML_Stack *out);
 /**
  * @brief Pops an element from the top of a CML_Stack.
  * 
- * @param out The CML_Stack to be popped from.
+ * @param stack The CML_Stack to be popped from.
+ * @param out   Pointer to the location where to move the popped element.
  * 
- * @return The popped element.
+ * @return Status code.
  */
-void *cml_stack_pop(CML_Stack *out);
+CML_Status cml_stack_pop(CML_Stack *stack, void *out);
 
 
 /**
@@ -143,7 +144,7 @@ void *cml_stack_pop(CML_Stack *out);
  * 
  * @return A pointer to the element at the top.
  */
-void *cml_stack_get(u32 index, CML_Stack *out);
+void *cml_stack_peek(CML_Stack *out);
 
 
 /**

@@ -114,7 +114,7 @@ CML_Status cml_darray_resize(u32 capacity, CML_DArray *out);
 
 
 /**
- * @brief Pushes a copy of an element to the end of a CML_DArray.
+ * @brief Pushes an element to the end of a CML_DArray.
  * 
  * @param element Pointer to the element to be pushed.
  * @param out     The CML_DArray to be pushed to.
@@ -125,7 +125,7 @@ CML_Status cml_darray_push(void *element, CML_DArray *out);
 
 
 /**
- * @brief Inserts a copy of an element at the input index of a CML_DArray.
+ * @brief Inserts an of an element at the input index of a CML_DArray.
  * 
  * @param element Pointer to the element to be inserted.
  * @param index   Index at which the element will be inserted.
@@ -138,31 +138,25 @@ CML_Status cml_darray_insert(void *element, u32 index, CML_DArray *out);
 
 /**
  * @brief Pops an element from the end of a CML_DArray.
- *
- * @note The returned element is allocated in the heap using the darray's 
- *       allocator, and the user becomes respondisle to free it and its 
- *       contents, its ownership is transferred to the user.
  * 
- * @param out The CML_DArray to be popped from.
+ * @param darray The CML_DArray to be popped from.
+ * @param out    Pointer to the location to move the popped element.
  * 
- * @return The popped element.
+ * @return Status code.
  */
-void *cml_darray_pop(CML_DArray *out);
+CML_Status cml_darray_pop(CML_DArray *darray, void *out);
 
 
 /**
  * @brief Pops an element at the input index of a CML_DArray.
- *
- * @note The returned element is allocated in the heap using the darray's 
- *       allocator, and the user becomes respondisle to free it and its 
- *       contents, its ownership is transferred to the user.
  * 
- * @param index Index at which the element will be removed.
- * @param out   The CML_DArray to be removed from.
+ * @param index  Index at which the element will be removed.
+ * @param darray The CML_DArray to be removed from.
+ * @param out    Pointer to the location to move the popped element.
  * 
- * @return The removed element.
+ * @return Status code.
  */
-void *cml_darray_remove(u32 index, CML_DArray *out);
+CML_Status cml_darray_remove(u32 index, CML_DArray *darray, void *out);
 
 
 /**
