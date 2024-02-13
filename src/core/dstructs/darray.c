@@ -39,19 +39,20 @@ CML_Status _cml_darray_init(CML_Allocator *allocator, u32 capacity, u32 stride, 
 }
 
 
-void cml_darray_destroy(CML_DArray *darray) {
-    if (darray != NULL) {
-        if (darray->destroyFn != NULL) {
-            for (u32 i = 0; i < darray->length; ++i) {
-                darray->destroyFn((u8*)darray->data + i*darray->stride);
+void cml_darray_destroy(void *darray) {
+    CML_DArray *dry = (CML_DArray*)darray;
+    if (dry != NULL) {
+        if (dry->destroyFn != NULL) {
+            for (u32 i = 0; i < dry->length; ++i) {
+                dry->destroyFn((u8*)dry->data + i*dry->stride);
             }
         }
-        darray->allocator->free(darray->data, darray->allocator->context);
-        darray->data = NULL;
-        darray->length = 0;
-        darray->allocator = NULL;
-        darray->capacity = 0;
-        darray->stride = 0;
+        dry->allocator->free(dry->data, dry->allocator->context);
+        dry->data = NULL;
+        dry->length = 0;
+        dry->allocator = NULL;
+        dry->capacity = 0;
+        dry->stride = 0;
     }
 }
 

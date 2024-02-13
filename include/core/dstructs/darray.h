@@ -99,7 +99,7 @@ CML_Status _cml_darray_init(CML_Allocator *allocator, u32 capacity, u32 stride, 
  * 
  * @return void.
  */
-void cml_darray_destroy(CML_DArray *darray);
+void cml_darray_destroy(void *darray);
 
 
 /**

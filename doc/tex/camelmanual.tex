@@ -1,4 +1,4 @@
-\documentclass[a4paper,oneside,10pt]{article}
+\documentclass[a4paper,oneside,8pt]{extarticle}
 \usepackage[utf8]{inputenc}
 \usepackage{titlesec}
 \usepackage{titletoc}
@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{amsmath}
 
 
 
@@ -16,6 +17,14 @@
 % Commands
 \newcommand{\struct}[1]{
   \noindent\textcolor{purple}{\texttt{#1}}
+  \vspace{-0.3em}
+}
+\newcommand{\enum}[1]{
+  \noindent\textcolor{green}{\texttt{#1}}
+  \vspace{-0.3em}
+}
+\newcommand{\union}[1]{
+  \noindent\textcolor{red}{\texttt{#1}}
   \vspace{-0.3em}
 }
 \newcommand{\function}[1]{
@@ -93,7 +102,7 @@ The first main goal of mine was to create an understandable and intuitive API th
 
 Finally, I aimed to provide full symbolic and numerical computation capabilities throughout all modules of the library, based all on the same core for easy interoperation.
 
-\subsection{Core Features}
+\subsection{Main Features}
 
 The library is divided into several modules, each of which provides a set of related functions and data structures. These modules are explained thoroughly in Part \ref{part:library_reference}, and this section will serve as a brief overview of the main features of the library. The modules are as follows:
 \begin{enumerate}
@@ -161,7 +170,7 @@ This manual includes complex mathematical explanations and algorithms, and to ma
 \begin{itemize}
   \item \textbf{Sets}: Sets will be denoted with capital letters, such as $A$, $B$, $C$, etc.
   \item \textbf{Vectors}: Vectors will be denoted with lowercase bold letters, such as $\mathbf{v}$, $\mathbf{w}$, $\mathbf{x}$, etc. And their components will be denoted with subscripts, such as $v_1$, $v_2$, $v_3$, etc.
-  \item \textbf{Matrices}: Matrices will be denoted with uppercase bold letters, such as $\mathbf{A}$, $\mathbf{B}$, $\mathbf{C}$, etc.
+  \item \textbf{Matrices}: Matrices will be denoted with uppercase bold letters, such as $\mathbf{A}$, $\mathbf{B}$, $\mathbf{C}$, etc. And their components will be denoted with subscripts, $A_{ij}$, where $i$ is the row and $j$ is the column.
   \item \textbf{Scalars}: Scalars will be denoted with lowercase letters, such as $a$, $b$, $c$, etc.
 \end{itemize}
 
@@ -175,9 +184,11 @@ The library uses a set of naming conventions to make the code more readable and 
 
 \subsection{Data Structures}
 
+The \textbf{data structures} module provides a set of common data structures, including arrays, lists, queues, stacks, and trees, as well as some more esoteric ones. The following sections provide an overview of the data structures provided by the library, as well as detailed descriptions of their usage and, in cases where it is necessary, their algorithms thoroughly explained.
+
 \subsubsection{String}
 
-The string data structures serves as a replacement for the standard C string, and provides a wide range of string manipulation functions. The string data structure is defined as follows: \newline
+The \textbf{string} data structure serves as a replacement for the standard C string, and provides a wide range of string manipulation functions. The string data structure is defined as follows: \newline
 
 \struct{CML\_String}
 \begin{quote}
@@ -196,7 +207,6 @@ The string data structures serves as a replacement for the standard C string, an
   \textbf{Valid Usage}: \\
   $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
 \end{quote}
-
 
 \function{cml\_string\_init}
 \begin{quote}
@@ -559,7 +569,7 @@ The string data structures serves as a replacement for the standard C string, an
 
 \subsubsection{Stack}
 
-A stack is a data structure that follows the Last In, First Out (LIFO) principle, and is used to store data in a way that the last element added is the first one to be removed. The stack data structure is defined as follows: \newline
+A \textbf{stack} is a data structure that follows the Last In, First Out (LIFO) principle, and is used to store data in a way that the last element added is the first one to be removed. The stack data structure is defined as follows: \newline
 
 \struct{CML\_Stack}
 \begin{quote}
@@ -593,7 +603,7 @@ A stack is a data structure that follows the Last In, First Out (LIFO) principle
   
   \vspace{-0.75em}
   \textbf{Description}: \\
-  Initializes a new stack. \\
+  Initializes a new stack. This function is not meant to be called directly, but rather through the \texttt{cml\_stack\_init} or \texttt{cml\_stack\_init\_default} macros. \\
 
   \vspace{-0.75em}
   \textbf{Valid Usage}: \\
@@ -815,7 +825,340 @@ A stack is a data structure that follows the Last In, First Out (LIFO) principle
 
 \subsubsection{Dynamic Array}
 
-A dynamic array is a data structure that allows for the storage of a variable number of elements by dynamically resizing the array as needed. The dynamic array data structure is defined as follows: \newline
+A \textbf{dynamic array} is a data structure that allows for the storage of a variable number of elements by dynamically resizing the array as needed. The dynamic array data structure is defined as follows: \newline
+
+\struct{CML\_DArray}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \texttt{void *data}: A pointer to the dynamic array's data. \\
+  $\dot$ \texttt{u32 length}: The length of the dynamic array. \\
+  $\dot$ \texttt{u32 capacity}: The allocated capacity of the dynamic array. \\
+  $\dot$ \texttt{u32 stride}: The size of each element in the dynamic array in bytes. \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the dynamic array. \\
+  $\dot$ \texttt{void (*destroyFn)(void *)}: Function to destroy the elements of the dynamic array. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a dynamic array data structure containing information about the dynamic array's data, length, capacity, and allocator. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+\end{quote}
+
+\function{\_cml\_darray\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Pointer to the allocator to use in the dynamic array. \\
+  $\dot$ \texttt{u32 capacity}: The initial capacity of the dynamic array. \\
+  $\dot$ \texttt{u32 stride}: The size of each element in the dynamic array in bytes. \\
+  $\dot$ \texttt{void (*destroyFn)(void *)}: Function to destroy the elements of the dynamic array. \\
+  $\dot$ \texttt{CML\_DArray *darray}: The dynamic array to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new dynamic array. This function is not meant to be called directly, but rather through the \texttt{cml\_darray\_init} or \texttt{cml\_darray\_init\_default} macros. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the dynamic array do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The dynamic array was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{darray} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was
+  less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\macro{cml\_darray\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{allocator}: Pointer to the allocator to use in the dynamic array. \\
+  $\dot$ \texttt{capacity}: The initial capacity of the dynamic array. \\
+  $\dot$ \texttt{type}: The type of the elements in the dynamic array. \\
+  $\dot$ \texttt{destroyFn}: Function to destroy the elements of the dynamic array. \\
+  $\dot$ \texttt{darray}: The dynamic array to initialize. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new dynamic array. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the dynamic array do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The dynamic array was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{darray} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\macro{cml\_darray\_init\_default}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{allocator}: Pointer to the allocator to use in the dynamic array. \\
+  $\dot$ \texttt{type}: The type of the elements in the dynamic array. \\
+  $\dot$ \texttt{destroyFn}: Function to destroy the elements of the dynamic array. \\
+  $\dot$ \texttt{darray}: The dynamic array to initialize. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new dynamic array with a default capacity of 2. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{destroyFn} can be \texttt{NULL} if the elements of the dynamic array do not need to be destroyed. Otherwise, it \textbf{must} be a valid pointer to a destroy function. \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The dynamic array was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{allocator} or \texttt{darray} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_MALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_darray\_destroy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *darray}: The dynamic array to destroy. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Destroys a dynamic array, freeing its internal memory and calling the destroy function on each element. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+\end{quote}
+
+\function{cml\_darray\_resize}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 capacity}: The new capacity of the dynamic array. \\
+  $\dot$ \texttt{CML\_DArray *out}: The dynamic array to resize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Resizes the dynamic array to the new capacity. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{capacity} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The dynamic array was successfully resized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_CAPACITY}: \texttt{capacity} was less than or equal to 0. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_darray\_push}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *element}: The element to push. \\
+  $\dot$ \texttt{CML\_DArray *out}: The dynamic array to push into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Pushes an element into the dynamic array. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{element} \textbf{must} be a valid pointer to an element of the dynamic array's type. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully pushed. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{element} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_darray\_insert}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *element}: The element to insert. \\
+  $\dot$ \texttt{u32 index}: The index to insert the element at. \\
+  $\dot$ \texttt{CML\_DArray *out}: The dynamic array to insert into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Inserts an element into the dynamic array at the specified index. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{element} \textbf{must} be a valid pointer to an element of the dynamic array's type. \\
+  $\dot$ \texttt{index} \textbf{must} be less than or equal to the length of the dynamic array. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully inserted. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{element} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_INDEX}: \texttt{index} was greater than the length of the dynamic array. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_darray\_pop}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_DArray *darray}: The dynamic array to pop from. \\
+  $\dot$ \texttt{void *out}: The element to pop into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Pops an element from the dynamic array and stores it in \texttt{out}. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a space to store an element of the dynamic array's type. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully popped. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{darray} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_EMPTY\_STRUCTURE}: The dynamic array was empty. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_darray\_remove}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 index}: The index to remove the element at. \\
+  $\dot$ \texttt{CML\_DArray *darray}: The dynamic array to remove from. \\
+  $\dot$ \texttt{void *out}: The element to remove into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Removes an element from the dynamic array at the specified index and stores it in \texttt{out}. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{index} \textbf{must} be less than the length of the dynamic array. \\
+  $\dot$ \texttt{darray} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a space to store an element of the dynamic array's type. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully removed. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{darray} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_INDEX}: \texttt{index} was greater than or equal to the length of the dynamic array. \\
+  $\dot$ \texttt{CML\_ERR\_REALLOC}: An error occurred during memory reallocation. \\
+\end{quote}
+
+\function{cml\_darray\_get}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 index}: The index to get the element at. \\
+  $\dot$ \texttt{CML\_DArray *out}: The dynamic array to get from. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Gets an element from the dynamic array at the specified index and returns a pointer to it. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{index} \textbf{must} be less than the length of the dynamic array. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{void*}: If \texttt{index} was less than the length of the dynamic array. \\
+  $\dot$ \texttt{NULL}: If \texttt{index} was greater than or equal to the length of the dynamic array, \texttt{out} was \texttt{NULL} or empty. \\
+\end{quote}
+
+\function{cml\_darray\_set}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 index}: The index to set the element at. \\
+  $\dot$ \texttt{void *element}: The element to set. \\
+  $\dot$ \texttt{CML\_DArray *out}: The dynamic array to set into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Sets an element in the dynamic array at the specified index, and destroys the previous element if necessary. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{index} \textbf{must} be less than the length of the dynamic array. \\
+  $\dot$ \texttt{element} \textbf{must} be a valid pointer to an element of the dynamic array's type. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully set. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{element}, \texttt{out} or \texttt{out->data} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_INDEX}: \texttt{index} was greater than or equal to the length of the dynamic array. \\
+\end{quote}
+
+\function{cml\_darray\_eq}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_DArray *darray1}: The first dynamic array. \\
+  $\dot$ \texttt{CML\_DArray *darray2}: The second dynamic array. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the dynamic arrays are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares two dynamic arrays for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{darray1} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+  $\dot$ \texttt{darray2} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+\end{quote}
+
+\function{cml\_darray\_debug}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_DArray *expected}: The expected dynamic array. \\
+  $\dot$ \texttt{CML\_DArray *got}: The got dynamic array. \\
+  $\dot$ \texttt{b8 verbose}: Whether to print the internal information of the dynamic arrays. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{char*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns a \texttt{char} string with the debug information of the dynamic arrays. Designed to be used directly in \texttt{printf}. \\
+  
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{expected} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+  $\dot$ \texttt{got} \textbf{must} be a valid pointer to a \texttt{CML\_DArray} structure. \\
+\end{quote}
 
 \subsubsection{Singly Linked List}
 
@@ -837,7 +1180,1468 @@ A dynamic array is a data structure that allows for the storage of a variable nu
 
 \subsection{Linear Algebra}
 
+\textbf{Linear algebra} is the branch of mathematics concerning linear equations and linear maps and their representations through matrices and vector spaces. Inside of the Camel library, linear algebra is divided into two categories: fixed-size linear algebra and variable-size linear algebra. Fixed-size linear algebra is used for small, fixed-size matrices and vectors up to 4x4, while variable-size linear algebra is used for larger, variable-size matrices and vectors.
+
 \subsubsection{Fixed-Size Linear Algebra}
+
+The \textbf{fixed-size linear algebra} functions are designed to be used in performance-critical applications where the size of the matrices and vectors doesn't exceed 4x4, such as in graphics programming. The fixed-size linear algebra objects are stored in column-major order to be compatible with OpenGL and other graphics libraries. For further optimization, the fixed-size linear algebra module offers header-only or compiled versions of the functions, depending on the user's needs. By using the standard \texttt{cml\_...} functions, the user can use the header-only version, while by using the \texttt{cmlc\_...} functions, the user can use the compiled version.
+
+The fixed-size linear algebra vectors are defined as follows: \newline
+
+\union{CML\_Vector2}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 x}: The x component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 y}: The y component of the vector. \\
+  $\dot$ \texttt{f32 array[2]}: The vector as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 2-dimensional vector. \\
+\end{quote}
+
+\union{CML\_Vector3}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 x}: The x component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 y}: The y component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 z}: The z component of the vector. \\
+  $\dot$ \texttt{f32 array[3]}: The vector as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 3-dimensional vector. \\
+\end{quote}
+
+\union{CML\_Vector4}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 x}: The x component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 y}: The y component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 z}: The z component of the vector. \\
+  \indent\hspace{1em} \texttt{f32 w}: The w component of the vector. \\
+  $\dot$ \texttt{f32 array[4]}: The vector as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 4-dimensional vector. \\
+\end{quote}
+
+The fixed-size linear algebra matrices are defined as follows: \newline
+
+\union{CML\_Matrix2x2}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  $\dot$ \texttt{f32 array[4]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 2x2 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix3x3}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m22}: The element at row 2, column 2 of the matrix. \\
+  $\dot$ \texttt{f32 array[9]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 3x3 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix4x4}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m30}: The element at row 3, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m31}: The element at row 3, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m22}: The element at row 2, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m32}: The element at row 3, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m03}: The element at row 0, column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m13}: The element at row 1,
+  column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m23}: The element at row 2, column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m33}: The element at row 3, column 3 of the matrix. \\
+  $\dot$ \texttt{f32 array[16]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 4x4 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix2x3}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  $\dot$ \texttt{f32 array[6]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 2x3 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix2x4}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m03}: The element at row 0, column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m13}: The element at row 1, column 3 of the matrix. \\
+  $\dot$ \texttt{f32 array[8]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 2x4 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix3x2}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  $\dot$ \texttt{f32 array[6]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 3x2 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix3x4}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m22}: The element at row 2, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m03}: The element at row 0, column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m13}: The element at row 1, column 3 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m23}: The element at row 2, column 3 of the matrix. \\
+  $\dot$ \texttt{f32 array[12]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 3x4 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix4x2}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m30}: The element at row 3, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m31}: The element at row 3, column 1 of the matrix. \\
+  $\dot$ \texttt{f32 array[8]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 4x2 matrix. \\
+\end{quote}
+
+\union{CML\_Matrix4x3}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \textcolor{blue}{\texttt{struct}}: \\
+  \indent\hspace{1em} \texttt{f32 m00}: The element at row 0, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m10}: The element at row 1, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m20}: The element at row 2, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m30}: The element at row 3, column 0 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m01}: The element at row 0, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m11}: The element at row 1, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m21}: The element at row 2, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m31}: The element at row 3, column 1 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m02}: The element at row 0, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m12}: The element at row 1, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m22}: The element at row 2, column 2 of the matrix. \\
+  \indent\hspace{1em} \texttt{f32 m32}: The element at row 3, column 2 of the matrix. \\
+  $\dot$ \texttt{f32 array[12]}: The matrix as an array. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a 4x3 matrix. \\
+\end{quote}
+
+During the rest of this section, any reference to a vector will be done using \texttt{CML\_Vectorn} (or \texttt{CML\_VECTORN} in macros), where \texttt{n} is the number of components of the vector. Similarly, any reference to a matrix will be done using \texttt{CML\_Matrixnxm} (or \texttt{CML\_MATRIXNXM} in macros), where \texttt{n} is the number of rows and \texttt{m} is the number of columns of the matrix, or using \texttt{CML\_Matrixnxn} if the matrix is necessarily square.
+
+For the creation of vectors and matrices, the following macros are provided: \newline
+
+\macro{CML\_VECTORN\_ZERO}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the vector to zero. \\
+\end{quote}
+
+\macro{CML\_VECTORN\_I}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the vector to the i-th unit vector. \\
+\end{quote}
+
+\macro{CML\_VECTORN\_J}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the vector to the j-th unit vector. \\
+\end{quote}
+
+\macro{CML\_VECTORN\_K}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the vector to the k-th unit vector. \\
+\end{quote}
+
+\macro{CML\_VECTORN\_L}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the vector to the l-th unit vector. \\
+\end{quote}
+
+\macro{CML\_VECTORN}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{x}: The x component of the vector. \\
+  $\dot$ \texttt{y}: The y component of the vector. \\
+  $\dot$ \texttt{z}: The z component of the vector (only for 3D and 4D vectors). \\
+  $\dot$ \texttt{w}: The w component of the vector (only for 4D vectors). \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Sets the vector to the specified components. \\
+\end{quote}
+
+\macro{CML\_MATRIXNXM\_ZERO}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the matrix to zero. \\
+\end{quote}
+
+\macro{CML\_MATRIXNXM\_IDENTITY}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the matrix to the identity matrix. \\
+\end{quote}
+
+\macro{CML\_MATRIXNXM\_ONE}
+\begin{quote}
+  \textbf{Description}: \\
+  Sets the matrix to the one matrix. \\
+\end{quote}
+
+\macro{CML\_MATRIXNXM}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{m00}: The element at row 0, column 0 of the matrix. \\
+  $\dot$ \texttt{m01}: The element at row 0, column 1 of the matrix. \\
+  $\dot$ \texttt{m02}: The element at row 0, column 2 of the matrix (if applicable). \\
+  $\dot$ \texttt{m03}: The element at row 0, column 3 of the matrix (if applicable). \\
+  $\dot$ \texttt{m10}: The element at row 1, column 0 of the matrix. \\
+  $\dot$ \texttt{m11}: The element at row 1, column 1 of the matrix. \\
+  $\dot$ \texttt{m12}: The element at row 1, column 2 of the matrix (if applicable). \\
+  $\dot$ \texttt{m13}: The element at row 1, column 3 of the matrix (if applicable). \\
+  $\dot$ \texttt{m20}: The element at row 2, column 0 of the matrix (if applicable). \\
+  $\dot$ \texttt{m21}: The element at row 2, column 1 of the matrix (if applicable). \\
+  $\dot$ \texttt{m22}: The element at row 2, column 2 of the matrix (if applicable). \\
+  $\dot$ \texttt{m23}: The element at row 2, column 3 of the matrix (if applicable). \\
+  $\dot$ \texttt{m30}: The element at row 3, column 0 of the matrix (if applicable). \\
+  $\dot$ \texttt{m31}: The element at row 3, column 1 of the matrix (if applicable). \\
+  $\dot$ \texttt{m32}: The element at row 3, column 2 of the matrix (if applicable). \\
+  $\dot$ \texttt{m33}: The element at row 3, column 3 of the matrix (if applicable). \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Sets the matrix to the specified elements row-wise, for more intuitive initialization. \\
+\end{quote}
+
+All function in this module expect valid pointers, and all arguments to hold values, except the \texttt{out} parameter. Knwoing this, all valid usage parts will be skipped for brevity. The fixed-size linear algebra functions are defined as follows: \newline
+
+\function{cml\_vectorn\_add}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Adds two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector sum: $\mathbf{out} = \mathbf{v} + \mathbf{w}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, $out_i = v_i + w_i$. \\
+\end{quote}
+
+\function{cml\_vectorn\_add\_f32}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{f32 t}: The scalar. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Adds a scalar to a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  ``Broadcast'' sum: $\mathbf{out} = \mathbf{v} + t$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vector, $out_i = v_i + t$. \\
+\end{quote}
+
+\function{cml\_vectorn\_sub}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Subtracts two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector subtraction: $\mathbf{out} = \mathbf{v} - \mathbf{w}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, $out_i = v_i - w_i$. \\
+\end{quote}
+
+\function{cml\_vectorn\_sub\_f32}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{f32 t}: The scalar. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Subtracts a scalar from a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  ``Broadcast'' subtraction: $\mathbf{out} = \mathbf{v} - t$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vector, $out_i = v_i - t$. \\
+\end{quote}
+
+\function{cml\_vectorn\_scale}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{f32 t}: The scalar. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Scales a vector by a scalar. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector scaling: $\mathbf{out} = t\mathbf{v}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vector, $out_i = tv_i$. \\
+\end{quote}
+
+\function{cml\_vectorn\_mod}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the modulus of the vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the modulus of a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector modulus: $\lVert\mathbf{v}\rVert_2 = \sqrt{\sum_{i=0}^{n-1} v_i^2}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vector, accumulate the square of the component. Return the square root of the accumulated value. \\
+\end{quote}
+
+\function{cml\_vectorn\_mod2}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the squared modulus of the vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the squared modulus of a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector squared modulus: $\lVert\mathbf{v}\rVert_2^2 = \sum_{i=0}^{n-1} v_i^2$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vector, accumulate the square of the component. Return the accumulated value. \\
+\end{quote}
+
+\function{cml\_vectorn\_norm}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Normalizes a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector normalization: $\mathbf{out} = \hat{\mathbf{v}} = \frac{\mathbf{v}}{\lVert\mathbf{v}\rVert_2}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  Calculate $\lVert\mathbf{v}\rVert_2$. Then, for each component $i$ of the vector, $out_i = \frac{v_i}{\lVert\mathbf{v}\rVert_2}$. \\
+\end{quote}
+
+\function{cml\_vectorn\_dot}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the dot product of the vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the dot product of two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector dot product: $\mathbf{v} \cdot \mathbf{w} = \sum_{i=0}^{n-1} v_iw_i$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, accumulate the product of the components. Return the accumulated value. \\
+\end{quote}
+
+\function{cml\_vector3\_cross}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vector3 *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vector3 *w}: The second vector. \\
+  $\dot$ \texttt{CML\_Vector3 *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the cross product of two 3D vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector cross product: $\mathbf{out} = \mathbf{v} \times \mathbf{w} = \begin{vmatrix}
+  \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+  v_x & v_y & v_z \\
+  w_x & w_y & w_z
+  \end{vmatrix}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  $out_x = v_yw_z - v_zw_y$, \\
+  $out_y = v_zw_x - v_xw_z$, \\
+  $out_z = v_xw_y - v_yw_x$. \\
+\end{quote}
+
+\function{cml\_vectorn\_distance}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the distance between the vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the distance between two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector distance: $d(\mathbf{v}, \mathbf{w}) = \lVert\mathbf{v} - \mathbf{w}\rVert_2 = \sqrt{\sum_{i=0}^{n-1} (v_i - w_i)^2}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, accumulate the square of the difference between the components. Return the square root of the accumulated value. \\
+\end{quote}
+
+\function{cml\_vectorn\_distance2}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the squared distance between the vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the squared distance between two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector squared distance: $d^2(\mathbf{v}, \mathbf{w}) = \lVert\mathbf{v} - \mathbf{w}\rVert_2^2 = \sum_{i=0}^{n-1} (v_i - w_i)^2$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, accumulate the square of the difference between the components. Return the accumulated value. \\
+\end{quote}
+
+\function{cml\_vectorn\_angle}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the angle between the vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the angle between two vectors. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector angle: $\theta = \arccos\left(\frac{\mathbf{v} \cdot \mathbf{w}}{\lVert\mathbf{v}\rVert_2\lVert\mathbf{w}\rVert_2}\right)$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  Return the arccosine of the dot product of the vectors divided by the product of their moduli. \\
+\end{quote}
+
+\function{cml\_vectorn\_project}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Projects a vector onto another. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector projection: $\mathbf{out} = \frac{\mathbf{v} \cdot \mathbf{w}}{\lVert\mathbf{w}\rVert_2^2}\mathbf{w}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  Calculate $\frac{\mathbf{v} \cdot \mathbf{w}}{\lVert \mathbf{w}\rVert_2^2}$. Then, for each component $i$ of the vectors, $out_i = \frac{\mathbf{v} \cdot \mathbf{w}}{\lVert \mathbf{w}\rVert_2^2}w_i$.
+\end{quote}
+
+\function{cml\_vectorn\_reflect}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *n}: The normal vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Reflects a vector across the suface defined by a normal vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector reflection: $\mathbf{out} = \mathbf{v} - \frac{2(\mathbf{v} \cdot \mathbf{n})}{\lVert\mathbf{n}\rVert_2}\mathbf{n}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  Calculate $\frac{2(\mathbf{v} \cdot \mathbf{n})}{\lVert\mathbf{n}\rVert_2}$. Then, for each component $i$ of the vectors, $out_i = v_i - \frac{2(\mathbf{v} \cdot \mathbf{n})}{\lVert\mathbf{n}\rVert_2}n_i$. \\
+\end{quote}
+
+\function{cml\_vectorn\_eq}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The first vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *w}: The second vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the vectors are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares two vectors for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector equality: $\mathbf{v} = \mathbf{w} \Leftrightarrow \forall i, v_i = w_i$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each component $i$ of the vectors, if $v_i \neq w_i$, return \texttt{false}. Return \texttt{true} otherwise. \\
+\end{quote}
+
+\function{cml\_vectorn\_debug}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *expected}: The expected vector. \\
+  $\dot$ \texttt{const CML\_Vectorn *got}: The got vector. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{char*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns a \texttt{char} string with the debug information of the vectors. Designed to be used directly in \texttt{printf}. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_add}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The left matrix. \\
+  $\dot$ \texttt{const CML\_Matrixnxm *B}: The right matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxm *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Adds two matrices. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix sum: $\mathbf{OUT} = \mathbf{A} + \mathbf{B}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, $OUT_{ij} = A_{ij} + B_{ij}$. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_sub}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The left matrix. \\
+  $\dot$ \texttt{const CML\_Matrixnxm *B}: The right matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxm *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Subtracts two matrices. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix subtraction: $\mathbf{OUT} = \mathbf{A} - \mathbf{B}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, $OUT_{ij} = A_{ij} - B_{ij}$. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_scale}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The matrix. \\
+  $\dot$ \texttt{f32 t}: The scalar. \\
+  $\dot$ \texttt{CML\_Matrixnxm *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Scales a matrix by a scalar. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix scaling: $\mathbf{OUT} = t\mathbf{A}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrix, $OUT_{ij} = tA_{ij}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_mul}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *A}: The left matrix. \\
+  $\dot$ \texttt{const CML\_Matrixnxn *B}: The right matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Multiplies two square matrices. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix multiplication: $\mathbf{OUT} = \mathbf{A}\mathbf{B}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, $OUT_{ij} = \sum_{k=0}^{n-1} A_{ik}B_{kj}$. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_mul\_matrixmxp}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The left matrix. \\
+  $\dot$ \texttt{const CML\_Matrixmxp *B}: The right matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxp *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Multiplies a matrix by a matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix multiplication: $\mathbf{OUT} = \mathbf{A}\mathbf{B}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, $OUT_{ij} = \sum_{k=0}^{m-1} A_{ik}B_{kj}$. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_mul\_vectorm}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The matrix. \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Multiplies a matrix by a vector. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix-vector multiplication: $\mathbf{out} = \mathbf{A}\mathbf{v}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i$ of the vector, $out_i = \sum_{j=0}^{m-1} A_{ij}v_j$. \\
+\end{quote}
+
+\function{cml\_vectorn\_mul\_matrixnxm}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Vectorn *v}: The vector. \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The matrix. \\
+  $\dot$ \texttt{CML\_Vectorn *out}: The vector to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Multiplies a vector by a matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard vector-matrix multiplication: $\mathbf{out}^T = \mathbf{v}^T\mathbf{A}$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i$ of the vector, $out_i = \sum_{j=0}^{n-1} v_jA_{ji}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_det}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *A}: The matrix. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the determinant of the matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the determinant of a square matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix determinant: $\det(\mathbf{A}) = \lvert\mathbf{A}\rvert = \sum_{i=0}^{n-1} (-1)^iA_{0i}\det(\mathbf{A}_{0i})$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For $2\times 2$ matrices, return $A_{00}A_{11} - A_{01}A_{10}$. For $3\times 3$ matrices, return the determinant calculated using Sarrus' rule. For $4\times 4$ matrices, return the determinant calculated using the Laplace expansion. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_inv}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *A}: The matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Inverts a square matrix if possible. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix inversion: $\mathbf{OUT} = \mathbf{A}^{-1} = \frac{1}{\det(\mathbf{A})}\mathrm{adj}(\mathbf{A})$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  Calculate the determinant of the matrix. If the determinant is zero, return \texttt{CML\_ERR\_SINGULAR\_MATRIX}. Calculate the adjugate of the matrix and the inverse of the determinant. For each element $i, j$ of the matrix, $OUT_{ij} = \frac{1}{\det(\mathbf{A})}\mathrm{adj}(\mathbf{A})_{ij}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The matrix was successfully inverted. \\
+  $\dot$ \texttt{CML\_ERR\_SINGULAR\_MATRIX}: The matrix is singular and cannot be inverted. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_transpose}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The matrix. \\
+  $\dot$ \texttt{CML\_Matrixmxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Transposes a matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix transposition: $\mathbf{OUT} = \mathbf{A}^T$ \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, $OUT_{ij} = A_{ji}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_trace}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *A}: The matrix. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{f32}: the trace of the matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the trace of a square matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix trace: $\mathrm{tr}(\mathbf{A}) = \sum_{i=0}^{n-1} A_{ii}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each diagonal element $i, i$ of the matrix, accumulate the value. Return the accumulated value. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_eq}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *A}: The first matrix. \\
+  $\dot$ \texttt{const CML\_Matrixnxm *B}: The second matrix. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{b8}: whether the matrices are equal. \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Compares two matrices for equality. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Standard matrix equality: $\mathbf{A} = \mathbf{B} \Leftrightarrow \forall i, j, A_{ij} = B_{ij}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $i, j$ of the matrices, if $A_{ij} \neq B_{ij}$, return \texttt{false}. Return \texttt{true} otherwise. \\
+\end{quote}
+
+\function{cml\_matrixnxm\_debug}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxm *expected}: The expected matrix. \\
+  $\dot$ \texttt{const CML\_Matrixnxm *got}: The got matrix. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{char*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns a \texttt{char} string with the debug information of the matrices. Designed to be used directly in \texttt{printf}. \\
+\end{quote}
+
+Camel also provides a set of functions to create transformation matrices. All of these functions are defined as column-major, like the rest of the module. Having a vector $\mathbf{v} = (x, y, z, w)$, the transformation matrix $\mathbf{T}$ is applied to $\mathbf{v}$ as $\mathbf{v}' = \mathbf{T}\mathbf{v}$. When possible, the follwoing functions will show the $4\times 4$ transformation matrices; however, to obtain the $3\times 3$ transformation matrices, the user can simply ignore the last row and column, and for the $2\times 2$ transformation matrices, the user can ignore the last two rows and columns. When the transformation is different for the different dimensions, the function will provide the separate functions for each dimension that requires it.
+
+The following functions are provided: \newline
+
+\function{cml\_matrixnxn\_gen\_scale}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 x}: The scaling factor in the $x$ axis. \\
+  $\dot$ \texttt{f32 y}: The scaling factor in the $y$ axis. \\
+  $\dot$ \texttt{f32 z}: The scaling factor in the $z$ axis. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a scaling transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  x & 0 & 0 & 0 \\
+  0 & y & 0 & 0 \\
+  0 & 0 & z & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_invscale}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *scale}: The scaling transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a scaling transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \frac{1}{A_{00}} & 0 & 0 & 0 \\
+  0 & \frac{1}{A_{11}} & 0 & 0 \\
+  0 & 0 & \frac{1}{A_{22}} & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_gen\_shearx}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 x}: The shear factor. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a shear transformation matrix in the $x$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & x \\
+  0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_gen\_sheary}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 y}: The shear factor. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a shear transformation matrix in the $y$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 \\
+  y & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_gen\_invshear}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrix2x2 *shear}: The shear transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a shear transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & -A_{01} \\
+  -A_{10} & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_shearx}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 y}: The shear factor in the $y$ axis. \\
+  $\dot$ \texttt{f32 z}: The shear factor in the $z$ axis. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a shear transformation matrix in the $x$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & y & z & 0 \\
+  0 & 1 & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_sheary}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 x}: The shear factor in the $x$ axis. \\
+  $\dot$ \texttt{f32 z}: The shear factor in the $z$ axis. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a shear transformation matrix in the $y$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  x & 1 & z & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_shearz}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 x}: The shear factor in the $x$ axis. \\
+  $\dot$ \texttt{f32 y}: The shear factor in the $y$ axis. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a shear transformation matrix in the $z$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 0 \\
+  x & y & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_invshear}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *shear}: The shear transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a shear transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & -A_{01} & -A_{02} & 0 \\
+  -A_{10} & 1 & -A_{12} & 0 \\
+  -A_{20} & -A_{21} & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix4x4\_gen\_translation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 x}: The translation factor in the $x$ axis. \\
+  $\dot$ \texttt{f32 y}: The translation factor in the $y$ axis. \\
+  $\dot$ \texttt{f32 z}: The translation factor in the $z$ axis. \\
+  $\dot$ \texttt{CML\_Matrix4x4 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a translation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & x \\
+  0 & 1 & 0 & y \\
+  0 & 0 & 1 & z \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix4x4\_gen\_invtranslation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrix4x4 *translation}: The translation transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrix4x4 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a translation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & -A_{03} \\
+  0 & 1 & 0 & -A_{13} \\
+  0 & 0 & 1 & -A_{23} \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_genlh\_rotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a left-handed rotation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(-\theta) & -\sin(-\theta) \\
+  \sin(-\theta) & \cos(-\theta)
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_genrh\_rotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a right-handed rotation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(\theta) & -\sin(\theta) \\
+  \sin(\theta) & \cos(\theta)
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrix2x2\_gen\_invrotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrix2x2 *rotation}: The rotation transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrix2x2 *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a rotation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  A_{00} & -A_{01} \\
+  -A_{10} & A_{11}
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genlh\_rotationx}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a left-handed rotation transformation matrix around the $x$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & \cos(-\theta) & -\sin(-\theta) & 0 \\
+  0 & \sin(-\theta) & \cos(-\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genrh\_rotationx}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a right-handed rotation transformation matrix around the $x$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & \cos(\theta) & -\sin(\theta) & 0 \\
+  0 & \sin(\theta) & \cos(\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genlh\_rotationy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a left-handed rotation transformation matrix around the $y$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(-\theta) & 0 & \sin(-\theta) & 0 \\
+  0 & 1 & 0 & 0 \\
+  -\sin(-\theta) & 0 & \cos(-\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genrh\_rotationy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a right-handed rotation transformation matrix around the $y$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(\theta) & 0 & \sin(\theta) & 0 \\
+  0 & 1 & 0 & 0 \\
+  -\sin(\theta) & 0 & \cos(\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genlh\_rotationz}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a left-handed rotation transformation matrix around the $z$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(-\theta) & -\sin(-\theta) & 0 & 0 \\
+  \sin(-\theta) & \cos(-\theta) & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genrh\_rotationz}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a right-handed rotation transformation matrix around the $z$ axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \begin{bmatrix}
+  \cos(\theta) & -\sin(\theta) & 0 & 0 \\
+  \sin(\theta) & \cos(\theta) & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genlh\_rotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{const CML\_Vector3 *axis}: The axis of rotation. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a left-handed rotation transformation matrix around an arbitrary axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Having $t = 1 - \cos(-\theta)$, and $x,y,z$ the components of the normalized axis of rotation, $\mathbf{OUT} = \begin{bmatrix}
+  txx + \cos(-\theta) & txy - z\sin(-\theta) & txz + y\sin(-\theta) & 0 \\
+  txy + z\sin(-\theta) & tyy + \cos(-\theta) & tyz - x\sin(-\theta) & 0 \\
+  txz - y\sin(-\theta) & tyz + x\sin(-\theta) & tzz + \cos(-\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_genrh\_rotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{f32 angle}: The rotation angle in radians. \\
+  $\dot$ \texttt{const CML\_Vector3 *axis}: The axis of rotation. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates a right-handed rotation transformation matrix around an arbitrary axis. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  Having $t = 1 - \cos(\theta)$, and $x,y,z$ the components of the normalized axis of rotation, $\mathbf{OUT} = \begin{bmatrix}
+  txx + \cos(\theta) & txy - z\sin(\theta) & txz + y\sin(\theta) & 0 \\
+  txy + z\sin(\theta) & tyy + \cos(\theta) & tyz - x\sin(\theta) & 0 \\
+  txz - y\sin(\theta) & tyz + x\sin(\theta) & tzz + \cos(\theta) & 0 \\
+  0 & 0 & 0 & 1
+  \end{bmatrix}$. \\
+\end{quote}
+
+\function{cml\_matrixnxn\_gen\_invrotation}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrixnxn *rotation}: The rotation transformation matrix. \\
+  $\dot$ \texttt{CML\_Matrixnxn *OUT}: The matrix to store the result. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Generates the inverse of a rotation transformation matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{OUT} = \mathbf{A}^T$. \\
+\end{quote}
 
 \subsubsection{Variable-Size Linear Algebra}
 

@@ -4,7 +4,7 @@
  * @brief Declarations and implementations for the fixed vector manipulation 
  *        functions of CAMEL.
  * 
-* @note This module is header only. Vectors are column major.
+ * @note This module is header only. Vectors are column major.
  *
  * @author Sergio Madrid
  * @date 7/11/2023
