@@ -2,6 +2,15 @@
 
 ## Priority
 
+Maybe put the sizes in the numeric type enum since then it is stored directly in type and no lutable is needed
+
+Basic camel type: Matrix (1x1 for scalars, 1xn or nx1 for vectors (must be transposed if needed), nxm for matrices). The init function will take size, and type (CML_NumericType), and will initialize it to 0 (maybe make different init functions (identity, etc.)). 
+
+Change exptkn_copy to use string copy instead of init.
+Create lm function (analogous to that of R), and have a print function for it that prints the same info as R (optional to do the hypothesis tests). Do lm with option to choose algorithm (least sqiares, etc.).
+Create the variance, covariance, mean, etc. functions that take a DArray.
+Create a dataset type that holds a 2d Darray (DArray of DArrays), and a darray with a new CML_Type type, where it specifies the type of each column, as well as some info like, factor, discrete, numeric, etc.
+
 - [ ] At some point, make latex manual for camel.
 - [ ] Have two functions to calculate roots of polynomials, a standard 100% accurate one (slow) and an approximation one using the Newton method (fast).
 - [ ] Add `CML_Allocator`, and make all the functions that require memory allocation to take one as a parameter.

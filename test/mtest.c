@@ -31,7 +31,7 @@ void cml_register_all_tests(CML_Test *registry, u32 *count) {
 
 
 int main() {
-    b8 testing = true;
+    b8 testing = false;
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 400;
@@ -55,29 +55,19 @@ int main() {
         u32 iterations = 1000000;
         u32 outIterations = 1000;
         printf("Time profiling:\n");
-        printf("Function being profiled: cml_matrix4x4_add\n");
+        printf("Function being profiled: cml_vector4_add\n");
         printf("Total iterations: %d\n", iterations*outIterations);
 
         struct timeval start, end;
-        CML_Matrix4x4 A = CML_MATRIX4X4(
-            1.0, 2.0, 3.0, 4.0,
-            5.0, 6.0, 7.0, 8.0,
-            9.0, 10.0, 11.0, 12.0,
-            13.0, 14.0, 15.0, 16.0
-        );
-        CML_Matrix4x4 B = CML_MATRIX4X4(
-            1.0, 2.0, 3.0, 4.0,
-            5.0, 6.0, 7.0, 8.0,
-            9.0, 10.0, 11.0, 12.0,
-            13.0, 14.0, 15.0, 16.0
-        );
+        CML_Vector4 v = CML_VECTOR4_ONE;
+        CML_Vector4 w = CML_VECTOR4_ONE;
         double totalElapsed = 0.0;
         double elapsed = 0.0;
         for (u32 i = 0; i < outIterations; i++) {
             gettimeofday(&start, NULL);
             for (u32 j = 0; j < iterations; j++) {
-                CML_Matrix4x4 C;
-                cml_matrix4x4_add(&A, &B, &C);
+                CML_Vector4 u;
+                cml_vector4_add(&v, &w, &u);
             }
             gettimeofday(&end, NULL);
             elapsed = (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0);
@@ -90,11 +80,11 @@ int main() {
         printf("Average iterations per second: %f\n", 1.0 / (elapsed / iterations));
     }
 
-    b8 individualTesting = false;
+    b8 individualTesting = true;
     if (individualTesting) {
         CML_Allocator a = CML_ALLOCATOR_DEFAULT;
 
-        CML_DArray darray;
+        /*CML_DArray darray;
         CML_String expression;
         cml_string_init(&a, "867x + y^(sin(z)) / (291(xlog(y + z)))", &expression);
         cml_expression_lex(&a, &expression, &darray);
@@ -108,7 +98,20 @@ int main() {
         }
 
         cml_string_destroy(&expression);
-        cml_darray_destroy(&darray);
+        cml_darray_destroy(&darray); */
+
+        u64 test[] = {11111,2,3,4,5,6,7,8,9,1,1,3,4,5,6,7};
+        CML_Matrix A;
+        cml_matrix_init(&a, 4, 4, true, CML_F32, &A);
+        u32 i = 0;
+        for (u32 r = 0; r < 4; r++) {
+            for (u32 c = 0; c < 4; c++) {
+                cml_matrix_set(&test[i], r, c, &A);
+                i++;
+            }
+        }
+        cml_matrix_print(&A);
+        cml_matrix_destroy(&A);
     }
 
     return 0;

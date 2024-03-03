@@ -16,8 +16,9 @@
 
 
 CML_TestResult test_bigint_set_int() {
+    CML_Allocator a = CML_ALLOCATOR_DEFAULT;
     CML_BigInt bigint;
-    cml_bigint_init(0, &bigint);
+    cml_bigint_init(&a, 0, &bigint);
     char *expected = "200345";
     cml_bigint_set_int(200345, 1, &bigint);
     CML_TestResult result;
@@ -25,7 +26,7 @@ CML_TestResult test_bigint_set_int() {
     if (!result.passed) {
         result.debugMessage = cml_bigint_debug(expected, &bigint);
     }
-    cml_bigint_free(&bigint);
+    cml_bigint_destroy(&bigint);
     return result;
 }
 

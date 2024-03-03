@@ -34,6 +34,8 @@ typedef enum CML_Status {
     CML_ERR_MALLOC = -2,
     /** @brief Realloc failed. */
     CML_ERR_REALLOC = -3,
+    /** @brief Calloc failed. */
+    CML_ERR_CALLOC,
     /** @brief Invalid capacity. */
     CML_ERR_INVALID_CAPACITY = -4,
     /** @brief Invalid size for the input. */

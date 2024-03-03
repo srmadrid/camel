@@ -14,10 +14,13 @@
 #ifndef CAMEL_CORE
 #define CAMEL_CORE
 
+#include "common.h"
 #include "macros.h"
 #include "err.h"
 #include "constants.h"
+#include "types.h"
 #include "test.h"
+#include "matrix/matrix.h"
 #include "expression/expression.h"
 #include "dstructs/dstructs.h"
 #include "bignum/bignum.h"

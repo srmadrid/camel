@@ -20,6 +20,7 @@
 
 #include "../macros.h"
 #include "../err.h"
+#include "../memory/memory.h"
 
 
 /** @brief Default capacity of a bigint. */
@@ -41,6 +42,9 @@ typedef struct CML_BigInt {
     u32 capacity;
     /** @brief Sign of the integer. */
     i32 sign;
+    /** @brief Allocator used for dynamic memory management within the 
+     *         structure. */
+    CML_Allocator *allocator;
 } CML_BigInt;
 
 
@@ -49,12 +53,13 @@ typedef struct CML_BigInt {
  *        value to 0. If a size under 2 is passed, the default initial size of 
  *        2 will be used.
  *
+ * @brief allocator Allocator for the bigint.
  * @param capacity Initial capacity of the bigint.
  * @param bigint   Big int to initialize.
  * 
  * @return Success or error code.
  */
-CML_Status cml_bigint_init(u32 capacity, CML_BigInt *bigint);
+CML_Status cml_bigint_init(CML_Allocator *allocator, u32 capacity, CML_BigInt *bigint);
 
 
 /**
@@ -64,7 +69,7 @@ CML_Status cml_bigint_init(u32 capacity, CML_BigInt *bigint);
  * 
  * @return void.
  */
-void cml_bigint_free(CML_BigInt *bigint);
+void cml_bigint_destroy(void *bigint);
 
 
 /**

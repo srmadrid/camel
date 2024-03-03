@@ -17,6 +17,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <complex.h>
 
 
 #define CAMEL_API inline
@@ -50,6 +51,10 @@ typedef double f64;   /** @brief 64-bit floating point number. */
 // Boolean types.
 typedef _Bool b8;     /** @brief 8-bit boolean. */
 typedef i32 b32;      /** @brief 32-bit boolean. */
+
+// Complex types.
+typedef _Complex float cf32;
+typedef _Complex double cf64;
 
 
 // Ensure type sizes.

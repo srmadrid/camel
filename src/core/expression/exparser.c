@@ -50,6 +50,21 @@ void cml_exptkn_destroy(void *token) {
 }
 
 
+CML_Status cml_exptkn_copy(CML_Allocator *allocator, CML_ExpressionToken *token, CML_ExpressionToken *out) {
+    if (allocator == NULL || token == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    CML_String aux;
+    CML_Status result = cml_string_init(allocator, token->characters.data, &aux);
+    if (result != CML_SUCCESS) {
+        return result;
+    }
+    
+    return cml_exptkn_init(&aux, token->charType, out);
+}
+
+
 CML_CharType cml_read_char(char input) {
     switch (input) {
         case '0':
@@ -124,6 +139,10 @@ CML_CharType cml_read_char(char input) {
 
 
 CML_Status cml_expression_lex(CML_Allocator *allocator, CML_String *expression, CML_DArray *out) {
+    if (allocator == NULL || expression == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
+    }
+
     cml_darray_init_default(allocator, CML_ExpressionToken, cml_exptkn_destroy, out);
     u32 letterAuxLen = 0; // For charType == 5, to be removed when a something better is implemented
     CML_CharType charType = CML_CHAR_UNDEFINED;
@@ -245,11 +264,23 @@ CML_Status cml_expression_lex(CML_Allocator *allocator, CML_String *expression, 
 
 
 CML_Status cml_expression_parse(CML_Allocator *allocator, CML_DArray *expression, CML_BTree *out) {
+    if (allocator == NULL || expression == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
+    }
+
     CML_Stack operatorStack;
     cml_stack_init_default(allocator, CML_ExpressionToken, cml_exptkn_destroy, &operatorStack);
+    cml_btree_init(allocator, NULL, CML_ExpressionToken, cml_exptkn_destroy, out);
 
-    out->stride = 1;
-    expression->stride = 1;
+    for (u32 i = 0; i < expression->length; i++) {
+        CML_ExpressionToken token;
+        cml_exptkn_copy(allocator, cml_darray_get(i, expression), &token);
+
+        if (token.charType == CML_CHAR_NUMBER || token.charType == CML_CHAR_VARIABLE || token.charType == CML_CHAR_CONSTANT) {
+
+        }
+    }
+
     return CML_SUCCESS;
 }
 

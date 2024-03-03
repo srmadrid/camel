@@ -4,7 +4,7 @@ ifeq ($(OS),Linux)
     TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors # -g #(to debug if something like a segfault occurs)
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Iinclude -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g #(to debug if something like a segfault occurs)
     LDFLAGS = -shared -lm -fsanitize=address,undefined
     LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined
 else

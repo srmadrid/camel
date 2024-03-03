@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "../../../core/common.h"
+
 #ifdef CML_USE_SSE
     #include <xmmintrin.h>
     #include <smmintrin.h>
@@ -751,10 +753,16 @@ CAMEL_STATIC CAMEL_API char *cml_vector3_debug(const CML_Vector3 *expected, cons
  * @return void.
  */
 CAMEL_STATIC CAMEL_API void cml_vector4_add(const CML_Vector4 *v, const CML_Vector4 *w, CML_Vector4 *out) {
+#ifdef CML_USE_SSE
+    out->sse = _mm_add_ps(v->sse, w->sse);
+#elif CML_USE_NEON
+    out->neon = vaddq_f32(v->neon, w->neon);
+#else
     out->x = v->x + w->x;
     out->y = v->y + w->y;
     out->z = v->z + w->z;
     out->w = v->w + w->w;
+#endif
 }
 
 

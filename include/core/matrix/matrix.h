@@ -1,19 +1,19 @@
 /**
- * @file linear.h
+ * @file matrix.h
  * 
- * @brief Main entry point for the linear algebra module of CAMEL.
+ * @brief Entry point for the core data type (matrix) module of CAMEL.
  *
  * @author Sergio Madrid
- * @date 7/11/2023
+ * @date 2/3/2024
  * 
  * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
  *            under the MIT License. See LICENSE in the project root for license
  *            information.
  */
 
-#ifndef CAMEL_LINEAR_ALGEBRA
-#define CAMEL_LINEAR_ALGEBRA
+#ifndef CAMEL_MATRIX
+#define CAMEL_MATRIX
 
-#include "flinear/flinear.h"
+#include "m.h"
 
-#endif /* CAMEL_LINEAR_ALGEBRA */
+#endif /* CAMEL_MATRIX */

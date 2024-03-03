@@ -15,39 +15,42 @@
 #include "../../../include/core/bignum/bigint.h"
 
 
-CML_Status cml_bigint_init(u32 capacity, CML_BigInt *bigint) {
+CML_Status cml_bigint_init(CML_Allocator *allocator, u32 capacity, CML_BigInt *bigint) {
     if (capacity < CML_INITIAL_BIGINT_CAP) {
         capacity = CML_INITIAL_BIGINT_CAP;
     }
 
-    if (bigint == NULL) {
+    if (allocator == NULL || bigint == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    bigint->data = (u32*)malloc(capacity * sizeof(u32));
+    bigint->data = (u32*)allocator->malloc(capacity * sizeof(u32), allocator->context);
     if (bigint->data == NULL) {
         bigint->capacity = 0;
         bigint->size = 0;
-        return CML_ERR_INVALID_SIZE;
+        bigint->allocator = NULL;
+        return CML_ERR_MALLOC;
     }
     for (u32 i = 0; i < capacity; ++i) {
         bigint->data[i] = 0;
     }
     bigint->size = 0;
     bigint->capacity = capacity;
+    bigint->allocator = allocator;
 
     return CML_SUCCESS;
 }
 
 
-void cml_bigint_free(CML_BigInt *bigint) {
-    if (bigint != NULL) {
-        if (bigint->data != NULL) {
-            free(bigint->data);
+void cml_bigint_destroy(void *bigint) {
+    CML_BigInt *bi = (CML_BigInt*)bigint;
+    if (bi != NULL) {
+        if (bi->data != NULL) {
+            free(bi->data);
         }
-        bigint->data = NULL;
-        bigint->size = 0;
-        bigint->capacity = 0;
+        bi->data = NULL;
+        bi->size = 0;
+        bi->capacity = 0;
     }
 }
 
@@ -252,12 +255,12 @@ CML_Comparison cml_bigint_compare_str(CML_BigInt *bigint, char *str) {
     }
 
     CML_BigInt bigint2;
-    cml_bigint_init(0, &bigint2);
+    cml_bigint_init(bigint->allocator, 0, &bigint2);
     cml_bigint_set_str(str, &bigint2);
 
     CML_Comparison result = cml_bigint_compare(bigint, &bigint2);
 
-    cml_bigint_free(&bigint2);
+    cml_bigint_destroy(&bigint2);
 
     return result;
 }

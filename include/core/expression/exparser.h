@@ -72,8 +72,15 @@ typedef struct CML_ExpressionToken{
     CML_CharType charType;
     /** @brief String that holds the characters of the token. */
     CML_String characters;
-    // No allocator because there is no internal dynamic memory.
 } CML_ExpressionToken;
+
+
+/**
+ * @brief Structure representing a varible.
+ */
+typedef struct CML_Variable {
+    i32 temp;
+} CML_Variable;
 
 
 /**
@@ -84,6 +91,9 @@ typedef struct CML_ExpressionToken{
 typedef struct CML_Expression {
     /** @brief Binary tree that holds the expression in tokens. */
     CML_BTree data;
+    /** @brief Dynamic array holding the input variables of the expression in 
+     *         alphabetical order (the input order used in functions later). */
+    CML_DArray variables;
     /** @brief Dynamic array that holds the expression in tokens. */
     CML_DArray tokens;
     /** @brief String that holds the original expression in characters. */
@@ -118,6 +128,18 @@ CML_Status cml_exptkn_init(CML_String *characters, CML_CharType charType, CML_Ex
  * @return void.
  */
 void cml_exptkn_destroy(void *token);
+
+
+/**
+ * @brief Deep copies a CML_ExpressionToken.
+ *
+ * @param allocator Allocator for the new string in out.
+ * @param token Token to copy.
+ * @param out   Token to copy into.
+ *
+ * @return Status code.
+ */
+CML_Status cml_exptkn_copy(CML_Allocator *allocator, CML_ExpressionToken *token, CML_ExpressionToken *out);
 
 
 /**
