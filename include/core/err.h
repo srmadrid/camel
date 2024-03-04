@@ -48,6 +48,10 @@ typedef enum CML_Status {
     CML_ERR_INVALID_INDEX = -8,
     /** @brief Empty structure. */
     CML_ERR_EMPTY_STRUCTURE = -9,
+    /** @brief Expected vector. */
+    CML_ERR_EXPECTED_VECTOR,
+    /** @brief Invalid permuatation. */
+    CML_ERR_INVALID_PERMUTATION,
 } CML_Status;
 
 

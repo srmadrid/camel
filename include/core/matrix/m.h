@@ -16,6 +16,7 @@
 
 
 #include <stdio.h>
+#include <math.h>
 
 #include "../err.h"
 #include "../macros.h"
@@ -113,6 +114,22 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out);
  * @return A pointer to the element at the input location.
  */
 void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out);
+
+
+/**
+ * @brief Creates a new matrix out of the rows and columns specified by p and
+ *        q (permutation vectors).
+ *
+ * @brief allocator Allocator for the new matrix.
+ * @brief A         Input matrix.
+ * @brief p         Row permutation vector.
+ * @brief q         Column permutation vector.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *p, CML_Matrix *q, b8 rowmajor, CML_Matrix *out);
 
 
 /**

@@ -100,9 +100,9 @@ int main() {
         cml_string_destroy(&expression);
         cml_darray_destroy(&darray); */
 
-        u64 test[] = {11111,2,3,4,5,6,7,8,9,1,1,3,4,5,6,7};
+        f64 test[] = {1,2,-3,4,5,6,7,8,9,1,1,3,4,5,6,7};
         CML_Matrix A;
-        cml_matrix_init(&a, 4, 4, true, CML_F32, &A);
+        cml_matrix_init(&a, 4, 4, true, CML_F64, &A);
         u32 i = 0;
         for (u32 r = 0; r < 4; r++) {
             for (u32 c = 0; c < 4; c++) {
@@ -110,8 +110,36 @@ int main() {
                 i++;
             }
         }
+        printf("A = \n");
         cml_matrix_print(&A);
+
+        u32 parr[] = {0,0,1,2,3,3,3,3};
+        CML_Matrix p;
+        cml_matrix_init(&a, 8, 1, true, CML_U32, &p);
+        for (u32 r = 0; r < 8; r++) {
+            cml_matrix_set(&parr[r], r, 0, &p);
+        }
+        printf("\np = \n");
+        cml_matrix_print(&p);
+        u32 qarr[] = {1,2};
+        CML_Matrix q;
+        cml_matrix_init(&a, 2, 1, true, CML_U32, &q);
+        for (u32 r = 0; r < 2; r++) {
+            cml_matrix_set(&qarr[r], r, 0, &q);
+        }
+        printf("\nq = \n");
+        cml_matrix_print(&q);
+
+        CML_Matrix B;
+        cml_matrix_select(NULL, &A, &p, &q, true, &B);
+        printf("\nB = \n");
+        cml_matrix_print(&B);
+
+
         cml_matrix_destroy(&A);
+        cml_matrix_destroy(&p);
+        cml_matrix_destroy(&q);
+        cml_matrix_destroy(&B);
     }
 
     return 0;
