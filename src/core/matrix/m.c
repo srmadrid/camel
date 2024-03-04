@@ -562,7 +562,7 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
                         break;
 
                     default:
-                        cml_matrix_set(cml_matrix_get(r, c, A), r, c, out);
+                        cml_matrix_set(cml_matrix_get(*(u32*)((u8*)p->data + r*pstride), *(u32*)((u8*)q->data + c*qstride), A), r, c, out);
                         break;
                 }
             }
