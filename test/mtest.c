@@ -113,6 +113,7 @@ int main() {
         printf("A = \n");
         cml_matrix_print(&A);
 
+        /* Permutation
         u32 parr[] = {0,0,1,2,3,3,3,3};
         CML_Matrix p;
         cml_matrix_init(&a, 8, 1, true, CML_U32, &p);
@@ -132,14 +133,32 @@ int main() {
 
         CML_Matrix B;
         cml_matrix_select(NULL, &A, &p, &q, true, &B);
+        printf("\nA(p, q) = B = \n");
+        cml_matrix_print(&B); */
+
+        CML_Matrix B;
+        cml_matrix_init(&a, 4, 4, true, CML_F64, &B);
+        f64 number = 1.65;
+        for (u32 r = 0; r < 4; r++) {
+            for (u32 c = 0; c < 4; c++) {
+                cml_matrix_set(&number, r, c, &B);
+                number *= 1.5;
+                i++;
+            }
+        }
         printf("\nB = \n");
         cml_matrix_print(&B);
 
+        CML_Matrix C;
+        cml_matrix_add(NULL, &A, &B, true, &C);
+        printf("\nC = A+B = \n");
+        cml_matrix_print(&C);
 
         cml_matrix_destroy(&A);
-        cml_matrix_destroy(&p);
-        cml_matrix_destroy(&q);
+        //cml_matrix_destroy(&p);
+        //cml_matrix_destroy(&q);
         cml_matrix_destroy(&B);
+        cml_matrix_destroy(&C);
     }
 
     return 0;

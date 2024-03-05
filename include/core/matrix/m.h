@@ -120,16 +120,30 @@ void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out);
  * @brief Creates a new matrix out of the rows and columns specified by p and
  *        q (permutation vectors).
  *
- * @brief allocator Allocator for the new matrix.
- * @brief A         Input matrix.
- * @brief p         Row permutation vector.
- * @brief q         Column permutation vector.
+ * @param allocator Allocator for the new matrix.
+ * @param A         Input matrix.
+ * @param p         Row permutation vector.
+ * @param q         Column permutation vector.
  * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
 CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *p, CML_Matrix *q, b8 rowmajor, CML_Matrix *out);
+
+
+/**
+ * @brief Adds two matrices and stores the result in the out matrix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
 
 
 /**

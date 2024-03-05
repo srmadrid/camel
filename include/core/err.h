@@ -52,6 +52,10 @@ typedef enum CML_Status {
     CML_ERR_EXPECTED_VECTOR,
     /** @brief Invalid permuatation. */
     CML_ERR_INVALID_PERMUTATION,
+    /** @brief Input matrices have incompatible sizes. */
+    CML_ERR_INCOMPATIBLE_SIZE,
+    /** @brief Input matrices have incompatible types. */
+    CML_ERR_INCOMPATIBLE_TYPES,
 } CML_Status;
 
 
