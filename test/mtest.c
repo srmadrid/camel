@@ -150,15 +150,30 @@ int main() {
         cml_matrix_print(&B);
 
         CML_Matrix C;
-        cml_matrix_add(NULL, &A, &B, true, &C);
-        printf("\nC = A+B = \n");
+        cml_matrix_sub(NULL, &A, &B, true, &C);
+        printf("\nC = A-B = \n");
         cml_matrix_print(&C);
+
+        cml_matrix_sub_inplace(&B, &A);
+        printf("\nA -= B: \n");
+        cml_matrix_print(&A);
+
+        CML_Matrix scalar;
+        cml_matrix_init(&a, 1, 1, true, CML_F64, &scalar);
+        f64 snumber = 10;
+        cml_matrix_set(&snumber, 0, 0, &scalar);
+        printf("\nscalar = \n");
+        cml_matrix_print(&scalar);
+        cml_matrix_sub_inplace(&scalar, &A);
+        printf("\nA -= scalar: \n");
+        cml_matrix_print(&A);
 
         cml_matrix_destroy(&A);
         //cml_matrix_destroy(&p);
         //cml_matrix_destroy(&q);
         cml_matrix_destroy(&B);
         cml_matrix_destroy(&C);
+        cml_matrix_destroy(&scalar);
     }
 
     return 0;

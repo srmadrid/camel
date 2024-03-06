@@ -147,6 +147,44 @@ CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, cons
 
 
 /**
+ * @brief Adds two matrices in place (out += left) and stores the result in 
+ *        the out matrix.
+ *
+ * @param left      The matrix on the left.
+ * @param out       The matrix on the right.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out);
+
+
+/**
+ * @brief Subtracts two matrices and stores the result in the out matrix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+
+
+/**
+ * @brief Subtracts two matrices in place (out -= left) and stores the result in 
+ *        the out matrix.
+ *
+ * @param left      The matrix on the left.
+ * @param out       The matrix on the right.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out);
+
+
+/**
  * @brief Prints the input matrix.
  *
  * @param matrix The matrix to be printed.
