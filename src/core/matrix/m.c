@@ -24,7 +24,7 @@ CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, b8 r
         return CML_ERR_INVALID_SIZE;
     }
 
-    u32 stride = cml_numerictype_size_lookup[type];
+    u32 stride = cml_numerictype_size(type);
 
     matrix->data = allocator->calloc(rows*columns, stride, allocator->context);
     if (matrix->data == NULL) {
@@ -50,7 +50,7 @@ CML_Status cml_matrix_init0(CML_Allocator *allocator, u32 rows, u32 columns, b8 
         return CML_ERR_INVALID_SIZE;
     }
 
-    u32 stride = cml_numerictype_size_lookup[type];
+    u32 stride = cml_numerictype_size(type);
     u32 size = rows*columns;
 
     matrix->data = allocator->calloc(size, stride, allocator->context);
@@ -115,7 +115,7 @@ CML_Status cml_matrix_init0(CML_Allocator *allocator, u32 rows, u32 columns, b8 
 void cml_matrix_destroy(void *matrix) {
     CML_Matrix *mat = (CML_Matrix*)matrix;
     if (mat != NULL) {
-        u32 stride = cml_numerictype_size_lookup[mat->type];
+        u32 stride = cml_numerictype_size(mat->type);
         u32 size = mat->rows*mat->columns;
         switch (mat->type) {
             case CML_BIGINT:
@@ -149,7 +149,7 @@ void cml_matrix_destroy(void *matrix) {
 
 
 CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out) {
-    if (out == NULL) {
+    if (out == NULL || element == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
@@ -157,7 +157,7 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out) {
         return CML_ERR_INVALID_INDEX;
     }
 
-    u32 stride = cml_numerictype_size_lookup[out->type];
+    u32 stride = cml_numerictype_size(out->type);
     void *location;
     if (out->rowmajor) {
         location = ((u8*)out->data) + row*stride*out->columns + column*stride;
@@ -217,6 +217,8 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out) {
         case CML_BIGINT:
         case CML_FRACTION:
         case CML_COMPLEX:
+        case CML_EXPRESSION:
+        case CML_MATRIX:
             memcpy(location, element, stride);
             break;
     }
@@ -247,7 +249,7 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
     if (p != NULL) {
         pcreated = false;
         plength = p->rows > p->columns ? p->rows : p->columns;
-        pstride = cml_numerictype_size_lookup[p->type];
+        pstride = cml_numerictype_size(p->type);
         switch(p->type) {
             case CML_U8:
                 for (u32 i = 0; i < plength; i++) {
@@ -368,13 +370,15 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
                 break;
 
             case CML_COMPLEX:
+            case CML_EXPRESSION:
+            case CML_MATRIX:
                 break;
 
         }
     } else {
         pcreated = true;
         plength = A->rows;
-        pstride = cml_numerictype_size_lookup[CML_U32];
+        pstride = cml_numerictype_size(CML_U32);
         CML_Status result = cml_matrix_init(allocator, A->rows, 1, true, CML_U32, p);
         if (result != CML_SUCCESS)
             return result;
@@ -390,7 +394,7 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
     if (q != NULL) {
         qcreated = false;
         qlength = q->rows > q->columns ? q->rows : q->columns;
-        qstride = cml_numerictype_size_lookup[q->type];
+        qstride = cml_numerictype_size(q->type);
         switch(q->type) {
             case CML_U8:
                 for (u32 i = 0; i < qlength; i++) {
@@ -511,13 +515,15 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
                 break;
 
             case CML_COMPLEX:
+            case CML_EXPRESSION:
+            case CML_MATRIX:
                 break;
 
         }
     } else {
         qcreated = true;
         qlength = A->columns;
-        qstride = cml_numerictype_size_lookup[CML_U32];
+        qstride = cml_numerictype_size(CML_U32);
         CML_Status result = cml_matrix_init(allocator, A->columns, 1, true, CML_U32, q);
         if (result != CML_SUCCESS)
             return result;
@@ -588,7 +594,7 @@ void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out) {
         return NULL;
     }
 
-    u32 stride = cml_numerictype_size_lookup[out->type];
+    u32 stride = cml_numerictype_size(out->type);
     void *element;
     if (out->rowmajor) {
         element = ((u8*)out->data) + row*stride*out->columns + column*stride;
@@ -633,7 +639,10 @@ CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, cons
         allocator = left->allocator;
     }
 
-    cml_matrix_init(allocator, outRows, outColumns, rowmajor, left->type, out);
+    CML_Status result = cml_matrix_init(allocator, outRows, outColumns, rowmajor, left->type, out);
+    if (result != CML_SUCCESS) {
+        return result;
+    }
 
     switch (out->type) {
         case CML_U8:
@@ -1399,6 +1408,8 @@ CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, cons
             break;
 
         case CML_COMPLEX:
+        case CML_EXPRESSION:
+        case CML_MATRIX:
             break;
     }
 
@@ -1406,31 +1417,31 @@ CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, cons
 }
 
 
-CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
-    if (left == NULL || out == NULL) {
+CML_Status cml_matrix_add_inplace(const CML_Matrix *right, CML_Matrix *out) {
+    if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (left->type != out->type) {
+    if (right->type != out->type) {
         // Maybe add type promotion in the future
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
 
-    b8 leftIsScalar;
-    if (left->rows != out->rows || left->columns != out->columns) {
-        if (left->rows == 1 && left->columns == 1) {
-            leftIsScalar = true;
+    b8 rightIsScalar;
+    if (right->rows != out->rows || right->columns != out->columns) {
+        if (right->rows == 1 && right->columns == 1) {
+            rightIsScalar = true;
         } else {
         return CML_ERR_INCOMPATIBLE_SIZE;
         }
     } else {
-        leftIsScalar = false;
+        rightIsScalar = false;
     }
 
     switch (out->type) {
         case CML_U8:
-            if (leftIsScalar) {
-                u8 scalar = *(u8*)left->data;
+            if (rightIsScalar) {
+                u8 scalar = *(u8*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1448,13 +1459,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u8*)cml_matrix_get(r, c, out) += *(u8*)cml_matrix_get(r, c, left);
+                            *(u8*)cml_matrix_get(r, c, out) += *(u8*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u8*)cml_matrix_get(r, c, out) += *(u8*)cml_matrix_get(r, c, left);
+                            *(u8*)cml_matrix_get(r, c, out) += *(u8*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1462,8 +1473,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U16:
-            if (leftIsScalar) {
-                u16 scalar = *(u16*)left->data;
+            if (rightIsScalar) {
+                u16 scalar = *(u16*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1481,13 +1492,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u16*)cml_matrix_get(r, c, out) += *(u16*)cml_matrix_get(r, c, left);
+                            *(u16*)cml_matrix_get(r, c, out) += *(u16*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u16*)cml_matrix_get(r, c, out) += *(u16*)cml_matrix_get(r, c, left);
+                            *(u16*)cml_matrix_get(r, c, out) += *(u16*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1495,8 +1506,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U32:
-            if (leftIsScalar) {
-                u32 scalar = *(u32*)left->data;
+            if (rightIsScalar) {
+                u32 scalar = *(u32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1514,13 +1525,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u32*)cml_matrix_get(r, c, out) += *(u32*)cml_matrix_get(r, c, left);
+                            *(u32*)cml_matrix_get(r, c, out) += *(u32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u32*)cml_matrix_get(r, c, out) += *(u32*)cml_matrix_get(r, c, left);
+                            *(u32*)cml_matrix_get(r, c, out) += *(u32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1528,8 +1539,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U64:
-            if (leftIsScalar) {
-                u64 scalar = *(u64*)left->data;
+            if (rightIsScalar) {
+                u64 scalar = *(u64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1547,13 +1558,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u64*)cml_matrix_get(r, c, out) += *(u64*)cml_matrix_get(r, c, left);
+                            *(u64*)cml_matrix_get(r, c, out) += *(u64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u64*)cml_matrix_get(r, c, out) += *(u64*)cml_matrix_get(r, c, left);
+                            *(u64*)cml_matrix_get(r, c, out) += *(u64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1561,8 +1572,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I8:
-            if (leftIsScalar) {
-                i8 scalar = *(i8*)left->data;
+            if (rightIsScalar) {
+                i8 scalar = *(i8*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1580,13 +1591,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i8*)cml_matrix_get(r, c, out) += *(i8*)cml_matrix_get(r, c, left);
+                            *(i8*)cml_matrix_get(r, c, out) += *(i8*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i8*)cml_matrix_get(r, c, out) += *(i8*)cml_matrix_get(r, c, left);
+                            *(i8*)cml_matrix_get(r, c, out) += *(i8*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1594,8 +1605,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I16:
-            if (leftIsScalar) {
-                i16 scalar = *(i16*)left->data;
+            if (rightIsScalar) {
+                i16 scalar = *(i16*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1613,13 +1624,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i16*)cml_matrix_get(r, c, out) += *(i16*)cml_matrix_get(r, c, left);
+                            *(i16*)cml_matrix_get(r, c, out) += *(i16*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i16*)cml_matrix_get(r, c, out) += *(i16*)cml_matrix_get(r, c, left);
+                            *(i16*)cml_matrix_get(r, c, out) += *(i16*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1627,8 +1638,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I32:
-            if (leftIsScalar) {
-                i32 scalar = *(i32*)left->data;
+            if (rightIsScalar) {
+                i32 scalar = *(i32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1646,13 +1657,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i32*)cml_matrix_get(r, c, out) += *(i32*)cml_matrix_get(r, c, left);
+                            *(i32*)cml_matrix_get(r, c, out) += *(i32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i32*)cml_matrix_get(r, c, out) += *(i32*)cml_matrix_get(r, c, left);
+                            *(i32*)cml_matrix_get(r, c, out) += *(i32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1660,8 +1671,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I64:
-            if (leftIsScalar) {
-                i64 scalar = *(i64*)left->data;
+            if (rightIsScalar) {
+                i64 scalar = *(i64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1679,13 +1690,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i64*)cml_matrix_get(r, c, out) += *(i64*)cml_matrix_get(r, c, left);
+                            *(i64*)cml_matrix_get(r, c, out) += *(i64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i64*)cml_matrix_get(r, c, out) += *(i64*)cml_matrix_get(r, c, left);
+                            *(i64*)cml_matrix_get(r, c, out) += *(i64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1693,8 +1704,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_F32:
-            if (leftIsScalar) {
-                f32 scalar = *(f32*)left->data;
+            if (rightIsScalar) {
+                f32 scalar = *(f32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1712,13 +1723,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(f32*)cml_matrix_get(r, c, out) += *(f32*)cml_matrix_get(r, c, left);
+                            *(f32*)cml_matrix_get(r, c, out) += *(f32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(f32*)cml_matrix_get(r, c, out) += *(f32*)cml_matrix_get(r, c, left);
+                            *(f32*)cml_matrix_get(r, c, out) += *(f32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1726,8 +1737,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_F64:
-            if (leftIsScalar) {
-                f64 scalar = *(f64*)left->data;
+            if (rightIsScalar) {
+                f64 scalar = *(f64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1745,13 +1756,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(f64*)cml_matrix_get(r, c, out) += *(f64*)cml_matrix_get(r, c, left);
+                            *(f64*)cml_matrix_get(r, c, out) += *(f64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(f64*)cml_matrix_get(r, c, out) += *(f64*)cml_matrix_get(r, c, left);
+                            *(f64*)cml_matrix_get(r, c, out) += *(f64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1759,8 +1770,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEXF32:
-            if (leftIsScalar) {
-                cf32 scalar = *(cf32*)left->data;
+            if (rightIsScalar) {
+                cf32 scalar = *(cf32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1778,13 +1789,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(cf32*)cml_matrix_get(r, c, out) += *(cf32*)cml_matrix_get(r, c, left);
+                            *(cf32*)cml_matrix_get(r, c, out) += *(cf32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(cf32*)cml_matrix_get(r, c, out) += *(cf32*)cml_matrix_get(r, c, left);
+                            *(cf32*)cml_matrix_get(r, c, out) += *(cf32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1792,8 +1803,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEXF64:
-            if (leftIsScalar) {
-                cf64 scalar = *(cf64*)left->data;
+            if (rightIsScalar) {
+                cf64 scalar = *(cf64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -1811,13 +1822,13 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(cf64*)cml_matrix_get(r, c, out) += *(cf64*)cml_matrix_get(r, c, left);
+                            *(cf64*)cml_matrix_get(r, c, out) += *(cf64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(cf64*)cml_matrix_get(r, c, out) += *(cf64*)cml_matrix_get(r, c, left);
+                            *(cf64*)cml_matrix_get(r, c, out) += *(cf64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -1831,6 +1842,8 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEX:
+        case CML_EXPRESSION:
+        case CML_MATRIX:
             break;
     }
 
@@ -1872,7 +1885,10 @@ CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, cons
         allocator = left->allocator;
     }
 
-    cml_matrix_init(allocator, outRows, outColumns, rowmajor, left->type, out);
+    CML_Status result = cml_matrix_init(allocator, outRows, outColumns, rowmajor, left->type, out);
+    if (result != CML_SUCCESS) {
+        return result;
+    }
 
     switch (out->type) {
         case CML_U8:
@@ -2638,6 +2654,8 @@ CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, cons
             break;
 
         case CML_COMPLEX:
+        case CML_EXPRESSION:
+        case CML_MATRIX:
             break;
     }
 
@@ -2645,31 +2663,31 @@ CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, cons
 }
 
 
-CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
-    if (left == NULL || out == NULL) {
+CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out) {
+    if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (left->type != out->type) {
+    if (right->type != out->type) {
         // Maybe add type promotion in the future
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
 
-    b8 leftIsScalar;
-    if (left->rows != out->rows || left->columns != out->columns) {
-        if (left->rows == 1 && left->columns == 1) {
-            leftIsScalar = true;
+    b8 rightIsScalar;
+    if (right->rows != out->rows || right->columns != out->columns) {
+        if (right->rows == 1 && right->columns == 1) {
+            rightIsScalar = true;
         } else {
         return CML_ERR_INCOMPATIBLE_SIZE;
         }
     } else {
-        leftIsScalar = false;
+        rightIsScalar = false;
     }
 
     switch (out->type) {
         case CML_U8:
-            if (leftIsScalar) {
-                u8 scalar = *(u8*)left->data;
+            if (rightIsScalar) {
+                u8 scalar = *(u8*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2687,13 +2705,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u8*)cml_matrix_get(r, c, out) -= *(u8*)cml_matrix_get(r, c, left);
+                            *(u8*)cml_matrix_get(r, c, out) -= *(u8*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u8*)cml_matrix_get(r, c, out) -= *(u8*)cml_matrix_get(r, c, left);
+                            *(u8*)cml_matrix_get(r, c, out) -= *(u8*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2701,8 +2719,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U16:
-            if (leftIsScalar) {
-                u16 scalar = *(u16*)left->data;
+            if (rightIsScalar) {
+                u16 scalar = *(u16*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2720,13 +2738,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u16*)cml_matrix_get(r, c, out) -= *(u16*)cml_matrix_get(r, c, left);
+                            *(u16*)cml_matrix_get(r, c, out) -= *(u16*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u16*)cml_matrix_get(r, c, out) -= *(u16*)cml_matrix_get(r, c, left);
+                            *(u16*)cml_matrix_get(r, c, out) -= *(u16*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2734,8 +2752,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U32:
-            if (leftIsScalar) {
-                u32 scalar = *(u32*)left->data;
+            if (rightIsScalar) {
+                u32 scalar = *(u32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2753,13 +2771,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u32*)cml_matrix_get(r, c, out) -= *(u32*)cml_matrix_get(r, c, left);
+                            *(u32*)cml_matrix_get(r, c, out) -= *(u32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u32*)cml_matrix_get(r, c, out) -= *(u32*)cml_matrix_get(r, c, left);
+                            *(u32*)cml_matrix_get(r, c, out) -= *(u32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2767,8 +2785,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_U64:
-            if (leftIsScalar) {
-                u64 scalar = *(u64*)left->data;
+            if (rightIsScalar) {
+                u64 scalar = *(u64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2786,13 +2804,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(u64*)cml_matrix_get(r, c, out) -= *(u64*)cml_matrix_get(r, c, left);
+                            *(u64*)cml_matrix_get(r, c, out) -= *(u64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(u64*)cml_matrix_get(r, c, out) -= *(u64*)cml_matrix_get(r, c, left);
+                            *(u64*)cml_matrix_get(r, c, out) -= *(u64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2800,8 +2818,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I8:
-            if (leftIsScalar) {
-                i8 scalar = *(i8*)left->data;
+            if (rightIsScalar) {
+                i8 scalar = *(i8*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2819,13 +2837,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i8*)cml_matrix_get(r, c, out) -= *(i8*)cml_matrix_get(r, c, left);
+                            *(i8*)cml_matrix_get(r, c, out) -= *(i8*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i8*)cml_matrix_get(r, c, out) -= *(i8*)cml_matrix_get(r, c, left);
+                            *(i8*)cml_matrix_get(r, c, out) -= *(i8*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2833,8 +2851,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I16:
-            if (leftIsScalar) {
-                i16 scalar = *(i16*)left->data;
+            if (rightIsScalar) {
+                i16 scalar = *(i16*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2852,13 +2870,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i16*)cml_matrix_get(r, c, out) -= *(i16*)cml_matrix_get(r, c, left);
+                            *(i16*)cml_matrix_get(r, c, out) -= *(i16*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i16*)cml_matrix_get(r, c, out) -= *(i16*)cml_matrix_get(r, c, left);
+                            *(i16*)cml_matrix_get(r, c, out) -= *(i16*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2866,8 +2884,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I32:
-            if (leftIsScalar) {
-                i32 scalar = *(i32*)left->data;
+            if (rightIsScalar) {
+                i32 scalar = *(i32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2885,13 +2903,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i32*)cml_matrix_get(r, c, out) -= *(i32*)cml_matrix_get(r, c, left);
+                            *(i32*)cml_matrix_get(r, c, out) -= *(i32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i32*)cml_matrix_get(r, c, out) -= *(i32*)cml_matrix_get(r, c, left);
+                            *(i32*)cml_matrix_get(r, c, out) -= *(i32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2899,8 +2917,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_I64:
-            if (leftIsScalar) {
-                i64 scalar = *(i64*)left->data;
+            if (rightIsScalar) {
+                i64 scalar = *(i64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2918,13 +2936,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(i64*)cml_matrix_get(r, c, out) -= *(i64*)cml_matrix_get(r, c, left);
+                            *(i64*)cml_matrix_get(r, c, out) -= *(i64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(i64*)cml_matrix_get(r, c, out) -= *(i64*)cml_matrix_get(r, c, left);
+                            *(i64*)cml_matrix_get(r, c, out) -= *(i64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2932,8 +2950,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_F32:
-            if (leftIsScalar) {
-                f32 scalar = *(f32*)left->data;
+            if (rightIsScalar) {
+                f32 scalar = *(f32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2951,13 +2969,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(f32*)cml_matrix_get(r, c, out) -= *(f32*)cml_matrix_get(r, c, left);
+                            *(f32*)cml_matrix_get(r, c, out) -= *(f32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(f32*)cml_matrix_get(r, c, out) -= *(f32*)cml_matrix_get(r, c, left);
+                            *(f32*)cml_matrix_get(r, c, out) -= *(f32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2965,8 +2983,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_F64:
-            if (leftIsScalar) {
-                f64 scalar = *(f64*)left->data;
+            if (rightIsScalar) {
+                f64 scalar = *(f64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -2984,13 +3002,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(f64*)cml_matrix_get(r, c, out) -= *(f64*)cml_matrix_get(r, c, left);
+                            *(f64*)cml_matrix_get(r, c, out) -= *(f64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(f64*)cml_matrix_get(r, c, out) -= *(f64*)cml_matrix_get(r, c, left);
+                            *(f64*)cml_matrix_get(r, c, out) -= *(f64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -2998,8 +3016,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEXF32:
-            if (leftIsScalar) {
-                cf32 scalar = *(cf32*)left->data;
+            if (rightIsScalar) {
+                cf32 scalar = *(cf32*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -3017,13 +3035,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(cf32*)cml_matrix_get(r, c, out) -= *(cf32*)cml_matrix_get(r, c, left);
+                            *(cf32*)cml_matrix_get(r, c, out) -= *(cf32*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(cf32*)cml_matrix_get(r, c, out) -= *(cf32*)cml_matrix_get(r, c, left);
+                            *(cf32*)cml_matrix_get(r, c, out) -= *(cf32*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -3031,8 +3049,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEXF64:
-            if (leftIsScalar) {
-                cf64 scalar = *(cf64*)left->data;
+            if (rightIsScalar) {
+                cf64 scalar = *(cf64*)right->data;
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
@@ -3050,13 +3068,13 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
                 if (out->rowmajor) {
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            *(cf64*)cml_matrix_get(r, c, out) -= *(cf64*)cml_matrix_get(r, c, left);
+                            *(cf64*)cml_matrix_get(r, c, out) -= *(cf64*)cml_matrix_get(r, c, right);
                         }
                     }
                 } else {
                     for (u32 c = 0; c < out->columns; c++) {
                         for (u32 r = 0; r < out->rows; r++) {
-                            *(cf64*)cml_matrix_get(r, c, out) -= *(cf64*)cml_matrix_get(r, c, left);
+                            *(cf64*)cml_matrix_get(r, c, out) -= *(cf64*)cml_matrix_get(r, c, right);
                         }
                     }
                 }
@@ -3070,6 +3088,8 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *left, CML_Matrix *out) {
             break;
 
         case CML_COMPLEX:
+        case CML_EXPRESSION:
+        case CML_MATRIX:
             break;
     }
 
@@ -3088,7 +3108,7 @@ CML_Status cml_matrix_print(const CML_Matrix *matrix) {
     if (digits == NULL) {
         return CML_ERR_MALLOC;
     }
-    u32 stride = cml_numerictype_size_lookup[matrix->type];
+    u32 stride = cml_numerictype_size(matrix->type);
     switch(matrix->type) {
         case CML_U8:
             for (u32 i = 0; i < size; i++) {

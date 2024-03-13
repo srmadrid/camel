@@ -180,6 +180,85 @@ The library uses a set of naming conventions to make the code more readable and 
 
 \section{Core} \label{sec:core}
 
+The \textbf{core} module provides the building blocks for the entire library, including basic types, error handling, memory management, data structures, expression parsing, and other core tools. The following sections provide an overview of the core module, as well as detailed descriptions of its components.
+
+\subsection{Basic Features}
+
+\subsubsection{Elementary Typedefs}
+
+For ease of usage, CAMEL provides a set of elementary typedefs for basic types:
+
+\begin{itemize}
+  \item \texttt{u8}: An unsigned 8-bit integer.
+  \item \texttt{u16}: An unsigned 16-bit integer.
+  \item \texttt{u32}: An unsigned 32-bit integer.
+  \item \texttt{u64}: An unsigned 64-bit integer.
+  \item \texttt{i8}: A signed 8-bit integer.
+  \item \texttt{i16}: A signed 16-bit integer.
+  \item \texttt{i32}: A signed 32-bit integer.
+  \item \texttt{i64}: A signed 64-bit integer.
+  \item \texttt{f32}: A 32-bit floating-point number.
+  \item \texttt{f64}: A 64-bit floating-point number.
+  \item \texttt{b8}: A boolean value.
+  \item \texttt{b32}: A 32-bit boolean value.
+  \item \texttt{cf32}: A 32-bit complex floating-point number.
+  \item \texttt{cf64}: A 64-bit complex floating-point number.
+\end{itemize}
+
+\subsubsection{Error Handling}
+
+\subsubsection{Constants}
+
+\subsubsection{Types}
+
+CAMEL also offers some helper functionalities for types which are used throughout the library. The most important of which is the \texttt{CML\_NumericType} enum, which is used to represent numeric types: \newline
+
+\enum{CML\_NumericType}
+\begin{quote}
+  \textbf{Values}: \\
+  $\dot$ \texttt{CML\_U8}: An unsigned 8-bit integer. \\
+  $\dot$ \texttt{CML\_U16}: An unsigned 16-bit integer. \\
+  $\dot$ \texttt{CML\_U32}: An unsigned 32-bit integer. \\
+  $\dot$ \texttt{CML\_U64}: An unsigned 64-bit integer. \\
+  $\dot$ \texttt{CML\_I8}: A signed 8-bit integer. \\
+  $\dot$ \texttt{CML\_I16}: A signed 16-bit integer. \\
+  $\dot$ \texttt{CML\_I32}: A signed 32-bit integer. \\
+  $\dot$ \texttt{CML\_I64}: A signed 64-bit integer. \\
+  $\dot$ \texttt{CML\_F32}: A 32-bit floating-point number. \\
+  $\dot$ \texttt{CML\_F64}: A 64-bit floating-point number. \\
+  $\dot$ \texttt{CML\_COMPLEXF32}: A 32-bit complex floating-point number. \\
+  $\dot$ \texttt{CML\_COMPLEXF64}: A 64-bit complex floating-point number. \\
+  $\dot$ \texttt{CML\_BIGINT}: An arbitrary-precision integer (corresponds to \texttt{CML\_BigInt}). \\
+  $\dot$ \texttt{CML\_FRACTION}: An arbitrary-precision fraction (corresponds to \texttt{CML\_Fraction}). \\
+  $\dot$ \texttt{CML\_COMPLEX}: An arbitrary-precision complex number (corresponds to \texttt{CML\_Complex}). \\
+  $\dot$ \texttt{CML\_EXPRESSION}: A symbolic expression (corresponds to \texttt{CML\_Expression}). \\
+  $\dot$ \texttt{CML\_MATRIX}: A matrix (corresponds to \texttt{CML\_Matrix}). \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a numeric type, which can be used to specify the type of a variable or function parameter. \\
+\end{quote}
+
+At a first glance, it might seem strange that the \texttt{CML\_NumericType} enum includes the non-numeric \texttt{CML\_Expression} type, but this is because the same operations that can be performed on a numeric type can be performed on an expression, and, as will be seen later, this allows for matrices to hold expressions which, in some areas, can be very useful. \texttt{CML\_Matrix} is also included in the enum, as it is the essential numeric type for the library, and this allows for higher dimensional matrices to be created.
+
+Additionally, a helper function is included to get the size of a numeric type in bytes: \newline
+
+\function{cml\_numerictype\_size}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_NumericType type}: The numeric type. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{u32} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Returns the size of the numeric type in bytes. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{type} \textbf{must} be a valid \texttt{CML\_NumericType} value. \\
+\end{quote}
+
 \subsection{Memory Management}
 
 \subsection{Data Structures}
@@ -1175,6 +1254,342 @@ A \textbf{dynamic array} is a data structure that allows for the storage of a va
 \subsection{Expression Parsing}
 
 \subsection{Arbitrary Precision Arithmetic}
+
+\subsection{Matrix Numeric Type}
+
+\textbf{Matrices} are the basic numeric type used in CAMEL. They are used to represent scalars, vectors and matrices and are used as a way of unifying most of the numerical operations in the library. The matrix numeric type is defined as follows: \newline
+
+\struct{CML\_Matrix}
+\begin{quote}
+  \textbf{Fields}: \\
+  $\dot$ \texttt{void *data}: A pointer to the matrix's data. \\
+  $\dot$ \texttt{CML\_NumericType type}: The type of the matrix's data. \\
+  $\dot$ \texttt{u32 rows}: The number of rows in the matrix. \\
+  $\dot$ \texttt{u32 columns}: The number of columns in the matrix. \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the matrix is row-major. If \texttt{false}, the matrix is column-major. \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the matrix. \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Represents a matrix numeric type containing information about the matrix's data, number of rows, and number of columns. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{data} \textbf{must} be a valid pointer to the matrix's data. \\
+\end{quote}
+
+Matrices can hold the types enumerated in \texttt{CML\_NumericType}. The matrix numeric type is used to represent scalars (when the number of rows and columns is 1), vectors (when the number of rows or columns is 1), and matrices (when the number of rows and columns is greater than 1). The matrix numeric type is used to unify most of the numerical operations in the library, such as addition, subtraction, multiplication, division and others. The matrix uses the following functions to perform these operations: \newline
+
+\function{cml\_matrix\_init}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the matrix. \\
+  $\dot$ \texttt{u32 rows}: The number of rows in the matrix. \\
+  $\dot$ \texttt{u32 columns}: The number of columns in the matrix. \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the matrix is row-major. \\
+  $\dot$ \texttt{CML\_NumericType type}: The type of the matrix's data. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The matrix to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new matrix and sets everything to 0. Keep in mind that if more complex values are used, such as \texttt{CML\_BigInt} or other library defined types, these will not be initialized, the position of their memory is just set to 0. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{type} \textbf{must} be a valid \texttt{CML\_NumericType}. \\
+  $\dot$ \texttt{rows} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{columns} \textbf{must} be greater than 0. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The matrix was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{out} or \texttt{allocator} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_SIZE}: \texttt{rows} or \texttt{columns} was 0. \\
+  $\dot$ \texttt{CML\_ERR\_CALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_matrix\_init0}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the matrix. \\
+  $\dot$ \texttt{u32 rows}: The number of rows in the matrix. \\
+  $\dot$ \texttt{u32 columns}: The number of columns in the matrix. \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the matrix is row-major. \\
+  $\dot$ \texttt{CML\_NumericType type}: The type of the matrix's data. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The matrix to initialize. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Initializes a new matrix and sets everything to 0. In contrast to \texttt{cml\_matrix\_init}, this function initializes more complex types, such as \texttt{CML\_BigInt} or other library defined types, to 0. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{allocator} \textbf{must} be a valid pointer to a \texttt{CML\_Allocator} structure. \\
+  $\dot$ \texttt{type} \textbf{must} be a valid \texttt{CML\_NumericType}. \\
+  $\dot$ \texttt{rows} \textbf{must} be greater than 0. \\
+  $\dot$ \texttt{columns} \textbf{must} be greater than 0. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The matrix was successfully initialized. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{out} or \texttt{allocator} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_SIZE}: \texttt{rows} or \texttt{columns} was 0. \\
+  $\dot$ \texttt{CML\_ERR\_CALLOC}: An error occurred during memory allocation. \\
+\end{quote}
+
+\function{cml\_matrix\_destroy}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Matrix *matrix}: The matrix to destroy. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void} \\
+  
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Destroys a matrix, freeing its internal memory. If it contains more complex types, such as \texttt{CML\_BigInt} or other library defined types, it will call the destroy function on each element. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{matrix} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+\end{quote}
+
+\function{cml\_matrix\_set}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{void *element}: The element to set into the matrix. \\
+  $\dot$ \texttt{u32 row}: The row to set the element at. \\
+  $\dot$ \texttt{u32 column}: The column to set the element at. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The matrix to set into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Sets an element in the matrix at the specified row and column. If the matrix contains more complex types, such as \texttt{CML\_BigInt} or other library defined types, it will take ownership of the element, and the user should no longer use it. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{element} \textbf{must} be a valid pointer to an element of the matrix's type. \\
+  $\dot$ \texttt{row} \textbf{must} be less than the number of rows in the matrix but greater than or equal to 0. \\
+  $\dot$ \texttt{column} \textbf{must} be less than the number of columns in the matrix but greater than or equal to 0. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The element was successfully set. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{element} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_INDEX}: \texttt{row} or \texttt{column} was out of bounds. \\
+\end{quote}
+
+\function{cml\_matrix\_get}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{u32 row}: The row to get the element from. \\
+  $\dot$ \texttt{u32 column}: The column to get the element from. \\
+  $\dot$ \texttt{const CML\_Matrix *out}: The matrix to get from. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{void*} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Gets an element from the matrix at the specified row and column and returns a pointer to it. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{row} \textbf{must} be less than the number of rows in the matrix but greater than or equal to 0. \\
+  $\dot$ \texttt{column} \textbf{must} be less than the number of columns in the matrix but greater than or equal to 0. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+\end{quote}
+
+\function{cml\_matrix\_select}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the new matrix. \\
+  $\dot$ \texttt{const CML\_Matrix *A}: The matrix to select from. \\
+  $\dot$ \texttt{CML\_Matrix *p}: The row permutation vector. For example, if $\mathbf{p} = \begin{bmatrix} 2 & 0 & 1 \end{bmatrix}$ (or $\mathbf{p}^T$, it does not matter if it is a row or a column vector), then the new matrix will be $\begin{bmatrix} \mathbf{A}_{2\ast} \\ \mathbf{A}_{0\ast} \\ \mathbf{A}_{1\ast} \end{bmatrix}$, where $\mathbf{A}_{i\ast}$ is the $i$-th row of $\mathbf{A}$. \\
+  $\dot$ \texttt{CML\_Matrix *q}: The column permutation vector. For example, if $\mathbf{q} = \begin{bmatrix} 2 & 0 & 1 \end{bmatrix}$ (or $\mathbf{q}^T$, it does not matter if it is a row or a column vector), then the new matrix will be $\begin{bmatrix} \mathbf{A}_{\ast2} & \mathbf{A}_{\ast0} & \mathbf{A}_{\ast1} \end{bmatrix}$, where $\mathbf{A}_{\ast i}$ is the $i$-th column of $\mathbf{A}$. \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the new matrix is row-major. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The new matrix to select into. \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Selects rows and columns from a matrix and stores them in a new matrix. If the matrix contains more complex types, such as \texttt{CML\_BigInt} or other library defined types, they will be copied into the new matrix. If either the input permutation vectors are \texttt{NULL}, the identity permutation will be used for that vector (i.e., $\mathbf{p}\vee\mathbf{q} = \begin{bmatrix} 0 & 1 & \cdots & n-1 \end{bmatrix}$, where $n$ is the number of rows or columns in the matrix). If the type of the permutation vectors is not \texttt{CML\_U32}, a conversion will be attempted. In general, if both permutation vectors are \texttt{NULL}, the new matrix will be a copy of the input matrix. The allocator can be \texttt{NULL}, in which case the allocator of \texttt{A} will be used. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{may} be \texttt{NULL}, in which case the allocator of \texttt{A} will be used. \\
+  $\dot$ \texttt{A} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{p} and \texttt{q} can be \texttt{NULL}, and if not \texttt{NULL}, it is recommended that they are of type \texttt{CML\_U32}. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The new matrix was successfully selected. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{A} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INVALID\_PERMUTATION}: The permutation vectors were out of bounds. \\
+  $\dot$ Any error code from \texttt{cml\_matrix\_init} (used to initialize the new matrix or \texttt{p} or \texttt{q}, if either is \texttt{NULL}). \\
+\end{quote}
+
+\function{cml\_matrix\_add}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the new matrix. \\
+  $\dot$ \texttt{const CML\_Matrix *left}: The left matrix ($\mathbf{A}$). \\
+  $\dot$ \texttt{const CML\_Matrix *right}: The right matrix ($\mathbf{B}$). \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the new matrix is row-major. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The new matrix to store the result of the addition ($\mathbf{C}$). \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Adds two matrices and stores the result in a new matrix. This new matrix is initialized using the input allocator, or the allocator of the left matrix if the input allocator is \texttt{NULL}. If one of the inputs is a scalar (i.e., a matrix with one row and one column) and the other is not, the scalar will be added to each element of the other matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{C} = \mathbf{A} + \mathbf{B}$. If only one of the inputs is a scalar, either $A_{ij} = a$ or $B_{ij} = b$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $C_{ij}$ of $\mathbf{C}$, $C_{ij} = A_{ij} + B_{ij}$, or, if only one of the inputs is a scalar, $C_{ij} = A_{ij} + b$ or $C_{ij} = a + B_{ij}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{may} be \texttt{NULL}, in which case the allocator of \texttt{left} will be used. \\
+  $\dot$ \texttt{left} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{right} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{left} and \texttt{right} \textbf{must} have the same number of rows and columns, or one of them must be a scalar. \\
+  $\dot$ \texttt{left} and \texttt{right} \textbf{must} have the same type. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The new matrix was successfully added. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{left}, \texttt{right} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_TYPES}: \texttt{left} and \texttt{right} had different types. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_SIZE}: \texttt{left} and \texttt{right} had different sizes and neither was a scalar. \\
+  $\dot$ Any error code from \texttt{cml\_matrix\_init} (used to initialize the new matrix). \\
+\end{quote}
+
+\function{cml\_matrix\_add\_inplace}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrix *right}: The right matrix ($\mathbf{A}$). \\
+  $\dot$ \texttt{CML\_Matrix *out}: The left matrix ($\mathbf{B}$). \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Adds two matrices and stores the result in the out matrix. If the left matrix is a scalar (i.e., a matrix with one row and one column) and the right matrix is not, the scalar will be added to each element of the right matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{B} = \mathbf{B} + \mathbf{A}$. If only the right input is a scalar, $A_{ij} = a$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $B_{ij}$ of $\mathbf{B}$, $B_{ij} = B_{ij} + A_{ij}$, or, if only the right input is a scalar, $B_{ij} = B_{ij} + a$. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{right} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{out} and \texttt{right} \textbf{must} have the same number of rows and columns, or right must be a scalar. \\
+  $\dot$ \texttt{out} and \texttt{right} \textbf{must} have the same type. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The new matrix was successfully added. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{right} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_TYPES}: \texttt{out} and \texttt{right} had different types. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_SIZE}: \texttt{out} and \texttt{right} had different sizes and \texttt{right} was not a scalar. \\
+\end{quote}
+
+\function{cml\_matrix\_sub}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{CML\_Allocator *allocator}: Allocator used for dynamic memory allocation within the new matrix. \\
+  $\dot$ \texttt{const CML\_Matrix *left}: The left matrix ($\mathbf{A}$). \\
+  $\dot$ \texttt{const CML\_Matrix *right}: The right matrix ($\mathbf{B}$). \\
+  $\dot$ \texttt{b8 rowmajor}: Whether the new matrix is row-major. \\
+  $\dot$ \texttt{CML\_Matrix *out}: The new matrix to store the result of the subtraction ($\mathbf{C}$). \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Subtracts two matrices and stores the result in a new matrix. This new matrix is initialized using the input allocator, or the allocator of the left matrix if the input allocator is \texttt{NULL}. If one of the inputs is a scalar (i.e., a matrix with one row and one column) and the other is not, the scalar will be subtracted from each element of the other matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{C} = \mathbf{A} - \mathbf{B}$. If only one of the inputs is a scalar, either $A_{ij} = a$ or $B_{ij} = b$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $C_{ij}$ of $\mathbf{C}$, $C_{ij} = A_{ij} - B_{ij}$, or, if only one of the inputs is a scalar, $C_{ij} = A_{ij} - b$ or $C_{ij} = a - B_{ij}$. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{allocator} \textbf{may} be \texttt{NULL}, in which case the allocator of \texttt{left} will be used. \\
+  $\dot$ \texttt{left} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{right} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{left} and \texttt{right} \textbf{must} have the same number of rows and columns, or one of them must be a scalar. \\
+  $\dot$ \texttt{left} and \texttt{right} \textbf{must} have the same type. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The new matrix was successfully subtracted. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{left}, \texttt{right} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_TYPES}: \texttt{left} and \texttt{right} had different types. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_SIZE}: \texttt{left} and \texttt{right} had different sizes and neither was a scalar. \\
+  $\dot$ Any error code from \texttt{cml\_matrix\_init} (used to initialize the new matrix). \\
+\end{quote}
+
+\function{cml\_matrix\_sub\_inplace}
+\begin{quote}
+  \textbf{Parameters}: \\
+  $\dot$ \texttt{const CML\_Matrix *right}: The right matrix ($\mathbf{A}$). \\
+  $\dot$ \texttt{CML\_Matrix *out}: The left matrix ($\mathbf{B}$). \\
+  \textbf{Returns}: \\
+  $\dot$ \texttt{CML\_Status} \\
+
+  \vspace{-0.75em}
+  \textbf{Description}: \\
+  Subtracts two matrices and stores the result in the out matrix. If the left matrix is a scalar (i.e., a matrix with one row and one column) and the right matrix is not, the scalar will be subtracted from each element of the right matrix. \\
+
+  \vspace{-0.75em}
+  \textbf{Operation}: \\
+  $\mathbf{B} = \mathbf{B} - \mathbf{A}$. If only the right input is a scalar, $A_{ij} = a$. \\
+
+  \vspace{-0.75em}
+  \textbf{Algorithm}: \\
+  For each element $B_{ij}$ of $\mathbf{B}$, $B_{ij} = B_{ij} - A_{ij}$, or, if only the right input is a scalar, $B_{ij} = B_{ij} - a$. \\
+
+  \vspace{-0.75em}
+  \textbf{Valid Usage}: \\
+  $\dot$ \texttt{right} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{out} \textbf{must} be a valid pointer to a \texttt{CML\_Matrix} structure. \\
+  $\dot$ \texttt{out} and \texttt{right} \textbf{must} have the same number of rows and columns, or right must be a scalar. \\
+  $\dot$ \texttt{out} and \texttt{right} \textbf{must} have the same type. \\
+
+  \vspace{-0.75em}
+  \textbf{Return Codes}: \\
+  $\dot$ \texttt{CML\_SUCCESS}: The new matrix was successfully subtracted. \\
+  $\dot$ \texttt{CML\_ERR\_NULL\_PTR}: \texttt{right} or \texttt{out} was \texttt{NULL}. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_TYPES}: \texttt{out} and \texttt{right} had different types. \\
+  $\dot$ \texttt{CML\_ERR\_INCOMPATIBLE\_SIZE}: \texttt{out} and \texttt{right} had different sizes and \texttt{right} was not a scalar. \\
+\end{quote}
 
 \section{Algebra} \label{sec:algebra}
 

@@ -2,6 +2,8 @@
 
 ## Priority
 
+Maybe have matrices be able to hold expressions.
+
 Maybe put the sizes in the numeric type enum since then it is stored directly in type and no lutable is needed
 
 Basic camel type: Matrix (1x1 for scalars, 1xn or nx1 for vectors (must be transposed if needed), nxm for matrices). The init function will take size, and type (CML_NumericType), and will initialize it to 0 (maybe make different init functions (identity, etc.)). 

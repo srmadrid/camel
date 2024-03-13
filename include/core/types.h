@@ -21,6 +21,7 @@
 
 #include "macros.h"
 #include "bignum/bignum.h"
+#include "expression/expression.h"
 
 
 typedef enum CML_NumericType {
@@ -39,26 +40,67 @@ typedef enum CML_NumericType {
     CML_BIGINT,
     CML_FRACTION, // a/b, both CML_Bigint
     CML_COMPLEX, // a + bi, both CML_Fraction
+    CML_EXPRESSION,
+    CML_MATRIX,
 } CML_NumericType;
 
 
-static const u32 cml_numerictype_size_lookup[] = {
-    [CML_U8] = sizeof(u8),
-    [CML_U16] = sizeof(u16),
-    [CML_U32] = sizeof(u32),
-    [CML_U64] = sizeof(u64),
-    [CML_I8] = sizeof(i8),
-    [CML_I16] = sizeof(i16),
-    [CML_I32] = sizeof(i32),
-    [CML_I64] = sizeof(i64),
-    [CML_F32] = sizeof(f32),
-    [CML_F64] = sizeof(f64),
-    [CML_COMPLEXF32] = sizeof(cf32),
-    [CML_COMPLEXF64] = sizeof(cf64),
-    [CML_BIGINT] = sizeof(CML_BigInt),
-    [CML_FRACTION] = 0, // a/b, both CML_Bigint
-    [CML_COMPLEX] = 0, // a + bi, both CML_Fraction
-};
+static inline u32 cml_numerictype_size(CML_NumericType t) {
+    switch (t) {
+        case CML_U8:
+            return sizeof(u8);
+        
+        case CML_U16:
+            return sizeof(u16);
+
+        case CML_U32:
+            return sizeof(u32);
+
+        case CML_U64:
+            return sizeof(u64);
+
+        case CML_I8:
+            return sizeof(u8);
+        
+        case CML_I16:
+            return sizeof(u16);
+
+        case CML_I32:
+            return sizeof(u32);
+
+        case CML_I64:
+            return sizeof(u64);
+
+        case CML_F32:
+            return sizeof(u32);
+
+        case CML_F64:
+            return sizeof(u64);
+
+        case CML_COMPLEXF32:
+            return sizeof(u32);
+
+        case CML_COMPLEXF64:
+            return sizeof(u64);
+
+        case CML_BIGINT:
+            return sizeof(CML_BigInt);
+
+        case CML_FRACTION:
+            return 0;
+
+        case CML_COMPLEX:
+            return 0;
+
+        case CML_EXPRESSION:
+            return sizeof(CML_Expression);
+
+        case CML_MATRIX:
+            return sizeof(void*) + sizeof(CML_NumericType) + 2*sizeof(u32) + sizeof(b8) + sizeof(CML_Allocator*);
+    }
+
+    return 0;
+}
 
 
 #endif /* CAMEL_TYPES */
