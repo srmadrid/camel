@@ -185,6 +185,20 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
+ * @brief Multiplies two matrices and stores the result in the out matrix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+
+
+/**
  * @brief Prints the input matrix.
  *
  * @param matrix The matrix to be printed.
