@@ -199,6 +199,60 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
 
 
 /**
+ * @brief Multiplies two matrices element by element, and stores the result in
+ *        out.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_multew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+
+
+/**
+ * @brief Multiplies two matrices element by element, and stores the result in
+ *        the out matrix out .*= right.
+ *
+ * @param right     The matrix on the right.
+ * @param out       The matrix on the left.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
+
+
+/**
+ * @brief Divides two matrices element by element, and stores the result in
+ *        out.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+
+
+/**
+ * @brief Divides two matrices element by element, and stores the result in
+ *        the out matrix out ./= right.
+ *
+ * @param right     The matrix on the right.
+ * @param out       The matrix on the left.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
+
+
+/**
  * @brief Prints the input matrix.
  *
  * @param matrix The matrix to be printed.

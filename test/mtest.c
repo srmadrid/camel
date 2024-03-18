@@ -150,12 +150,12 @@ int main() {
         cml_matrix_print(&B);
 
         CML_Matrix C;
-        cml_matrix_mult(NULL, &A, &B, true, &C);
-        printf("\nC = A*B = \n");
+        cml_matrix_divew(NULL, &A, &B, true, &C);
+        printf("\nC = A./B = \n");
         cml_matrix_print(&C);
 
-        cml_matrix_sub_inplace(&B, &A);
-        printf("\nA -= B: \n");
+        cml_matrix_divew_inplace(&B, &A);
+        printf("\nA ./= B: \n");
         cml_matrix_print(&A);
 
         CML_Matrix scalar;
@@ -164,26 +164,26 @@ int main() {
         cml_matrix_set(&snumber, 0, 0, &scalar);
         printf("\nscalar = \n");
         cml_matrix_print(&scalar);
-        cml_matrix_sub_inplace(&scalar, &A);
-        printf("\nA -= scalar: \n");
+        cml_matrix_divew_inplace(&scalar, &A);
+        printf("\nA ./= scalar: \n");
         cml_matrix_print(&A);
         CML_Matrix D;
-        cml_matrix_mult(NULL, &A, &scalar, true, &D);
-        printf("\nD = A*scalar: \n");
+        cml_matrix_divew(NULL, &A, &scalar, true, &D);
+        printf("\nD = A/scalar: \n");
         cml_matrix_print(&D);
 
         CML_Matrix p;
-        cml_matrix_init(&a, 7, 1, true, CML_F64, &p);
-        for (u32 r = 0; r < 8; r++) {
+        cml_matrix_init(&a, 9, 1, true, CML_F64, &p);
+        for (u32 r = 0; r < 9; r++) {
             f64 number = r + 1;
             cml_matrix_set(&number, r, 0, &p);
         }
         printf("\np = \n");
         cml_matrix_print(&p);
-        f64 qarr[] = {1.0, 2.0};
+        f64 qarr[] = {1.0, 2.0, 3.0, 3.0, 3.0};
         CML_Matrix q;
-        cml_matrix_init(&a, 1, 2, true, CML_F64, &q);
-        for (u32 r = 0; r < 2; r++) {
+        cml_matrix_init(&a, 1, 5, true, CML_F64, &q);
+        for (u32 r = 0; r < 5; r++) {
             cml_matrix_set(&qarr[r], 0, r, &q);
         }
         printf("\nq = \n");
@@ -194,8 +194,8 @@ int main() {
         cml_matrix_print(&P);
 
         CML_Matrix p2;
-        cml_matrix_init(&a, 1, 7, true, CML_F64, &p2);
-        for (u32 r = 0; r < 7; r++) {
+        cml_matrix_init(&a, 1, 9, true, CML_F64, &p2);
+        for (u32 r = 0; r < 9; r++) {
             f64 number = r + 1;
             cml_matrix_set(&number, 0, r, &p2);
         }
