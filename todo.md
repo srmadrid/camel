@@ -2,9 +2,9 @@
 
 ## Priority
 
-Maybe have matrices be able to hold expressions.
+When a mathematical object is created (something through an expression, or maybe even numerical objects, like matricwes) it is stored internally in the library, keeping track of all of them. If it is created with a name, like f(x) = x² or S = {1,2,3}, that name is used, if not, a random one is used (stored as something like u64). All are unique, and this way, through expressions the libary can ideantify already created objects, like creating an expression like g(x) = f(x)² (or f²) would use the preexistent f, and not set it to a variable.
 
-Maybe put the sizes in the numeric type enum since then it is stored directly in type and no lutable is needed
+Maybe make it so if a matrix function receives no allocator (NULL), then it means the out matrix is already initialized, in that case, check size and type ...
 
 Basic camel type: Matrix (1x1 for scalars, 1xn or nx1 for vectors (must be transposed if needed), nxm for matrices). The init function will take size, and type (CML_NumericType), and will initialize it to 0 (maybe make different init functions (identity, etc.)). 
 

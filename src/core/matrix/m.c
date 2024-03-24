@@ -3096,8 +3096,14 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out) {
     return CML_SUCCESS;
 }
 
-
+// Profuiling: temporal
+#include <sys/time.h>
+// Profuiling: temporal
 CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out) {
+    // Profuiling: temporal
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    // Profuiling: temporal
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -3135,7 +3141,12 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
     if (result != CML_SUCCESS) {
         return result;
     }
+    // Profuiling: temporal
+    gettimeofday(&end, NULL);
+    printf("Prep: %fs\n", (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0));
 
+    gettimeofday(&start, NULL);
+    // Profuiling: temporal
     switch (out->type) {
         case CML_U8:
             if (oneIsScalar) {
@@ -3820,6 +3831,11 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
                 }
             } else {
                 if (out->rowmajor) {
+                    // Profuiling: temporal
+                    gettimeofday(&end, NULL);
+                    printf("Switch: %fs\n", (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0));
+                    gettimeofday(&start, NULL);
+                    // Profuiling: temporal
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
                             f64 element = 0;
@@ -3845,6 +3861,10 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
                     }
                 }
             }
+            // Profuiling: temporal
+            gettimeofday(&end, NULL);
+            printf("Loop: %fs\n", (end.tv_sec - start.tv_sec) + ((end.tv_usec - start.tv_usec) / 1000000.0));
+            // Profuiling: temporal
             break;
 
         case CML_COMPLEXF32:
@@ -6490,6 +6510,65 @@ CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out) {
     }
 
     return CML_SUCCESS;
+}
+
+
+CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, b8 rowmajor, CML_Matrix *out) {
+    if (A == NULL || out == NULL) {
+        return CML_ERR_NULL_PTR;
+    }
+
+    if (allocator == NULL) {
+        allocator = A->allocator;
+    }
+
+    CML_Status result = cml_matrix_init(allocator, A->columns, A->rows, rowmajor, A->type, out);
+    if (result != CML_SUCCESS) {
+        return result;
+    }
+
+    if (rowmajor) {
+        for (u32 r = 0; r < out->rows; r++) {
+            for (u32 c = 0; c < out->columns; c++) {
+                switch(out->type) {
+                    case CML_BIGINT:
+                        break;
+
+                    case CML_FRACTION:
+                        break;
+
+                    case CML_COMPLEX:
+                        break;
+
+                    default:
+                        cml_matrix_set(cml_matrix_get(c, r, A), r, c, out);
+                        break;
+                }
+            }
+        }
+    } else {
+        for (u32 c = 0; c < out->columns; c++) {
+            for (u32 r = 0; r < out->rows; r++) {
+                switch(out->type) {
+                    case CML_BIGINT:
+                        break;
+
+                    case CML_FRACTION:
+                        break;
+
+                    case CML_COMPLEX:
+                        break;
+
+                    default:
+                        cml_matrix_set(cml_matrix_get(c, r, A), r, c, out);
+                        break;
+                }
+            }
+        }
+    }
+
+    return CML_SUCCESS;
+
 }
 
 

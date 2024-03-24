@@ -253,6 +253,19 @@ CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
+ * @brief Transposes a matrix and stores the result in the out maytix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param A         Matrix to be transposed.
+ * @param rowmajor  Row-major (true) or column-major (false) storage.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, b8 rowmajor, CML_Matrix *out);
+
+
+/**
  * @brief Prints the input matrix.
  *
  * @param matrix The matrix to be printed.

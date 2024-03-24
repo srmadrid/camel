@@ -150,8 +150,8 @@ int main() {
         cml_matrix_print(&B);
 
         CML_Matrix C;
-        cml_matrix_divew(NULL, &A, &B, true, &C);
-        printf("\nC = A./B = \n");
+        cml_matrix_mult(NULL, &A, &B, true, &C);
+        printf("\nC = A*B = \n");
         cml_matrix_print(&C);
 
         cml_matrix_divew_inplace(&B, &A);
@@ -203,14 +203,37 @@ int main() {
         cml_matrix_print(&p2);
         CML_Matrix dot;
         cml_matrix_mult(NULL, &p2, &p, true, &dot);
-        printf("\ndot = p.q\n");
+        printf("\ndot = p2*p\n");
         cml_matrix_print(&dot);
 
-        // Test dot product
+        CML_Matrix p3;
+        cml_matrix_transpose(NULL, &p2, true, &p3);
+        printf("\np3 = p2^T = \n");
+        cml_matrix_print(&p3);
+
+
+        CML_Matrix big1, big2;
+        cml_matrix_init(&a, 500, 1000, true, CML_F64, &big1);
+        cml_matrix_init(&a, 1000, 500, true, CML_F64, &big2);
+        printf("\nDim(big1) = %dx%d\n", big1.rows, big1.columns);
+        printf("\nDim(big2) = %dx%d\n", big2.rows, big2.columns);
+        CML_Matrix big3;
+        cml_matrix_mult(NULL, &big1, &big2, true, &big3);
+        printf("\nbig3 = big1*big2 \n");
+        printf("\nDim(big3) = %dx%d\n", big3.rows, big3.columns);
+        cml_matrix_destroy(&big3);
+        cml_matrix_mult(NULL, &big2, &big1, true, &big3);
+        printf("\nbig3 = big2*big1 \n");
+        printf("\nDim(big3) = %dx%d\n", big3.rows, big3.columns);
+        cml_matrix_destroy(&big3);
+        cml_matrix_destroy(&big2);
+        cml_matrix_destroy(&big1);
+
 
         cml_matrix_destroy(&A);
         cml_matrix_destroy(&p);
         cml_matrix_destroy(&p2);
+        cml_matrix_destroy(&p3);
         cml_matrix_destroy(&q);
         cml_matrix_destroy(&B);
         cml_matrix_destroy(&C);
