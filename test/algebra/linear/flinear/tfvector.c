@@ -15,7 +15,7 @@
 #include "../../../../include/camel.h"
 
 
-CML_TestResult test_vector2_add() {
+CML_TestResult test_vector2_add(void) {
     CML_Vector2 v = CML_VECTOR2(1.0f, 2.0f);
     CML_Vector2 w = {{3.0f, 4.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
@@ -30,7 +30,7 @@ CML_TestResult test_vector2_add() {
 }
 
 
-CML_TestResult test_vector2_add_f32() {
+CML_TestResult test_vector2_add_f32(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {{3.0f, 4.0f}};
@@ -44,7 +44,7 @@ CML_TestResult test_vector2_add_f32() {
 }
 
 
-CML_TestResult test_vector2_sub() {
+CML_TestResult test_vector2_sub(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
@@ -59,7 +59,7 @@ CML_TestResult test_vector2_sub() {
 }
 
 
-CML_TestResult test_vector2_sub_f32() {
+CML_TestResult test_vector2_sub_f32(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {{-1.0f, 0.0f}};
@@ -73,7 +73,7 @@ CML_TestResult test_vector2_sub_f32() {
 }
 
 
-CML_TestResult test_vector2_scale() {
+CML_TestResult test_vector2_scale(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {{2.0f, 4.0f}};
@@ -87,7 +87,7 @@ CML_TestResult test_vector2_scale() {
 }
 
 
-CML_TestResult test_vector2_mod() {
+CML_TestResult test_vector2_mod(void) {
     CML_Vector2 v = {{3.0f, 4.0f}};
     f32 expected = 5.0f;
     f32 result = cml_vector2_mod(&v);
@@ -100,7 +100,7 @@ CML_TestResult test_vector2_mod() {
 }
 
 
-CML_TestResult test_vector2_mod2() {
+CML_TestResult test_vector2_mod2(void) {
     CML_Vector2 v = {{3.0f, 4.0f}};
     f32 expected = 25.0f;
     f32 result = cml_vector2_mod2(&v);
@@ -113,7 +113,7 @@ CML_TestResult test_vector2_mod2() {
 }
 
 
-CML_TestResult test_vector2_norm() {
+CML_TestResult test_vector2_norm(void) {
     CML_Vector2 v = {{3.0f, 4.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
     CML_Vector2 expected = {{0.6f, 0.8f}};
@@ -127,7 +127,7 @@ CML_TestResult test_vector2_norm() {
 }
 
 
-CML_TestResult test_vector2_dot() {
+CML_TestResult test_vector2_dot(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     f32 expected = 11.0f;
@@ -141,7 +141,7 @@ CML_TestResult test_vector2_dot() {
 }
 
 
-CML_TestResult test_vector2_distance() {
+CML_TestResult test_vector2_distance(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     f32 expected = 2.8284271247461903f;
@@ -155,7 +155,7 @@ CML_TestResult test_vector2_distance() {
 }
 
 
-CML_TestResult test_vector2_distance2() {
+CML_TestResult test_vector2_distance2(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     f32 expected = 8.0f;
@@ -169,7 +169,7 @@ CML_TestResult test_vector2_distance2() {
 }
 
 
-CML_TestResult test_vector2_angle() {
+CML_TestResult test_vector2_angle(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     f32 expected = 0.17985349979247847f;
@@ -183,7 +183,7 @@ CML_TestResult test_vector2_angle() {
 }
 
 
-CML_TestResult test_vector2_project() {
+CML_TestResult test_vector2_project(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
@@ -198,7 +198,7 @@ CML_TestResult test_vector2_project() {
 }
 
 
-CML_TestResult test_vector2_reflect() {
+CML_TestResult test_vector2_reflect(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Vector2 w = {{3.0f, 4.0f}};
     CML_Vector2 out = CML_VECTOR2_ZERO;
@@ -214,7 +214,7 @@ CML_TestResult test_vector2_reflect() {
 
 
 
-CML_TestResult test_vector3_add() {
+CML_TestResult test_vector3_add(void) {
     CML_Vector3 v = CML_VECTOR3(1.0f, 2.0f, 3.0f);
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
@@ -229,7 +229,7 @@ CML_TestResult test_vector3_add() {
 }
 
 
-CML_TestResult test_vector3_add_f32() {
+CML_TestResult test_vector3_add_f32(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
     CML_Vector3 expected = {{3.0f, 4.0f, 5.0f}};
@@ -243,7 +243,7 @@ CML_TestResult test_vector3_add_f32() {
 }
 
 
-CML_TestResult test_vector3_sub() {
+CML_TestResult test_vector3_sub(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
@@ -258,7 +258,7 @@ CML_TestResult test_vector3_sub() {
 }
 
 
-CML_TestResult test_vector3_sub_f32() {
+CML_TestResult test_vector3_sub_f32(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
     CML_Vector3 expected = {{-1.0f, 0.0f, 1.0f}};
@@ -272,7 +272,7 @@ CML_TestResult test_vector3_sub_f32() {
 }
 
 
-CML_TestResult test_vector3_scale() {
+CML_TestResult test_vector3_scale(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
     CML_Vector3 expected = {{2.0f, 4.0f, 6.0f}};
@@ -286,7 +286,7 @@ CML_TestResult test_vector3_scale() {
 }
 
 
-CML_TestResult test_vector3_mod() {
+CML_TestResult test_vector3_mod(void) {
     CML_Vector3 v = {{3.0f, 4.0f, 5.0f}};
     f32 expected = 7.0710678118654755f;
     f32 result = cml_vector3_mod(&v);
@@ -299,7 +299,7 @@ CML_TestResult test_vector3_mod() {
 }
 
 
-CML_TestResult test_vector3_mod2() {
+CML_TestResult test_vector3_mod2(void) {
     CML_Vector3 v = {{3.0f, 4.0f, 5.0f}};
     f32 expected = 50.0f;
     f32 result = cml_vector3_mod2(&v);
@@ -312,7 +312,7 @@ CML_TestResult test_vector3_mod2() {
 }
 
 
-CML_TestResult test_vector3_norm() {
+CML_TestResult test_vector3_norm(void) {
     CML_Vector3 v = {{3.0f, 4.0f, 5.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
     CML_Vector3 expected = {{0.4242640687119285f, 0.565685424949238f, 0.7071067811865475f}};
@@ -326,7 +326,7 @@ CML_TestResult test_vector3_norm() {
 }
 
 
-CML_TestResult test_vector3_dot() {
+CML_TestResult test_vector3_dot(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     f32 expected = 32.0f;
@@ -340,7 +340,7 @@ CML_TestResult test_vector3_dot() {
 }
 
 
-CML_TestResult test_vector3_cross() {
+CML_TestResult test_vector3_cross(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
@@ -355,7 +355,7 @@ CML_TestResult test_vector3_cross() {
 }
 
 
-CML_TestResult test_vector3_distance() {
+CML_TestResult test_vector3_distance(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     f32 expected = 5.196152422706632f;
@@ -369,7 +369,7 @@ CML_TestResult test_vector3_distance() {
 }
 
 
-CML_TestResult test_vector3_distance2() {
+CML_TestResult test_vector3_distance2(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     f32 expected = 27.0f;
@@ -383,7 +383,7 @@ CML_TestResult test_vector3_distance2() {
 }
 
 
-CML_TestResult test_vector3_angle() {
+CML_TestResult test_vector3_angle(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     f32 expected = 0.2257261285527342f;
@@ -397,7 +397,7 @@ CML_TestResult test_vector3_angle() {
 }
 
 
-CML_TestResult test_vector3_project() {
+CML_TestResult test_vector3_project(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
@@ -412,7 +412,7 @@ CML_TestResult test_vector3_project() {
 }
 
 
-CML_TestResult test_vector3_reflect() {
+CML_TestResult test_vector3_reflect(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Vector3 w = {{4.0f, 5.0f, 6.0f}};
     CML_Vector3 out = CML_VECTOR3_ZERO;
@@ -428,7 +428,7 @@ CML_TestResult test_vector3_reflect() {
 
 
 
-CML_TestResult test_vector4_add() {
+CML_TestResult test_vector4_add(void) {
     CML_Vector4 v = CML_VECTOR4(1.0f, 2.0f, 3.0f, 4.0f);
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
@@ -443,7 +443,7 @@ CML_TestResult test_vector4_add() {
 }
 
 
-CML_TestResult test_vector4_add_f32() {
+CML_TestResult test_vector4_add_f32(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
     CML_Vector4 expected = {{3.0f, 4.0f, 5.0f, 6.0f}};
@@ -457,7 +457,7 @@ CML_TestResult test_vector4_add_f32() {
 }
 
 
-CML_TestResult test_vector4_sub() {
+CML_TestResult test_vector4_sub(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
@@ -472,7 +472,7 @@ CML_TestResult test_vector4_sub() {
 }
 
 
-CML_TestResult test_vector4_sub_f32() {
+CML_TestResult test_vector4_sub_f32(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
     CML_Vector4 expected = {{-1.0f, 0.0f, 1.0f, 2.0f}};
@@ -486,7 +486,7 @@ CML_TestResult test_vector4_sub_f32() {
 }
 
 
-CML_TestResult test_vector4_scale() {
+CML_TestResult test_vector4_scale(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
     CML_Vector4 expected = {{2.0f, 4.0f, 6.0f, 8.0f}};
@@ -500,7 +500,7 @@ CML_TestResult test_vector4_scale() {
 }
 
 
-CML_TestResult test_vector4_mod() {
+CML_TestResult test_vector4_mod(void) {
     CML_Vector4 v = {{3.0f, 4.0f, 5.0f, 6.0f}};
     f32 expected = 9.273618495495704f;
     f32 result = cml_vector4_mod(&v);
@@ -513,7 +513,7 @@ CML_TestResult test_vector4_mod() {
 }
 
 
-CML_TestResult test_vector4_mod2() {
+CML_TestResult test_vector4_mod2(void) {
     CML_Vector4 v = {{3.0f, 4.0f, 5.0f, 6.0f}};
     f32 expected = 86.0f;
     f32 result = cml_vector4_mod2(&v);
@@ -526,7 +526,7 @@ CML_TestResult test_vector4_mod2() {
 }
 
 
-CML_TestResult test_vector4_norm() {
+CML_TestResult test_vector4_norm(void) {
     CML_Vector4 v = {{3.0f, 4.0f, 5.0f, 6.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
     CML_Vector4 expected = {{0.32349831961063324f, 0.43133109281417765f, 0.5391638660177221f, 0.6469966392212665f}};
@@ -540,7 +540,7 @@ CML_TestResult test_vector4_norm() {
 }
 
 
-CML_TestResult test_vector4_dot() {
+CML_TestResult test_vector4_dot(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     f32 expected = 70.0f;
@@ -554,7 +554,7 @@ CML_TestResult test_vector4_dot() {
 }
 
 
-CML_TestResult test_vector4_distance() {
+CML_TestResult test_vector4_distance(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     f32 expected = 8.0f;
@@ -568,7 +568,7 @@ CML_TestResult test_vector4_distance() {
 }
 
 
-CML_TestResult test_vector4_distance2() {
+CML_TestResult test_vector4_distance2(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     f32 expected = 64.0f;
@@ -582,7 +582,7 @@ CML_TestResult test_vector4_distance2() {
 }
 
 
-CML_TestResult test_vector4_angle() {
+CML_TestResult test_vector4_angle(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     f32 expected = 0.250195920422511f;
@@ -596,7 +596,7 @@ CML_TestResult test_vector4_angle() {
 }
 
 
-CML_TestResult test_vector4_project() {
+CML_TestResult test_vector4_project(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;
@@ -611,7 +611,7 @@ CML_TestResult test_vector4_project() {
 }
 
 
-CML_TestResult test_vector4_reflect() {
+CML_TestResult test_vector4_reflect(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Vector4 w = {{5.0f, 6.0f, 7.0f, 8.0f}};
     CML_Vector4 out = CML_VECTOR4_ZERO;

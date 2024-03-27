@@ -23,3 +23,4 @@ void cml_register_core_tests(CML_Test *registry, u32 *count) {
     //cml_register_bignum_tests(registry, count);
     cml_register_dstructs_tests(registry, count);
 }
+

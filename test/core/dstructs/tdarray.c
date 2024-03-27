@@ -15,7 +15,7 @@
 #include "../../../include/camel.h"
 
 
-CML_TestResult test_darray_resize() {
+CML_TestResult test_darray_resize(void) {
     CML_Allocator a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&a, 2, i32, NULL, &darray);
@@ -37,7 +37,7 @@ CML_TestResult test_darray_resize() {
 }
 
 
-CML_TestResult test_darray_push() {
+CML_TestResult test_darray_push(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);
@@ -61,7 +61,7 @@ CML_TestResult test_darray_push() {
 }
 
 
-CML_TestResult test_darray_insert() {
+CML_TestResult test_darray_insert(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);
@@ -85,7 +85,7 @@ CML_TestResult test_darray_insert() {
 }
 
 
-CML_TestResult test_darray_pop() {
+CML_TestResult test_darray_pop(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);
@@ -112,7 +112,7 @@ CML_TestResult test_darray_pop() {
 }
 
 
-CML_TestResult test_darray_remove() {
+CML_TestResult test_darray_remove(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);
@@ -138,7 +138,7 @@ CML_TestResult test_darray_remove() {
 }
 
 
-CML_TestResult test_darray_get() {
+CML_TestResult test_darray_get(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);
@@ -163,7 +163,7 @@ CML_TestResult test_darray_get() {
 }
 
 
-CML_TestResult test_darray_set() {
+CML_TestResult test_darray_set(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_DArray darray;
     cml_darray_init(&_a, 5, i32, NULL, &darray);

@@ -15,7 +15,7 @@
 #include "../../../include/camel.h"
 
 
-CML_TestResult test_string_temp() {
+CML_TestResult test_string_temp(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String *string = cml_string_temp(&_a, "Hello, world!");
     cml_string_checkref(&string);
@@ -29,7 +29,7 @@ CML_TestResult test_string_temp() {
 }
 
 
-CML_TestResult test_string_checkref() {
+CML_TestResult test_string_checkref(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string1;
     cml_string_init(&_a, "Hello, world!", &string1);
@@ -51,7 +51,7 @@ CML_TestResult test_string_checkref() {
 }
 
 
-CML_TestResult test_string_copy() {
+CML_TestResult test_string_copy(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
@@ -66,7 +66,7 @@ CML_TestResult test_string_copy() {
 }
 
 
-CML_TestResult test_string_ncopy() {
+CML_TestResult test_string_ncopy(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
@@ -81,7 +81,7 @@ CML_TestResult test_string_ncopy() {
 }
 
 
-CML_TestResult test_string_copy_char() {
+CML_TestResult test_string_copy_char(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
@@ -96,7 +96,7 @@ CML_TestResult test_string_copy_char() {
 }
 
 
-CML_TestResult test_string_ncopy_char() {
+CML_TestResult test_string_ncopy_char(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init0(&_a, &string);
@@ -111,7 +111,7 @@ CML_TestResult test_string_ncopy_char() {
 }
 
 
-CML_TestResult test_string_cat() {
+CML_TestResult test_string_cat(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init(&_a, "Hello", &string);
@@ -126,7 +126,7 @@ CML_TestResult test_string_cat() {
 }
 
 
-CML_TestResult test_string_ncat() {
+CML_TestResult test_string_ncat(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init(&_a, "Hello", &string);
@@ -141,7 +141,7 @@ CML_TestResult test_string_ncat() {
 }
 
 
-CML_TestResult test_string_cat_char() {
+CML_TestResult test_string_cat_char(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init(&_a, "Hello", &string);
@@ -156,7 +156,7 @@ CML_TestResult test_string_cat_char() {
 }
 
 
-CML_TestResult test_string_ncat_char() {
+CML_TestResult test_string_ncat_char(void) {
     CML_Allocator _a = CML_ALLOCATOR_DEFAULT;
     CML_String string;
     cml_string_init(&_a, "Hello", &string);

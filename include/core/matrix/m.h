@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 
 #include "../err.h"
 #include "../macros.h"
@@ -37,8 +38,6 @@ typedef struct CML_Matrix {
     u32 rows;
     /** @brief Number of columns. */
     u32 columns;
-    /** Row-major (true) or column-major (false) storage of the elements. */
-    b8 rowmajor;
     /** @brief Allocator used for dynamic memory management within the 
      *         structure. */
     CML_Allocator *allocator;
@@ -52,13 +51,12 @@ typedef struct CML_Matrix {
  * @param allocator Allocator for the matrix.
  * @param rows      Number of rows.
  * @param columns   Number of columns.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param type      Numeric type stored in the matrix.
  * @param matrix    Pointer to the matrix to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, b8 rowmajor, CML_NumericType type, CML_Matrix *matrix);
+CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_NumericType type, CML_Matrix *matrix);
 
 
 /**
@@ -70,13 +68,12 @@ CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, b8 r
  * @param allocator Allocator for the matrix.
  * @param rows      Number of rows.
  * @param columns   Number of columns.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param type      Numeric type stored in the matrix.
  * @param matrix    Pointer to the matrix to be initialized.
  * 
  * @return Status code.
  */
-CML_Status cml_matrix_init0(CML_Allocator *allocator, u32 rows, u32 columns, b8 rowmajor, CML_NumericType type, CML_Matrix *matrix);
+CML_Status cml_matrix_init0(CML_Allocator *allocator, u32 rows, u32 columns, CML_NumericType type, CML_Matrix *matrix);
 
 
 /**
@@ -124,12 +121,11 @@ void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out);
  * @param A         Input matrix.
  * @param p         Row permutation vector.
  * @param q         Column permutation vector.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *p, CML_Matrix *q, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *p, CML_Matrix *q, CML_Matrix *out);
 
 
 /**
@@ -138,12 +134,11 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
  * @param allocator Allocator for the new matrix.
  * @param left      The matrix on the left.
  * @param right     The matrix on the right.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -164,12 +159,11 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @param allocator Allocator for the new matrix.
  * @param left      The matrix on the left.
  * @param right     The matrix on the right.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -190,12 +184,11 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @param allocator Allocator for the new matrix.
  * @param left      The matrix on the left.
  * @param right     The matrix on the right.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_mult(b8 p, CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -205,12 +198,11 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
  * @param allocator Allocator for the new matrix.
  * @param left      The matrix on the left.
  * @param right     The matrix on the right.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_multew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_multew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -232,12 +224,11 @@ CML_Status cml_matrix_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @param allocator Allocator for the new matrix.
  * @param left      The matrix on the left.
  * @param right     The matrix on the right.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -257,12 +248,11 @@ CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
  *
  * @param allocator Allocator for the new matrix.
  * @param A         Matrix to be transposed.
- * @param rowmajor  Row-major (true) or column-major (false) storage.
  * @param out       Output matrix.
  *
  * @return Status code.
  */
-CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, b8 rowmajor, CML_Matrix *out);
+CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *out);
 
 
 /**

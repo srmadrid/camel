@@ -34,7 +34,7 @@ typedef struct CML_TestResult {
 /**
  * @brief Represents a function pointer for a test function.
  */
-typedef CML_TestResult (*CML_TestFunction)();
+typedef CML_TestResult (*CML_TestFunction)(void);
 
 
 /**

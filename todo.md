@@ -1,8 +1,12 @@
 # To-Do
 
+## Optimization
+
+Test just like mult, the rest of the matrix operation (probably add and add_inplace are enough since the rest are the same but with other operations. Also with div, since division is slower).
+
 ## Priority
 
-When a mathematical object is created (something through an expression, or maybe even numerical objects, like matricwes) it is stored internally in the library, keeping track of all of them. If it is created with a name, like f(x) = x² or S = {1,2,3}, that name is used, if not, a random one is used (stored as something like u64). All are unique, and this way, through expressions the libary can ideantify already created objects, like creating an expression like g(x) = f(x)² (or f²) would use the preexistent f, and not set it to a variable.
+When a mathematical object is created (something through an expression, or maybe even numerical objects, like matricwes) it is stored internally in the library, keeping track of all of them. If it is created with a name, like f(x) = x² or S = {1,2,3}, that name is used, if not, a random one is used (stored as something like u64). All are unique, and this way, through expressions the libary can ideantify already created objects, like creating an expression like g(x) = f(x)² (or f²) would use the preexistent f, and not set it to a variable. This could be optional, like if you want to use it, then the user must run cml_init() or something, and things could be stored in a CML_Darray. The array would always be NULL (global variable) unless the user runs cml_init(), in which case it gets initialized. Then, functions can have something like if (array) to check if the feature wants to be used.
 
 Maybe make it so if a matrix function receives no allocator (NULL), then it means the out matrix is already initialized, in that case, check size and type ...
 

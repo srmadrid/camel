@@ -9,6 +9,27 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 
+% Code listings
+\usepackage{listings}
+\usepackage{color}
+
+% Code listing styles
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=none,
+    numbers=none, 
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{blue},
+    backgroundcolor=\color{gray!10!white},
+}
 
 
 % Page margins
@@ -3075,6 +3096,14 @@ The following functions are provided: \newline
 \authoredpart{Performance}{Sergio Madrid}
 
 Every single function in the library has been tested for performance. The following sections provide a detailed analysis of the performance of each function.
+
+\section{Core}
+
+\subsection{Matrix Operations}
+
+\subsubsection{Matrix Multiplication}
+
+Many variations of matrix multiplication were tested, and hypothesis testing was performed to determine the best algorithm for each case. With some optimizations, the best algorithm was found to be the standard matrix multiplication algorithm, with altered loop order to take advantage of the cache. Parallelization was also tested, but the overhead of creating threads was found to be too high for small matrices. The following table shows the performance of the function \texttt{cml\_matrixnxn\_mul\_matrixnxn} for different matrix sizes.
 
 % Part III
 \authoredpart{Examples}{Sergio Madrid}

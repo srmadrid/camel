@@ -15,7 +15,7 @@
 #include "../../../include/camel.h"
 
 
-CML_TestResult test_bigint_set_int() {
+CML_TestResult test_bigint_set_int(void) {
     CML_Allocator a = CML_ALLOCATOR_DEFAULT;
     CML_BigInt bigint;
     cml_bigint_init(&a, 0, &bigint);

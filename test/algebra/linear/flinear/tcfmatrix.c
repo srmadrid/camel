@@ -15,7 +15,7 @@
 #include "../../../../include/camel.h"
 
 
-CML_TestResult testc_matrix2x2_add() {
+CML_TestResult testc_matrix2x2_add(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f, 
         3.0f, 4.0f
@@ -39,7 +39,7 @@ CML_TestResult testc_matrix2x2_add() {
 }
 
 
-CML_TestResult testc_matrix2x2_sub() {
+CML_TestResult testc_matrix2x2_sub(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -63,7 +63,7 @@ CML_TestResult testc_matrix2x2_sub() {
 }
 
 
-CML_TestResult testc_matrix2x2_scale() {
+CML_TestResult testc_matrix2x2_scale(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -83,7 +83,7 @@ CML_TestResult testc_matrix2x2_scale() {
 }
 
 
-CML_TestResult testc_matrix2x2_mult() {
+CML_TestResult testc_matrix2x2_mult(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -107,7 +107,7 @@ CML_TestResult testc_matrix2x2_mult() {
 }
 
 
-CML_TestResult testc_matrix2x2_mult_matrix2x3() {
+CML_TestResult testc_matrix2x2_mult_matrix2x3(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -131,7 +131,7 @@ CML_TestResult testc_matrix2x2_mult_matrix2x3() {
 }
 
 
-CML_TestResult testc_matrix2x2_mult_matrix2x4() {
+CML_TestResult testc_matrix2x2_mult_matrix2x4(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -155,7 +155,7 @@ CML_TestResult testc_matrix2x2_mult_matrix2x4() {
 }
 
 
-CML_TestResult testc_matrix2x2_mult_vector2() {
+CML_TestResult testc_matrix2x2_mult_vector2(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -173,7 +173,7 @@ CML_TestResult testc_matrix2x2_mult_vector2() {
 }
 
 
-CML_TestResult testc_vector2_mult_matrix2x2() {
+CML_TestResult testc_vector2_mult_matrix2x2(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Matrix2x2 A = CML_MATRIX2X2(
         3.0f, 4.0f,
@@ -191,7 +191,7 @@ CML_TestResult testc_vector2_mult_matrix2x2() {
 }
 
 
-CML_TestResult testc_matrix2x2_det() {
+CML_TestResult testc_matrix2x2_det(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -207,7 +207,7 @@ CML_TestResult testc_matrix2x2_det() {
 }
 
 
-CML_TestResult testc_matrix2x2_inv() {
+CML_TestResult testc_matrix2x2_inv(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -227,7 +227,7 @@ CML_TestResult testc_matrix2x2_inv() {
 }
 
 
-CML_TestResult testc_matrix2x2_transpose() {
+CML_TestResult testc_matrix2x2_transpose(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -247,7 +247,7 @@ CML_TestResult testc_matrix2x2_transpose() {
 }
 
 
-CML_TestResult testc_matrix2x2_trace() {
+CML_TestResult testc_matrix2x2_trace(void) {
     CML_Matrix2x2 A = CML_MATRIX2X2(
         1.0f, 2.0f,
         3.0f, 4.0f
@@ -263,7 +263,7 @@ CML_TestResult testc_matrix2x2_trace() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_scale() {
+CML_TestResult testc_matrix2x2_gen_scale(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{2.0f, 6.0f}};
@@ -278,7 +278,7 @@ CML_TestResult testc_matrix2x2_gen_scale() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_invscale() {
+CML_TestResult testc_matrix2x2_gen_invscale(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{1.0f, 2.0f}};
@@ -295,7 +295,7 @@ CML_TestResult testc_matrix2x2_gen_invscale() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_shearx() {
+CML_TestResult testc_matrix2x2_gen_shearx(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{2.0f, 1.0f}};
@@ -310,7 +310,7 @@ CML_TestResult testc_matrix2x2_gen_shearx() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_sheary() {
+CML_TestResult testc_matrix2x2_gen_sheary(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{1.0f, 2.0f}};
@@ -325,7 +325,7 @@ CML_TestResult testc_matrix2x2_gen_sheary() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_invshear() {
+CML_TestResult testc_matrix2x2_gen_invshear(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out1;
     CML_Matrix2x2 out2;
@@ -347,7 +347,7 @@ CML_TestResult testc_matrix2x2_gen_invshear() {
 }
 
 
-CML_TestResult testc_matrix2x2_genlh_rotation() {
+CML_TestResult testc_matrix2x2_genlh_rotation(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{1.0f, -1.0f}};
@@ -362,7 +362,7 @@ CML_TestResult testc_matrix2x2_genlh_rotation() {
 }
 
 
-CML_TestResult testc_matrix2x2_genrh_rotation() {
+CML_TestResult testc_matrix2x2_genrh_rotation(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out;
     CML_Vector2 expected = {{-1.0f, 1.0f}};
@@ -377,7 +377,7 @@ CML_TestResult testc_matrix2x2_genrh_rotation() {
 }
 
 
-CML_TestResult testc_matrix2x2_gen_invrotation() {
+CML_TestResult testc_matrix2x2_gen_invrotation(void) {
     CML_Vector2 v = {{1.0f, 1.0f}};
     CML_Matrix2x2 out1;
     CML_Matrix2x2 out2;
@@ -400,7 +400,7 @@ CML_TestResult testc_matrix2x2_gen_invrotation() {
 
 
 
-CML_TestResult testc_matrix3x3_add() {
+CML_TestResult testc_matrix3x3_add(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -427,7 +427,7 @@ CML_TestResult testc_matrix3x3_add() {
 }
 
 
-CML_TestResult testc_matrix3x3_sub() {
+CML_TestResult testc_matrix3x3_sub(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -454,7 +454,7 @@ CML_TestResult testc_matrix3x3_sub() {
 }
 
 
-CML_TestResult testc_matrix3x3_scale() {
+CML_TestResult testc_matrix3x3_scale(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -476,7 +476,7 @@ CML_TestResult testc_matrix3x3_scale() {
 }
 
 
-CML_TestResult testc_matrix3x3_mult() {
+CML_TestResult testc_matrix3x3_mult(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -503,7 +503,7 @@ CML_TestResult testc_matrix3x3_mult() {
 }
 
 
-CML_TestResult testc_matrix3x3_mult_matrix3x2() {
+CML_TestResult testc_matrix3x3_mult_matrix3x2(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -530,7 +530,7 @@ CML_TestResult testc_matrix3x3_mult_matrix3x2() {
 }
 
 
-CML_TestResult testc_matrix3x3_mult_matrix3x4() {
+CML_TestResult testc_matrix3x3_mult_matrix3x4(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -557,7 +557,7 @@ CML_TestResult testc_matrix3x3_mult_matrix3x4() {
 }
 
 
-CML_TestResult testc_matrix3x3_mult_vector3() {
+CML_TestResult testc_matrix3x3_mult_vector3(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -576,7 +576,7 @@ CML_TestResult testc_matrix3x3_mult_vector3() {
 }
 
 
-CML_TestResult testc_vector3_mult_matrix3x3() {
+CML_TestResult testc_vector3_mult_matrix3x3(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Matrix3x3 A = CML_MATRIX3X3(
         4.0f, 5.0f, 6.0f,
@@ -595,7 +595,7 @@ CML_TestResult testc_vector3_mult_matrix3x3() {
 }
 
 
-CML_TestResult testc_matrix3x3_det() {
+CML_TestResult testc_matrix3x3_det(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -612,7 +612,7 @@ CML_TestResult testc_matrix3x3_det() {
 }
 
 
-CML_TestResult testc_matrix3x3_inv() {
+CML_TestResult testc_matrix3x3_inv(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         0.0f, 1.0f, 4.0f,
@@ -634,7 +634,7 @@ CML_TestResult testc_matrix3x3_inv() {
 }
 
 
-CML_TestResult testc_matrix3x3_transpose() {
+CML_TestResult testc_matrix3x3_transpose(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -656,7 +656,7 @@ CML_TestResult testc_matrix3x3_transpose() {
 }
 
 
-CML_TestResult testc_matrix3x3_trace() {
+CML_TestResult testc_matrix3x3_trace(void) {
     CML_Matrix3x3 A = CML_MATRIX3X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -673,7 +673,7 @@ CML_TestResult testc_matrix3x3_trace() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_scale() {
+CML_TestResult testc_matrix3x3_gen_scale(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{2.0f, 6.0f, 12.0f}};
@@ -688,7 +688,7 @@ CML_TestResult testc_matrix3x3_gen_scale() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_invscale() {
+CML_TestResult testc_matrix3x3_gen_invscale(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, 2.0f, 3.0f}};
@@ -705,7 +705,7 @@ CML_TestResult testc_matrix3x3_gen_invscale() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_shearx() {
+CML_TestResult testc_matrix3x3_gen_shearx(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{3.0f, 1.0f, 1.0f}};
@@ -720,7 +720,7 @@ CML_TestResult testc_matrix3x3_gen_shearx() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_sheary() {
+CML_TestResult testc_matrix3x3_gen_sheary(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, 3.0f, 1.0f}};
@@ -735,7 +735,7 @@ CML_TestResult testc_matrix3x3_gen_sheary() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_shearz() {
+CML_TestResult testc_matrix3x3_gen_shearz(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, 1.0f, 3.0f}};
@@ -750,7 +750,7 @@ CML_TestResult testc_matrix3x3_gen_shearz() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_invshear() {
+CML_TestResult testc_matrix3x3_gen_invshear(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out1;
     CML_Matrix3x3 out2;
@@ -777,7 +777,7 @@ CML_TestResult testc_matrix3x3_gen_invshear() {
 }
 
 
-CML_TestResult testc_matrix3x3_genlh_rotationx() {
+CML_TestResult testc_matrix3x3_genlh_rotationx(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, 1.0f, -1.0f}};
@@ -792,7 +792,7 @@ CML_TestResult testc_matrix3x3_genlh_rotationx() {
 }
 
 
-CML_TestResult testc_matrix3x3_genlh_rotationy() {
+CML_TestResult testc_matrix3x3_genlh_rotationy(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{-1.0f, 1.0f, 1.0f}};
@@ -807,7 +807,7 @@ CML_TestResult testc_matrix3x3_genlh_rotationy() {
 }
 
 
-CML_TestResult testc_matrix3x3_genlh_rotationz() {
+CML_TestResult testc_matrix3x3_genlh_rotationz(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, -1.0f, 1.0f}};
@@ -822,7 +822,7 @@ CML_TestResult testc_matrix3x3_genlh_rotationz() {
 }
 
 
-CML_TestResult testc_matrix3x3_genlh_rotation() {
+CML_TestResult testc_matrix3x3_genlh_rotation(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 axis = {{1.0f, 1.0f, 0.0f}};
@@ -838,7 +838,7 @@ CML_TestResult testc_matrix3x3_genlh_rotation() {
 }
 
 
-CML_TestResult testc_matrix3x3_genrh_rotationx() {
+CML_TestResult testc_matrix3x3_genrh_rotationx(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, -1.0f, 1.0f}};
@@ -853,7 +853,7 @@ CML_TestResult testc_matrix3x3_genrh_rotationx() {
 }
 
 
-CML_TestResult testc_matrix3x3_genrh_rotationy() {
+CML_TestResult testc_matrix3x3_genrh_rotationy(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}};
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{1.0f, 1.0f, -1.0f}};
@@ -868,7 +868,7 @@ CML_TestResult testc_matrix3x3_genrh_rotationy() {
 }
 
 
-CML_TestResult testc_matrix3x3_genrh_rotationz() {
+CML_TestResult testc_matrix3x3_genrh_rotationz(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
     CML_Matrix3x3 out;
     CML_Vector3 expected = {{-1.0f, 1.0f, 1.0f}};
@@ -883,7 +883,7 @@ CML_TestResult testc_matrix3x3_genrh_rotationz() {
 }
 
 
-CML_TestResult testc_matrix3x3_genrh_rotation() {
+CML_TestResult testc_matrix3x3_genrh_rotation(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
     CML_Matrix3x3 out;
     CML_Vector3 axis = {{1.0f, 0.0f, 1.0f}};
@@ -899,7 +899,7 @@ CML_TestResult testc_matrix3x3_genrh_rotation() {
 }
 
 
-CML_TestResult testc_matrix3x3_gen_invrotation() {
+CML_TestResult testc_matrix3x3_gen_invrotation(void) {
     CML_Vector3 v = {{1.0f, 1.0f, 1.0f}}; 
     CML_Matrix3x3 out1;
     CML_Matrix3x3 out2;
@@ -922,7 +922,7 @@ CML_TestResult testc_matrix3x3_gen_invrotation() {
 
 
 
-CML_TestResult testc_matrix4x4_add() {
+CML_TestResult testc_matrix4x4_add(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
@@ -952,7 +952,7 @@ CML_TestResult testc_matrix4x4_add() {
 }
 
 
-CML_TestResult testc_matrix4x4_sub() {
+CML_TestResult testc_matrix4x4_sub(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -982,7 +982,7 @@ CML_TestResult testc_matrix4x4_sub() {
 }
 
 
-CML_TestResult testc_matrix4x4_scale() {
+CML_TestResult testc_matrix4x4_scale(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1006,7 +1006,7 @@ CML_TestResult testc_matrix4x4_scale() {
 }
 
 
-CML_TestResult testc_matrix4x4_mult() {
+CML_TestResult testc_matrix4x4_mult(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1036,7 +1036,7 @@ CML_TestResult testc_matrix4x4_mult() {
 }
 
 
-CML_TestResult testc_matrix4x4_mult_matrix4x2() {
+CML_TestResult testc_matrix4x4_mult_matrix4x2(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1066,7 +1066,7 @@ CML_TestResult testc_matrix4x4_mult_matrix4x2() {
 }
 
 
-CML_TestResult testc_matrix4x4_mult_matrix4x3() {
+CML_TestResult testc_matrix4x4_mult_matrix4x3(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1096,7 +1096,7 @@ CML_TestResult testc_matrix4x4_mult_matrix4x3() {
 }
 
 
-CML_TestResult testc_matrix4x4_mult_vector4() {
+CML_TestResult testc_matrix4x4_mult_vector4(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1116,7 +1116,7 @@ CML_TestResult testc_matrix4x4_mult_vector4() {
 }
 
 
-CML_TestResult testc_vector4_mult_matrix4x4() {
+CML_TestResult testc_vector4_mult_matrix4x4(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Matrix4x4 A = CML_MATRIX4X4(
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1136,7 +1136,7 @@ CML_TestResult testc_vector4_mult_matrix4x4() {
 }
 
 
-CML_TestResult testc_matrix4x4_det() {
+CML_TestResult testc_matrix4x4_det(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1154,7 +1154,7 @@ CML_TestResult testc_matrix4x4_det() {
 }
 
 
-CML_TestResult testc_matrix4x4_inv() {
+CML_TestResult testc_matrix4x4_inv(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         0.0f, 1.0f, 5.0f, 6.0f, 
@@ -1178,7 +1178,7 @@ CML_TestResult testc_matrix4x4_inv() {
 }
 
 
-CML_TestResult testc_matrix4x4_transpose() {
+CML_TestResult testc_matrix4x4_transpose(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
@@ -1202,7 +1202,7 @@ CML_TestResult testc_matrix4x4_transpose() {
 }
 
 
-CML_TestResult testc_matrix4x4_trace() {
+CML_TestResult testc_matrix4x4_trace(void) {
     CML_Matrix4x4 A = CML_MATRIX4X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -1220,7 +1220,7 @@ CML_TestResult testc_matrix4x4_trace() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_scale() {
+CML_TestResult testc_matrix4x4_gen_scale(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{2.0f, 6.0f, 12.0f, 1.0f}};
@@ -1235,7 +1235,7 @@ CML_TestResult testc_matrix4x4_gen_scale() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_invscale() {
+CML_TestResult testc_matrix4x4_gen_invscale(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 2.0f, 3.0f, 1.0f}};
@@ -1252,7 +1252,7 @@ CML_TestResult testc_matrix4x4_gen_invscale() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_shearx() {
+CML_TestResult testc_matrix4x4_gen_shearx(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{3.0f, 1.0f, 1.0f, 1.0f}};
@@ -1267,7 +1267,7 @@ CML_TestResult testc_matrix4x4_gen_shearx() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_sheary() {
+CML_TestResult testc_matrix4x4_gen_sheary(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 3.0f, 1.0f, 1.0f}};
@@ -1282,7 +1282,7 @@ CML_TestResult testc_matrix4x4_gen_sheary() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_shearz() {
+CML_TestResult testc_matrix4x4_gen_shearz(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 1.0f, 3.0f, 1.0f}};
@@ -1297,7 +1297,7 @@ CML_TestResult testc_matrix4x4_gen_shearz() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_invshear() {
+CML_TestResult testc_matrix4x4_gen_invshear(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out1;
     CML_Matrix4x4 out2;
@@ -1324,7 +1324,7 @@ CML_TestResult testc_matrix4x4_gen_invshear() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_translation() {
+CML_TestResult testc_matrix4x4_gen_translation(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{2.0f, 3.0f, 4.0f, 1.0f}};
@@ -1339,7 +1339,7 @@ CML_TestResult testc_matrix4x4_gen_translation() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_invtranslation() {
+CML_TestResult testc_matrix4x4_gen_invtranslation(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 1.0f, 1.0f, 1.0f}};
@@ -1356,7 +1356,7 @@ CML_TestResult testc_matrix4x4_gen_invtranslation() {
 }
 
 
-CML_TestResult testc_matrix4x4_genlh_rotationx() {
+CML_TestResult testc_matrix4x4_genlh_rotationx(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 1.0f, -1.0f, 1.0f}};
@@ -1371,7 +1371,7 @@ CML_TestResult testc_matrix4x4_genlh_rotationx() {
 }
 
 
-CML_TestResult testc_matrix4x4_genlh_rotationy() {
+CML_TestResult testc_matrix4x4_genlh_rotationy(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{-1.0f, 1.0f, 1.0f, 1.0f}};
@@ -1386,7 +1386,7 @@ CML_TestResult testc_matrix4x4_genlh_rotationy() {
 }
 
 
-CML_TestResult testc_matrix4x4_genlh_rotationz() {
+CML_TestResult testc_matrix4x4_genlh_rotationz(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, -1.0f, 1.0f, 1.0f}};
@@ -1401,7 +1401,7 @@ CML_TestResult testc_matrix4x4_genlh_rotationz() {
 }
 
 
-CML_TestResult testc_matrix4x4_genlh_rotation() {
+CML_TestResult testc_matrix4x4_genlh_rotation(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector3 axis = {{1.0f, 1.0f, 0.0f}};
@@ -1417,7 +1417,7 @@ CML_TestResult testc_matrix4x4_genlh_rotation() {
 }
 
 
-CML_TestResult testc_matrix4x4_genrh_rotationx() {
+CML_TestResult testc_matrix4x4_genrh_rotationx(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, -1.0f, 1.0f, 1.0f}};
@@ -1432,7 +1432,7 @@ CML_TestResult testc_matrix4x4_genrh_rotationx() {
 }
 
 
-CML_TestResult testc_matrix4x4_genrh_rotationy() {
+CML_TestResult testc_matrix4x4_genrh_rotationy(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{1.0f, 1.0f, -1.0f, 1.0f}};
@@ -1447,7 +1447,7 @@ CML_TestResult testc_matrix4x4_genrh_rotationy() {
 }
 
 
-CML_TestResult testc_matrix4x4_genrh_rotationz() {
+CML_TestResult testc_matrix4x4_genrh_rotationz(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}};
     CML_Matrix4x4 out;
     CML_Vector4 expected = {{-1.0f, 1.0f, 1.0f, 1.0f}};
@@ -1462,7 +1462,7 @@ CML_TestResult testc_matrix4x4_genrh_rotationz() {
 }
 
 
-CML_TestResult testc_matrix4x4_genrh_rotation() {
+CML_TestResult testc_matrix4x4_genrh_rotation(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
     CML_Matrix4x4 out;
     CML_Vector3 axis = {{1.0f, 0.0f, 1.0f}};
@@ -1478,7 +1478,7 @@ CML_TestResult testc_matrix4x4_genrh_rotation() {
 }
 
 
-CML_TestResult testc_matrix4x4_gen_invrotation() {
+CML_TestResult testc_matrix4x4_gen_invrotation(void) {
     CML_Vector4 v = {{1.0f, 1.0f, 1.0f, 1.0f}}; 
     CML_Matrix4x4 out1;
     CML_Matrix4x4 out2;
@@ -1501,7 +1501,7 @@ CML_TestResult testc_matrix4x4_gen_invrotation() {
 
 
 
-CML_TestResult testc_matrix2x3_add() {
+CML_TestResult testc_matrix2x3_add(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1525,7 +1525,7 @@ CML_TestResult testc_matrix2x3_add() {
 }
 
 
-CML_TestResult testc_matrix2x3_sub() {
+CML_TestResult testc_matrix2x3_sub(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1549,7 +1549,7 @@ CML_TestResult testc_matrix2x3_sub() {
 }
 
 
-CML_TestResult testc_matrix2x3_scale() {
+CML_TestResult testc_matrix2x3_scale(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1569,7 +1569,7 @@ CML_TestResult testc_matrix2x3_scale() {
 }
 
 
-CML_TestResult testc_matrix2x3_mult_matrix3x2() {
+CML_TestResult testc_matrix2x3_mult_matrix3x2(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1594,7 +1594,7 @@ CML_TestResult testc_matrix2x3_mult_matrix3x2() {
 }
 
 
-CML_TestResult testc_matrix2x3_mult_matrix3x3() {
+CML_TestResult testc_matrix2x3_mult_matrix3x3(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1619,7 +1619,7 @@ CML_TestResult testc_matrix2x3_mult_matrix3x3() {
 }
 
 
-CML_TestResult testc_matrix2x3_mult_matrix3x4() {
+CML_TestResult testc_matrix2x3_mult_matrix3x4(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1644,7 +1644,7 @@ CML_TestResult testc_matrix2x3_mult_matrix3x4() {
 }
 
 
-CML_TestResult testc_matrix2x3_mult_vector3() {
+CML_TestResult testc_matrix2x3_mult_vector3(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1662,7 +1662,7 @@ CML_TestResult testc_matrix2x3_mult_vector3() {
 }
 
 
-CML_TestResult testc_vector2_mult_matrix2x3() {
+CML_TestResult testc_vector2_mult_matrix2x3(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Matrix2x3 A = CML_MATRIX2X3(
         3.0f, 4.0f, 5.0f,
@@ -1680,7 +1680,7 @@ CML_TestResult testc_vector2_mult_matrix2x3() {
 }
 
 
-CML_TestResult testc_matrix2x3_transpose() {
+CML_TestResult testc_matrix2x3_transpose(void) {
     CML_Matrix2x3 A = CML_MATRIX2X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f
@@ -1702,7 +1702,7 @@ CML_TestResult testc_matrix2x3_transpose() {
 
 
 
-CML_TestResult testc_matrix2x4_add() {
+CML_TestResult testc_matrix2x4_add(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1726,7 +1726,7 @@ CML_TestResult testc_matrix2x4_add() {
 }
 
 
-CML_TestResult testc_matrix2x4_sub() {
+CML_TestResult testc_matrix2x4_sub(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1750,7 +1750,7 @@ CML_TestResult testc_matrix2x4_sub() {
 }
 
 
-CML_TestResult testc_matrix2x4_scale() {
+CML_TestResult testc_matrix2x4_scale(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1770,7 +1770,7 @@ CML_TestResult testc_matrix2x4_scale() {
 }
 
 
-CML_TestResult testc_matrix2x4_mult_matrix4x2() {
+CML_TestResult testc_matrix2x4_mult_matrix4x2(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1796,7 +1796,7 @@ CML_TestResult testc_matrix2x4_mult_matrix4x2() {
 }
 
 
-CML_TestResult testc_matrix2x4_mult_matrix4x3() {
+CML_TestResult testc_matrix2x4_mult_matrix4x3(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1822,7 +1822,7 @@ CML_TestResult testc_matrix2x4_mult_matrix4x3() {
 }
 
 
-CML_TestResult testc_matrix2x4_mult_matrix4x4() {
+CML_TestResult testc_matrix2x4_mult_matrix4x4(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1848,7 +1848,7 @@ CML_TestResult testc_matrix2x4_mult_matrix4x4() {
 }
 
 
-CML_TestResult testc_matrix2x4_mult_vector4() {
+CML_TestResult testc_matrix2x4_mult_vector4(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1866,7 +1866,7 @@ CML_TestResult testc_matrix2x4_mult_vector4() {
 }
 
 
-CML_TestResult testc_vector2_mult_matrix2x4() {
+CML_TestResult testc_vector2_mult_matrix2x4(void) {
     CML_Vector2 v = {{1.0f, 2.0f}};
     CML_Matrix2x4 A = CML_MATRIX2X4(
         3.0f, 4.0f, 5.0f, 6.0f, 
@@ -1884,7 +1884,7 @@ CML_TestResult testc_vector2_mult_matrix2x4() {
 }
 
 
-CML_TestResult testc_matrix2x4_transpose() {
+CML_TestResult testc_matrix2x4_transpose(void) {
     CML_Matrix2x4 A = CML_MATRIX2X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f
@@ -1907,7 +1907,7 @@ CML_TestResult testc_matrix2x4_transpose() {
 
 
 
-CML_TestResult testc_matrix3x2_add() {
+CML_TestResult testc_matrix3x2_add(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -1934,7 +1934,7 @@ CML_TestResult testc_matrix3x2_add() {
 }
 
 
-CML_TestResult testc_matrix3x2_sub() {
+CML_TestResult testc_matrix3x2_sub(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -1961,7 +1961,7 @@ CML_TestResult testc_matrix3x2_sub() {
 }
 
 
-CML_TestResult testc_matrix3x2_scale() {
+CML_TestResult testc_matrix3x2_scale(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -1983,7 +1983,7 @@ CML_TestResult testc_matrix3x2_scale() {
 }
 
 
-CML_TestResult testc_matrix3x2_mult_matrix2x2() {
+CML_TestResult testc_matrix3x2_mult_matrix2x2(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2009,7 +2009,7 @@ CML_TestResult testc_matrix3x2_mult_matrix2x2() {
 }
 
 
-CML_TestResult testc_matrix3x2_mult_matrix2x3() {
+CML_TestResult testc_matrix3x2_mult_matrix2x3(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2035,7 +2035,7 @@ CML_TestResult testc_matrix3x2_mult_matrix2x3() {
 }
 
 
-CML_TestResult testc_matrix3x2_mult_matrix2x4() {
+CML_TestResult testc_matrix3x2_mult_matrix2x4(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2061,7 +2061,7 @@ CML_TestResult testc_matrix3x2_mult_matrix2x4() {
 }
 
 
-CML_TestResult testc_matrix3x2_mult_vector2() {
+CML_TestResult testc_matrix3x2_mult_vector2(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2080,7 +2080,7 @@ CML_TestResult testc_matrix3x2_mult_vector2() {
 }
 
 
-CML_TestResult testc_vector3_mult_matrix3x2() {
+CML_TestResult testc_vector3_mult_matrix3x2(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Matrix3x2 A = CML_MATRIX3X2(
         4.0f, 5.0f,
@@ -2099,7 +2099,7 @@ CML_TestResult testc_vector3_mult_matrix3x2() {
 }
 
 
-CML_TestResult testc_matrix3x2_transpose() {
+CML_TestResult testc_matrix3x2_transpose(void) {
     CML_Matrix3x2 A = CML_MATRIX3X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2121,7 +2121,7 @@ CML_TestResult testc_matrix3x2_transpose() {
 
 
 
-CML_TestResult testc_matrix3x4_add() {
+CML_TestResult testc_matrix3x4_add(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
@@ -2148,7 +2148,7 @@ CML_TestResult testc_matrix3x4_add() {
 }
 
 
-CML_TestResult testc_matrix3x4_sub() {
+CML_TestResult testc_matrix3x4_sub(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2175,7 +2175,7 @@ CML_TestResult testc_matrix3x4_sub() {
 }
 
 
-CML_TestResult testc_matrix3x4_scale() {
+CML_TestResult testc_matrix3x4_scale(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2197,7 +2197,7 @@ CML_TestResult testc_matrix3x4_scale() {
 }
 
 
-CML_TestResult testc_matrix3x4_mult_matrix4x2() {
+CML_TestResult testc_matrix3x4_mult_matrix4x2(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2225,7 +2225,7 @@ CML_TestResult testc_matrix3x4_mult_matrix4x2() {
 }
 
 
-CML_TestResult testc_matrix3x4_mult_matrix4x3() {
+CML_TestResult testc_matrix3x4_mult_matrix4x3(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2253,7 +2253,7 @@ CML_TestResult testc_matrix3x4_mult_matrix4x3() {
 }
 
 
-CML_TestResult testc_matrix3x4_mult_matrix4x4() {
+CML_TestResult testc_matrix3x4_mult_matrix4x4(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2281,7 +2281,7 @@ CML_TestResult testc_matrix3x4_mult_matrix4x4() {
 }
 
 
-CML_TestResult testc_matrix3x4_mult_vector4() {
+CML_TestResult testc_matrix3x4_mult_vector4(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2300,7 +2300,7 @@ CML_TestResult testc_matrix3x4_mult_vector4() {
 }
 
 
-CML_TestResult testc_vector3_mult_matrix3x4() {
+CML_TestResult testc_vector3_mult_matrix3x4(void) {
     CML_Vector3 v = {{1.0f, 2.0f, 3.0f}};
     CML_Matrix3x4 A = CML_MATRIX3X4(
         4.0f, 5.0f, 6.0f, 7.0f, 
@@ -2319,7 +2319,7 @@ CML_TestResult testc_vector3_mult_matrix3x4() {
 }
 
 
-CML_TestResult testc_matrix3x4_transpose() {
+CML_TestResult testc_matrix3x4_transpose(void) {
     CML_Matrix3x4 A = CML_MATRIX3X4(
         1.0f, 2.0f, 3.0f, 4.0f, 
         5.0f, 6.0f, 7.0f, 8.0f, 
@@ -2343,7 +2343,7 @@ CML_TestResult testc_matrix3x4_transpose() {
 
 
 
-CML_TestResult testc_matrix4x2_add() {
+CML_TestResult testc_matrix4x2_add(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2373,7 +2373,7 @@ CML_TestResult testc_matrix4x2_add() {
 }
 
 
-CML_TestResult testc_matrix4x2_sub() {
+CML_TestResult testc_matrix4x2_sub(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2403,7 +2403,7 @@ CML_TestResult testc_matrix4x2_sub() {
 }
 
 
-CML_TestResult testc_matrix4x2_scale() {
+CML_TestResult testc_matrix4x2_scale(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2427,7 +2427,7 @@ CML_TestResult testc_matrix4x2_scale() {
 }
 
 
-CML_TestResult testc_matrix4x2_mult_matrix2x2() {
+CML_TestResult testc_matrix4x2_mult_matrix2x2(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f,
         3.0f, 4.0f,
@@ -2455,7 +2455,7 @@ CML_TestResult testc_matrix4x2_mult_matrix2x2() {
 }
 
 
-CML_TestResult testc_matrix4x2_mult_matrix2x3() {
+CML_TestResult testc_matrix4x2_mult_matrix2x3(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f, 
         3.0f, 4.0f, 
@@ -2483,7 +2483,7 @@ CML_TestResult testc_matrix4x2_mult_matrix2x3() {
 }
 
 
-CML_TestResult testc_matrix4x2_mult_matrix2x4() {
+CML_TestResult testc_matrix4x2_mult_matrix2x4(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f, 
         3.0f, 4.0f, 
@@ -2511,7 +2511,7 @@ CML_TestResult testc_matrix4x2_mult_matrix2x4() {
 }
 
 
-CML_TestResult testc_matrix4x2_mult_vector2() {
+CML_TestResult testc_matrix4x2_mult_vector2(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f, 
         3.0f, 4.0f, 
@@ -2531,7 +2531,7 @@ CML_TestResult testc_matrix4x2_mult_vector2() {
 }
 
 
-CML_TestResult testc_vector4_mult_matrix4x2() {
+CML_TestResult testc_vector4_mult_matrix4x2(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Matrix4x2 A = CML_MATRIX4X2(
         5.0f, 6.0f, 
@@ -2551,7 +2551,7 @@ CML_TestResult testc_vector4_mult_matrix4x2() {
 }
 
 
-CML_TestResult testc_matrix4x2_transpose() {
+CML_TestResult testc_matrix4x2_transpose(void) {
     CML_Matrix4x2 A = CML_MATRIX4X2(
         1.0f, 2.0f, 
         3.0f, 4.0f, 
@@ -2574,7 +2574,7 @@ CML_TestResult testc_matrix4x2_transpose() {
 
 
 
-CML_TestResult testc_matrix4x3_add() {
+CML_TestResult testc_matrix4x3_add(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
@@ -2604,7 +2604,7 @@ CML_TestResult testc_matrix4x3_add() {
 }
 
 
-CML_TestResult testc_matrix4x3_sub() {
+CML_TestResult testc_matrix4x3_sub(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2634,7 +2634,7 @@ CML_TestResult testc_matrix4x3_sub() {
 }
 
 
-CML_TestResult testc_matrix4x3_scale() {
+CML_TestResult testc_matrix4x3_scale(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2658,7 +2658,7 @@ CML_TestResult testc_matrix4x3_scale() {
 }
 
 
-CML_TestResult testc_matrix4x3_mult_matrix3x2() {
+CML_TestResult testc_matrix4x3_mult_matrix3x2(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2687,7 +2687,7 @@ CML_TestResult testc_matrix4x3_mult_matrix3x2() {
 }
 
 
-CML_TestResult testc_matrix4x3_mult_matrix3x3() {
+CML_TestResult testc_matrix4x3_mult_matrix3x3(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2716,7 +2716,7 @@ CML_TestResult testc_matrix4x3_mult_matrix3x3() {
 }
 
 
-CML_TestResult testc_matrix4x3_mult_matrix3x4() {
+CML_TestResult testc_matrix4x3_mult_matrix3x4(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2745,7 +2745,7 @@ CML_TestResult testc_matrix4x3_mult_matrix3x4() {
 }
 
 
-CML_TestResult testc_matrix4x3_mult_vector3() {
+CML_TestResult testc_matrix4x3_mult_vector3(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
@@ -2765,7 +2765,7 @@ CML_TestResult testc_matrix4x3_mult_vector3() {
 }
 
 
-CML_TestResult testc_vector4_mult_matrix4x3() {
+CML_TestResult testc_vector4_mult_matrix4x3(void) {
     CML_Vector4 v = {{1.0f, 2.0f, 3.0f, 4.0f}};
     CML_Matrix4x3 A = CML_MATRIX4X3(
         5.0f, 6.0f, 7.0f,
@@ -2785,7 +2785,7 @@ CML_TestResult testc_vector4_mult_matrix4x3() {
 }
 
 
-CML_TestResult testc_matrix4x3_transpose() {
+CML_TestResult testc_matrix4x3_transpose(void) {
     CML_Matrix4x3 A = CML_MATRIX4X3(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f, 
