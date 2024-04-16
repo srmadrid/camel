@@ -35,8 +35,8 @@ typedef enum CML_NumericType {
     CML_I64,
     CML_F32,
     CML_F64,
-    CML_COMPLEXF32,
-    CML_COMPLEXF64,
+    CML_CF32,
+    CML_CF64,
     CML_BIGINT,
     CML_FRACTION, // a/b, both CML_Bigint
     CML_COMPLEX, // a + bi, both CML_Fraction

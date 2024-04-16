@@ -35,7 +35,7 @@ int main(void) {
     if (testing) {
         u32 count = 0;
         u32 expectedCount = 400;
-        CML_Test registry[expectedCount];
+        CML_Test *registry = malloc(sizeof(CML_Test)*expectedCount);
 
         // cml_test_init(&registry, &count, expectedCount);
         // Better create the registry on the stack, so we 
@@ -44,6 +44,8 @@ int main(void) {
         cml_register_all_tests(registry, &count);
 
         cml_run_tests(registry, count);
+
+        free(registry);
     }
 
     b8 profiling = false;

@@ -1,5 +1,4 @@
-/**
- * @file m.h
+/** @file m.h
  * 
  * @brief Implementation of CAMEL's basic type, the matrix.
  *
@@ -16,6 +15,60 @@
 
 
 CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_NumericType type, CML_Matrix *matrix) {
+    switch (matrix->type) {
+        case CML_U8:
+            return cml_matrixU8_init(allocator, rows, columns, matrix);
+
+        case CML_U16:
+            return cml_matrixU16_init(allocator, rows, columns, matrix);
+
+        case CML_U32:
+            return cml_matrixU32_init(allocator, rows, columns, matrix);
+
+        case CML_U64:
+            return cml_matrixU64_init(allocator, rows, columns, matrix);
+
+        case CML_I8:
+            return cml_matrixI8_init(allocator, rows, columns, matrix);
+
+        case CML_I16:
+            return cml_matrixI16_init(allocator, rows, columns, matrix);
+
+        case CML_I32:
+            return cml_matrixI32_init(allocator, rows, columns, matrix);
+
+        case CML_I64:
+            return cml_matrixI64_init(allocator, rows, columns, matrix);
+
+        case CML_F32:
+            return cml_matrixF32_init(allocator, rows, columns, matrix);
+
+        case CML_F64:
+            return cml_matrixF64_init(allocator, rows, columns, matrix);
+
+        case CML_CF32:
+            return cml_matrixCF32_init(allocator, rows, columns, matrix);
+
+        case CML_CF64:
+            return cml_matrixCF64_init(allocator, rows, columns, matrix);
+
+        case CML_BIGINT:
+            return cml_matrixBINT_init(allocator, rows, columns, matrix);
+
+        case CML_FRACTION:
+            return cml_matrixFRAC_init(allocator, rows, columns, matrix);
+
+        case CML_COMPLEX:
+            return cml_matrixCMPLX_init(allocator, rows, columns, matrix);
+
+        case CML_EXPRESSION:
+            return cml_matrixEXP_init(allocator, rows, columns, matrix);
+
+        case CML_MATRIX:
+            return cml_matrixMAT_init(allocator, rows, columns, matrix);
+    }
+
+    // Move this to specific functions
     if (allocator == NULL || matrix == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -2342,27 +2395,16 @@ CML_Status cml_matrix_mult(b8 p, CML_Allocator *allocator, const CML_Matrix *lef
                 f64 scalar;
                 if (leftIsScalar) {
                     scalar = *(f64*)left->data;
-                    if (p) {
-                        #pragma omp parallel for
-                        for (u32 r = 0; r < out->rows; r++) {
-                            for (u32 c = 0; c < out->columns; c++) {
-                                ((f64*)out->data)[r*out->columns + c] += scalar*((f64*)right->data)[r*right->columns + c];
-                            }
-                        }
-                    } else {
-                        for (u32 r = 0; r < out->rows; r++) {
-                            for (u32 c = 0; c < out->columns; c++) {
-                                ((f64*)out->data)[r*out->columns + c] += scalar*((f64*)right->data)[r*right->columns + c];
-                            }
+                    for (u32 r = 0; r < out->rows; r++) {
+                        for (u32 c = 0; c < out->columns; c++) {
+                            ((f64*)out->data)[r*out->columns + c] += scalar*((f64*)right->data)[r*right->columns + c];
                         }
                     }
                 } else  {
                     scalar = *(f64*)right->data;
                     for (u32 r = 0; r < out->rows; r++) {
                         for (u32 c = 0; c < out->columns; c++) {
-                            f64 number = *(f64*)cml_matrix_get(r, c, left);
-                            number *= scalar;
-                            cml_matrix_set(&number, r, c, out);
+                            ((f64*)out->data)[r*out->columns + c] += scalar*((f64*)left->data)[r*left->columns + c];
                         }
                     }
                 }

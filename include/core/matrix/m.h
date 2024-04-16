@@ -23,6 +23,7 @@
 #include "../macros.h"
 #include "../types.h"
 #include "../memory/memory.h"
+#include "../bignum/bignum.h"
 
 
 /**
@@ -31,7 +32,29 @@
  */
 typedef struct CML_Matrix {
     /** @brief Pointer to the data in the matrix. */
-    void *data;
+    union {
+        u8  *u8d;
+        u16 *u16d;
+        u32 *u32d;
+        u64 *u64d;
+
+        i8  *i8d;
+        i16 *i16d;
+        i32 *i32d;
+        i64 *i64d;
+
+        f32 *f32d;
+        f64 *f64d;
+
+        cf32 *cf32d;
+        cf64 *cf64d;
+
+        CML_BigInt     *bigintd;
+        CML_Fraction   *fracd;
+        CML_Complex    *complexd;
+        CML_Expression *expd;
+        CML_Matrix     *matd;
+    };
     /** @brief Type stored in the matrix. */
     CML_NumericType type;
     /** @brief Number of rows. */
@@ -46,7 +69,8 @@ typedef struct CML_Matrix {
 
 
 /**
- * @brief Initializes a CML_Matrix and zeroes its data.
+ * @brief Initializes a CML_Matrix and zeroes its data (all standard types are
+ *        set to zero, but library defined types are not initiallized).
  * 
  * @param allocator Allocator for the matrix.
  * @param rows      Number of rows.
@@ -60,7 +84,20 @@ CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_
 
 
 /**
- * @brief Initializes a CML_Matrix and sets all values to 0. Int contrast to 
+ * @brief Initializes a CML_Matrix of u8's to 0.
+ * 
+ * @param allocator Allocator for the matrix.
+ * @param rows      Number of rows.
+ * @param columns   Number of columns.
+ * @param matrix    Pointer to the matrix to be initialized.
+ * 
+ * @return Status code.
+ */
+CML_Status cml_matrixU8_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_Matrix *matrix);
+
+
+/**
+ * @brief Initializes a CML_Matrix and sets all values to 0. Incontrast to 
  *        the standard initializer, if the type is an arbitrary precision type 
  *        (CML_BigInt, CML_Fraction or CML_Complex), all elements will be 
  *        initialized with the allocator of the matrix to 0.

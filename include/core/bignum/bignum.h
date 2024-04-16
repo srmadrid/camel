@@ -15,5 +15,7 @@
 #define CAMEL_BIGNUM
 
 #include "bigint.h"
+#include "fraction.h"
+#include "complex.h"
 
 #endif /* CAMEL_BIGNUM */
