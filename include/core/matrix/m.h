@@ -53,7 +53,7 @@ typedef struct CML_Matrix {
         CML_Fraction   *fracd;
         CML_Complex    *complexd;
         CML_Expression *expd;
-        CML_Matrix     *matd;
+        struct CML_Matrix     *matd;
     };
     /** @brief Type stored in the matrix. */
     CML_NumericType type;
@@ -81,19 +81,6 @@ typedef struct CML_Matrix {
  * @return Status code.
  */
 CML_Status cml_matrix_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_NumericType type, CML_Matrix *matrix);
-
-
-/**
- * @brief Initializes a CML_Matrix of u8's to 0.
- * 
- * @param allocator Allocator for the matrix.
- * @param rows      Number of rows.
- * @param columns   Number of columns.
- * @param matrix    Pointer to the matrix to be initialized.
- * 
- * @return Status code.
- */
-CML_Status cml_matrixU8_init(CML_Allocator *allocator, u32 rows, u32 columns, CML_Matrix *matrix);
 
 
 /**
