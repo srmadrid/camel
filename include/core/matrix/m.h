@@ -132,7 +132,7 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out);
  * @param column Column of the element to be retrieved.
  * @param out   The CML_Matrix to be retrieved from.
  * 
- * @return A pointer to the element at the input location.
+ * @return A pointer to the location of the element.
  */
 void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out);
 

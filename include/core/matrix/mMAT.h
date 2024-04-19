@@ -19,7 +19,8 @@
 
 
 /**
- * @brief Sets the element at the specified location to the input value.
+ * @brief Sets the element at the specified location to the input value. Takes
+ *        ownership of the object.
  *
  * @param element Value to insert in the matrix.
  * @param row     Row of the element.

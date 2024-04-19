@@ -1,6 +1,6 @@
-/** @file cml_matrix_init.h
+/** @file cml_matrix_set.c
  * 
- * @brief Init function for matrices.
+ * @brief Set function for matrices.
  *
  * @author Sergio Madrid
  * @date 17/4/2024
@@ -25,117 +25,71 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out) {
 
     switch (out->type) {
         case CML_U8:
-            return cml_matrixU8_set(*(u8*)element, row, column, out);
-
-        case CML_U16:
-            return cml_matrixU16_set(*(u16*)element, row, column, out);
-
-        case CML_U32:
-            return cml_matrixU32_set(*(u32*)element, row, column, out);
-
-        case CML_U64:
-            return cml_matrixU64_set(*(u64*)element, row, column, out);
-
-        case CML_I8:
-            return cml_matrixI8_set(*(i8*)element, row, column, out);
-
-        case CML_I16:
-            return cml_matrixI16_set(*(i16*)element, row, column, out);
-
-        case CML_I32:
-            return cml_matrixI32_set(*(i32*)element, row, column, out);
-
-        case CML_I64:
-            return cml_matrixI64_set(*(i64*)element, row, column, out);
-
-        case CML_F32:
-            return cml_matrixF32_set(*(f32*)element, row, column, out);
-
-        case CML_F64:
-            return cml_matrixF64_set(*(f64*)element, row, column, out);
-
-        case CML_CF32:
-            return cml_matrixCF32_set(*(cf32*)element, row, column, out);
-
-        case CML_CF64:
-            return cml_matrixCF64_set(*(cf64*)element, row, column, out);
-
-        case CML_BIGINT:
-            return cml_matrixBINT_set(element, row, column, out);
-
-        case CML_FRACTION:
-            return cml_matrixFRAC_set(element, row, column, out);
-
-        case CML_COMPLEX:
-            return cml_matrixCMPLX_set(element, row, column, out);
-
-        case CML_EXPRESSION:
-            return cml_matrixEXP_set(element, row, column, out);
-
-        case CML_MATRIX:
-            return cml_matrixMAT_set(element, row, column, out);
-    }
-
-    u32 stride = cml_numerictype_size(out->type);
-    void *location;
-    //location = &(((u8*)out->data)[row*stride*out->columns + column*stride]);
-    location = ((u8*)out->data) + row*stride*out->columns + column*stride;
-
-    switch(out->type) {
-        case CML_U8:
-            *(u8*)location = *(u8*)element;
+            out->u8d[row*out->columns + column] = *(u8*)element;
             break;
 
         case CML_U16:
-            *(u16*)location = *(u16*)element;
+            out->u16d[row*out->columns + column] = *(u16*)element;
             break;
 
         case CML_U32:
-            *(u32*)location = *(u32*)element;
+            out->u32d[row*out->columns + column] = *(u32*)element;
             break;
 
         case CML_U64:
-            *(u64*)location = *(u64*)element;
+            out->u64d[row*out->columns + column] = *(u64*)element;
             break;
 
         case CML_I8:
-            *(i8*)location = *(i8*)element;
+            out->i8d[row*out->columns + column] = *(i8*)element;
             break;
 
         case CML_I16:
-            *(i16*)location = *(i16*)element;
+            out->u16d[row*out->columns + column] = *(i16*)element;
             break;
 
         case CML_I32:
-            *(i32*)location = *(i32*)element;
+            out->i32d[row*out->columns + column] = *(i32*)element;
             break;
 
         case CML_I64:
-            *(i64*)location = *(i64*)element;
+            out->i64d[row*out->columns + column] = *(i64*)element;
             break;
 
         case CML_F32:
-            *(f32*)location = *(f32*)element;
+            out->f32d[row*out->columns + column] = *(f32*)element;
             break;
 
         case CML_F64:
-            *(f64*)location = *(f64*)element;
+            out->f64d[row*out->columns + column] = *(f64*)element;
             break;
 
         case CML_CF32:
-            *(cf32*)location = *(cf32*)element;
+            out->cf32d[row*out->columns + column] = *(cf32*)element;
             break;
-        
+
         case CML_CF64:
-            *(cf64*)location = *(cf64*)element;
+            out->cf64d[row*out->columns + column] = *(cf64*)element;
             break;
 
         case CML_BIGINT:
+            memcpy(&out->bigintd, element, sizeof(CML_BigInt));
+            break;
+
         case CML_FRACTION:
+            memcpy(&out->fracd, element, sizeof(CML_Fraction));
+            break;
+
         case CML_COMPLEX:
+            memcpy(&out->complexd, element, sizeof(CML_Complex));
+            break;
+
         case CML_EXPRESSION:
+            memcpy(&out->expd, element, sizeof(CML_Expression));
+            break;
+
         case CML_MATRIX:
-            memcpy(location, element, stride);
+            memcpy(&out->matd, element, sizeof(CML_Matrix));
             break;
     }
 

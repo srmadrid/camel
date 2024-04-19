@@ -15,7 +15,6 @@
 
 
 
-
 CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *p, CML_Matrix *q, CML_Matrix *out) {
     if (A == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
@@ -352,22 +351,6 @@ CML_Status cml_matrix_select(CML_Allocator *allocator, const CML_Matrix *A, CML_
     return CML_SUCCESS;
 }
 
-
-void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out) {
-    if (out == NULL) {
-        return NULL;
-    }
-
-    if (row >= out->rows || column >= out->columns) {
-        return NULL;
-    }
-
-    u32 stride = cml_numerictype_size(out->type);
-    void *element;
-    element = ((u8*)out->data) + row*stride*out->columns + column*stride;
-    //element = &(((u8*)out->data)[row*stride*out->columns + column*stride]);
-    return element;
-}
 
 
 CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
