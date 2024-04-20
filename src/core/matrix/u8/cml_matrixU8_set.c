@@ -1,4 +1,4 @@
-/** @file cml_matrixU8_set.h
+/** @file cml_matrixU8_set.c
  * 
  * @brief Set function for matrices holding u8's.
  *

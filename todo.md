@@ -1,5 +1,9 @@
 # To-Do
 
+## Documentation
+
+Make github webpage instead of latex pdf (maybe generate a pdf from the website for offline users to use).
+
 ## Optimization
 
 Test just like mult, the rest of the matrix operation (probably add and add_inplace are enough since the rest are the same but with other operations. Also with div, since division is slower).

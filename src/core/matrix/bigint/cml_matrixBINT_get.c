@@ -1,9 +1,9 @@
-/** @file cml_matrix_get.c
+/** @file cml_matrixBINT_get.c
  * 
- * @brief Get function for matrices.
+ * @brief Get function for matrices holding Bigint's.
  *
  * @author Sergio Madrid
- * @date 17/4/2024
+ * @date 20/4/2024
  * 
  * @copyright Copyright (c) 2023 Sergio Madrid. All rights reserved. Licensed 
  *            under the MIT License. See LICENSE in the project root for license
@@ -11,10 +11,10 @@
  */
 
 
-#include "../../../include/core/matrix/matrix.h"
+#include "../../../../include/core/matrix/matrix.h"
 
 
-void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Status *out) {
+CML_BigInt *cml_matrixBINT_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Status *out) {
     if (matrix == NULL) {
         if (out != NULL) {
             *out = CML_ERR_NULL_PTR;
@@ -29,10 +29,13 @@ void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Status *
         return NULL;
     }
 
-    u32 stride = cml_numerictype_size(matrix->type);
-    void *element;
-    element = &matrix->u8d[stride*(row*matrix->columns + column)];
+    if (matrix->type != CML_BIGINT) {
+        if (out != NULL) {
+            *out = CML_ERR_INCOMPATIBLE_TYPES;
+        }
+        return NULL;
+    }
 
-    return element;
+    return &matrix->bigintd[row*matrix->columns + column];
 }
 

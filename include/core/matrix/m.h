@@ -130,11 +130,34 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out);
  * 
  * @param row   Row of the element to be retrieved.
  * @param column Column of the element to be retrieved.
- * @param out   The CML_Matrix to be retrieved from.
+ * @param matrix The CML_Matrix to be retrieved from.
+ * @param out Optional error checking parameter.
  * 
  * @return A pointer to the location of the element.
  */
-void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *out);
+void *cml_matrix_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Status *out);
+
+
+/**
+ * @brief Returns the index for an element in a specific row and column for use
+ *        in the 1d array of the matrix.
+ *
+ * @note No NULL checking is done on the matrix. If the dimensions are larger 
+ *       than the matrix's, they are wrapped around to avoid accessing unowned
+ *       memory.
+ *
+ * @param row Row of the element.
+ * @param column Column of the element.
+ * @param matrix The matrix.
+ *
+ * @return The 1d index.
+ */
+static inline u32 cml_idx(u32 row, u32 column, CML_Matrix *matrix) {
+    row = row < matrix->rows ? row : matrix->rows - 1;
+    column = column < matrix->columns ? column : matrix->columns - 1;
+
+    return row*matrix->columns + column;
+}
 
 
 /**

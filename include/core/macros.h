@@ -109,10 +109,10 @@ CML_STATIC_ASSERT(sizeof(b32) == 4, "b32 is not 4 bytes.");
 #define MIN_I64 0x8000000000000000  /** @brief Minimum value of i64 */
 
 // Floating point types.
-#define MAX_F32 0x7F7FFFFF          /** @brief Maximum value of f32 */
-#define MIN_F32 0xFF7FFFFF          /** @brief Minimum value of f32 */
-#define MAX_F64 0x7FEFFFFFFFFFFFFF  /** @brief Maximum value of f64 */
-#define MIN_F64 0xFFEFFFFFFFFFFFFF  /** @brief Minimum value of f64 */
+#define MAX_F32 0X1.FFFFFEP127      /** @brief Maximum value of f32 */
+#define MIN_F32 0X1.0P-126          /** @brief Minimum value of f32 */
+#define MAX_F64 0x1.FFFFFFFFFFFFFP+1023  /** @brief Maximum value of f64 */
+#define MIN_F64 0x1.0P-1022         /** @brief Minimum value of f64 */
 
 
 

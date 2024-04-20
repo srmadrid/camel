@@ -31,5 +31,18 @@
 CML_Status cml_matrixF64_set(f64 element, u32 row, u32 column, CML_Matrix *out);
 
 
+/**
+ * @brief Gets the element at the input location of a CML_Matrix.
+ * 
+ * @param row   Row of the element to be retrieved.
+ * @param column Column of the element to be retrieved.
+ * @param matrix The CML_Matrix to be retrieved from.
+ * @param out Optional error checking parameter.
+ * 
+ * @return The element.
+ */
+f64 cml_matrixF64_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Status *out);
+
+
 #endif /* CAMEL_MF64 */
 
