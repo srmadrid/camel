@@ -9,7 +9,7 @@
     --secondary-color: #E6A644; /* secondary color */
     --tertiary-color: #E18339; /* tertiary color */
     --dark-color: #8C3313; /* dark color for text */
-    --light-color: #fff3b0; /* light color for text */
+    --light-color: #dace8d; /* light color for text */
     --math-color: #2A6A9E; /* a shade of blue often associated with math and science */
     --background-color: #F5F5F5; /* light gray for subtle backgrounds */
     --highlight-color: #C19A6B; /* camel color for highlights */
@@ -119,6 +119,42 @@ img {
     height: auto;
     max-height: 100px;
     margin-right: 15px;
+}
+
+
+/* Footer */
+.footer {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 25px 0;
+    margin-top: 50px;
+}
+
+.footer .container {
+    max-width: 800px;
+    display: flex;
+}
+
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-columns .footer-column a {
+    color: #ffffff;
+}
+
+.footer-columns .footer-column a:hover {
+    color: var(--light-color);
+}
+
+
+.footer img {
+    max-height: 75px;
+    height: auto;
 }
 
 
