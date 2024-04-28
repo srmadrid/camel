@@ -2,6 +2,7 @@
 
 ## Documentation
 
+In matrix functions, if allocator is NULL, it means the out matrix is preinitialized, and if anm allocator is needed inside the function, out's allocator is used.
 Make github webpage instead of latex pdf (maybe generate a pdf from the website for offline users to use).
 
 ## Optimization
@@ -11,9 +12,6 @@ Test just like mult, the rest of the matrix operation (probably add and add_inpl
 ## Priority
 
 ## Matrix
-Almost definitely use different matrix types fopr different held types (CML_Matrix holds the type and the matrix using a union (maybe)). This way, any time the data array will not be void, so casting wont be necessary (ever), and even for CML_Matrix it wont be, data accessed like f64 msth = A.data[18] is valid. Maybe just make a union on the data field (all pointers have the same size), and then have specific function for each type that check the type of the matrix in the field; then the general one calls the specific function depending on the type held.
-Maybe separate matrices into the types they hold (CML_DMatrx, CML_SMatrix, etc, following BLAS abbreviations) and have separate functions for each mastrix type. Then, use CML_Matrix to hold the type and one of the matrix types (inside the CML_Matrix functions, switch to call the type specific ones). This way, float, double, complex float and complex double functions could be optimized easily with blas.
-Offer the matrix opertions so initialized matrices can be passed instead of always initializeing them (maybe if allocator passed is NULL, then dont initialize out).
 Look into introducing a BLAS backend for matrices (maybe only matrices holding CML_DOUBLE).
 
 Create matrix view (CML_Matrixv, or CML_MatrixView, name not final) which holds some reference to a matrix, maybe just the pointer to the data field, and some other info about what part of the matrix to view, like a single column, row, the entire matrix, a permutation, the transpose, etc. This makes it so when you for example need a column vector of a matrix, or the transpose of that matrix, you don't always need to allocate new memory. Make it so they work with matrices, and operations can be applied to them.

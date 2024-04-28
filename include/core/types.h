@@ -77,10 +77,10 @@ static inline u32 cml_numerictype_size(CML_NumericType t) {
         case CML_F64:
             return sizeof(u64);
 
-        case CML_COMPLEXF32:
+        case CML_CF32:
             return sizeof(u32);
 
-        case CML_COMPLEXF64:
+        case CML_CF64:
             return sizeof(u64);
 
         case CML_BIGINT:
