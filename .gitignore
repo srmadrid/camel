@@ -8,6 +8,7 @@ debug_segfault.sh
 ideas.md
 references.md
 handedness.xcf
+bigint_to_str.png
 
 # SIMD, untracked for now until I decide how to implement it
 include/algebra/linear/flinear/fvector_sse.h

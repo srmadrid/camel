@@ -49,11 +49,11 @@ typedef struct CML_Matrix {
         cf32 *cf32d;
         cf64 *cf64d;
 
-        CML_BigInt     *bigintd;
-        CML_Fraction   *fracd;
-        CML_Complex    *complexd;
-        CML_Expression *expd;
-        struct CML_Matrix     *matd;
+        CML_BigInt        *bigintd;
+        CML_Fraction      *fracd;
+        CML_Complex       *complexd;
+        CML_Expression    *expd;
+        struct CML_Matrix *matd;
     };
     /** @brief Type stored in the matrix. */
     CML_NumericType type;

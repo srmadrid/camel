@@ -57,5 +57,17 @@ cf32 cml_matrixCF32_get(u32 row, u32 column, const CML_Matrix *matrix, CML_Statu
 CML_Status cml_matrixCF32_add(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Adds two matrices in place (out += right) and stores the result in 
+ *        the out matrix.
+ *
+ * @param right     The matrix on the right.
+ * @param out       The matrix on the left.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixCF32_add_inplace(const CML_Matrix *right, CML_Matrix *out);
+
+
 #endif /* CAMEL_MCF32 */
 
