@@ -69,5 +69,18 @@ CML_Status cml_matrixU8_add(CML_Allocator *allocator, const CML_Matrix *left, co
 CML_Status cml_matrixU8_add_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Subtracts two matrices and stores the result in the out matrix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixU8_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
+
+
 #endif /* CAMEL_MU8 */
 
