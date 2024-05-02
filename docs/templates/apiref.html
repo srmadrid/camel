@@ -18,67 +18,133 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Style -->
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
 
     <!-- Logo -->
-    <link rel="shortcut icon" href="../assets/logo/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/assets/logo/logo.ico" type="image/x-icon" />
 </head>
 
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item" href="../index.html">
-                    <img src="../assets/logo/logo.svg" alt="Logo">
+                <a class="navbar-item" href="/index.html">
+                    <img src="/assets/logo/logo.svg" alt="Logo">
                     <div class="navbar-logo-text">Camel</div>
                 </a>
             </div>
             <div class="navbar-menu">
                 <ul>
                     <li>
-                        <a href="install.html">Install</a>
+                        <a href="/pages/install.html">Install</a>
                     </li>
                     <li>
-                        <a href="documentation.html">Documentation</a>
+                        <a href="/pages/documentation.html">Documentation</a>
                     </li>
                     <li>
-                        <a href="learn.html">Learn</a>
+                        <a href="/pages/learn.html">Learn</a>
                     </li>
                     <li>
-                        <a href="about_us.html">About Us</a>
+                        <a href="/pages/about_us.html">About Us</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <p>API Reference</p>
+    <div class="apiref-container">
+        <div class="sidebar">
+            <div class="sidebar-items">
+                <form class="sidebar-search">
+                    <input type="text" placeholder="Search...">
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <div class="sidebar-links">
+                    <ul>
+                        <li class="sidebar-link-l1">
+                            <a href="apiref.html">API Reference</a>
+                        </li>
+                        <li class="sidebar-link-l1">
+                            <a href="apiref.html">Camel</a>
+                        </li>
+                        <li class="sidebar-link-l1 active">
+                            <a href="apiref.html">Camel</a>
+                            <ul>
+                                <li class="sidebar-link-l2">
+                                    <a href="apiref.html">Camel</a>
+                                </li>
+                                <li class="sidebar-link-l2">
+                                    <a href="apiref.html">Camel</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="apiref-content">
+            <div class="apiref-name">
+                <h1>Camel</h1>
+            </div>
+            <div class="apiref-description">
+                <p>Camel is a numerical and symbolic mathematics library for C. It provides various mathematical functions and utilities.</p>
+            </div>
+            <div class="apiref-functions">
+                <h2>Functions</h2>
+                <div class="apiref-function">
+                    <h3>Function Name</h3>
+                    <p>Function Description</p>
+                    <h4>Parameters</h4>
+                    <ul>
+                        <li>Parameter 1: Description</li>
+                        <li>Parameter 2: Description</li>
+                    </ul>
+                    <h4>Return Value</h4>
+                    <p>Return Value Description</p>
+                    <h4>Example</h4>
+                    <pre><code class="language-c">int main() {
+    // Compute factorial of 5
+    int n = 5;
+    int factorial = 1;
+    for (int i = 1; i <= n; ++i) {
+        factorial *= i;
+    }
+    printf("Factorial of %d is %d\n", n, factorial);
+    return 0;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-columns">
                 <div class="footer-logo-column">
-                    <a href="../index.html">
-                        <img src="../assets/logo/logo.svg" alt="Logo">
+                    <a href="/index.html">
+                        <img src="/assets/logo/logo.svg" alt="Logo">
                     </a>
                 </div>
                 <div class="footer-column">
                     <ul>
                         <li>
-                            <a href="install.html">Install</a>
+                            <a href="/pages/install.html">Install</a>
                         </li>
                         <li>
-                            <a href="documentation.html">Documentation</a>
+                            <a href="/pages/documentation.html">Documentation</a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <ul>
                         <li>
-                            <a href="learn.html">Learn</a>
+                            <a href="/pages/learn.html">Learn</a>
                         </li>
                         <li>
-                            <a href="about_us.html">About Us</a>
+                            <a href="/pages/about_us.html">About Us</a>
                         </li>
                     </ul>
                 </div>
