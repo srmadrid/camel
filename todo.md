@@ -13,6 +13,7 @@ Test just like mult, the rest of the matrix operation (probably add and add_inpl
 
 ## Matrix
 Look into introducing a BLAS backend for matrices (maybe only matrices holding CML_DOUBLE).
+Look into transposing the matrix before matrix_mult, and detransposing after.
 
 Create matrix view (CML_Matrixv, or CML_MatrixView, name not final) which holds some reference to a matrix, maybe just the pointer to the data field, and some other info about what part of the matrix to view, like a single column, row, the entire matrix, a permutation, the transpose, etc. This makes it so when you for example need a column vector of a matrix, or the transpose of that matrix, you don't always need to allocate new memory. Make it so they work with matrices, and operations can be applied to them.
 

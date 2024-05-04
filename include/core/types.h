@@ -87,10 +87,10 @@ static inline u32 cml_numerictype_size(CML_NumericType t) {
             return sizeof(CML_BigInt);
 
         case CML_FRACTION:
-            return 0;
+            return sizeof(CML_Fraction);
 
         case CML_COMPLEX:
-            return 0;
+            return sizeof(CML_Complex);
 
         case CML_EXPRESSION:
             return sizeof(CML_Expression);
