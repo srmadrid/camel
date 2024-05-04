@@ -235,7 +235,7 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out);
  *
  * @return Status code.
  */
-CML_Status cml_matrix_mult(b8 p, CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
+CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
 /**

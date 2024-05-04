@@ -2,7 +2,7 @@
 
 ## Documentation
 
-In matrix functions, if allocator is NULL, it means the out matrix is preinitialized, and if anm allocator is needed inside the function, out's allocator is used.
+In matrix functions, if allocator is NULL, it means the out matrix is preinitialized, and if anm allocator is needed inside the function, out's allocator is used. In matrix multiplication, if allocator is NULL, it is not checked that the input matrix has only 0s, which it should (the user must make sure).
 Make github webpage instead of latex pdf (maybe generate a pdf from the website for offline users to use).
 
 ## Optimization
