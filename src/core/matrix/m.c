@@ -13,45 +13,6 @@
 
 #include "../../../include/core/matrix/matrix.h"
 
-
-CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *out) {
-    if (A == NULL || out == NULL) {
-        return CML_ERR_NULL_PTR;
-    }
-
-    if (allocator == NULL) {
-        allocator = A->allocator;
-    }
-
-    CML_Status result = cml_matrix_init(allocator, A->columns, A->rows, A->type, out);
-    if (result != CML_SUCCESS) {
-        return result;
-    }
-
-    for (u32 r = 0; r < out->rows; r++) {
-        for (u32 c = 0; c < out->columns; c++) {
-            switch(out->type) {
-                case CML_BIGINT:
-                    break;
-
-                case CML_FRACTION:
-                    break;
-
-                case CML_COMPLEX:
-                    break;
-
-                default:
-                    cml_matrix_set(cml_matrix_get(c, r, A), r, c, out);
-                    break;
-            }
-        }
-    }
-
-    return CML_SUCCESS;
-
-}
-
-
 CML_Status cml_matrix_print(const CML_Matrix *matrix) {
     if (matrix == NULL) {
         return CML_ERR_NULL_PTR;
