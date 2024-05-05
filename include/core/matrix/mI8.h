@@ -121,5 +121,17 @@ CML_Status cml_matrixI8_mult(CML_Allocator *allocator, const CML_Matrix *left, c
 CML_Status cml_matrixI8_multew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Multiplies two matrices element by element, and stores the result in
+ *        the out matrix out .*= right.
+ *
+ * @param right     The matrix on the right.
+ * @param out       The matrix on the left.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixI8_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
+
+
 #endif /* CAMEL_MI8 */
 

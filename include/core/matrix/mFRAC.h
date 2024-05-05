@@ -122,5 +122,17 @@ CML_Status cml_matrixFRAC_mult(CML_Allocator *allocator, const CML_Matrix *left,
 CML_Status cml_matrixFRAC_multew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Multiplies two matrices element by element, and stores the result in
+ *        the out matrix out .*= right.
+ *
+ * @param right     The matrix on the right.
+ * @param out       The matrix on the left.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixFRAC_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
+
+
 #endif /* CAMEL_MFRAC */
 

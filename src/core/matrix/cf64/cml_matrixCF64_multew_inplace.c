@@ -1,7 +1,7 @@
-/** @file cml_matrixBINT_multew_inplace.c
+/** @file cml_matrixCF64_multew_inplace.c
  * 
  * @brief In-place element-wise multiplication function for matrices holding 
- *        Bigint's.
+ *        cf64's.
  *
  * @author Sergio Madrid
  * @date 5/5/2024
@@ -15,12 +15,12 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixBINT_add_inplace(const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixCF64_multew_inplace(const CML_Matrix *right, CML_Matrix *out) {
     if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (right->type != CML_BIGINT || out->type != CML_BIGINT) {
+    if (right->type != CML_CF64 || out->type != CML_CF64) {
         // Maybe add type promotion in the future
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
@@ -37,16 +37,16 @@ CML_Status cml_matrixBINT_add_inplace(const CML_Matrix *right, CML_Matrix *out) 
     }
 
     if (rightIsScalar) {
-        CML_BigInt scalar = right->bigintd[0];
+        cf64 scalar = right->cf64d[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_bigint_mult_inplace(&scalar, &out->bigintd[r*out->columns + c]);
+                out->cf64d[r*out->columns + c] *= scalar;
             }
         }
     } else {
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_bigint_mult_inplace(&right->bigintd[r*out->columns + c], &out->bigintd[r*out->columns + c]);
+                out->cf64d[r*out->columns + c] *= right->cf64d[r*out->columns + c];
             }
         }
     }
