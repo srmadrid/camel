@@ -37,7 +37,7 @@ CML_Status cml_matrixFRAC_divew_inplace(const CML_Matrix *right, CML_Matrix *out
     }
 
     if (rightIsScalar) {
-        CML_Fraction scalar = right->fracd[0];
+        //CML_Fraction scalar = right->fracd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
                 //cml_fraction_div_inplace(&scalar, &out->fracd[r*out->columns + c]);

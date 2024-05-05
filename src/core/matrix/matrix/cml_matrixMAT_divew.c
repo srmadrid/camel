@@ -14,7 +14,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixMAT_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixMAT_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }

@@ -14,7 +14,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixCMPLX_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixCMPLX_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -58,16 +58,16 @@ CML_Status cml_matrixCMPLX_sub(CML_Allocator *allocator, const CML_Matrix *left,
     }
 
     if (oneIsScalar) {
-        CML_Complex scalar;
+        //CML_Complex scalar;
         if (leftIsScalar) {
-            scalar = left->complexd[0];
+            //scalar = left->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_div(NULL, &scalar, &right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->complexd[0];
+            //scalar = right->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_div(NULL, &left->complexd[r*out->columns + c], &scalar, &out->complexd[r*out->columns + c]);

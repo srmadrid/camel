@@ -37,7 +37,7 @@ CML_Status cml_matrixCMPLX_multew_inplace(const CML_Matrix *right, CML_Matrix *o
     }
 
     if (rightIsScalar) {
-        CML_Complex scalar = right->complexd[0];
+        //CML_Complex scalar = right->complexd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
                 //cml_complex_mult_inplace(&scalar, &out->complexd[r*out->columns + c]);

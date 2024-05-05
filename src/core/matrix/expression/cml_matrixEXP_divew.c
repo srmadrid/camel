@@ -14,7 +14,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixEXP_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixEXP_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -58,16 +58,16 @@ CML_Status cml_matrixEXP_sub(CML_Allocator *allocator, const CML_Matrix *left, c
     }
 
     if (oneIsScalar) {
-        CML_Expression scalar;
+        //CML_Expression scalar;
         if (leftIsScalar) {
-            scalar = left->expd[0];
+            //scalar = left->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_expression_div(NULL, &scalar, &right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->expd[0];
+            //scalar = right->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_expression_div(NULL, &left->expd[r*out->columns + c], &scalar, &out->expd[r*out->columns + c]);

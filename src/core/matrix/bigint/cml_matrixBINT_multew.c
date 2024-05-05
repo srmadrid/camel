@@ -58,16 +58,16 @@ CML_Status cml_matrixBINT_multew(CML_Allocator *allocator, const CML_Matrix *lef
     }
 
     if (oneIsScalar) {
-        CML_BigInt scalar;
+        //CML_BigInt scalar;
         if (leftIsScalar) {
-            scalar = left->bigintd[0];
+            //scalar = left->bigintd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_bigint_mult(NULL, &scalar, &right->bigintd[r*out->columns + c], &out->bigintd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->bigintd[0];
+            //scalar = right->bigintd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_bigint_mult(NULL, &left->bigintd[r*out->columns + c], &scalar, &out->bigintd[r*out->columns + c]);

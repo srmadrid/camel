@@ -1,4 +1,4 @@
-/** @file cml_matrixU8_divew.c
+/** @file cml_matrixU8_sub.c
  * 
  * @brief Element-wise division function for matrices holding u8's.
  *
@@ -14,7 +14,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixU8_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixU8_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -63,21 +63,21 @@ CML_Status cml_matrixU8_divew(CML_Allocator *allocator, const CML_Matrix *left, 
             scalar = left->u8d[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = scalar/right->u8d[r*out->columns + c];
+                    out->u8d[r*out->columns + c] = scalar - right->u8d[r*out->columns + c];
                 }
             }
         } else  {
             scalar = right->u8d[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c]/scalar;
+                    out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c] - scalar;
                 }
             }
         }
     } else {
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c]/right->u8d[r*out->columns + c];
+                out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c] - right->u8d[r*out->columns + c];
             }
         }
     }

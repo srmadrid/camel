@@ -19,7 +19,7 @@ CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, C
         return CML_ERR_NULL_PTR;
     }
 
-    switch (out->type) {
+    switch (A->type) {
         case CML_U8:
             return cml_matrixU8_transpose(allocator, A, out);
 

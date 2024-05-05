@@ -24,7 +24,7 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
 
-    switch (out->type) {
+    switch (left->type) {
         case CML_U8:
             return cml_matrixU8_mult(allocator, left, right, out);
 

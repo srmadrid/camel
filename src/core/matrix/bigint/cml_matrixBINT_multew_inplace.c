@@ -37,7 +37,7 @@ CML_Status cml_matrixBINT_multew_inplace(const CML_Matrix *right, CML_Matrix *ou
     }
 
     if (rightIsScalar) {
-        CML_BigInt scalar = right->bigintd[0];
+        //CML_BigInt scalar = right->bigintd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
                 //cml_bigint_mult_inplace(&scalar, &out->bigintd[r*out->columns + c]);

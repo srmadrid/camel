@@ -36,7 +36,7 @@ CML_Status cml_matrixEXP_add_inplace(const CML_Matrix *right, CML_Matrix *out) {
     }
 
     if (rightIsScalar) {
-        CML_Expression scalar = right->expd[0];
+        //CML_Expression scalar = right->expd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
                 //cml_expression_add_inplace(&scalar, &out->expd[r*out->columns + c]);

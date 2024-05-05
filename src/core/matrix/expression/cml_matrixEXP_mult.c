@@ -58,16 +58,16 @@ CML_Status cml_matrixEXP_mult(CML_Allocator *allocator, const CML_Matrix *left, 
     }
 
     if (oneIsScalar) {
-        CML_Expression scalar;
+        //CML_Expression scalar;
         if (leftIsScalar) {
-            scalar = left->expd[0];
+            //scalar = left->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_expression_mult(NULL, &scalar, &right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->expd[0];
+            //scalar = right->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_expression_mult(NULL, &left->expd[r*out->columns + c], &scalar, &out->expd[r*out->columns + c]);
@@ -75,7 +75,7 @@ CML_Status cml_matrixEXP_mult(CML_Allocator *allocator, const CML_Matrix *left, 
             }
         }
     } else {
-        CML_Expression tmp;
+        //CML_Expression tmp;
         //CML_Status result = cml_expression_init(out->allocator, 2, &tmp);
         //if (result != CML_SUCCESS) {
         //    return result;

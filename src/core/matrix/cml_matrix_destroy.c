@@ -17,7 +17,6 @@
 void cml_matrix_destroy(void *matrix) {
     CML_Matrix *mat = (CML_Matrix*)matrix;
     if (mat != NULL) {
-        u32 stride = cml_numerictype_size(mat->type);
         u32 size = mat->rows*mat->columns;
         switch (mat->type) {
             case CML_BIGINT:

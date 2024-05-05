@@ -24,7 +24,7 @@ CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out) {
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
 
-    switch (out->type) {
+    switch (right->type) {
         case CML_U8:
             return cml_matrixU8_sub_inplace(right, out);
 

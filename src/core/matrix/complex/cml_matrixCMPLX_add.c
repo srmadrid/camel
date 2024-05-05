@@ -58,16 +58,16 @@ CML_Status cml_matrixCMPLX_add(CML_Allocator *allocator, const CML_Matrix *left,
     }
 
     if (oneIsScalar) {
-        CML_Complex scalar;
+        //CML_Complex scalar;
         if (leftIsScalar) {
-            scalar = left->complexd[0];
+            //scalar = left->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_add(NULL, &scalar, &right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->complexd[0];
+            //scalar = right->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_add(NULL, &left->complexd[r*out->columns + c], &scalar, &out->complexd[r*out->columns + c]);

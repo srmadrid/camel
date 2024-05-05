@@ -58,16 +58,16 @@ CML_Status cml_matrixCMPLX_mult(CML_Allocator *allocator, const CML_Matrix *left
     }
 
     if (oneIsScalar) {
-        CML_Complex scalar;
+        //CML_Complex scalar;
         if (leftIsScalar) {
-            scalar = left->complexd[0];
+            //scalar = left->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_mult(NULL, &scalar, &right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->complexd[0];
+            //scalar = right->complexd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_complex_mult(NULL, &left->complexd[r*out->columns + c], &scalar, &out->complexd[r*out->columns + c]);
@@ -75,7 +75,7 @@ CML_Status cml_matrixCMPLX_mult(CML_Allocator *allocator, const CML_Matrix *left
             }
         }
     } else {
-        CML_Complex tmp;
+        //CML_Complex tmp;
         //CML_Status result = cml_complex_init(out->allocator, 2, &tmp);
         //if (result != CML_SUCCESS) {
         //    return result;

@@ -28,7 +28,7 @@ CML_Status cml_matrixF64_mult(CML_Allocator *allocator, const CML_Matrix *left, 
     b8 leftIsScalar;
     u32 outRows;
     u32 outColumns;
-    if (left->rows != right->columns) {
+    if (left->columns != right->rows) {
         if ((left->rows == 1 && left->columns == 1) || 
             (right->rows == 1 && right->columns == 1)) {
             oneIsScalar = true;
@@ -36,7 +36,7 @@ CML_Status cml_matrixF64_mult(CML_Allocator *allocator, const CML_Matrix *left, 
             outColumns = left->columns > right->columns ? left->columns : right->columns;
             leftIsScalar = left->rows == 1 ? true : false;
         } else {
-        return CML_ERR_INCOMPATIBLE_SIZE;
+            return CML_ERR_INCOMPATIBLE_SIZE;
         }
     } else {
         oneIsScalar = false;

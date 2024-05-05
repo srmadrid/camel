@@ -14,7 +14,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixFRAC_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixFRAC_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -58,16 +58,16 @@ CML_Status cml_matrixFRAC_sub(CML_Allocator *allocator, const CML_Matrix *left, 
     }
 
     if (oneIsScalar) {
-        CML_Fraction scalar;
+        //CML_Fraction scalar;
         if (leftIsScalar) {
-            scalar = left->fracd[0];
+            //scalar = left->fracd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_fraction_div(NULL, &scalar, &right->fracd[r*out->columns + c], &out->fracd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->fracd[0];
+            //scalar = right->fracd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
                     //cml_fraction_div(NULL, &left->fracd[r*out->columns + c], &scalar, &out->fracd[r*out->columns + c]);

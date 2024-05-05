@@ -36,7 +36,7 @@ CML_Status cml_matrixBINT_sub_inplace(const CML_Matrix *right, CML_Matrix *out) 
     }
 
     if (rightIsScalar) {
-        CML_BigInt scalar = right->bigintd[0];
+        //CML_BigInt scalar = right->bigintd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
                 //cml_bigint_sub_inplace(&scalar, &out->bigintd[r*out->columns + c]);

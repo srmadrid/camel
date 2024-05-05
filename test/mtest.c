@@ -102,7 +102,7 @@ int main(void) {
 
         cml_string_destroy(&expression);
         cml_darray_destroy(&darray); */
-        /*
+
         f64 test[] = {1,2,-3,4,5,6,7,8,9,1,1,3,4,5,6,7};
         CML_Matrix A;
         cml_matrix_init(&a, 4, 4, CML_F64, &A);
@@ -114,9 +114,8 @@ int main(void) {
             }
         }
         printf("A = \n");
-        cml_matrix_print(&A);
-        */
-        /* Permutation
+        cml_matrix_print(NULL, &A);
+        // Permutation
         u32 parr[] = {0,0,1,2,3,3,3,3};
         CML_Matrix p;
         cml_matrix_init(&a, 8, 1, CML_U32, &p);
@@ -124,7 +123,7 @@ int main(void) {
             cml_matrix_set(&parr[r], r, 0, &p);
         }
         printf("\np = \n");
-        cml_matrix_print(&p);
+        cml_matrix_print(NULL, &p);
         u32 qarr[] = {1,2};
         CML_Matrix q;
         cml_matrix_init(&a, 2, 1, CML_U32, &q);
@@ -132,14 +131,14 @@ int main(void) {
             cml_matrix_set(&qarr[r], r, 0, &q);
         }
         printf("\nq = \n");
-        cml_matrix_print(&q);
+        cml_matrix_print(NULL, &q);
 
         CML_Matrix B;
-        cml_matrix_select(NULL, &A, &p, &q, &B);
+        cml_matrix_select(&a, &A, &p, &q, &B);
         printf("\nA(p, q) = B = \n");
-        cml_matrix_print(&B); */
-        /*
-        CML_Matrix B;
+        cml_matrix_print(NULL, &B);
+        cml_matrix_destroy(&B);
+
         cml_matrix_init(&a, 4, 4, CML_F64, &B);
         f64 number = 1.0;
         for (u32 r = 0; r < 4; r++) {
@@ -150,61 +149,61 @@ int main(void) {
             }
         }
         printf("\nB = \n");
-        cml_matrix_print(&B);
+        cml_matrix_print(NULL, &B);
 
         CML_Matrix C;
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &A, &B, &C);
+        cml_matrix_mult(&a, &A, &B, &C);
         gettimeofday(&end, NULL);
         printf("\nC = A*B = \n");
-        cml_matrix_print(&C);
+        cml_matrix_print(NULL, &C);
         printf("Mult time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
         cml_matrix_destroy(&C);
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &A, &B, &C);
+        cml_matrix_mult(&a, &A, &B, &C);
         gettimeofday(&end, NULL);
         printf("Mult time redone: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
 
         cml_matrix_divew_inplace(&B, &A);
         printf("\nA ./= B: \n");
-        cml_matrix_print(&A);
+        cml_matrix_print(NULL, &A);
 
         CML_Matrix scalar;
         cml_matrix_init(&a, 1, 1, CML_F64, &scalar);
         f64 snumber = 10;
         cml_matrix_set(&snumber, 0, 0, &scalar);
         printf("\nscalar = \n");
-        cml_matrix_print(&scalar);
+        cml_matrix_print(NULL, &scalar);
         cml_matrix_divew_inplace(&scalar, &A);
         printf("\nA ./= scalar: \n");
-        cml_matrix_print(&A);
+        cml_matrix_print(NULL, &A);
         CML_Matrix D;
-        cml_matrix_divew(NULL, &A, &scalar, &D);
+        cml_matrix_divew(&a, &A, &scalar, &D);
         printf("\nD = A/scalar: \n");
-        cml_matrix_print(&D);
+        cml_matrix_print(NULL, &D);
 
-        CML_Matrix p;
+        cml_matrix_destroy(&p);
         cml_matrix_init(&a, 9, 1, CML_F64, &p);
         for (u32 r = 0; r < 9; r++) {
             f64 number = r + 1;
             cml_matrix_set(&number, r, 0, &p);
         }
         printf("\np = \n");
-        cml_matrix_print(&p);
-        f64 qarr[] = {1.0, 2.0, 3.0, 3.0, 3.0};
-        CML_Matrix q;
+        cml_matrix_print(NULL, &p);
+        f64 qarr2[] = {1.0, 2.0, 3.0, 3.0, 3.0};
+        cml_matrix_destroy(&q);
         cml_matrix_init(&a, 1, 5, CML_F64, &q);
         for (u32 r = 0; r < 5; r++) {
-            cml_matrix_set(&qarr[r], 0, r, &q);
+            cml_matrix_set(&qarr2[r], 0, r, &q);
         }
         printf("\nq = \n");
-        cml_matrix_print(&q);
+        cml_matrix_print(NULL, &q);
         CML_Matrix P;
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &p, &q, &P);
+        cml_matrix_mult(&a, &p, &q, &P);
         gettimeofday(&end, NULL);
         printf("\nP = pq\n");
-        cml_matrix_print(&P);
+        cml_matrix_print(NULL, &P);
         printf("Mult time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
 
         CML_Matrix p2;
@@ -214,19 +213,19 @@ int main(void) {
             cml_matrix_set(&number, 0, r, &p2);
         }
         printf("\np2 = \n");
-        cml_matrix_print(&p2);
+        cml_matrix_print(NULL, &p2);
         CML_Matrix dot;
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &p2, &p, &dot);
+        cml_matrix_mult(&a, &p2, &p, &dot);
         gettimeofday(&end, NULL);
         printf("\ndot = p2*p\n");
-        cml_matrix_print(&dot);
+        cml_matrix_print(NULL, &dot);
         printf("Mult time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
 
         CML_Matrix p3;
-        cml_matrix_transpose(NULL, &p2, &p3);
+        cml_matrix_transpose(&a, &p2, &p3);
         printf("\np3 = p2^T = \n");
-        cml_matrix_print(&p3);
+        cml_matrix_print(NULL, &p3);
 
 
         CML_Matrix big1, big2;
@@ -236,14 +235,14 @@ int main(void) {
         printf("\nDim(big2) = %dx%d\n", big2.rows, big2.columns);
         CML_Matrix big3;
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &big1, &big2, &big3);
+        cml_matrix_mult(&a, &big1, &big2, &big3);
         gettimeofday(&end, NULL);
         printf("\nbig3 = big1*big2 \n");
         printf("\nDim(big3) = %dx%d\n", big3.rows, big3.columns);
         printf("Mult time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
         cml_matrix_destroy(&big3);
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &big2, &big1, &big3);
+        cml_matrix_mult(&a, &big2, &big1, &big3);
         gettimeofday(&end, NULL);
         printf("\nbig3 = big2*big1 \n");
         printf("\nDim(big3) = %dx%d\n", big3.rows, big3.columns);
@@ -258,7 +257,7 @@ int main(void) {
         printf("\nDim(big8) = %dx%d\n", big8.rows, big8.columns);
         printf("\nDim(big9) = %dx%d\n", big9.rows, big9.columns);
         gettimeofday(&start, NULL);
-        cml_matrix_mult(NULL, &big8, &big9, &big10);
+        cml_matrix_mult(&a, &big8, &big9, &big10);
         gettimeofday(&end, NULL);
         printf("\nbig10 = big8*big9 \n");
         printf("\nDim(big10) = %dx%d\n", big10.rows, big10.columns);
@@ -271,7 +270,10 @@ int main(void) {
         cml_matrix_init(&a, 1000, 1000, CML_F64, &big5);
         cml_matrix_init(&a, 1000, 1000, CML_F64, &big6);
         printf("\nbig7 = big5 + big6\n");
-        cml_matrix_add(NULL, &big5, &big6, &big7);
+        gettimeofday(&start, NULL);
+        cml_matrix_add(&a, &big5, &big6, &big7);
+        gettimeofday(&end, NULL);
+        printf("Add time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
         cml_matrix_destroy(&big5);
         cml_matrix_destroy(&big6);
         cml_matrix_destroy(&big7);
@@ -288,9 +290,9 @@ int main(void) {
         cml_matrix_destroy(&P);
         cml_matrix_destroy(&scalar);
         cml_matrix_destroy(&dot);
-        */
-
         
+
+        /*
         FILE *f;
         f = fopen("perf/core/matrix/cml_matrix_mult(oneScalar)(f64).csv", "w+");
         fprintf(f,"i,j,parallel,nonparallel,opcount,sum\n");
@@ -336,6 +338,7 @@ int main(void) {
         }
         printf("\n");
         fclose(f);
+        */
         /*
         CML_Matrix A, B, C;
         cml_matrix_init(&a, 1, 1, CML_F64, &A);

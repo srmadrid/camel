@@ -24,7 +24,7 @@ CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, co
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
 
-    switch (out->type) {
+    switch (left->type) {
         case CML_U8:
             return cml_matrixU8_divew(allocator, left, right, out);
 
