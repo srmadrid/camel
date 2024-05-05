@@ -1,6 +1,6 @@
-/** @file cml_matrixU8_divew.c
+/** @file cml_matrixEXP_divew.c
  * 
- * @brief Element-wise division function for matrices holding u8's.
+ * @brief Element-wise division function for matrices holding Complex's.
  *
  * @author Sergio Madrid
  * @date 5/5/2024
@@ -14,12 +14,12 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixU8_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixEXP_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out) {
     if (left == NULL || right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (left->type != CML_U8 || right->type != CML_U8) {
+    if (left->type != CML_EXPRESSION || right->type != CML_EXPRESSION) {
         // Maybe add type promotion in the future
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
@@ -47,37 +47,37 @@ CML_Status cml_matrixU8_divew(CML_Allocator *allocator, const CML_Matrix *left, 
     // If allocator is NULL, out is initialized.
     if (allocator == NULL) {
         if (out->rows != outRows || out->columns != outColumns || 
-            out->type != CML_U8) {
+            out->type != CML_EXPRESSION) {
             return CML_ERR_INVALID_SIZE;
         }
     } else {
-        CML_Status result = cml_matrix_init(allocator, outRows, outColumns, CML_U8, out);
+        CML_Status result = cml_matrix_init0(allocator, outRows, outColumns, CML_EXPRESSION, out);
         if (result != CML_SUCCESS) {
             return result;
         }
     }
 
     if (oneIsScalar) {
-        u8 scalar;
+        CML_Expression scalar;
         if (leftIsScalar) {
-            scalar = left->u8d[0];
+            scalar = left->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = scalar/right->u8d[r*out->columns + c];
+                    //cml_expression_div(NULL, &scalar, &right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
                 }
             }
         } else  {
-            scalar = right->u8d[0];
+            scalar = right->expd[0];
             for (u32 r = 0; r < out->rows; r++) {
                 for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c]/scalar;
+                    //cml_expression_div(NULL, &left->expd[r*out->columns + c], &scalar, &out->expd[r*out->columns + c]);
                 }
             }
         }
     } else {
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c]/right->u8d[r*out->columns + c];
+                //cml_expression_div(NULL, &left->expd[r*out->columns + c], &right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
             }
         }
     }

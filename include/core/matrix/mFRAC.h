@@ -134,5 +134,19 @@ CML_Status cml_matrixFRAC_multew(CML_Allocator *allocator, const CML_Matrix *lef
 CML_Status cml_matrixFRAC_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Divides two matrices element by element, and stores the result in
+ *        out.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param left      The matrix on the left.
+ * @param right     The matrix on the right.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixFRAC_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
+
+
 #endif /* CAMEL_MFRAC */
 
