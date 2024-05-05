@@ -1,6 +1,6 @@
-/** @file cml_matrixEXP_multew_inplace.c
+/** @file cml_matrixEXP_divew_inplace.c
  * 
- * @brief In-place element-wise multiplication function for matrices holding 
+ * @brief In-place element-wise division function for matrices holding 
  *        Expression's.
  *
  * @author Sergio Madrid
@@ -15,7 +15,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixEXP_multew_inplace(const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixEXP_divew_inplace(const CML_Matrix *right, CML_Matrix *out) {
     if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
@@ -40,13 +40,13 @@ CML_Status cml_matrixEXP_multew_inplace(const CML_Matrix *right, CML_Matrix *out
         CML_Expression scalar = right->expd[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_expression_mult_inplace(&scalar, &out->expd[r*out->columns + c]);
+                //cml_expression_div_inplace(&scalar, &out->expd[r*out->columns + c]);
             }
         }
     } else {
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_expression_mult_inplace(&right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
+                //cml_expression_div_inplace(&right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
             }
         }
     }

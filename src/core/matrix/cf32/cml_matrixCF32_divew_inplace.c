@@ -1,7 +1,7 @@
-/** @file cml_matrixEXP_multew_inplace.c
+/** @file cml_matrixCF32_divew_inplace.c
  * 
- * @brief In-place element-wise multiplication function for matrices holding 
- *        Expression's.
+ * @brief In-place element-wise division function for matrices holding 
+ *        cf32's.
  *
  * @author Sergio Madrid
  * @date 5/5/2024
@@ -15,12 +15,12 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixEXP_multew_inplace(const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixCF32_divew_inplace(const CML_Matrix *right, CML_Matrix *out) {
     if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
 
-    if (right->type != CML_EXPRESSION || out->type != CML_EXPRESSION) {
+    if (right->type != CML_CF32 || out->type != CML_CF32) {
         // Maybe add type promotion in the future
         return CML_ERR_INCOMPATIBLE_TYPES;
     }
@@ -37,16 +37,16 @@ CML_Status cml_matrixEXP_multew_inplace(const CML_Matrix *right, CML_Matrix *out
     }
 
     if (rightIsScalar) {
-        CML_Expression scalar = right->expd[0];
+        cf32 scalar = right->cf32d[0];
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_expression_mult_inplace(&scalar, &out->expd[r*out->columns + c]);
+                out->cf32d[r*out->columns + c] /= scalar;
             }
         }
     } else {
         for (u32 r = 0; r < out->rows; r++) {
             for (u32 c = 0; c < out->columns; c++) {
-                //cml_expression_mult_inplace(&right->expd[r*out->columns + c], &out->expd[r*out->columns + c]);
+                out->cf32d[r*out->columns + c] /= right->cf32d[r*out->columns + c];
             }
         }
     }

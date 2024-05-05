@@ -15,7 +15,7 @@
 #include "../../../../include/core/matrix/matrix.h"
 
 
-CML_Status cml_matrixCMPLX_add_inplace(const CML_Matrix *right, CML_Matrix *out) {
+CML_Status cml_matrixCMPLX_multew_inplace(const CML_Matrix *right, CML_Matrix *out) {
     if (right == NULL || out == NULL) {
         return CML_ERR_NULL_PTR;
     }
