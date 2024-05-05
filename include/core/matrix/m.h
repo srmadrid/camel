@@ -305,10 +305,11 @@ CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, C
 /**
  * @brief Prints the input matrix.
  *
+ * @param allocator Allocator for the temporary array.
  * @param matrix The matrix to be printed.
  *
  * @return Status code. */
-CML_Status cml_matrix_print(const CML_Matrix *matrix);
+CML_Status cml_matrix_print(CML_Allocator *allocator, const CML_Matrix *matrix);
 
 
 #endif /* CAMEL_M */

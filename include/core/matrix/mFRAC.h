@@ -172,5 +172,15 @@ CML_Status cml_matrixFRAC_divew_inplace(const CML_Matrix *right, CML_Matrix *out
 CML_Status cml_matrixFRAC_transpose(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *out);
 
 
+/**
+ * @brief Prints the input matrix.
+ *
+ * @param allocator Allocator for the temporary array.
+ * @param matrix The matrix to be printed.
+ *
+ * @return Status code. */
+CML_Status cml_matrixFRAC_print(CML_Allocator *allocator, const CML_Matrix *matrix);
+
+
 #endif /* CAMEL_MFRAC */
 
