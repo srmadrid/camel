@@ -160,5 +160,17 @@ CML_Status cml_matrixCMPLX_divew(CML_Allocator *allocator, const CML_Matrix *lef
 CML_Status cml_matrixCMPLX_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
+/**
+ * @brief Transposes a matrix and stores the result in the out matrix.
+ *
+ * @param allocator Allocator for the new matrix.
+ * @param A         Matrix to be transposed.
+ * @param out       Output matrix.
+ *
+ * @return Status code.
+ */
+CML_Status cml_matrixCMPLX_transpose(CML_Allocator *allocator, const CML_Matrix *A, CML_Matrix *out);
+
+
 #endif /* CAMEL_MCMPLX */
 

@@ -291,7 +291,7 @@ CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
- * @brief Transposes a matrix and stores the result in the out maytix.
+ * @brief Transposes a matrix and stores the result in the out matrix.
  *
  * @param allocator Allocator for the new matrix.
  * @param A         Matrix to be transposed.

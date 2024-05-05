@@ -12,6 +12,9 @@ Test just like mult, the rest of the matrix operation (probably add and add_inpl
 ## Priority
 
 ## Matrix
+
+Maybe, add a b8 transpose (or reintroduce the rowwise flag) to alter the way the array is traversed.
+
 Look into introducing a BLAS backend for matrices (maybe only matrices holding CML_DOUBLE).
 Look into transposing the matrix before matrix_mult, and detransposing after.
 
