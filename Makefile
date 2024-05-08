@@ -4,8 +4,9 @@ ifeq ($(OS),Linux)
     TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-	CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math #(to debug if something like a segfault occurs)
-	LDFLAGS = -shared -lm -fsanitize=address,undefined -fopenmp
+	CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math
+	FFLAGS = #-O3 -march=native
+	LDFLAGS = -shared -lm -lopenblas -fsanitize=address,undefined -fopenmp
 	LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp
 else
     TARGET = bin/windows/camel.dll
@@ -25,6 +26,11 @@ OBJECTS = $(SOURCES:%.c=%.o)
 HDR_DIRS = include
 HEADERS = $(shell find $(HDR_DIRS) -type f -name '*.h')
 
+FC = gfortran
+FORTRAN_SRC_DIR = src
+FORTRAN_SOURCES = $(shell find $(SRC_DIRS) -type f -name '*.f')
+FORTRAN_OBJECTS = $(FORTRAN_SOURCES:%.f=%.o)
+
 # Test settings
 TEST_SRC_DIRS = test
 TEST_SOURCES = $(shell find $(TEST_SRC_DIRS) -type f -name '*.c')
@@ -38,11 +44,11 @@ endif
 # Default rule (only library)
 lib: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(FORTRAN_OBJECTS)
 	@echo "Linking: $@"
 	@$(CC) $(LDFLAGS) -o $@ $^
 	@echo "Cleaning up..."
-	@$(RM) $(OBJECTS)
+	@$(RM) $(OBJECTS) $(FORTRAN_OBJECTS)
 	@echo "Build complete."
 
 # All rule
@@ -62,6 +68,11 @@ $(TEST_TARGET): $(TEST_OBJECTS)
 %.o: %.c $(HEADERS)
 	@echo "Compiling: $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Rule for compiling Fortran file
+%.o: %.f
+	@echo "Compiling Fortran: $<"
+	@$(FC) $(FFLAGS) -c $< -o $@
 
 # Install rule
 install: lib

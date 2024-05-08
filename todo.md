@@ -1,18 +1,23 @@
 # To-Do
 
+For all addition, element wise multiplication, etc.: every element-wise matrix operation -> remove double loop to only one -> for r for c -> for i row*col -> sample in F64 add. Try to make them in fortran.
+
+Matrix multiplication (5000x5000*5000x5000):
+    NumPy: 89s
+    DGEMM Fortran -O0 -march=native: 379s
+    DGEMM Fortran -O3 -march=native: 33s
+
 ## Documentation
 
 In matrix functions, if allocator is NULL, it means the out matrix is preinitialized, and if anm allocator is needed inside the function, out's allocator is used. In matrix multiplication, if allocator is NULL, it is not checked that the input matrix has only 0s, which it should (the user must make sure).
 Make github webpage instead of latex pdf (maybe generate a pdf from the website for offline users to use).
 
-## Optimization
-
-Test just like mult, the rest of the matrix operation (probably add and add_inplace are enough since the rest are the same but with other operations. Also with div, since division is slower).
-
 ## Priority
 
 ## Matrix
 
+Have BLAS (fortran subroutines, standard BLAS, in core/BLAS), and BLAS adapted for CML_Matrix (same routines but implemented for CML_Matrix instead of C arrays (pointers)), also in Fortran, for complex structures (bigint, fraction, etc.) in Fortran call the C operation functions.
+Implement all of BLAS (maybe just use the reference implementations). How to call dgemm in ~/Desktop/tmp/gsl-test/camel.c. For debugging, no optimization. For release, -O3 and no address sanitizer.
 Maybe, add a b8 transpose (or reintroduce the rowwise flag) to alter the way the array is traversed.
 
 Look into introducing a BLAS backend for matrices (maybe only matrices holding CML_DOUBLE).

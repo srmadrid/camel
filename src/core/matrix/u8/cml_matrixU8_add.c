@@ -57,28 +57,23 @@ CML_Status cml_matrixU8_add(CML_Allocator *allocator, const CML_Matrix *left, co
         }
     }
 
+    u32 size = out->columns*out->rows;
     if (oneIsScalar) {
         u8 scalar;
         if (leftIsScalar) {
             scalar = left->u8d[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = scalar + right->u8d[r*out->columns + c];
-                }
+            for (u32 i = 0; i < size; i++) {
+                out->u8d[i] = scalar + right->u8d[i];
             }
         } else  {
             scalar = right->u8d[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c] + scalar;
-                }
+            for (u32 i = 0; i < size; i++) {
+                out->u8d[i] = left->u8d[i] + scalar;
             }
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->u8d[r*out->columns + c] = left->u8d[r*out->columns + c] + right->u8d[r*out->columns + c];
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->u8d[i] = left->u8d[i] + right->u8d[i];
         }
     }
 

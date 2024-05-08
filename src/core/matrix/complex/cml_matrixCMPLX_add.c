@@ -57,28 +57,23 @@ CML_Status cml_matrixCMPLX_add(CML_Allocator *allocator, const CML_Matrix *left,
         }
     }
 
+    u32 size = out->columns*out->rows;
     if (oneIsScalar) {
         //CML_Complex scalar;
         if (leftIsScalar) {
             //scalar = left->complexd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_complex_add(NULL, &scalar, &right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_complex_add(NULL, &scalar, &right->complexd[i], &out->complexd[i]);
             }
         } else  {
             //scalar = right->complexd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_complex_add(NULL, &left->complexd[r*out->columns + c], &scalar, &out->complexd[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_complex_add(NULL, &left->complexd[i], &scalar, &out->complexd[i]);
             }
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_complex_add(NULL, &left->complexd[r*out->columns + c], &right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_complex_add(NULL, &left->complexd[i], &right->complexd[i], &out->complexd[i]);
         }
     }
 

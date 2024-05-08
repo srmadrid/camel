@@ -57,28 +57,23 @@ CML_Status cml_matrixF32_divew(CML_Allocator *allocator, const CML_Matrix *left,
         }
     }
 
+    u32 size = out->columns*out->rows;
     if (oneIsScalar) {
         f32 scalar;
         if (leftIsScalar) {
             scalar = left->f32d[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    out->f32d[r*out->columns + c] = scalar/right->f32d[r*out->columns + c];
-                }
+            for (u32 i = 0; i < size; i++) {
+                out->f32d[i] = scalar/right->f32d[i];
             }
         } else  {
             scalar = right->f32d[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    out->f32d[r*out->columns + c] = left->f32d[r*out->columns + c]/scalar;
-                }
+            for (u32 i = 0; i < size; i++) {
+                out->f32d[i] = left->f32d[i]/scalar;
             }
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->f32d[r*out->columns + c] = left->f32d[r*out->columns + c]/right->f32d[r*out->columns + c];
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->f32d[i] = left->f32d[i]/right->f32d[i];
         }
     }
 

@@ -35,18 +35,15 @@ CML_Status cml_matrixBINT_sub_inplace(const CML_Matrix *right, CML_Matrix *out) 
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         //CML_BigInt scalar = right->bigintd[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_bigint_sub_inplace(&scalar, &out->bigintd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_bigint_sub_inplace(&scalar, &out->bigintd[i]);
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_bigint_sub_inplace(&right->bigintd[r*out->columns + c], &out->bigintd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_bigint_sub_inplace(&right->bigintd[i], &out->bigintd[i]);
         }
     }
 

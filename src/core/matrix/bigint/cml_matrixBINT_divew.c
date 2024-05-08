@@ -57,28 +57,23 @@ CML_Status cml_matrixBINT_divew(CML_Allocator *allocator, const CML_Matrix *left
         }
     }
 
+    u32 size = out->columns*out->rows;
     if (oneIsScalar) {
         //CML_BigInt scalar;
         if (leftIsScalar) {
             //scalar = left->bigintd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_bigint_div(NULL, &scalar, &right->bigintd[r*out->columns + c], &out->bigintd[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_bigint_div(NULL, &scalar, &right->bigintd[i], &out->bigintd[i]);
             }
         } else  {
             //scalar = right->bigintd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_bigint_div(NULL, &left->bigintd[r*out->columns + c], &scalar, &out->bigintd[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_bigint_div(NULL, &left->bigintd[i], &scalar, &out->bigintd[i]);
             }
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_bigint_div(NULL, &left->bigintd[r*out->columns + c], &right->bigintd[r*out->columns + c], &out->bigintd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_bigint_div(NULL, &left->bigintd[i], &right->bigintd[i], &out->bigintd[i]);
         }
     }
 

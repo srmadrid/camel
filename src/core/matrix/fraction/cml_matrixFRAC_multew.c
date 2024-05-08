@@ -57,28 +57,23 @@ CML_Status cml_matrixFRAC_multew(CML_Allocator *allocator, const CML_Matrix *lef
         }
     }
 
+    u32 size = out->columns*out->rows;
     if (oneIsScalar) {
         //CML_Fraction scalar;
         if (leftIsScalar) {
             //scalar = left->fracd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_fraction_mult(NULL, &scalar, &right->fracd[r*out->columns + c], &out->frac[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_fraction_mult(NULL, &scalar, &right->fracd[i], &out->frac[i]);
             }
         } else  {
             //scalar = right->fracd[0];
-            for (u32 r = 0; r < out->rows; r++) {
-                for (u32 c = 0; c < out->columns; c++) {
-                    //cml_fraction_mult(NULL, &left->fracd[r*out->columns + c], &scalar, &out->fracd[r*out->columns + c]);
-                }
+            for (u32 i = 0; i < size; i++) {
+                //cml_fraction_mult(NULL, &left->fracd[i], &scalar, &out->fracd[i]);
             }
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_fraction_mult(NULL, &left->fracd[r*out->columns + c], &right->fracd[r*out->columns + c], &out->expd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_fraction_mult(NULL, &left->fracd[i], &right->fracd[i], &out->expd[i]);
         }
     }
 

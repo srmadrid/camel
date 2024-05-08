@@ -36,18 +36,15 @@ CML_Status cml_matrixI16_multew_inplace(const CML_Matrix *right, CML_Matrix *out
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         i16 scalar = right->i16d[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->i16d[r*out->columns + c] *= scalar;
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->i16d[i] *= scalar;
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->i16d[r*out->columns + c] *= right->i16d[r*out->columns + c];
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->i16d[i] *= right->i16d[i];
         }
     }
 

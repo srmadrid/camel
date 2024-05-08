@@ -36,18 +36,15 @@ CML_Status cml_matrixF64_divew_inplace(const CML_Matrix *right, CML_Matrix *out)
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         f64 scalar = right->f64d[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->f64d[r*out->columns + c] /= scalar;
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->f64d[i] /= scalar;
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->f64d[r*out->columns + c] /= right->f64d[r*out->columns + c];
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->f64d[i] /= right->f64d[i];
         }
     }
 

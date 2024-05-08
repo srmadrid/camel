@@ -36,18 +36,15 @@ CML_Status cml_matrixMAT_divew_inplace(const CML_Matrix *right, CML_Matrix *out)
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         CML_Matrix scalar = right->matd[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                cml_matrix_divew_inplace(&scalar, &out->matd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            cml_matrix_divew_inplace(&scalar, &out->matd[i]);
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                cml_matrix_divew_inplace(&right->matd[r*out->columns + c], &out->matd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            cml_matrix_divew_inplace(&right->matd[i], &out->matd[i]);
         }
     }
 

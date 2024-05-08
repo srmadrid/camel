@@ -252,8 +252,8 @@ int main(void) {
         cml_matrix_destroy(&big1);
 
         CML_Matrix big8, big9, big10;
-        cml_matrix_init(&a, 5, 100000, CML_F64, &big8);
-        cml_matrix_init(&a, 100000, 5, CML_F64, &big9);
+        cml_matrix_init(&a, 1000, 1000, CML_F64, &big8);
+        cml_matrix_init(&a, 1000, 1000, CML_F64, &big9);
         printf("\nDim(big8) = %dx%d\n", big8.rows, big8.columns);
         printf("\nDim(big9) = %dx%d\n", big9.rows, big9.columns);
         gettimeofday(&start, NULL);
@@ -267,16 +267,26 @@ int main(void) {
         cml_matrix_destroy(&big10);
 
         CML_Matrix big5, big6, big7;
-        cml_matrix_init(&a, 1000, 1000, CML_F64, &big5);
-        cml_matrix_init(&a, 1000, 1000, CML_F64, &big6);
-        printf("\nbig7 = big5 + big6\n");
+        cml_matrix_init(&a, 5000, 5000, CML_F64, &big5);
+        cml_matrix_init(&a, 5000, 5000, CML_F64, &big6);
+        cml_matrix_init(&a, 5000, 5000, CML_F64, &big7);
+        printf("\nbig7 = big5 + big6 (5000x5000)\n");
         gettimeofday(&start, NULL);
-        cml_matrix_add(&a, &big5, &big6, &big7);
+        cml_matrix_add(NULL, &big5, &big6, &big7);
         gettimeofday(&end, NULL);
         printf("Add time: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
         cml_matrix_destroy(&big5);
         cml_matrix_destroy(&big6);
         cml_matrix_destroy(&big7);
+
+
+        printf("\nA = \n");
+        cml_matrix_print(NULL, &A);
+        printf("\nB = \n");
+        cml_matrix_print(NULL, &B);
+        cml_matrix_add(NULL, &A, &B, &C);
+        printf("\nC = A+B = \n");
+        cml_matrix_print(&a, &C);
 
 
         cml_matrix_destroy(&A);

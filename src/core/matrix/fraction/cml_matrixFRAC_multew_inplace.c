@@ -36,18 +36,15 @@ CML_Status cml_matrixFRAC_multew_inplace(const CML_Matrix *right, CML_Matrix *ou
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         //CML_Fraction scalar = right->fracd[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_fraction_mult_inplace(&scalar, &out->fracd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_fraction_mult_inplace(&scalar, &out->fracd[i]);
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_fraction_mult_inplace(&right->fracd[r*out->columns + c], &out->fracd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_fraction_mult_inplace(&right->fracd[i], &out->fracd[i]);
         }
     }
 

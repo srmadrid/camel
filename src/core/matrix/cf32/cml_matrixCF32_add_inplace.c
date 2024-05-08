@@ -35,18 +35,15 @@ CML_Status cml_matrixCF32_add_inplace(const CML_Matrix *right, CML_Matrix *out) 
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         cf32 scalar = right->cf32d[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->cf32d[r*out->columns + c] += scalar;
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->cf32d[i] += scalar;
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                out->cf32d[r*out->columns + c] += right->cf32d[r*out->columns + c];
-            }
+        for (u32 i = 0; i < size; i++) {
+            out->cf32d[i] += right->cf32d[i];
         }
     }
 

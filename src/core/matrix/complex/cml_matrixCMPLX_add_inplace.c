@@ -35,18 +35,15 @@ CML_Status cml_matrixCMPLX_add_inplace(const CML_Matrix *right, CML_Matrix *out)
         rightIsScalar = false;
     }
 
+    u32 size = out->columns*out->rows;
     if (rightIsScalar) {
         //CML_Complex scalar = right->complexd[0];
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_complex_add_inplace(&scalar, &out->complexd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_complex_add_inplace(&scalar, &out->complexd[i]);
         }
     } else {
-        for (u32 r = 0; r < out->rows; r++) {
-            for (u32 c = 0; c < out->columns; c++) {
-                //cml_complex_add_inplace(&right->complexd[r*out->columns + c], &out->complexd[r*out->columns + c]);
-            }
+        for (u32 i = 0; i < size; i++) {
+            //cml_complex_add_inplace(&right->complexd[i], &out->complexd[i]);
         }
     }
 

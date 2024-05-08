@@ -20,10 +20,10 @@
 
 #include "../macros.h"
 #include "../memory/allocator.h"
-#include "../../../include/core/dstructs/string.h"
-#include "../../../include/core/dstructs/darray.h"
-#include "../../../include/core/dstructs/stack.h"
-#include "../../../include/core/dstructs/btree.h"
+#include "../dstructs/string.h"
+#include "../dstructs/darray.h"
+#include "../dstructs/stack.h"
+#include "../dstructs/btree.h"
 
 
 /** @brief Default size of the expression token array. */
