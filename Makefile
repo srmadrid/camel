@@ -29,6 +29,7 @@ HEADERS = $(shell find $(HDR_DIRS) -type f -name '*.h')
 FC = gfortran
 FORTRAN_SRC_DIR = src
 FORTRAN_SOURCES = $(shell find $(SRC_DIRS) -type f -name '*.f')
+FORTRAN_SOURCES += $(shell find $(SRC_DIRS) -type f -name '*.f90')
 FORTRAN_OBJECTS = $(FORTRAN_SOURCES:%.f=%.o)
 
 # Test settings
