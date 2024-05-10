@@ -5,7 +5,7 @@ ifeq ($(OS),Linux)
     TEST_TARGET = test/bin/linux/test
     EXT = so
 	CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math
-	FFLAGS = #-O3 -march=native
+	FFLAGS = -O3 -march=native
 	LDFLAGS = -shared -lm -lopenblas -fsanitize=address,undefined -fopenmp
 	LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp
 else
@@ -28,9 +28,12 @@ HEADERS = $(shell find $(HDR_DIRS) -type f -name '*.h')
 
 FC = gfortran
 FORTRAN_SRC_DIR = src
-FORTRAN_SOURCES = $(shell find $(SRC_DIRS) -type f -name '*.f')
-FORTRAN_SOURCES += $(shell find $(SRC_DIRS) -type f -name '*.f90')
-FORTRAN_OBJECTS = $(FORTRAN_SOURCES:%.f=%.o)
+FORTRAN_SOURCES := $(shell find $(SRC_DIRS) -type f \( -name '*.f' -o -name '*.f90' \))
+
+# Replace .f and .f90 extensions with .o for FORTRAN_OBJECTS
+FORTRAN_OBJECTS := $(patsubst %.f,%.o,$(filter %.f,$(FORTRAN_SOURCES)))
+FORTRAN_OBJECTS += $(patsubst %.f90,%.o,$(filter %.f90,$(FORTRAN_SOURCES)))
+
 
 # Test settings
 TEST_SRC_DIRS = test
@@ -75,6 +78,10 @@ $(TEST_TARGET): $(TEST_OBJECTS)
 	@echo "Compiling Fortran: $<"
 	@$(FC) $(FFLAGS) -c $< -o $@
 
+%.o: %.f90
+	@echo "Compiling Fortran: $<"
+	@$(FC) $(FFLAGS) -c $< -o $@
+
 # Install rule
 install: lib
 	@echo "Installing..."
@@ -94,7 +101,7 @@ uninstall:
 # Clean rule
 clean:
 	@echo "Cleaning..."
-	@$(RM) $(OBJECTS) $(TARGET)
+	@$(RM) $(OBJECTS) $(FORTRAN_OBJECTS) $(TARGET)
 	@echo "Clean complete."
 
 clean-test:

@@ -34,4 +34,164 @@
 void cml_cblas_zrotg(void *a, void *b, f64 *c, void *s);
 
 
-#endif /* CAMEL_S_CBLAS */
+/**
+ * @brief Performs rotation of points in the plane.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y. 
+ * @param x [in] Array, size at least (1 + (n-1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n -1)*abs(incy)).
+ * @param incy [in] Specifies the increment for the elements of y.
+ * @param c [in] A scalar.
+ * @param s [in] A scalar.
+ *
+ * @param x [out] Each element is replaced by c*x + s*y.
+ * @param y [out] Each element is replaced by c*y - s*x, or by c*y-conj(s)*x if 
+ *                s is a complex type.
+ *
+ * @return Void.
+ */
+void cml_cblas_zdrot(const i32 n, void *x, const i32 incx, void *y, const i32 incy, const f64 c, const f64 s);
+
+
+/**
+ * @brief Swaps a vector with another vector.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y.
+ * @param x [in] Array, size at least (1 + (n-1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n-1)*abs(incy)). 
+ * @param incy [in] Specifies the increment for the elements of y.
+ *
+ * @param x [out] Contains the resultant vector x, that is, the input vector y.
+ * @param y [out] Contains the resultant vector y, that is, the input vector x.
+ *
+ * @return Void.
+ */
+void cml_cblas_zswap(const i32 n, void *x, const i32 incx, void *y, const i32 incy);
+
+
+/**
+ * @brief Computes the product of a vector by a scalar.
+ *
+ * @param n [in] Specifies the number of elements in vector x.
+ * @param a [in] Specifies the scalar a.
+ * @param x [in] Array, size at least (1 + (n -1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @param x [out] Updated vector x.
+ *
+ * @return Void.
+ */
+void cml_cblas_zscal(const i32 n, const void *a, void *x, const i32 incx);
+
+
+/**
+ * @brief Computes the product of a vector by a scalar.
+ *
+ * @param n [in] Specifies the number of elements in vector x.
+ * @param a [in] Specifies the scalar a.
+ * @param x [in] Array, size at least (1 + (n -1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @param x [out] Updated vector x.
+ *
+ * @return Void.
+ */
+void cml_cblas_zdscal(const i32 n, const f64 a, void *x, const i32 incx);
+
+
+/**
+ * @brief Copies a vector to another vector.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y.
+ * @param x [in] Array, size at least (1 + (n-1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n-1)*abs(incy)).
+ * @param incy [in] Specifies the increment for the elements of y.
+ *
+ * @param y [out] Contains a copy of the vector x if n is positive. Otherwise, 
+ *                parameters are unaltered.
+ *
+ * @return Void.
+ */
+void cml_cblas_zcopy(const i32 n, const void *x, const i32 incx, void *y, const i32 incy);
+
+
+/**
+ * @brief Computes a vector-scalar product and adds the result to a vector.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y.
+ * @param a [in] Specifies the scalar a.
+ * @param x [in] Array, size at least (1 + (n-1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n-1)*abs(incy)).
+ * @param incy [in] Specifies the increment for the elements of y.
+ *
+ * @param y [out] Contains the updated vector y.
+ *
+ * @return Void.
+ */
+void cml_cblas_zaxpy(const i32 n, const void *a, const void *x, const i32 incx, void *y, const i32 incy);
+
+
+/**
+ * @brief Computes a complex vector-vector dot product.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y.
+ * @param x [in] Array, size at least (1 + (n -1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n -1)*abs(incy)).
+ * @param incy [in] Specifies the increment for the elements of y.
+ *
+ * @param dotu [out] Contains the result of the dot product of x and y, if n is 
+ *                   positive. Otherwise, it contains 0.
+ *
+ * @return Void.
+ */
+void cml_cblas_zdotu_sub(const i32 n, const void *x, const i32 incx, const void *y, const i32 incy, void *dotu);
+
+
+/**
+ * @brief Computes a dot product of a conjugated vector with another vector.
+ *
+ * @param n [in] Specifies the number of elements in vectors x and y.
+ * @param x [in] Array, size at least (1 + (n -1)*abs(incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ * @param y [in] Array, size at least (1 + (n -1)*abs(incy)).
+ * @param incy [in] Specifies the increment for the elements of y.
+ *
+ * @param dotu [out] Contains the result of the dot product of the conjugated x 
+ *                   and unconjugated y, if n is positive. Otherwise, it 
+ *                   contains 0.
+ *
+ * @return Void.
+ */
+void cml_cblas_zdotc_sub(const i32 n, const void *x, const i32 incx, const void *y, const i32 incy, void *dotc);
+
+
+/**
+ * @brief Computes the Euclidean norm of a vector.
+ *
+ * @param n [in] Specifies the number of elements in vector x. 
+ * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @return Void.
+ */
+f64 cml_cblas_dznrm2(const i32 n, const void *x, const i32 incx);
+
+
+/**
+ * @brief Computes the sum of magnitudes of the vector elements.
+ *
+ * @param n [in] Specifies the number of elements in vector x. 
+ * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @return Void.
+ */
+f64 cml_cblas_dzasum(const i32 n, const void *x, const i32 incx);
+
+
+#endif /* CAMEL_Z_CBLAS */
