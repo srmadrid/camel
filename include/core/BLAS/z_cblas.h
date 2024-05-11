@@ -177,7 +177,7 @@ void cml_cblas_zdotc_sub(const i32 n, const void *x, const i32 incx, const void 
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The Euclidean norm of the vector x.
  */
 f64 cml_cblas_dznrm2(const i32 n, const void *x, const i32 incx);
 
@@ -189,9 +189,34 @@ f64 cml_cblas_dznrm2(const i32 n, const void *x, const i32 incx);
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The sum of magnitudes of real and imaginary parts of all elements of 
+ *         the vector.
  */
 f64 cml_cblas_dzasum(const i32 n, const void *x, const i32 incx);
+
+
+/**
+ * @brief Finds the index of the element with maximum absolute value.
+ *
+ * @param n [in] Specifies the number of elements in vector x. 
+ * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @return The position of vector element that has the largest absolute value 
+ *         such that x[index-1] has the largest absolute value. The index 
+ *         returned is zero-based.
+ */
+i32 cml_cblas_izamax(const i32 n, const void *x, const i32 incx);
+
+
+/**
+ * @brief Computes absolute value of complex number.
+ *
+ * @param z [in] Scalar.
+ *
+ * @return The absolute value of a complex number z.
+ */
+f64 cml_cblas_dcabs1(const void *z);
 
 
 #endif /* CAMEL_Z_CBLAS */

@@ -168,7 +168,8 @@ void cml_cblas_saxpy(const i32 n, const f32 a, const f32 *x, const i32 incx, f32
  * @param y [in] Array, size at least (1+(n-1)*abs(incy)).
  * @param incy [in] Specifies the increment for the elements of y.
  *
- * @return Void.
+ * @return The result of the dot product of x and y, if n is positive. 
+ *         Otherwise, returns 0.
  */
 f32 cml_cblas_sdot(const i32 n, const f32 *x, const i32 incx, const f32 *y, const i32 incy);
 
@@ -186,7 +187,8 @@ f32 cml_cblas_sdot(const i32 n, const f32 *x, const i32 incx, const f32 *y, cons
  * @param incx [in] Specifies the increment for the elements of sx.
  * @param incy [in] Specifies the increment for the elements of sy.
  *
- * @return Void.
+ * @return The result of the dot product of sx and sy with sb added, if n is 
+ *         positive. Otherwise, returns.
  */
 f32 cml_cblas_sdsdot(const i32 n, const f32 sb, const f32 *sx, const i32 incx, const f32 *sy, const i32 incy);
 
@@ -198,7 +200,7 @@ f32 cml_cblas_sdsdot(const i32 n, const f32 sb, const f32 *sx, const i32 incx, c
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The Euclidean norm of the vector x.
  */
 f32 cml_cblas_snrm2(const i32 n, const f32 *x, const i32 incx);
 
@@ -210,9 +212,24 @@ f32 cml_cblas_snrm2(const i32 n, const f32 *x, const i32 incx);
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The sum of magnitudes of real and imaginary parts of all elements of 
+ *         the vector.
  */
 f32 cml_cblas_sasum(const i32 n, const f32 *x, const i32 incx);
+
+
+/**
+ * @brief Finds the index of the element with maximum absolute value.
+ *
+ * @param n [in] Specifies the number of elements in vector x. 
+ * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @return The position of vector element that has the largest absolute value 
+ *         such that x[index-1] has the largest absolute value. The index 
+ *         returned is zero-based.
+ */
+i32 cml_cblas_isamax(const i32 n, const f32 *x, const i32 incx);
 
 
 #endif /* CAMEL_S_CBLAS */

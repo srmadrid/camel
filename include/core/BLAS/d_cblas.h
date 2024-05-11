@@ -168,7 +168,8 @@ void cml_cblas_daxpy(const i32 n, const f64 a, const f64 *x, const i32 incx, f64
  * @param y [in] Array, size at least (1+(n-1)*abs(incy)).
  * @param incy [in] Specifies the increment for the elements of y.
  *
- * @return Void.
+ * @return The result of the dot product of x and y, if n is positive. 
+ *         Otherwise, returns 0.
  */
 f64 cml_cblas_ddot(const i32 n, const f64 *x, const i32 incx, const f64 *y, const i32 incy);
 
@@ -184,7 +185,8 @@ f64 cml_cblas_ddot(const i32 n, const f64 *x, const i32 incx, const f64 *y, cons
  * @param incx [in] Specifies the increment for the elements of sx.
  * @param incy [in] Specifies the increment for the elements of sy.
  *
- * @return Void.
+ * @return The result of the dot product of sx and sy, if n is positive. 
+ *         Otherwise, returns 0.
  */
 f64 cml_cblas_dsdot(const i32 n, const f32 *sx, const i32 incx, const f32 *sy, const i32 incy);
 
@@ -196,7 +198,7 @@ f64 cml_cblas_dsdot(const i32 n, const f32 *sx, const i32 incx, const f32 *sy, c
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The Euclidean norm of the vector x.
  */
 f64 cml_cblas_dnrm2(const i32 n, const f64 *x, const i32 incx);
 
@@ -208,9 +210,24 @@ f64 cml_cblas_dnrm2(const i32 n, const f64 *x, const i32 incx);
  * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
  * @param incx [in] Specifies the increment for the elements of x.
  *
- * @return Void.
+ * @return The sum of magnitudes of real and imaginary parts of all elements of 
+ *         the vector.
  */
 f64 cml_cblas_dasum(const i32 n, const f64 *x, const i32 incx);
+
+
+/**
+ * @brief Finds the index of the element with maximum absolute value.
+ *
+ * @param n [in] Specifies the number of elements in vector x. 
+ * @param x [in] Array, size at least (1 + (n -1)*abs (incx)).
+ * @param incx [in] Specifies the increment for the elements of x.
+ *
+ * @return The position of vector element that has the largest absolute value 
+ *         such that x[index-1] has the largest absolute value. The index 
+ *         returned is zero-based.
+ */
+i32 cml_cblas_idamax(const i32 n, const f64 *x, const i32 incx);
 
 
 #endif /* CAMEL_D_CBLAS */
