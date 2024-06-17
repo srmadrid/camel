@@ -71,5 +71,7 @@ CML_Status cml_matrix_print(CML_Allocator *allocator, const CML_Matrix *matrix) 
         case CML_MATRIX:
             return cml_matrixMAT_print(allocator, matrix);
     }
+
+    return CML_ERR_INVALID_ENUM_MEMBER;
 }
 

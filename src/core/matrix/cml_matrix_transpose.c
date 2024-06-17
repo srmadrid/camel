@@ -71,5 +71,7 @@ CML_Status cml_matrix_transpose(CML_Allocator *allocator, const CML_Matrix *A, C
         case CML_MATRIX:
             return cml_matrixMAT_transpose(allocator, A, out);
     }
+
+    return CML_ERR_INVALID_ENUM_MEMBER;
 }
 

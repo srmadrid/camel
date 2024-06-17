@@ -28,6 +28,8 @@
 typedef enum CML_Status {
     /** @brief Operation was successful. */
     CML_SUCCESS = 1,
+    /** @brief Invalid enum value. */
+    CML_ERR_INVALID_ENUM_MEMBER,
     /** @brief Null pointer passed as input. */
     CML_ERR_NULL_PTR = -1,
     /** @brief Malloc failed. */

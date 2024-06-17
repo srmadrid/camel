@@ -91,6 +91,9 @@ CML_Status cml_matrix_set(void *element, u32 row, u32 column, CML_Matrix *out) {
         case CML_MATRIX:
             memcpy(&out->matd, element, sizeof(CML_Matrix));
             break;
+
+        default:
+            return CML_ERR_INVALID_ENUM_MEMBER;
     }
 
     return CML_SUCCESS;

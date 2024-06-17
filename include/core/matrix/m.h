@@ -19,6 +19,7 @@
 #include <math.h>
 #include <omp.h>
 
+#include "../common.h"
 #include "../err.h"
 #include "../macros.h"
 #include "../types.h"

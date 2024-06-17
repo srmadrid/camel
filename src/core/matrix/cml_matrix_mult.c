@@ -76,5 +76,7 @@ CML_Status cml_matrix_mult(CML_Allocator *allocator, const CML_Matrix *left, con
         case CML_MATRIX:
             return cml_matrixMAT_mult(allocator, left, right, out);
     }
+
+    return CML_ERR_INVALID_ENUM_MEMBER;
 }
 

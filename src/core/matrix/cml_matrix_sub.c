@@ -76,5 +76,7 @@ CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, cons
         case CML_MATRIX:
             return cml_matrixMAT_sub(allocator, left, right, out);
     }
+
+    return CML_ERR_INVALID_ENUM_MEMBER;
 }
 

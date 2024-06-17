@@ -76,5 +76,7 @@ CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, co
         case CML_MATRIX:
             return cml_matrixMAT_divew(allocator, left, right, out);
     }
+
+    return CML_ERR_INVALID_ENUM_MEMBER;
 }
 

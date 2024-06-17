@@ -6,8 +6,8 @@ ifeq ($(OS),Linux)
     EXT = so
     CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math
     FFLAGS = -O3 -march=native
-    LDFLAGS = -shared -lm -fsanitize=address,undefined -fopenmp
-    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp -lgfortran
+    LDFLAGS = -shared -lm -fsanitize=address,undefined -fopenmp -lgfortran
+    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp
 else
     TARGET = bin/windows/camel.dll
     TEST_TARGET = test/bin/windows/test.exe
