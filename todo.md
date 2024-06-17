@@ -1,6 +1,8 @@
 # To-Do
 
-For all addition, element wise multiplication, etc.: every element-wise matrix operation -> remove double loop to only one -> for r for c -> for i row*col -> sample in F64 add. Try to make them in fortran.
+Add maybe to the Matrix union avx, sse, etc. SIMD types to try vectorized operations. Also try with just load.
+Add maybe to the Matrix union avx, sse, etc. SIMD types to try vectorized operations. Also try with just load.
+Make a BLAS routine (the ones integrated with Matrix, not the standard cblas) that automatically calls the best blas routine depending on the input matrices.
 
 Matrix multiplication (5000x5000*5000x5000):
     NumPy: 89s

@@ -84,7 +84,7 @@ CML_Status cml_matrixMAT_mult(CML_Allocator *allocator, const CML_Matrix *left, 
                 for (u32 k = 0; k < left->columns; k++) {
             for (u32 c = 0; c < out->columns; c++) {
                     cml_matrix_mult(NULL, &left->matd[r*left->columns + k], &right->matd[k*right->columns + c], &tmp);
-                    cml_matrix_add_inplace(&tmp, &out->matd[r*out->columns + c]);
+                    cml_matrix_add(NULL, &tmp, &out->matd[r*out->columns + c], &out->matd[r*out->columns + c]);
                 }
             }
         }

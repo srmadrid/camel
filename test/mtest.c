@@ -164,19 +164,12 @@ int main(void) {
         gettimeofday(&end, NULL);
         printf("Mult time redone: %fs\n", end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec)/1000000.0);
 
-        cml_matrix_divew_inplace(&B, &A);
-        printf("\nA ./= B: \n");
-        cml_matrix_print(NULL, &A);
-
         CML_Matrix scalar;
         cml_matrix_init(&a, 1, 1, CML_F64, &scalar);
         f64 snumber = 10;
         cml_matrix_set(&snumber, 0, 0, &scalar);
         printf("\nscalar = \n");
         cml_matrix_print(NULL, &scalar);
-        cml_matrix_divew_inplace(&scalar, &A);
-        printf("\nA ./= scalar: \n");
-        cml_matrix_print(NULL, &A);
         CML_Matrix D;
         cml_matrix_divew(&a, &A, &scalar, &D);
         printf("\nD = A/scalar: \n");

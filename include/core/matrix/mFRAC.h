@@ -59,18 +59,6 @@ CML_Status cml_matrixFRAC_add(CML_Allocator *allocator, const CML_Matrix *left, 
 
 
 /**
- * @brief Adds two matrices in place (out += right) and stores the result in 
- *        the out matrix.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrixFRAC_add_inplace(const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
  * @brief Subtracts two matrices and stores the result in the out matrix.
  *
  * @param allocator Allocator for the new matrix.
@@ -81,18 +69,6 @@ CML_Status cml_matrixFRAC_add_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @return Status code.
  */
 CML_Status cml_matrixFRAC_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
- * @brief Subtracts two matrices in place (out -= right) and stores the result in 
- *        the out matrix.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrixFRAC_sub_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -123,18 +99,6 @@ CML_Status cml_matrixFRAC_multew(CML_Allocator *allocator, const CML_Matrix *lef
 
 
 /**
- * @brief Multiplies two matrices element by element, and stores the result in
- *        the out matrix out .*= right.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrixFRAC_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
  * @brief Divides two matrices element by element, and stores the result in
  *        out.
  *
@@ -146,18 +110,6 @@ CML_Status cml_matrixFRAC_multew_inplace(const CML_Matrix *right, CML_Matrix *ou
  * @return Status code.
  */
 CML_Status cml_matrixFRAC_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
- * @brief Divides two matrices element by element, and stores the result in
- *        the out matrix out ./= right.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrixFRAC_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**

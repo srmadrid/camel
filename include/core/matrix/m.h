@@ -189,18 +189,6 @@ CML_Status cml_matrix_add(CML_Allocator *allocator, const CML_Matrix *left, cons
 
 
 /**
- * @brief Adds two matrices in place (out += right) and stores the result in 
- *        the out matrix.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrix_add_inplace(const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
  * @brief Subtracts two matrices and stores the result in the out matrix.
  *
  * @param allocator Allocator for the new matrix.
@@ -211,18 +199,6 @@ CML_Status cml_matrix_add_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @return Status code.
  */
 CML_Status cml_matrix_sub(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
- * @brief Subtracts two matrices in place (out -= right) and stores the result in 
- *        the out matrix.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrix_sub_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**
@@ -253,18 +229,6 @@ CML_Status cml_matrix_multew(CML_Allocator *allocator, const CML_Matrix *left, c
 
 
 /**
- * @brief Multiplies two matrices element by element, and stores the result in
- *        the out matrix out .*= right.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrix_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
  * @brief Divides two matrices element by element, and stores the result in
  *        out.
  *
@@ -276,18 +240,6 @@ CML_Status cml_matrix_multew_inplace(const CML_Matrix *right, CML_Matrix *out);
  * @return Status code.
  */
 CML_Status cml_matrix_divew(CML_Allocator *allocator, const CML_Matrix *left, const CML_Matrix *right, CML_Matrix *out);
-
-
-/**
- * @brief Divides two matrices element by element, and stores the result in
- *        the out matrix out ./= right.
- *
- * @param right     The matrix on the right.
- * @param out       The matrix on the left.
- *
- * @return Status code.
- */
-CML_Status cml_matrix_divew_inplace(const CML_Matrix *right, CML_Matrix *out);
 
 
 /**

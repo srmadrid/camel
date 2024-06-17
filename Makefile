@@ -4,10 +4,10 @@ ifeq ($(OS),Linux)
     TARGET = bin/linux/libcamel.so
     TEST_TARGET = test/bin/linux/test
     EXT = so
-	CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math
-	FFLAGS = -O3 -march=native
-	LDFLAGS = -shared -lm -lopenblas -fsanitize=address,undefined -fopenmp
-	LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp
+    CFLAGS = -pedantic -Wall -Wextra -Werror -Wvla -Iinclude -fopenmp -fPIC -msse3 -fsanitize=address,undefined -pedantic-errors -g -O3 -march=native -ffast-math
+    FFLAGS = -O3 -march=native
+    LDFLAGS = -shared -lm -fsanitize=address,undefined -fopenmp
+    LIB_LINK = -Lbin/linux -Wl,-rpath,'$$ORIGIN/../../../bin/linux' -lcamel -lm -fsanitize=address,undefined -fopenmp -lgfortran
 else
     TARGET = bin/windows/camel.dll
     TEST_TARGET = test/bin/windows/test.exe
@@ -18,8 +18,8 @@ else
 endif
 
 # Compiler settings
-# CC = gcc
-CC = clang
+CC = gcc
+# CC = clang
 SRC_DIRS = src
 SOURCES = $(shell find $(SRC_DIRS) -type f -name '*.c')
 OBJECTS = $(SOURCES:%.c=%.o)
