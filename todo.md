@@ -1,5 +1,7 @@
 # To-Do
 
+Implement hot reload: now that compilation times are getting high, make asystem that stores all objects in a folder, and only recompiles files that have been edited.
+
 Add maybe to the Matrix union avx, sse, etc. SIMD types to try vectorized operations. Also try with just load.
 Add maybe to the Matrix union avx, sse, etc. SIMD types to try vectorized operations. Also try with just load.
 Make a BLAS routine (the ones integrated with Matrix, not the standard cblas) that automatically calls the best blas routine depending on the input matrices.

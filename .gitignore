@@ -1,3 +1,6 @@
+zig-out/
+zig-cache/
+
 # Ignore IDE files
 .idea
 .vscode
@@ -16,29 +19,11 @@ test/algebra/linear/flinear/tfvector_sse.c
 
 # Ignore object files and other build artifacts
 *.o
-
-# Latex build files
-*.aux
-*.log
-*.toc
-*.lof
-*.lot
-*.out
-*.nav
-*.snm
-*.vrb
-*.fls
-*.fdb_latexmk
-*.synctex.gz
-*.blg
-*.bbl
-*.idx
-*.ind
-*.ilg
-*.glo
-*.gls
-*.ist
-*.hd
+*.a
+*.exe
+.tmp
+.log
+Thumbs.db
 
 # Performance testing
 perf/
