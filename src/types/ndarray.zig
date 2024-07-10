@@ -1,5 +1,14 @@
 const std = @import("std");
 const camel = @import("../camel.zig");
+const core = @import("../core/core.zig");
+
+const _add = core.supported._add;
+const _sub = core.supported._sub;
+const _mult = core.supported._mult;
+const _div = core.supported._div;
+
+/// Maximal number of dimensions.
+pub const MaxDimensions = 32;
 
 /// An n-dimensional array of elements of type `T`. Initialize with `init` and
 /// deinitialize with `deinit`.
@@ -14,7 +23,7 @@ const camel = @import("../camel.zig");
 /// Stores an allocator for internal memory management.
 pub fn NDArray(comptime T: type) type {
     // Catch any attempt to create with unsupported type.
-    _ = camel.core.supported.whatSupportedNumericType(T);
+    _ = core.supported.whatSupportedNumericType(T);
     return struct {
         const Self: type = @This();
         /// The data of the matrix.
@@ -50,6 +59,10 @@ pub fn NDArray(comptime T: type) type {
         ///
         /// Deinitialize with `deinit`.
         pub fn initOrder(allocator: std.mem.Allocator, shape: []const usize, order: NDArrayOrder) !Self {
+            if (shape.len > MaxDimensions) {
+                return NDArrayError.TooManyDimensions;
+            }
+
             for (shape) |dim| {
                 if (dim == 0) {
                     return NDArrayError.ZeroDimension;
@@ -93,7 +106,7 @@ pub fn NDArray(comptime T: type) type {
         /// Deinitializes an element of the array. Only defined for custom
         /// types. For a scalar, any position will yield the only element.
         pub fn deinitElement(self: *Self, position: []const usize) !void {
-            const supported = camel.core.supported.whatSupportedNumericType(T);
+            const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
                 .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => @compileError("deinitElement only defined on types that need to be deinitialized."),
                 .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
@@ -104,7 +117,7 @@ pub fn NDArray(comptime T: type) type {
 
                     try self.checkPosition(position);
 
-                    self.data[self.index(position)].deinit();
+                    self.data[self._index(position)].deinit();
                 },
                 .Unsupported => unreachable,
             }
@@ -113,9 +126,9 @@ pub fn NDArray(comptime T: type) type {
         /// Deinitializes all elements of the array. Only defined for custom
         /// types.
         pub fn deinitAllElements(self: *Self) void {
-            const supported = camel.core.supported.whatSupportedNumericType(T);
+            const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
-                .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => @compileError("deinitElement only defined on types that need to be deinitialized."),
+                .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => @compileError("deinitAllElements only defined on types that need to be deinitialized."),
                 .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
                     for (self.data) |element| {
                         element.deinit();
@@ -125,18 +138,36 @@ pub fn NDArray(comptime T: type) type {
             }
         }
 
-        ///
         /// Calculates the index of the element at the given position of the
         /// array.
         ///
         /// No bounds checking is performed.
-        inline fn index(self: Self, position: []const usize) usize {
+        pub inline fn _index(self: Self, position: []const usize) usize {
             var idx: usize = 0;
             for (0..self.shape.len) |i| {
                 idx += position[i] * self.strides[i];
             }
 
             return idx;
+        }
+
+        /// Calculates the postion of the element at the given index in the
+        /// data of the array.
+        ///
+        /// No bounds checking is performed.
+        pub inline fn _position(self: Self, index: usize, position: []usize) void {
+            var idx: usize = index;
+            if (self.order == NDArrayOrder.RowMajor) {
+                for (0..self.strides.len) |i| {
+                    position[i] = idx / self.strides[i];
+                    idx %= self.strides[i];
+                }
+            } else {
+                for (0..self.strides.len) |i| {
+                    position[position.len - i - 1] = idx / self.strides[self.strides.len - i - 1];
+                    idx %= self.strides[self.strides.len - i - 1];
+                }
+            }
         }
 
         /// Checks if the given position is within the bounds of the array and
@@ -173,7 +204,7 @@ pub fn NDArray(comptime T: type) type {
 
             try self.checkPosition(position);
 
-            self.data[self.index(position)] = value;
+            self.data[self._index(position)] = value;
         }
 
         /// Sets all elements of the array to the input value.
@@ -184,10 +215,10 @@ pub fn NDArray(comptime T: type) type {
         /// array. If there was already an element at some position, it will be
         /// overwritten and a memory leak will occur, unless another copy of the
         /// value was kept elsewhere.
-        pub fn setAll(self: *Self, value: T) !void {
+        pub fn setAll(self: *Self, value: T) void {
             self.data[0] = value;
 
-            const supported = camel.core.supported.whatSupportedNumericType(T);
+            const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
                 .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => {
                     for (1..self.size) |i| {
@@ -217,7 +248,7 @@ pub fn NDArray(comptime T: type) type {
                 idx = 0;
             } else {
                 try self.checkPosition(position);
-                idx = self.index(position);
+                idx = self._index(position);
             }
 
             const prev: T = self.data[idx];
@@ -245,9 +276,9 @@ pub fn NDArray(comptime T: type) type {
                 idx = 0;
             } else {
                 try self.checkPosition(position);
-                idx = self.index(position);
+                idx = self._index(position);
             }
-            const supported = camel.core.supported.whatSupportedNumericType(T);
+            const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
                 .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => {
                     self.data[idx] = value;
@@ -272,7 +303,7 @@ pub fn NDArray(comptime T: type) type {
         /// For custom types, calling this when any element is uninitiallized
         /// will cause undefined behavior.
         pub fn updateAll(self: *Self, value: T) !void {
-            const supported = camel.core.supported.whatSupportedNumericType(T);
+            const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
                 .BuiltinInt, .BuiltinFloat, .BuiltinBool, .CustomComplexFloat => {
                     for (0..self.size) |i| {
@@ -296,7 +327,7 @@ pub fn NDArray(comptime T: type) type {
             }
 
             try self.checkPosition(position);
-            return self.data[self.index(position)];
+            return self.data[self._index(position)];
         }
 
         /// Checks if the array is a scalar.
@@ -323,17 +354,433 @@ pub fn NDArray(comptime T: type) type {
         pub fn isMatrix(self: Self) bool {
             return self.shape.len == 2;
         }
+
+        // TODO: Implement the following functions (only for matrices)
+        // - isSquare
+        // - isUpperTriangular
+        // - isLowerTriangular
+        // - isSymmetric
+        // - isSkewSymmetric
+        // - isHermitian
+        // - isSkewHermitian
+        // - more property checking functions
+
+        /// Computes elementwise addition (self = left - right). If only one  of
+        /// them is a scalar, it is added to all the elements of the other
+        /// array.
+        pub fn add(self: *Self, left: Self, right: Self) !void {
+            var oneIsScalar: bool = undefined;
+            var leftIsScalar: bool = undefined;
+            var bothAreScalar: bool = undefined;
+            if (left.isScalar() and !right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = true;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, right.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (!left.isScalar() and right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (left.isScalar() and right.isScalar()) {
+                bothAreScalar = true;
+            } else {
+                oneIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape) or
+                    !std.mem.eql(usize, left.shape, right.shape))
+                {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            }
+
+            if (bothAreScalar) {
+                _add(&self.data[0], left.data[0], right.data[0]);
+                return;
+            }
+            if (oneIsScalar) {
+                if (leftIsScalar) {
+                    if (self.order == right.order) {
+                        const scalar: T = left.data[0];
+                        for (0..self.size) |i| {
+                            _add(&self.data[i], scalar, right.data[i]);
+                        }
+                    } else {
+                        const scalar: T = left.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _add(&self.data[i], scalar, right.data[right._index(position)]);
+                        }
+                    }
+                } else {
+                    if (self.order == left.order) {
+                        const scalar: T = right.data[0];
+                        for (0..self.size) |i| {
+                            _add(&self.data[i], left.data[i], scalar);
+                        }
+                    } else {
+                        const scalar: T = right.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _add(&self.data[i], left.data[left._index(position)], scalar);
+                        }
+                    }
+                }
+            } else {
+                if (self.order == left.order and self.order == right.order) {
+                    for (0..self.size) |i| {
+                        _add(&self.data[i], left.data[i], right.data[i]);
+                    }
+                } else {
+                    // Follow the order common to two of them (better caching).
+                    if (self.order == left.order or self.order == right.order) {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order (also used by left or right).
+                            self._position(i, position);
+                            _add(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
+                        }
+                    } else {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow left's order (also used by right).
+                            left._position(i, position);
+                            _add(&self.data[self._index(position)], left.data[i], right.data[i]);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// Computes elementwise subtraction (self = left - right). If only one
+        /// of them is a scalar, it is added to all the elements of the other
+        /// array.
+        pub fn sub(self: *Self, left: Self, right: Self) !void {
+            var oneIsScalar: bool = undefined;
+            var leftIsScalar: bool = undefined;
+            var bothAreScalar: bool = undefined;
+            if (left.isScalar() and !right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = true;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, right.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (!left.isScalar() and right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (left.isScalar() and right.isScalar()) {
+                bothAreScalar = true;
+            } else {
+                oneIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape) or
+                    !std.mem.eql(usize, left.shape, right.shape))
+                {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            }
+
+            if (bothAreScalar) {
+                _sub(&self.data[0], left.data[0], right.data[0]);
+                return;
+            }
+            if (oneIsScalar) {
+                if (leftIsScalar) {
+                    if (self.order == right.order) {
+                        const scalar: T = left.data[0];
+                        for (0..self.size) |i| {
+                            _sub(&self.data[i], scalar, right.data[i]);
+                        }
+                    } else {
+                        const scalar: T = left.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _sub(&self.data[i], scalar, right.data[right._index(position)]);
+                        }
+                    }
+                } else {
+                    if (self.order == left.order) {
+                        const scalar: T = right.data[0];
+                        for (0..self.size) |i| {
+                            _sub(&self.data[i], left.data[i], scalar);
+                        }
+                    } else {
+                        const scalar: T = right.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _sub(&self.data[i], left.data[left._index(position)], scalar);
+                        }
+                    }
+                }
+            } else {
+                if (self.order == left.order and self.order == right.order) {
+                    for (0..self.size) |i| {
+                        _sub(&self.data[i], left.data[i], right.data[i]);
+                    }
+                } else {
+                    // Follow the order common to two of them (better caching).
+                    if (self.order == left.order or self.order == right.order) {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order (also used by left or right).
+                            self._position(i, position);
+                            _sub(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
+                        }
+                    } else {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow left's order (also used by right).
+                            left._position(i, position);
+                            _sub(&self.data[self._index(position)], left.data[i], right.data[i]);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// Computes elementwise multiplication (self = left .* right). If only
+        /// one of them is a scalar, it is added to all the elements of the
+        /// other array.
+        pub fn multew(self: *Self, left: Self, right: Self) !void {
+            var oneIsScalar: bool = undefined;
+            var leftIsScalar: bool = undefined;
+            var bothAreScalar: bool = undefined;
+            if (left.isScalar() and !right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = true;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, right.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (!left.isScalar() and right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (left.isScalar() and right.isScalar()) {
+                bothAreScalar = true;
+            } else {
+                oneIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape) or
+                    !std.mem.eql(usize, left.shape, right.shape))
+                {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            }
+
+            if (bothAreScalar) {
+                _mult(&self.data[0], left.data[0], right.data[0]);
+                return;
+            }
+            if (oneIsScalar) {
+                if (leftIsScalar) {
+                    if (self.order == right.order) {
+                        const scalar: T = left.data[0];
+                        for (0..self.size) |i| {
+                            _mult(&self.data[i], scalar, right.data[i]);
+                        }
+                    } else {
+                        const scalar: T = left.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _mult(&self.data[i], scalar, right.data[right._index(position)]);
+                        }
+                    }
+                } else {
+                    if (self.order == left.order) {
+                        const scalar: T = right.data[0];
+                        for (0..self.size) |i| {
+                            _mult(&self.data[i], left.data[i], scalar);
+                        }
+                    } else {
+                        const scalar: T = right.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _mult(&self.data[i], left.data[left._index(position)], scalar);
+                        }
+                    }
+                }
+            } else {
+                if (self.order == left.order and self.order == right.order) {
+                    for (0..self.size) |i| {
+                        _mult(&self.data[i], left.data[i], right.data[i]);
+                    }
+                } else {
+                    // Follow the order common to two of them (better caching).
+                    if (self.order == left.order or self.order == right.order) {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order (also used by left or right).
+                            self._position(i, position);
+                            _mult(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
+                        }
+                    } else {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow left's order (also used by right).
+                            left._position(i, position);
+                            _mult(&self.data[self._index(position)], left.data[i], right.data[i]);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// Computes elementwise division (self = left ./ right). If only one of
+        /// them is a scalar, it is added to all the elements of the other
+        /// array.
+        pub fn divew(self: *Self, left: Self, right: Self) !void {
+            var oneIsScalar: bool = undefined;
+            var leftIsScalar: bool = undefined;
+            var bothAreScalar: bool = undefined;
+            if (left.isScalar() and !right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = true;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, right.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (!left.isScalar() and right.isScalar()) {
+                oneIsScalar = true;
+                leftIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape)) {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            } else if (left.isScalar() and right.isScalar()) {
+                bothAreScalar = true;
+            } else {
+                oneIsScalar = false;
+                bothAreScalar = false;
+                if (!std.mem.eql(usize, self.shape, left.shape) or
+                    !std.mem.eql(usize, left.shape, right.shape))
+                {
+                    return NDArrayError.IncompatibleDimensions;
+                }
+            }
+
+            if (bothAreScalar) {
+                _div(&self.data[0], left.data[0], right.data[0]);
+                return;
+            }
+            if (oneIsScalar) {
+                if (leftIsScalar) {
+                    if (self.order == right.order) {
+                        const scalar: T = left.data[0];
+                        for (0..self.size) |i| {
+                            _div(&self.data[i], scalar, right.data[i]);
+                        }
+                    } else {
+                        const scalar: T = left.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _div(&self.data[i], scalar, right.data[right._index(position)]);
+                        }
+                    }
+                } else {
+                    if (self.order == left.order) {
+                        const scalar: T = right.data[0];
+                        for (0..self.size) |i| {
+                            _div(&self.data[i], left.data[i], scalar);
+                        }
+                    } else {
+                        const scalar: T = right.data[0];
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order
+                            self._position(i, position);
+                            _div(&self.data[i], left.data[left._index(position)], scalar);
+                        }
+                    }
+                }
+            } else {
+                if (self.order == left.order and self.order == right.order) {
+                    for (0..self.size) |i| {
+                        _div(&self.data[i], left.data[i], right.data[i]);
+                    }
+                } else {
+                    // Follow the order common to two of them (better caching).
+                    if (self.order == left.order or self.order == right.order) {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow self's order (also used by left or right).
+                            self._position(i, position);
+                            _div(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
+                        }
+                    } else {
+                        var position_buf: [MaxDimensions]usize = undefined;
+                        const position = position_buf[0..self.shape.len];
+                        for (0..self.size) |i| {
+                            // Follow left's order (also used by right).
+                            left._position(i, position);
+                            _div(&self.data[self._index(position)], left.data[i], right.data[i]);
+                        }
+                    }
+                }
+            }
+        }
     };
 }
 
 /// Errors that can occur when workin with an `NDArray`.
 pub const NDArrayError = error{
+    /// Too many dimensions.
+    TooManyDimensions,
     /// The dimensions of the array and the position do not match.
     DimensionMismatch,
     /// Some position is out of bounds.
     PositionOutOfBounds,
     /// A dimension is zero.
     ZeroDimension,
+    /// The array is not a scalar.
+    NotScalar,
+    /// The array is not a vector.
+    NotVector,
+    /// The array is not a matrix.
+    NotMatrix,
+    /// The dimensions of the array are not compatible.
+    IncompatibleDimensions,
 };
 
 /// Order in which an `NDArray` stores its data.

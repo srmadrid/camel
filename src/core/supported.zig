@@ -50,3 +50,87 @@ pub inline fn whatSupportedNumericType(comptime T: type) SupportedNumericType {
         },
     };
 }
+
+/// Adds two elements of any supported type and stores the result in the output
+/// variable. `left` and `right` must be of the same type, and `out` must be a
+/// pointer of that same type.
+pub inline fn _add(out: anytype, left: anytype, right: anytype) void {
+    const T = @TypeOf(out.*, left, right);
+    const supported = whatSupportedNumericType(T);
+    switch (supported) {
+        .BuiltinInt, .BuiltinFloat => {
+            out.* = left + right;
+        },
+        .CustomComplexFloat => {
+            out.* = T.add(left, right);
+        },
+        .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
+            out.add(left, right);
+        },
+        .BuiltinBool => @compileError("Addition function not defined for booleans"),
+        .Unsupported => unreachable,
+    }
+}
+
+/// Subtracts two elements of any supported type and stores the result in the
+/// output variable. `left` and `right` must be of the same type, and `out` must
+/// be a pointer of that same type.
+pub inline fn _sub(out: anytype, left: anytype, right: anytype) void {
+    const T = @TypeOf(out.*, left, right);
+    const supported = whatSupportedNumericType(T);
+    switch (supported) {
+        .BuiltinInt, .BuiltinFloat => {
+            out.* = left - right;
+        },
+        .CustomComplexFloat => {
+            out.* = T.sub(left, right);
+        },
+        .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
+            out.sub(left, right);
+        },
+        .BuiltinBool => @compileError("Subtraction function not defined for booleans"),
+        .Unsupported => unreachable,
+    }
+}
+
+/// Multiplies two elements of any supported type and stores the result in the
+/// output variable. `left` and `right` must be of the same type, and `out` must
+/// be a pointer of that same type.
+pub inline fn _mult(out: anytype, left: anytype, right: anytype) void {
+    const T = @TypeOf(out.*, left, right);
+    const supported = whatSupportedNumericType(T);
+    switch (supported) {
+        .BuiltinInt, .BuiltinFloat => {
+            out.* = left * right;
+        },
+        .CustomComplexFloat => {
+            out.* = T.mult(left, right);
+        },
+        .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
+            out.mult(left, right);
+        },
+        .BuiltinBool => @compileError("Multiplication function not defined for booleans"),
+        .Unsupported => unreachable,
+    }
+}
+
+/// Divides two elements of any supported type and stores the result in the
+/// output variable. `left` and `right` must be of the same type, and `out` must
+/// be a pointer of that same type.
+pub inline fn _div(out: anytype, left: anytype, right: anytype) void {
+    const T = @TypeOf(out.*, left, right);
+    const supported = whatSupportedNumericType(T);
+    switch (supported) {
+        .BuiltinInt, .BuiltinFloat => {
+            out.* = left / right;
+        },
+        .CustomComplexFloat => {
+            out.* = T.div(left, right);
+        },
+        .CustomInt, .CustomReal, .CustomComplex, .CustomExpression => {
+            out.div(left, right);
+        },
+        .BuiltinBool => @compileError("Division function not defined for booleans"),
+        .Unsupported => unreachable,
+    }
+}
