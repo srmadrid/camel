@@ -105,15 +105,14 @@
                     <h4>Return Value</h4>
                     <p>Return Value Description</p>
                     <h4>Example</h4>
-                    <pre><code class="language-c">int main() {
+                    <pre><code class="language-zig">int main() {
     // Compute factorial of 5
-    int n = 5;
-    int factorial = 1;
-    for (int i = 1; i <= n; ++i) {
+    const n = 5;
+    comptime var factorial = 1;
+    for (0..n) |i| {
         factorial *= i;
     }
-    printf("Factorial of %d is %d\n", n, factorial);
-    return 0;
+    std.debug.print("Factorial of {} is {}\n", .{ n, factorial });
 }</code></pre>
                 </div>
             </div>
