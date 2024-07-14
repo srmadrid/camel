@@ -1,3 +1,14 @@
+/// IMPLEMENT EFFICIENT ITERATORS SO THAT IN THE ADD (AND OTHER FUNCTIONS)
+/// INSTEAD OF CALLING `_position` AND `_index` WHEN THE ORDER IS NOT THE SAME
+/// (VERY INNEFICIENT), AN EFFICIENT ITERATOR IS USED INSTEAD. THIS WAY THE
+/// LOOPS FOR BOTH CASES CAN JUST BE THE SAME.
+///
+/// REMOVE SPECIFIC ORDERING (`RowMajor` AND `ColumnMajor`) AND REPLCAE IT WITH
+/// ANY CUSTOM ORDERING (AFTER ALL IT JUST AFFECTS THE STRIDES SLICE).
+///
+/// ADD FLAGS LIKE NUMPY (LIKE OWNED, VIEW, ETC.) AND CREATE VIEWS (JUST HAVE A
+/// VIEW OR UNOWNED FLAG WITH (MAYBE) DIFFERENT METADATA (STRIDES, ORDERING,
+/// SHAPE, ETC.).
 const std = @import("std");
 const camel = @import("../camel.zig");
 const core = @import("../core/core.zig");
@@ -29,14 +40,14 @@ pub fn NDArray(comptime T: type) type {
         /// The data of the matrix.
         data: []T,
         /// The shape of the array, i.e., the dimensions of the array.
-        shape: []const usize,
+        shape: []usize,
         /// The strides of the array. These are the number of elements to skip
         /// to get the next element in each dimension.
-        strides: []const usize,
+        strides: []usize,
         /// Total number of elements in the array.
         size: usize,
-        /// Order of storage of the array.
-        order: NDArrayOrder,
+        /// Flags holding info on the storage of the array.
+        flags: usize,
         /// The allocator used for internal memory management.
         allocator: std.mem.Allocator,
 
@@ -48,7 +59,7 @@ pub fn NDArray(comptime T: type) type {
         ///
         /// Deinitialize with `deinit`.
         pub fn init(allocator: std.mem.Allocator, shape: []const usize) !Self {
-            return initOrder(allocator, shape, NDArrayOrder.RowMajor);
+            return initOrder(allocator, shape, NDArrayFlag.RowMajorContiguous | NDArrayFlag.OwnsData | NDArrayFlag.Writeable);
         }
 
         /// Initializes an array with the given shape and order. It is highly
@@ -58,7 +69,7 @@ pub fn NDArray(comptime T: type) type {
         /// are accessed before being set.
         ///
         /// Deinitialize with `deinit`.
-        pub fn initOrder(allocator: std.mem.Allocator, shape: []const usize, order: NDArrayOrder) !Self {
+        pub fn initOrder(allocator: std.mem.Allocator, shape: []const usize, flags: usize) !Self {
             if (shape.len > MaxDimensions) {
                 return NDArrayError.TooManyDimensions;
             }
@@ -70,27 +81,30 @@ pub fn NDArray(comptime T: type) type {
             }
 
             var size: usize = 1;
+            var shapes: []usize = try allocator.alloc(usize, shape.len);
             var strides: []usize = try allocator.alloc(usize, shape.len);
             if (shape.len > 0) {
-                if (order == NDArrayOrder.RowMajor) {
+                if (flags & NDArrayFlag.RowMajorContiguous) {
                     for (0..shape.len) |i| {
                         strides[shape.len - i - 1] = size;
                         size *= shape[shape.len - i - 1];
+                        shapes[i] = shape[i];
                     }
                 } else {
                     for (0..shape.len) |i| {
                         strides[i] = size;
                         size *= shape[i];
+                        shapes[i] = shape[i];
                     }
                 }
             }
 
             return Self{
                 .data = try allocator.alloc(T, size),
-                .shape = shape,
+                .shape = shapes,
                 .strides = strides,
                 .size = size,
-                .order = order,
+                .flags = flags,
                 .allocator = allocator,
             };
         }
@@ -98,8 +112,12 @@ pub fn NDArray(comptime T: type) type {
         /// Deinitializes the array, freeing the data. The user is responsible
         /// for deinitializing the elements of `data` for custom types.
         pub fn deinit(self: *Self) void {
-            self.allocator.free(self.data);
+            self.allocator.free(self.shape);
             self.allocator.free(self.strides);
+            if (self.flags & NDArrayFlag.OwnsData) {
+                self.allocator.free(self.data);
+            }
+
             self.* = undefined;
         }
 
@@ -566,7 +584,7 @@ pub fn NDArray(comptime T: type) type {
         /// Computes elementwise multiplication (self = left .* right). If only
         /// one of them is a scalar, it is added to all the elements of the
         /// other array.
-        pub fn multew(self: *Self, left: Self, right: Self) !void {
+        pub fn multElementWise(self: *Self, left: Self, right: Self) !void {
             var oneIsScalar: bool = undefined;
             var leftIsScalar: bool = undefined;
             var bothAreScalar: bool = undefined;
@@ -665,7 +683,7 @@ pub fn NDArray(comptime T: type) type {
         /// Computes elementwise division (self = left ./ right). If only one of
         /// them is a scalar, it is added to all the elements of the other
         /// array.
-        pub fn divew(self: *Self, left: Self, right: Self) !void {
+        pub fn divElementWise(self: *Self, left: Self, right: Self) !void {
             var oneIsScalar: bool = undefined;
             var leftIsScalar: bool = undefined;
             var bothAreScalar: bool = undefined;
@@ -760,6 +778,71 @@ pub fn NDArray(comptime T: type) type {
                 }
             }
         }
+
+        /// Namespace for BLAS functions.
+        pub const BLAS = struct {
+            /// Computes the sum of magnitudes of the vector elements.
+            ///
+            /// **Description**:
+            ///
+            /// The routine computes the sum of the magnitudes of elements of a
+            /// real vector, or the sum of magnitudes of the real and imaginary
+            /// parts of elements of a complex vector:
+            ///
+            /// `res = |x[1].Re| + |x[1].Im| + |x[2].Re| + |x[2].Im| + ... +
+            /// |x[n].Re| + |x[n].Im|`,
+            ///
+            /// where `x` is an `NDArray` with shape `{n}`.
+            ///
+            /// **Input Parameters**:
+            /// - `allocator`: an optional `std.mem.Allocator`. Only needed when
+            /// `T` is `BigInt`, `Fraction`, `Complex` or `Expression`.
+            /// - `x`: `NDArray` of shape `{n}`.
+            ///
+            /// **Return Values**:
+            /// - `res`: The sum of magnitudes of real and imaginary parts of
+            /// all elements of the vector.
+            //pub fn asum(allocator: ?std.mem.Allocator, x: NDArray(T)) !T {
+            //    return @import("ndarray/BLAS/asum.zig").asum(T, allocator, x);
+            //}
+            pub fn tmp() usize {
+                return 3;
+            }
+        };
+
+        /// Namespace for LAPACK functions.
+        pub const LAPACK = struct {
+            /// Computes the LU factorization of a general m-by-n matrix.
+            ///
+            /// **Description**:
+            ///
+            /// The routine computes the LU factorization of a general
+            /// `m`-by-`n` matrix `A` as `A = P*L*U`, where `P` is a permutation
+            /// matrix, `L` is lower triangular with unit diagonal elements
+            /// (lower trapezoidal if `m > n`) and `U` is upper triangular
+            /// (upper trapezoidal if `m < n`). The routine uses partial
+            /// pivoting, with row interchanges.
+            ///
+            /// **Input Parameters**:
+            /// - `a`: `NDArray` of shape `{m, n}`. Contains the matrix `A`.
+            ///
+            /// **Output Parameters**:
+            /// - `a`: Overwritten by `L` and `U`. The unit diagonal elements of
+            /// `L` are not stored.
+            /// - `ipiv`: `NDArray`, of shape `{min(m, n)}`. Contains the pivot
+            /// indices; for `1 ≤ i ≤ min(m, n)`, row `i` was interchanged with
+            /// row `ipiv[i]`.
+            ///
+            /// **Return Values**:
+            /// - `void`: the execution is successful.
+            /// ...
+            //pub fn getrf(a: *Self, ipiv: *NDArray(usize)) !void {
+            //    return @import("ndarray/LAPACK/getrf.zig").getrf(T, a, ipiv);
+            //}
+            pub fn tmp() usize {
+                return 3;
+            }
+        };
     };
 }
 
@@ -783,8 +866,16 @@ pub const NDArrayError = error{
     IncompatibleDimensions,
 };
 
-/// Order in which an `NDArray` stores its data.
-pub const NDArrayOrder = enum {
-    RowMajor,
-    ColumnMajor,
+/// Flags representing information on the storage of an array.
+pub const NDArrayFlag = enum(usize) {
+    RowMajorContiguous = 1 << 0,
+    ColumnMajorContiguous = 1 << 1,
+    OwnsData = 1 << 2,
+    Writeable = 1 << 3,
+    Aligned = 1 << 4,
 };
+
+test "test" {
+    const a = 1;
+    try std.testing.expect(a == 1);
+}

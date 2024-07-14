@@ -6,7 +6,7 @@ pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
 
-    var A: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 20, 15, 8, 17 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    var A: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 20, 15, 8, 18 }, camel.ndarray.NDArrayOrder.ColumnMajor);
     defer A.deinit();
 
     std.debug.print("A dimentions = {}\n", .{A.shape.len});
@@ -63,7 +63,7 @@ pub fn main() !void {
 
     var D: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 3, 4 }, camel.ndarray.NDArrayOrder.RowMajor);
     defer D.deinit();
-    try D.divew(B, C);
+    try D.divElementWise(B, C);
     // try camel.NDArray(u64).add(&D, B, C);
     std.debug.print("\nD =\n", .{});
     for (0..D.shape[0]) |i| {
@@ -73,4 +73,65 @@ pub fn main() !void {
         }
         std.debug.print("\n", .{});
     }
+
+    var big1: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.RowMajor);
+    defer big1.deinit();
+    var big2: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    defer big2.deinit();
+    var big3: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    defer big3.deinit();
+
+    std.debug.print("big3 dimentions = {}\n", .{big3.shape.len});
+
+    std.debug.print("big3.shape = [  ", .{});
+    for (big3.shape) |dim| {
+        std.debug.print("{}  ", .{dim});
+    }
+    std.debug.print("]\n", .{});
+
+    std.debug.print("big3.strides = [  ", .{});
+    for (big3.strides) |stride| {
+        std.debug.print("{}  ", .{stride});
+    }
+    std.debug.print("]\n", .{});
+
+    std.debug.print("big3.size = {}\n", .{big3.size});
+
+    // Profiling
+    const n: usize = 10;
+    var start_time = std.time.nanoTimestamp();
+
+    for (0..n) |_| {
+        std.debug.print(".", .{});
+        try @call(.auto, camel.NDArray(f64).add, .{ &big3, big1, big2 });
+        //try big3.add(big1, big2);
+    }
+    std.debug.print("\n", .{});
+
+    var end_time = std.time.nanoTimestamp();
+    var duration_ns = end_time - start_time;
+
+    // Convert nanoseconds to seconds as a floating-point number.
+    var duration_s: f128 = @as(f128, @floatFromInt(duration_ns)) / (1_000_000_000.0 * @as(f128, @floatFromInt(n)));
+
+    // Print the duration in seconds with high precision (e.g., 9 decimal places).
+    std.debug.print("add took: {d:.9} seconds\n", .{duration_s});
+
+    start_time = std.time.nanoTimestamp();
+
+    for (0..n) |_| {
+        std.debug.print(".", .{});
+        try @call(.auto, camel.NDArray(f64).add, .{ &big3, big1, big2 });
+        //try big3.add2(big1, big2);
+    }
+    std.debug.print("\n", .{});
+
+    end_time = std.time.nanoTimestamp();
+    duration_ns = end_time - start_time;
+
+    // Convert nanoseconds to seconds as a floating-point number.
+    duration_s = @as(f128, @floatFromInt(duration_ns)) / (1_000_000_000.0 * @as(f128, @floatFromInt(n)));
+
+    // Print the duration in seconds with high precision (e.g., 9 decimal places).
+    std.debug.print("add2 took: {d:.9} seconds\n", .{duration_s});
 }

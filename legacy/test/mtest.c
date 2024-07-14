@@ -102,7 +102,7 @@ int main(void) {
 
         cml_string_destroy(&expression);
         cml_darray_destroy(&darray); */
-
+        /*
         f64 test[] = {1,2,-3,4,5,6,7,8,9,1,1,3,4,5,6,7};
         CML_Matrix A;
         cml_matrix_init(&a, 4, 4, CML_F64, &A);
@@ -258,12 +258,13 @@ int main(void) {
         cml_matrix_destroy(&big8);
         cml_matrix_destroy(&big9);
         cml_matrix_destroy(&big10);
+        */
 
         CML_Matrix big5, big6, big7;
-        cml_matrix_init(&a, 5000, 5000, CML_F64, &big5);
-        cml_matrix_init(&a, 5000, 5000, CML_F64, &big6);
-        cml_matrix_init(&a, 5000, 5000, CML_F64, &big7);
-        printf("\nbig7 = big5 + big6 (5000x5000)\n");
+        cml_matrix_init(&a, 50000, 5000, CML_F64, &big5);
+        cml_matrix_init(&a, 50000, 5000, CML_F64, &big6);
+        cml_matrix_init(&a, 50000, 5000, CML_F64, &big7);
+        printf("\nbig7 = big5 + big6 (50000x5000)\n");
         gettimeofday(&start, NULL);
         cml_matrix_add(NULL, &big5, &big6, &big7);
         gettimeofday(&end, NULL);
@@ -272,7 +273,7 @@ int main(void) {
         cml_matrix_destroy(&big6);
         cml_matrix_destroy(&big7);
 
-
+        /*
         printf("\nA = \n");
         cml_matrix_print(NULL, &A);
         printf("\nB = \n");
@@ -293,7 +294,7 @@ int main(void) {
         cml_matrix_destroy(&P);
         cml_matrix_destroy(&scalar);
         cml_matrix_destroy(&dot);
-        
+        */
 
         /*
         FILE *f;

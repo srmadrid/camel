@@ -11,3 +11,7 @@ pub const cf128 = types.cf.cf128;
 pub const ndarray = types.ndarray;
 
 pub const types = @import("types/types.zig");
+
+test {
+    std.testing.refAllDeclsRecursive(@This());
+}
