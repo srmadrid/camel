@@ -1,16 +1,7 @@
 const std = @import("std");
 
-pub const NDArray = types.ndarray.NDArray;
-
-// Temporal
-pub const cf16 = types.cf.cf16;
-pub const cf32 = types.cf.cf32;
-pub const cf64 = types.cf.cf64;
-pub const cf128 = types.cf.cf128;
-
-pub const ndarray = types.ndarray;
-
-pub const types = @import("types/types.zig");
+pub const ndarray = @import("ndarray/ndarray.zig");
+pub const NDArray = ndarray.NDArray;
 
 test {
     std.testing.refAllDeclsRecursive(@This());

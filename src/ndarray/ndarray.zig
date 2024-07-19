@@ -1,17 +1,22 @@
-/// IMPLEMENT EFFICIENT ITERATORS SO THAT IN THE ADD (AND OTHER FUNCTIONS)
-/// INSTEAD OF CALLING `_position` AND `_index` WHEN THE ORDER IS NOT THE SAME
-/// (VERY INNEFICIENT), AN EFFICIENT ITERATOR IS USED INSTEAD. THIS WAY THE
-/// LOOPS FOR BOTH CASES CAN JUST BE THE SAME.
-///
-/// REMOVE SPECIFIC ORDERING (`RowMajor` AND `ColumnMajor`) AND REPLCAE IT WITH
-/// ANY CUSTOM ORDERING (AFTER ALL IT JUST AFFECTS THE STRIDES SLICE).
-///
-/// ADD FLAGS LIKE NUMPY (LIKE OWNED, VIEW, ETC.) AND CREATE VIEWS (JUST HAVE A
-/// VIEW OR UNOWNED FLAG WITH (MAYBE) DIFFERENT METADATA (STRIDES, ORDERING,
-/// SHAPE, ETC.).
+// IMPLEMENT EFFICIENT ITERATORS SO THAT IN THE ADD (AND OTHER FUNCTIONS)
+// INSTEAD OF CALLING `_position` AND `_index` WHEN THE ORDER IS NOT THE SAME
+// (VERY INNEFICIENT), AN EFFICIENT ITERATOR IS USED INSTEAD. THIS WAY THE
+// LOOPS FOR BOTH CASES CAN JUST BE THE SAME. ALSO, ITS ABSTRACTS ALL ITERATING
+// AND HANDLES BROADCASTING.
+
+// HAVE AN ITERATOR OF ONE ARRAY, BUT ALSO A MULTITER FOR A N ARRAYS (THEY ALL
+// MUST BE ABLE TO BE BROADCASTED TO THE SAME SHAPE).
+
+// FOR MOST FUNCTIONS, MAKE TWO VERSIONS (NAMES NOT FINAL):
+// - add, addInPlace: (self: *Self, left: Self, right: Self) void: adds left +
+//   right and stores the result in self
+// - addNew, add: (allocator: std.mem.Allocator, left: Self, right: Self) Self:
+//   adds left + right and returns a newly allocated array with the result
 const std = @import("std");
 const camel = @import("../camel.zig");
 const core = @import("../core/core.zig");
+
+const ndarray = @This();
 
 const _add = core.supported._add;
 const _sub = core.supported._sub;
@@ -26,7 +31,8 @@ pub const MaxDimensions = 32;
 ///
 /// Only supports the following types for `T`:
 /// - Integers: u8, u16, u32, u64, u128, i8, i16, i32, i64, i128
-/// - Floating-point numbers: f16, f32, f64, f128
+/// - Floating-point numbers: f16, f32, f64, f80, f128
+/// - C compatibility types
 /// - Booleans: bool
 /// - Custom types: cf16, cf32, cf64, cf128, BigInt, Fraction, Complex,
 ///                 Expression
@@ -47,44 +53,87 @@ pub fn NDArray(comptime T: type) type {
         /// Total number of elements in the array.
         size: usize,
         /// Flags holding info on the storage of the array.
-        flags: usize,
+        flags: Flags,
         /// The allocator used for internal memory management.
         allocator: std.mem.Allocator,
 
-        /// Initializes a matrix with the given shape and default RowMajor
-        /// order. It is highly recommended to initialize all elements of the
-        /// matrix after calling this function using the `set` or `setAll`
-        /// functions. Failure to do so may result in undefined behavior if the
-        /// uninitialized elements are accessed before being set.
+        /// Initializes an array.
+        ///
+        /// **Description**:
+        ///
+        /// Initializes a matrix with the given shape and the default flags. It
+        /// is highly recommended to initialize all elements of the array after
+        /// calling this function using the `set` or `setAll` functions. Failure
+        /// to do so may result in undefined behavior if the uninitialized
+        /// elements are accessed before being set.
         ///
         /// Deinitialize with `deinit`.
+        ///
+        /// **Input Parameters**:
+        /// - `allocator`: allocator to use internally.
+        /// - `shape`: shape of the array. Must have length
+        /// `≤ MaxDimensions` and no dimension of size `0`.
+        ///
+        /// **Return Values**:
+        /// - `Self`: the initialized array.
+        /// - `TooManyDimensions`: `shape` is too long (`≥ MaxDimensions`).
+        /// - `ZeroDimension`: at least one dimension is `0`.
+        /// - `OutOfMemory`: `alloc` failed.
         pub fn init(allocator: std.mem.Allocator, shape: []const usize) !Self {
-            return initOrder(allocator, shape, NDArrayFlag.RowMajorContiguous | NDArrayFlag.OwnsData | NDArrayFlag.Writeable);
+            return initFlags(allocator, shape, .{});
         }
 
-        /// Initializes an array with the given shape and order. It is highly
+        /// Initializes an array.
+        ///
+        /// **Description**:
+        ///
+        /// Initializes a matrix with the given shape and flags. It is highly
         /// recommended to initialize all elements of the array after calling
         /// this function using the `set` or `setAll` functions. Failure to do
         /// so may result in undefined behavior if the uninitialized elements
         /// are accessed before being set.
         ///
         /// Deinitialize with `deinit`.
-        pub fn initOrder(allocator: std.mem.Allocator, shape: []const usize, flags: usize) !Self {
+        ///
+        /// **Input Parameters**:
+        /// - `allocator`: allocator to use internally.
+        /// - `shape`: shape of the array. Must have length
+        /// `≤ MaxDimensions` and no dimension of size `0`.
+        /// - `flags`: storage flags for the array (must be valid:
+        /// `RowMajorContiguous` and `ColumnMajorContinuous` must not be set at
+        /// the same time, unless the desired array is a scalar or a vector, and
+        /// `OwnsData` must be true.
+        ///
+        /// **Return Values**:
+        /// - `Self`: the initialized array.
+        /// - `TooManyDimensions`: `shape` is too long (`≥ MaxDimensions`).
+        /// - `ZeroDimension`: at least one dimension is `0`.
+        /// - `InvalidFlags`: flags are invalid.
+        /// - `OutOfMemory`: `alloc` failed.
+        pub fn initFlags(allocator: std.mem.Allocator, shape: []const usize, flags: Flags) !Self {
             if (shape.len > MaxDimensions) {
-                return NDArrayError.TooManyDimensions;
+                return Error.TooManyDimensions;
             }
 
+            var count: u32 = 0;
             for (shape) |dim| {
                 if (dim == 0) {
-                    return NDArrayError.ZeroDimension;
+                    return Error.ZeroDimension;
                 }
+                if (dim > 1) {
+                    count += 1;
+                }
+            }
+
+            if ((flags.RowMajorContiguous == flags.ColumnMajorContiguous and count > 1) or !flags.OwnsData) {
+                return Error.InvalidFlags;
             }
 
             var size: usize = 1;
             var shapes: []usize = try allocator.alloc(usize, shape.len);
             var strides: []usize = try allocator.alloc(usize, shape.len);
             if (shape.len > 0) {
-                if (flags & NDArrayFlag.RowMajorContiguous) {
+                if (flags.RowMajorContiguous) {
                     for (0..shape.len) |i| {
                         strides[shape.len - i - 1] = size;
                         size *= shape[shape.len - i - 1];
@@ -109,20 +158,47 @@ pub fn NDArray(comptime T: type) type {
             };
         }
 
+        /// Deinitializes an array
+        ///
+        /// **Description**:
+        ///
         /// Deinitializes the array, freeing the data. The user is responsible
         /// for deinitializing the elements of `data` for custom types.
+        ///
+        /// If the array has `OwnsData` set to false, data is not freed (assumed
+        /// to be owned by another array) but is still set to undefined.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to be deinitialized.
         pub fn deinit(self: *Self) void {
             self.allocator.free(self.shape);
             self.allocator.free(self.strides);
-            if (self.flags & NDArrayFlag.OwnsData) {
+            if (self.flags.OwnsData) {
                 self.allocator.free(self.data);
             }
 
-            self.* = undefined;
+            self.shape = undefined;
+            self.strides = undefined;
+            self = undefined;
         }
 
+        /// Deinitializes an element of the array.
+        ///
+        /// **Description**:
+        ///
         /// Deinitializes an element of the array. Only defined for custom
         /// types. For a scalar, any position will yield the only element.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to free the element.
+        /// - `position`: the location of the element to be freed. Must be a
+        /// valid position, unless the array is a scalar.
+        ///
+        /// **Return Values**:
+        /// - `void`: the execution was successful.
+        /// - `DimensionMismatch`: the length of `position` is not equalm to the
+        /// number of dimentions in `self`.
+        /// - `PositionOutOfBounds`: the position is out of bounds.
         pub fn deinitElement(self: *Self, position: []const usize) !void {
             const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
@@ -133,7 +209,7 @@ pub fn NDArray(comptime T: type) type {
                         return;
                     }
 
-                    try self.checkPosition(position);
+                    try self._checkPosition(position);
 
                     self.data[self._index(position)].deinit();
                 },
@@ -141,8 +217,15 @@ pub fn NDArray(comptime T: type) type {
             }
         }
 
+        /// Deinitializes all elements of the array.
+        ///
+        /// **Description**:
+        ///
         /// Deinitializes all elements of the array. Only defined for custom
         /// types.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to free the elements.
         pub fn deinitAllElements(self: *Self) void {
             const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
@@ -162,7 +245,7 @@ pub fn NDArray(comptime T: type) type {
         /// No bounds checking is performed.
         pub inline fn _index(self: Self, position: []const usize) usize {
             var idx: usize = 0;
-            for (0..self.shape.len) |i| {
+            for (0..self.ndim) |i| {
                 idx += position[i] * self.strides[i];
             }
 
@@ -175,15 +258,15 @@ pub fn NDArray(comptime T: type) type {
         /// No bounds checking is performed.
         pub inline fn _position(self: Self, index: usize, position: []usize) void {
             var idx: usize = index;
-            if (self.order == NDArrayOrder.RowMajor) {
+            if (self.flags.RowMajorContiguous) {
                 for (0..self.strides.len) |i| {
                     position[i] = idx / self.strides[i];
                     idx %= self.strides[i];
                 }
             } else {
                 for (0..self.strides.len) |i| {
-                    position[position.len - i - 1] = idx / self.strides[self.strides.len - i - 1];
-                    idx %= self.strides[self.strides.len - i - 1];
+                    position[position.len - i - 1] = idx / self.strides[self.ndim - i - 1];
+                    idx %= self.strides[self.ndim - i - 1];
                 }
             }
         }
@@ -193,18 +276,22 @@ pub fn NDArray(comptime T: type) type {
         ///
         /// This function should be used before accessing elements in the array
         /// to prevent `PositionOutOfBounds` and `DimensionMismatch` errors.
-        fn checkPosition(self: Self, position: []const usize) !void {
+        inline fn _checkPosition(self: Self, position: []const usize) !void {
             if (position.len != self.shape.len) {
-                return NDArrayError.DimensionMismatch;
+                return Error.DimensionMismatch;
             }
 
             for (0..position.len) |i| {
                 if (position[i] >= self.shape[i]) {
-                    return NDArrayError.PositionOutOfBounds;
+                    return Error.PositionOutOfBounds;
                 }
             }
         }
 
+        /// Sets the value at the given position, if the position is correct.
+        ///
+        /// **Description**:
+        ///
         /// Sets the value at the given position, if the position is correct.
         /// For a scalar, any position will yield the only element.
         ///
@@ -212,19 +299,35 @@ pub fn NDArray(comptime T: type) type {
         /// therefore, should not be used outside of the array, although it
         /// should still be manually deinitialized before deinitializing the
         /// array. If there was already an element in that positon, it will be
-        /// overwritten and a memory leak will occur, unless another copy of the
-        /// value was kept elsewhere.
+        /// overwritten and a memory leak will occur, unless another reference
+        /// of the value was kept elsewhere.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `position`: the location of the element to be set. Must be a valid
+        /// position, unless the array is a scalar.
+        /// - `value`: the value to set.
+        ///
+        /// **Return Values**:
+        /// - `void`: the execution was successful.
+        /// - `DimensionMismatch`: the length of `position` is not equalm to the
+        /// number of dimentions in `self`.
+        /// - `PositionOutOfBounds`: the position is out of bounds.
         pub fn set(self: *Self, position: []const usize, value: T) !void {
             if (self.isScalar()) {
                 self.data[0] = value;
                 return;
             }
 
-            try self.checkPosition(position);
+            try self._checkPosition(position);
 
             self.data[self._index(position)] = value;
         }
 
+        /// Sets all elements of the array to the input value.
+        ///
+        /// **Description**:
+        ///
         /// Sets all elements of the array to the input value.
         ///
         /// For custom types, the array will take ownership of the value and,
@@ -232,7 +335,14 @@ pub fn NDArray(comptime T: type) type {
         /// should still be manually deinitialized before deinitializing the
         /// array. If there was already an element at some position, it will be
         /// overwritten and a memory leak will occur, unless another copy of the
-        /// value was kept elsewhere.
+        /// value was kept elsewhere. The first element of the array is the one
+        /// taking ownership of `value`, the rest are newly initialized `T`s
+        /// (overwriting any existing element) which also require
+        /// deinitializing.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `value`: the value to set.
         pub fn setAll(self: *Self, value: T) void {
             self.data[0] = value;
 
@@ -253,6 +363,10 @@ pub fn NDArray(comptime T: type) type {
         }
 
         /// Sets the value at the given position and returns the previous value.
+        ///
+        /// **Description**:
+        ///
+        /// Sets the value at the given position and returns the previous value.
         /// For a scalar, any position will yield the only element.
         ///
         /// For custom types, the array takes ownership of the new value.
@@ -260,12 +374,24 @@ pub fn NDArray(comptime T: type) type {
         /// after being set, although it should still be manually deinitialized
         /// before deinitializing the array. The old value is returned, so it
         /// can be used or deinitialized as needed.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `position`: the location of the element to be set. Must be a valid
+        /// position, unless the array is a scalar.
+        /// - `value`: the value to set.
+        ///
+        /// **Return Values**:
+        /// - `T`: the previous value.
+        /// - `DimensionMismatch`: the length of `position` is not equalm to the
+        /// number of dimentions in `self`.
+        /// - `PositionOutOfBounds`: the position is out of bounds.
         pub fn replace(self: *Self, position: []const usize, value: T) !T {
             var idx: usize = undefined;
             if (self.isScalar()) {
                 idx = 0;
             } else {
-                try self.checkPosition(position);
+                try self._checkPosition(position);
                 idx = self._index(position);
             }
 
@@ -275,25 +401,43 @@ pub fn NDArray(comptime T: type) type {
         }
 
         /// Sets the value at the given position by updating the already
+        /// prexistent element.
+        ///
+        /// **Description**:
+        ///
+        /// Sets the value at the given position by updating the already
         /// prexistent element. For a scalar, any position will yield the only
         /// element.
         ///
         /// This function is useful when you want to change the value at a
         /// position in the array without causing the array to take ownership of
-        /// the new value. The new value can continue to be used outside of the
-        /// array after this function is called.
+        /// the new value or overwrite a prexistent element. The new value can
+        /// continue to be used outside of the array after this function is
+        /// called.
         ///
         /// For builting numeric types (uxx, ixx, fxx) it is equivalent to
         /// `set`.
         ///
         /// For custom types, calling this on an uninitiallized element will
         /// cause undefined behavior.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `position`: the location of the element to be set. Must be a valid
+        /// position, unless the array is a scalar.
+        /// - `value`: the value to set.
+        ///
+        /// **Return Values**:
+        /// - `void`: the execution was successful.
+        /// - `DimensionMismatch`: the length of `position` is not equalm to the
+        /// number of dimentions in `self`.
+        /// - `PositionOutOfBounds`: the position is out of bounds.
         pub fn update(self: *Self, position: []const usize, value: anytype) !void {
             var idx: usize = undefined;
             if (self.isScalar()) {
                 idx = 0;
             } else {
-                try self.checkPosition(position);
+                try self._checkPosition(position);
                 idx = self._index(position);
             }
             const supported = core.supported.whatSupportedNumericType(T);
@@ -308,18 +452,33 @@ pub fn NDArray(comptime T: type) type {
             }
         }
 
-        /// Updates all elements of the array to the input value.
+        /// Sets the values of all the elements of the array by updating the
+        /// already prexistent element.
+        ///
+        /// **Description**:
+        ///
+        /// Sets the value at the given position by updating the already
+        /// prexistent element. For a scalar, any position will yield the only
+        /// element.
         ///
         /// This function is useful when you want to change all the elements in
-        /// the array without causing the array to take ownership of the new
-        /// value. The new value can continue to be used outside of the array
-        /// after this function is called.
+        /// in the array without causing the array to take ownership of the new
+        /// value or overwrite elements. The new value can continue to be used
+        /// outside of the array after this function is called.
         ///
         /// For builting numeric types (uxx, ixx, fxx) it is equivalent to
         /// `setAll`.
         ///
-        /// For custom types, calling this when any element is uninitiallized
-        /// will cause undefined behavior.
+        /// For custom types, calling this on an uninitiallized element will
+        /// cause undefined behavior.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `value`: the value to set.
+        ///
+        /// **Return Values**:
+        /// - `void`: the execution was successful.
+        /// - ...
         pub fn updateAll(self: *Self, value: T) !void {
             const supported = core.supported.whatSupportedNumericType(T);
             switch (supported) {
@@ -337,38 +496,107 @@ pub fn NDArray(comptime T: type) type {
             }
         }
 
-        /// Gets the element at the given position. For a scalar, any position
-        /// will yield the only element.
+        /// Gets the element at the given position, if the position is correct.
+        ///
+        /// **Description**:
+        ///
+        /// Gets the element at the given position, if the position is correct.
+        /// For a scalar, any position will yield the only element.
+        ///
+        /// For custom types, returns a shallow copy of the element, so if it is
+        /// freed from inside or outside of the array, the other reference
+        /// becomes unusable.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array in which to set the element.
+        /// - `position`: the location of the element to be set. Must be a valid
+        /// position, unless the array is a scalar.
+        ///
+        /// **Return Values**:
+        /// - `T`: the element at `position`.
+        /// - `DimensionMismatch`: the length of `position` is not equalm to the
+        /// number of dimentions in `self`.
+        /// - `PositionOutOfBounds`: the position is out of bounds.
         pub fn get(self: Self, position: []const usize) !T {
             if (self.isScalar()) {
                 return self.data[0];
             }
 
-            try self.checkPosition(position);
+            try self._checkPosition(position);
             return self.data[self._index(position)];
         }
 
         /// Checks if the array is a scalar.
+        ///
+        /// **Description**:
+        ///
+        /// Checks if the array is a scalar, i.e., has only one element.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to check.
+        ///
+        /// **Return Values**:
+        /// - `bool`: whether the array is a scalar or not.
         pub fn isScalar(self: Self) bool {
             return self.size == 1;
         }
 
-        /// Checks if the array is a vector (1D array).
+        /// Checks if the array is a vector.
+        ///
+        /// **Description**:
+        ///
+        /// Checks if the array is a vector, i.e., has shape `{n}`.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to check.
+        ///
+        /// **Return Values**:
+        /// - `bool`: whether the array is a vector or not.
         pub fn isVector(self: Self) bool {
             return self.shape.len == 1;
         }
 
-        /// Checks if the array is a row vector (1xN).
+        /// Checks if the array is a row vector.
+        ///
+        /// **Description**:
+        ///
+        /// Checks if the array is a vector, i.e., has shape `{ 1, n }`.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to check.
+        ///
+        /// **Return Values**:
+        /// - `bool`: whether the array is a row vector or not.
         pub fn isRowVector(self: Self) bool {
             return self.shape.len == 2 and self.shape[0] == 1 and self.shape[1] > 1;
         }
 
-        /// Checks if the array is a column vector (Nx1).
+        /// Checks if the array is a column vector.
+        ///
+        /// **Description**:
+        ///
+        /// Checks if the array is a vector, i.e., has shape `{ n, 1 }`.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to check.
+        ///
+        /// **Return Values**:
+        /// - `bool`: whether the array is a column vector or not.
         pub fn isColVector(self: Self) bool {
             return self.shape.len == 2 and self.shape[0] > 1 and self.shape[1] == 1;
         }
 
-        /// Checks if the array is a matrix (2D array).
+        /// Checks if the array is a matrix.
+        ///
+        /// **Description**:
+        ///
+        /// Checks if the array is a matrix, i.e., has shape `{ m, n }`.
+        ///
+        /// **Input Parameters**:
+        /// - `self`: the array to check.
+        ///
+        /// **Return Values**:
+        /// - `bool`: whether the array is a matrix or not.
         pub fn isMatrix(self: Self) bool {
             return self.shape.len == 2;
         }
@@ -394,25 +622,25 @@ pub fn NDArray(comptime T: type) type {
                 oneIsScalar = true;
                 leftIsScalar = true;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, right.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
+                if (!std.mem.eql(usize, self.shape[0..self.ndim], right.shape[0..right.ndim])) {
+                    return Error.IncompatibleDimensions;
                 }
             } else if (!left.isScalar() and right.isScalar()) {
                 oneIsScalar = true;
                 leftIsScalar = false;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
+                if (!std.mem.eql(usize, self.shape[0..self.ndim], left.shape[0..left.ndim])) {
+                    return Error.IncompatibleDimensions;
                 }
             } else if (left.isScalar() and right.isScalar()) {
                 bothAreScalar = true;
             } else {
                 oneIsScalar = false;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape) or
-                    !std.mem.eql(usize, left.shape, right.shape))
+                if (!std.mem.eql(usize, self.shape[0..self.ndim], left.shape[0..left.ndim]) or
+                    !std.mem.eql(usize, left.shape[0..left.ndim], right.shape[0..right.ndim]))
                 {
-                    return NDArrayError.IncompatibleDimensions;
+                    return Error.IncompatibleDimensions;
                 }
             }
 
@@ -422,7 +650,7 @@ pub fn NDArray(comptime T: type) type {
             }
             if (oneIsScalar) {
                 if (leftIsScalar) {
-                    if (self.order == right.order) {
+                    if ((self.flags & 0b11) == (right.flags & 0b11)) {
                         const scalar: T = left.data[0];
                         for (0..self.size) |i| {
                             _add(&self.data[i], scalar, right.data[i]);
@@ -438,7 +666,7 @@ pub fn NDArray(comptime T: type) type {
                         }
                     }
                 } else {
-                    if (self.order == left.order) {
+                    if ((self.flags & 0b11) == (left.flags & 0b11)) {
                         const scalar: T = right.data[0];
                         for (0..self.size) |i| {
                             _add(&self.data[i], left.data[i], scalar);
@@ -455,13 +683,13 @@ pub fn NDArray(comptime T: type) type {
                     }
                 }
             } else {
-                if (self.order == left.order and self.order == right.order) {
+                if ((self.flags & 0b11) == (left.flags & 0b11) and (self.flags & 0b11) == (right.flags & 0b11)) {
                     for (0..self.size) |i| {
                         _add(&self.data[i], left.data[i], right.data[i]);
                     }
                 } else {
                     // Follow the order common to two of them (better caching).
-                    if (self.order == left.order or self.order == right.order) {
+                    if ((self.flags & 0b11) == (left.flags & 0b11) or (self.flags & 0b11) == (right.flags & 0b11)) {
                         var position_buf: [MaxDimensions]usize = undefined;
                         const position = position_buf[0..self.shape.len];
                         for (0..self.size) |i| {
@@ -476,303 +704,6 @@ pub fn NDArray(comptime T: type) type {
                             // Follow left's order (also used by right).
                             left._position(i, position);
                             _add(&self.data[self._index(position)], left.data[i], right.data[i]);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// Computes elementwise subtraction (self = left - right). If only one
-        /// of them is a scalar, it is added to all the elements of the other
-        /// array.
-        pub fn sub(self: *Self, left: Self, right: Self) !void {
-            var oneIsScalar: bool = undefined;
-            var leftIsScalar: bool = undefined;
-            var bothAreScalar: bool = undefined;
-            if (left.isScalar() and !right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = true;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, right.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (!left.isScalar() and right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (left.isScalar() and right.isScalar()) {
-                bothAreScalar = true;
-            } else {
-                oneIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape) or
-                    !std.mem.eql(usize, left.shape, right.shape))
-                {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            }
-
-            if (bothAreScalar) {
-                _sub(&self.data[0], left.data[0], right.data[0]);
-                return;
-            }
-            if (oneIsScalar) {
-                if (leftIsScalar) {
-                    if (self.order == right.order) {
-                        const scalar: T = left.data[0];
-                        for (0..self.size) |i| {
-                            _sub(&self.data[i], scalar, right.data[i]);
-                        }
-                    } else {
-                        const scalar: T = left.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _sub(&self.data[i], scalar, right.data[right._index(position)]);
-                        }
-                    }
-                } else {
-                    if (self.order == left.order) {
-                        const scalar: T = right.data[0];
-                        for (0..self.size) |i| {
-                            _sub(&self.data[i], left.data[i], scalar);
-                        }
-                    } else {
-                        const scalar: T = right.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _sub(&self.data[i], left.data[left._index(position)], scalar);
-                        }
-                    }
-                }
-            } else {
-                if (self.order == left.order and self.order == right.order) {
-                    for (0..self.size) |i| {
-                        _sub(&self.data[i], left.data[i], right.data[i]);
-                    }
-                } else {
-                    // Follow the order common to two of them (better caching).
-                    if (self.order == left.order or self.order == right.order) {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order (also used by left or right).
-                            self._position(i, position);
-                            _sub(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
-                        }
-                    } else {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow left's order (also used by right).
-                            left._position(i, position);
-                            _sub(&self.data[self._index(position)], left.data[i], right.data[i]);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// Computes elementwise multiplication (self = left .* right). If only
-        /// one of them is a scalar, it is added to all the elements of the
-        /// other array.
-        pub fn multElementWise(self: *Self, left: Self, right: Self) !void {
-            var oneIsScalar: bool = undefined;
-            var leftIsScalar: bool = undefined;
-            var bothAreScalar: bool = undefined;
-            if (left.isScalar() and !right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = true;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, right.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (!left.isScalar() and right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (left.isScalar() and right.isScalar()) {
-                bothAreScalar = true;
-            } else {
-                oneIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape) or
-                    !std.mem.eql(usize, left.shape, right.shape))
-                {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            }
-
-            if (bothAreScalar) {
-                _mult(&self.data[0], left.data[0], right.data[0]);
-                return;
-            }
-            if (oneIsScalar) {
-                if (leftIsScalar) {
-                    if (self.order == right.order) {
-                        const scalar: T = left.data[0];
-                        for (0..self.size) |i| {
-                            _mult(&self.data[i], scalar, right.data[i]);
-                        }
-                    } else {
-                        const scalar: T = left.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _mult(&self.data[i], scalar, right.data[right._index(position)]);
-                        }
-                    }
-                } else {
-                    if (self.order == left.order) {
-                        const scalar: T = right.data[0];
-                        for (0..self.size) |i| {
-                            _mult(&self.data[i], left.data[i], scalar);
-                        }
-                    } else {
-                        const scalar: T = right.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _mult(&self.data[i], left.data[left._index(position)], scalar);
-                        }
-                    }
-                }
-            } else {
-                if (self.order == left.order and self.order == right.order) {
-                    for (0..self.size) |i| {
-                        _mult(&self.data[i], left.data[i], right.data[i]);
-                    }
-                } else {
-                    // Follow the order common to two of them (better caching).
-                    if (self.order == left.order or self.order == right.order) {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order (also used by left or right).
-                            self._position(i, position);
-                            _mult(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
-                        }
-                    } else {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow left's order (also used by right).
-                            left._position(i, position);
-                            _mult(&self.data[self._index(position)], left.data[i], right.data[i]);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// Computes elementwise division (self = left ./ right). If only one of
-        /// them is a scalar, it is added to all the elements of the other
-        /// array.
-        pub fn divElementWise(self: *Self, left: Self, right: Self) !void {
-            var oneIsScalar: bool = undefined;
-            var leftIsScalar: bool = undefined;
-            var bothAreScalar: bool = undefined;
-            if (left.isScalar() and !right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = true;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, right.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (!left.isScalar() and right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape)) {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            } else if (left.isScalar() and right.isScalar()) {
-                bothAreScalar = true;
-            } else {
-                oneIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape) or
-                    !std.mem.eql(usize, left.shape, right.shape))
-                {
-                    return NDArrayError.IncompatibleDimensions;
-                }
-            }
-
-            if (bothAreScalar) {
-                _div(&self.data[0], left.data[0], right.data[0]);
-                return;
-            }
-            if (oneIsScalar) {
-                if (leftIsScalar) {
-                    if (self.order == right.order) {
-                        const scalar: T = left.data[0];
-                        for (0..self.size) |i| {
-                            _div(&self.data[i], scalar, right.data[i]);
-                        }
-                    } else {
-                        const scalar: T = left.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _div(&self.data[i], scalar, right.data[right._index(position)]);
-                        }
-                    }
-                } else {
-                    if (self.order == left.order) {
-                        const scalar: T = right.data[0];
-                        for (0..self.size) |i| {
-                            _div(&self.data[i], left.data[i], scalar);
-                        }
-                    } else {
-                        const scalar: T = right.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _div(&self.data[i], left.data[left._index(position)], scalar);
-                        }
-                    }
-                }
-            } else {
-                if (self.order == left.order and self.order == right.order) {
-                    for (0..self.size) |i| {
-                        _div(&self.data[i], left.data[i], right.data[i]);
-                    }
-                } else {
-                    // Follow the order common to two of them (better caching).
-                    if (self.order == left.order or self.order == right.order) {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order (also used by left or right).
-                            self._position(i, position);
-                            _div(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
-                        }
-                    } else {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow left's order (also used by right).
-                            left._position(i, position);
-                            _div(&self.data[self._index(position)], left.data[i], right.data[i]);
                         }
                     }
                 }
@@ -800,8 +731,9 @@ pub fn NDArray(comptime T: type) type {
             /// - `x`: `NDArray` of shape `{n}`.
             ///
             /// **Return Values**:
-            /// - `res`: The sum of magnitudes of real and imaginary parts of
+            /// - `T`: The sum of magnitudes of real and imaginary parts of
             /// all elements of the vector.
+            /// - `someError`: blabla
             //pub fn asum(allocator: ?std.mem.Allocator, x: NDArray(T)) !T {
             //    return @import("ndarray/BLAS/asum.zig").asum(T, allocator, x);
             //}
@@ -847,7 +779,9 @@ pub fn NDArray(comptime T: type) type {
 }
 
 /// Errors that can occur when workin with an `NDArray`.
-pub const NDArrayError = error{
+pub const Error = error{
+    /// Invalid flags.
+    InvalidFlags,
     /// Too many dimensions.
     TooManyDimensions,
     /// The dimensions of the array and the position do not match.
@@ -867,12 +801,16 @@ pub const NDArrayError = error{
 };
 
 /// Flags representing information on the storage of an array.
-pub const NDArrayFlag = enum(usize) {
-    RowMajorContiguous = 1 << 0,
-    ColumnMajorContiguous = 1 << 1,
-    OwnsData = 1 << 2,
-    Writeable = 1 << 3,
-    Aligned = 1 << 4,
+pub const Flags = packed struct {
+    /// Row major element storage (left to right).
+    RowMajorContiguous: bool = true,
+    /// Column major element storage (right to left).
+    ColumnMajorContiguous: bool = false,
+    /// The array owns the data, and it will be freed when the array is
+    /// deinitialized. If it does not own it, it is assumed to be a view.
+    OwnsData: bool = true,
+    /// The data of the array can or not be modified.
+    Writeable: bool = true,
 };
 
 test "test" {

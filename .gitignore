@@ -1,5 +1,7 @@
 zig-out/
 zig-cache/
+.zig-cache/
+think/
 
 # Ignore IDE files
 .idea

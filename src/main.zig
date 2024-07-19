@@ -6,7 +6,9 @@ pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
 
-    var A: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 20, 15, 8, 18 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    std.debug.print("Size of flags: {}\n", .{@sizeOf(camel.ndarray.Flags)});
+
+    var A: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 20, 15, 8, 18 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer A.deinit();
 
     std.debug.print("A dimentions = {}\n", .{A.shape.len});
@@ -25,17 +27,17 @@ pub fn main() !void {
 
     std.debug.print("A.size = {}\n", .{A.size});
 
-    std.debug.print("Location of (2, 13, 3, 16) = {}\n", .{A._index(&[_]usize{ 2, 13, 3, 16 })});
+    //std.debug.print("Location of (2, 13, 3, 16) = {}\n", .{A._index(&[_]usize{ 2, 13, 3, 16 })});
 
-    var pos = [_]usize{ 0, 0, 0, 0 };
-    A._position(39562, &pos);
-    std.debug.print("Location of 39562 = [  ", .{});
-    for (pos) |p| {
-        std.debug.print("{}  ", .{p});
-    }
-    std.debug.print("]\n\n", .{});
+    //var pos = [_]usize{ 0, 0, 0, 0 };
+    //A._position(39562, &pos);
+    //std.debug.print("Location of 39562 = [  ", .{});
+    //for (pos) |p| {
+    //    std.debug.print("{}  ", .{p});
+    //}
+    //std.debug.print("]\n\n", .{});
 
-    var B: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 3, 4 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    var B: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer B.deinit();
     for (0..B.size) |i| {
         B.data[i] = @floatFromInt(i);
@@ -49,7 +51,7 @@ pub fn main() !void {
         std.debug.print("\n", .{});
     }
 
-    var C: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 3, 4 }, camel.ndarray.NDArrayOrder.RowMajor);
+    var C: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer C.deinit();
     C.setAll(10);
     std.debug.print("\nC =\n", .{});
@@ -61,9 +63,9 @@ pub fn main() !void {
         std.debug.print("\n", .{});
     }
 
-    var D: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 3, 4 }, camel.ndarray.NDArrayOrder.RowMajor);
+    var D: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer D.deinit();
-    try D.divElementWise(B, C);
+    try D.add(B, C);
     // try camel.NDArray(u64).add(&D, B, C);
     std.debug.print("\nD =\n", .{});
     for (0..D.shape[0]) |i| {
@@ -74,11 +76,11 @@ pub fn main() !void {
         std.debug.print("\n", .{});
     }
 
-    var big1: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.RowMajor);
+    var big1: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 10000, 10000 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer big1.deinit();
-    var big2: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    var big2: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 10000, 10000 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer big2.deinit();
-    var big3: camel.NDArray(f64) = try camel.NDArray(f64).initOrder(a, &[_]usize{ 10000, 10000 }, camel.ndarray.NDArrayOrder.ColumnMajor);
+    var big3: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 10000, 10000 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer big3.deinit();
 
     std.debug.print("big3 dimentions = {}\n", .{big3.shape.len});

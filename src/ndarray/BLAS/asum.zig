@@ -5,6 +5,6 @@ const core = @import("../../../core/core.zig");
 
 const _add = core.supported._add;
 
-pub fn asum(comptime T: type, allocator: ?std.mem.Allocator, x: NDArray(T)) !T {
+pub fn asum(allocator: ?std.mem.Allocator, comptime T: type, x: NDArray(T)) !T {
     return;
 }

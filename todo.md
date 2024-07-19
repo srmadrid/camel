@@ -4,6 +4,8 @@
 
 ## Expressions
 
+Make the parser notation agnostic: it will be defined in a notation configuration file, and ship the library with some presets.
+
 Like with strings, make a funxction to make temporary expressions so for example, a user can do cml_expression_solve(cml_expression_temp(cml_string_temp("f(g(x))^f(x)")), ...) to do things to temporary expressions, where g(x) and f(x) would have to be predefined.
 
 For expression evaluation functions, take in a matrix (vectors of input variables, 1x1 if only one, alphabetioc order for more?) and return a matrix (1x1 for scalars, etc for matrices and vectors). Make some way to set some variables and other not, for example, for y = 1, get f(x) = x from f(x, y) = xy.
