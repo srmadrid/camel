@@ -76,6 +76,52 @@ pub fn main() !void {
         std.debug.print("\n", .{});
     }
 
+    // Iterator testing
+    var iterArrR: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    defer iterArrR.deinit();
+    var iterArrC: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    defer iterArrC.deinit();
+    var iterR: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(&iterArrR);
+    var iterC: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(&iterArrC);
+    std.debug.print("\n\nPosition(R)    Position(C)     R   C\n", .{});
+    std.debug.print("----------------------\n", .{});
+    std.debug.print("[  ", .{});
+    for (0..iterR.array.shape.len) |i| {
+        std.debug.print("{}  ", .{iterR.position[i]});
+    }
+    std.debug.print("]  [  ", .{});
+    for (0..iterC.array.shape.len) |i| {
+        std.debug.print("{}  ", .{iterC.position[i]});
+    }
+    std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
+    while (iterR.next() != null and iterC.next() != null) {
+        std.debug.print("[  ", .{});
+        for (0..iterR.array.shape.len) |i| {
+            std.debug.print("{}  ", .{iterR.position[i]});
+        }
+        std.debug.print("]  [  ", .{});
+        for (0..iterC.array.shape.len) |i| {
+            std.debug.print("{}  ", .{iterC.position[i]});
+        }
+        std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
+    }
+    _ = iterC.next();
+    std.debug.print("Final state:\n", .{});
+    std.debug.print("[  ", .{});
+    for (0..iterR.array.shape.len) |i| {
+        std.debug.print("{}  ", .{iterR.position[i]});
+    }
+    std.debug.print("]  [  ", .{});
+    for (0..iterC.array.shape.len) |i| {
+        std.debug.print("{}  ", .{iterC.position[i]});
+    }
+    std.debug.print("],  {},  {}\n\n", .{ iterR.index, iterC.index });
+
+    //perfTesting(a);
+}
+
+fn perfTesting(a: std.mem.Allocator) !void {
+    // Perf testing
     var big1: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 10000, 10000 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer big1.deinit();
     var big2: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 10000, 10000 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
@@ -100,7 +146,7 @@ pub fn main() !void {
     std.debug.print("big3.size = {}\n", .{big3.size});
 
     // Profiling
-    const n: usize = 10;
+    const n: usize = 1;
     var start_time = std.time.nanoTimestamp();
 
     for (0..n) |_| {

@@ -4,6 +4,18 @@
 // LOOPS FOR BOTH CASES CAN JUST BE THE SAME. ALSO, ITS ABSTRACTS ALL ITERATING
 // AND HANDLES BROADCASTING.
 
+// MAYBE ONLY HAVE IN FLAGS RowMajorContiguous, and if `false`, it is ColumnMajorContiguous
+
+// MAKE A `squish` FUNCTION THAT GIVEN AN ARRAY "SQUISHES" the dimensions with 1,
+// i.e., (1, 1, 10, 1, 1, 9, 1) would become (10, 9). It returns a view.
+
+// MAKE A TRANSFER OWNERSHIP, which given an array and a view of it (with the same
+// shape since if the view has smaller shape then it cant happen, unless it is a
+// squished shape, as explained in the above paragraph) changes the view to the
+// owner and the owner to the view.
+
+// Create a subarray view creator. Useful for i.e. LU decomposition
+
 // HAVE AN ITERATOR OF ONE ARRAY, BUT ALSO A MULTITER FOR A N ARRAYS (THEY ALL
 // MUST BE ABLE TO BE BROADCASTED TO THE SAME SHAPE).
 
@@ -15,6 +27,8 @@
 const std = @import("std");
 const camel = @import("../camel.zig");
 const core = @import("../core/core.zig");
+
+pub const Iterator = @import("iterators.zig").Iterator;
 
 const ndarray = @This();
 
@@ -179,7 +193,7 @@ pub fn NDArray(comptime T: type) type {
 
             self.shape = undefined;
             self.strides = undefined;
-            self = undefined;
+            self.data = undefined;
         }
 
         /// Deinitializes an element of the array.
@@ -245,7 +259,7 @@ pub fn NDArray(comptime T: type) type {
         /// No bounds checking is performed.
         pub inline fn _index(self: Self, position: []const usize) usize {
             var idx: usize = 0;
-            for (0..self.ndim) |i| {
+            for (0..self.strides.len) |i| {
                 idx += position[i] * self.strides[i];
             }
 
@@ -265,8 +279,8 @@ pub fn NDArray(comptime T: type) type {
                 }
             } else {
                 for (0..self.strides.len) |i| {
-                    position[position.len - i - 1] = idx / self.strides[self.ndim - i - 1];
-                    idx %= self.strides[self.ndim - i - 1];
+                    position[position.len - i - 1] = idx / self.strides[self.strides.len - i - 1];
+                    idx %= self.strides[self.strides.len - i - 1];
                 }
             }
         }
@@ -622,14 +636,14 @@ pub fn NDArray(comptime T: type) type {
                 oneIsScalar = true;
                 leftIsScalar = true;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape[0..self.ndim], right.shape[0..right.ndim])) {
+                if (!std.mem.eql(usize, self.shape, right.shape)) {
                     return Error.IncompatibleDimensions;
                 }
             } else if (!left.isScalar() and right.isScalar()) {
                 oneIsScalar = true;
                 leftIsScalar = false;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape[0..self.ndim], left.shape[0..left.ndim])) {
+                if (!std.mem.eql(usize, self.shape, left.shape)) {
                     return Error.IncompatibleDimensions;
                 }
             } else if (left.isScalar() and right.isScalar()) {
@@ -637,8 +651,8 @@ pub fn NDArray(comptime T: type) type {
             } else {
                 oneIsScalar = false;
                 bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape[0..self.ndim], left.shape[0..left.ndim]) or
-                    !std.mem.eql(usize, left.shape[0..left.ndim], right.shape[0..right.ndim]))
+                if (!std.mem.eql(usize, self.shape, left.shape) or
+                    !std.mem.eql(usize, left.shape, right.shape))
                 {
                     return Error.IncompatibleDimensions;
                 }
@@ -650,7 +664,7 @@ pub fn NDArray(comptime T: type) type {
             }
             if (oneIsScalar) {
                 if (leftIsScalar) {
-                    if ((self.flags & 0b11) == (right.flags & 0b11)) {
+                    if (self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous) {
                         const scalar: T = left.data[0];
                         for (0..self.size) |i| {
                             _add(&self.data[i], scalar, right.data[i]);
@@ -666,7 +680,7 @@ pub fn NDArray(comptime T: type) type {
                         }
                     }
                 } else {
-                    if ((self.flags & 0b11) == (left.flags & 0b11)) {
+                    if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous) {
                         const scalar: T = right.data[0];
                         for (0..self.size) |i| {
                             _add(&self.data[i], left.data[i], scalar);
@@ -683,13 +697,17 @@ pub fn NDArray(comptime T: type) type {
                     }
                 }
             } else {
-                if ((self.flags & 0b11) == (left.flags & 0b11) and (self.flags & 0b11) == (right.flags & 0b11)) {
+                if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous and
+                    self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous)
+                {
                     for (0..self.size) |i| {
                         _add(&self.data[i], left.data[i], right.data[i]);
                     }
                 } else {
                     // Follow the order common to two of them (better caching).
-                    if ((self.flags & 0b11) == (left.flags & 0b11) or (self.flags & 0b11) == (right.flags & 0b11)) {
+                    if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous or
+                        self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous)
+                    {
                         var position_buf: [MaxDimensions]usize = undefined;
                         const position = position_buf[0..self.shape.len];
                         for (0..self.size) |i| {
