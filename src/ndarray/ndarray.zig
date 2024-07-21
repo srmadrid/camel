@@ -1,8 +1,5 @@
-// IMPLEMENT EFFICIENT ITERATORS SO THAT IN THE ADD (AND OTHER FUNCTIONS)
-// INSTEAD OF CALLING `_position` AND `_index` WHEN THE ORDER IS NOT THE SAME
-// (VERY INNEFICIENT), AN EFFICIENT ITERATOR IS USED INSTEAD. THIS WAY THE
-// LOOPS FOR BOTH CASES CAN JUST BE THE SAME. ALSO, ITS ABSTRACTS ALL ITERATING
-// AND HANDLES BROADCASTING.
+// IN ELEMENT WISE FUNCTIONS MAKE SURE THE AUTPUT ARRAY HAS THE FULL BROADCASTED
+// SHAPE
 
 // MAYBE ONLY HAVE IN FLAGS RowMajorContiguous, and if `false`, it is ColumnMajorContiguous
 
@@ -16,9 +13,6 @@
 
 // Create a subarray view creator. Useful for i.e. LU decomposition
 
-// HAVE AN ITERATOR OF ONE ARRAY, BUT ALSO A MULTITER FOR A N ARRAYS (THEY ALL
-// MUST BE ABLE TO BE BROADCASTED TO THE SAME SHAPE).
-
 // FOR MOST FUNCTIONS, MAKE TWO VERSIONS (NAMES NOT FINAL):
 // - add, addInPlace: (self: *Self, left: Self, right: Self) void: adds left +
 //   right and stores the result in self
@@ -29,6 +23,7 @@ const camel = @import("../camel.zig");
 const core = @import("../core/core.zig");
 
 pub const Iterator = @import("iterators.zig").Iterator;
+pub const MultiIterator = @import("iterators.zig").MultiIterator;
 
 const ndarray = @This();
 
@@ -796,7 +791,7 @@ pub fn NDArray(comptime T: type) type {
     };
 }
 
-/// Errors that can occur when workin with an `NDArray`.
+/// Errors that can occur when working with an `NDArray`.
 pub const Error = error{
     /// Invalid flags.
     InvalidFlags,
@@ -820,9 +815,9 @@ pub const Error = error{
 
 /// Flags representing information on the storage of an array.
 pub const Flags = packed struct {
-    /// Row major element storage (left to right).
+    /// Row major element storage (right to left).
     RowMajorContiguous: bool = true,
-    /// Column major element storage (right to left).
+    /// Column major element storage (left to right).
     ColumnMajorContiguous: bool = false,
     /// The array owns the data, and it will be freed when the array is
     /// deinitialized. If it does not own it, it is assumed to be a view.

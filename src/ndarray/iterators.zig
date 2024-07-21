@@ -8,6 +8,9 @@ const Flags = ndarray.Flags;
 const Error = ndarray.Error;
 const MaxDimensions = ndarray.MaxDimensions;
 
+/// Max number of arrays for a multiIteratior.
+const MaxArrays: usize = 32;
+
 /// Iterator for one `NDArray`.
 ///
 /// For now, iterators are associated to an array, but if, for example, we just
@@ -157,3 +160,90 @@ pub fn Iterator(comptime T: type) type {
         }
     };
 }
+
+/// Iterator for multiple `NDArray`.
+pub fn MultiIterator(comptime T: type) type {
+    return struct {
+        const Self: type = @This();
+        /// The number of arrays.
+        narray: usize,
+        /// The number of dimetions of the broadcast.
+        ndim: usize,
+        /// The iterators of the arrays.
+        iterators: [MaxArrays]Iterator(T),
+        /// Broadcasted shape and strides of the arrays.
+        shape: [MaxDimensions]usize,
+        /// Current position.
+        position: [MaxDimensions]usize,
+        /// Current index.
+        index: usize,
+
+        /// Initializes a multi iterator for the given arrays.
+        ///
+        /// **Description**:
+        ///
+        /// Initializes a multi iterator for the given arrays.
+        ///
+        /// **Input Parameters**:
+        /// - `array`: the array for the Iterator.
+        ///
+        /// **Return Values**:
+        /// - `Self`: the initialized iterator.
+        pub fn init(arrays: []const *NDArray(T)) !Self {
+            const narray: usize = arrays.len;
+            if (narray > MaxArrays) {
+                return IteratorError.TooManyArrays;
+            }
+
+            var iterators: [MaxArrays]Iterator(T) = undefined;
+            var ndim: usize = 0;
+            for (0..narray) |i| {
+                iterators[i] = Iterator(T).init(arrays[i]);
+                if (arrays[i].shape.len > ndim) {
+                    ndim = arrays[i].shape.len;
+                }
+            }
+
+            var shape: [MaxDimensions]usize = [_]usize{0} ** MaxDimensions;
+            for (0..narray) |i| {
+                //std.debug.print("Shape = [  ", .{});
+                //for (0..ndim) |help| {
+                //    std.debug.print("{}  ", .{shape[help]});
+                //}
+                //std.debug.print("]\n", .{});
+                //std.debug.print("Array shape = [  ", .{});
+                //for (0..arrays[i].shape.len) |help| {
+                //    std.debug.print("{}  ", .{arrays[i].shape[help]});
+                //}
+                //std.debug.print("]\n", .{});
+                for (0..arrays[i].shape.len) |j| {
+                    if (shape[ndim - j - 1] != arrays[i].shape[arrays[i].shape.len - j - 1]) {
+                        //std.debug.print("Disagreement = {} != {}\n", .{ shape[ndim - j - 1], arrays[i].shape[arrays[i].shape.len - j - 1] });
+                        if (shape[ndim - j - 1] == 1 or shape[ndim - j - 1] == 0) {
+                            shape[ndim - j - 1] = arrays[i].shape[arrays[i].shape.len - j - 1];
+                        } else if (arrays[i].shape[arrays[i].shape.len - j - 1] != 1) {
+                            return IteratorError.NotBroadcastable;
+                        }
+                    }
+                }
+            }
+
+            return Self{
+                .narray = narray,
+                .ndim = ndim,
+                .iterators = iterators,
+                .shape = shape,
+                .position = [_]usize{0} ** MaxDimensions,
+                .index = 0,
+            };
+        }
+    };
+}
+
+/// Errors that can occur when workin with array iterators.
+pub const IteratorError = error{
+    /// Too many arrays.
+    TooManyArrays,
+    /// Incompatible shapes for broadcasting.
+    NotBroadcastable,
+};
