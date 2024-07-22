@@ -624,14 +624,14 @@ pub fn NDArray(comptime T: type) type {
         /// them is a scalar, it is added to all the elements of the other
         /// array.
         pub fn add(self: *Self, left: Self, right: Self) !void {
-            var iter: MultiIterator(T) = Iterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
+            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
             if (!std.mem.eql(usize, self.shape, iter.shape[0..self.shape.len])) {
                 return Error.IncompatibleDimensions;
             }
 
             _add(&self.data[0], left.data[0], right.data[0]);
             while (iter.next() != null) {
-                _add(&self.data[iter.aindices[0]], left.data[iter.aindices[1]], right.data[iter.aindices[2]]);
+                _add(&self.data[iter.iterators[0].index], left.data[iter.iterators[1].index], right.data[iter.iterators[2].index]);
             }
         }
 

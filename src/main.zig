@@ -8,7 +8,7 @@ pub fn main() !void {
 
     // try generalTesting(a);
 
-    // try addTesting(a);
+    try addTesting(a);
 
     // try iterTesting(a);
 
@@ -53,7 +53,7 @@ fn generalTesting(a: std.mem.Allocator) !void {
 }
 
 fn addTesting(a: std.mem.Allocator) !void {
-    var B: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var B: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer B.deinit();
     for (0..B.size) |i| {
         B.data[i] = @floatFromInt(i);
@@ -62,7 +62,7 @@ fn addTesting(a: std.mem.Allocator) !void {
     for (0..B.shape[0]) |i| {
         std.debug.print("\t", .{});
         for (0..B.shape[1]) |j| {
-            std.debug.print("{!}  ", .{B.get(&[_]usize{ i, j })});
+            std.debug.print("{!d:.2}  ", .{B.get(&[_]usize{ i, j })});
         }
         std.debug.print("\n", .{});
     }
@@ -74,7 +74,7 @@ fn addTesting(a: std.mem.Allocator) !void {
     for (0..C.shape[0]) |i| {
         std.debug.print("\t", .{});
         for (0..C.shape[1]) |j| {
-            std.debug.print("{!}  ", .{C.get(&[_]usize{ i, j })});
+            std.debug.print("{!d:.2}  ", .{C.get(&[_]usize{ i, j })});
         }
         std.debug.print("\n", .{});
     }
@@ -87,7 +87,7 @@ fn addTesting(a: std.mem.Allocator) !void {
     for (0..D.shape[0]) |i| {
         std.debug.print("\t", .{});
         for (0..D.shape[1]) |j| {
-            std.debug.print("{!}  ", .{D.get(&[_]usize{ i, j })});
+            std.debug.print("{!d:.2}  ", .{D.get(&[_]usize{ i, j })});
         }
         std.debug.print("\n\n", .{});
     }

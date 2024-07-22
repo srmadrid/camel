@@ -334,7 +334,7 @@ pub fn MultiIterator(comptime T: type) type {
         /// **Return Values**:
         /// - `T`: the next item.
         /// - `null`: reached end.
-        pub fn next(self: *Self) ?T {
+        pub fn next(self: *Self) ?usize {
             return self.nextOrder(true);
         }
 
