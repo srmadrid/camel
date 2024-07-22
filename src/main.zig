@@ -98,26 +98,26 @@ fn iterTesting(a: std.mem.Allocator) !void {
     defer iterArrR.deinit();
     var iterArrC: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer iterArrC.deinit();
-    var iterR: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(&iterArrR);
-    var iterC: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(&iterArrC);
+    var iterR: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(iterArrR);
+    var iterC: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(iterArrC);
     std.debug.print("Position(R)    Position(C)     R   C\n", .{});
     std.debug.print("----------------------\n", .{});
     std.debug.print("[  ", .{});
-    for (0..iterR.array.shape.len) |i| {
+    for (0..iterR.ndim) |i| {
         std.debug.print("{}  ", .{iterR.position[i]});
     }
     std.debug.print("]  [  ", .{});
-    for (0..iterC.array.shape.len) |i| {
+    for (0..iterC.ndim) |i| {
         std.debug.print("{}  ", .{iterC.position[i]});
     }
     std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
     while (iterR.nextOrder(true) != null and iterC.nextOrder(true) != null) {
         std.debug.print("[  ", .{});
-        for (0..iterR.array.shape.len) |i| {
+        for (0..iterR.ndim) |i| {
             std.debug.print("{}  ", .{iterR.position[i]});
         }
         std.debug.print("]  [  ", .{});
-        for (0..iterC.array.shape.len) |i| {
+        for (0..iterC.ndim) |i| {
             std.debug.print("{}  ", .{iterC.position[i]});
         }
         std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
@@ -125,22 +125,22 @@ fn iterTesting(a: std.mem.Allocator) !void {
     _ = iterC.nextOrder(true);
     std.debug.print("Final state:\n", .{});
     std.debug.print("[  ", .{});
-    for (0..iterR.array.shape.len) |i| {
+    for (0..iterR.ndim) |i| {
         std.debug.print("{}  ", .{iterR.position[i]});
     }
     std.debug.print("]  [  ", .{});
-    for (0..iterC.array.shape.len) |i| {
+    for (0..iterC.ndim) |i| {
         std.debug.print("{}  ", .{iterC.position[i]});
     }
     std.debug.print("],  {},  {}\n\n", .{ iterR.index, iterC.index });
 }
 
 fn iterPerfTesting(a: std.mem.Allocator) !void {
-    std.debug.print("Row major array, long next, optimize\n", .{});
+    std.debug.print("Row major array, long next, no optimize\n", .{});
 
     var arrBig: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 100, 100, 10, 100 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer arrBig.deinit();
-    var iterBig: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(&arrBig);
+    var iterBig: camel.ndarray.Iterator(f64) = camel.ndarray.Iterator(f64).init(arrBig);
 
     //
     const n: usize = 50;
@@ -198,16 +198,18 @@ fn iterPerfTesting(a: std.mem.Allocator) !void {
 }
 
 fn multiIterTesting(a: std.mem.Allocator) !void {
-    var iterArrR: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{1}, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var iterArrR: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 4, 2, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer iterArrR.deinit();
-    var iterArrC: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{4}, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    var iterArrC: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer iterArrC.deinit();
 
     // Other arrays for broadcasting testing.
-    var A: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{1}, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var A: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 1, 1, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer A.deinit();
+    var scalar: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{}, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    defer scalar.deinit();
 
-    const iter: camel.ndarray.MultiIterator(f64) = try camel.ndarray.MultiIterator(f64).init(&[_]*camel.NDArray(f64){ &iterArrR, &iterArrC, &A });
+    var iter: camel.ndarray.MultiIterator(f64) = try camel.ndarray.MultiIterator(f64).initFlags(&[_]camel.NDArray(f64){ iterArrR, iterArrC, A, scalar }, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
 
     std.debug.print("ndim = {}\n", .{iter.ndim});
     std.debug.print("narray = {}\n", .{iter.narray});
@@ -216,6 +218,87 @@ fn multiIterTesting(a: std.mem.Allocator) !void {
         std.debug.print("{}  ", .{iter.shape[i]});
     }
     std.debug.print("]\n", .{});
+    std.debug.print("Strides = [  ", .{});
+    for (0..iter.ndim) |i| {
+        std.debug.print("{}  ", .{iter.strides[i]});
+    }
+    std.debug.print("]\n", .{});
+
+    std.debug.print("F                      1                   2                3                      Scalar\n", .{});
+    std.debug.print("-------------------------------------------------------------------------------------------\n", .{});
+    std.debug.print("[  ", .{});
+    for (0..iter.ndim) |i| {
+        std.debug.print("{}  ", .{iter.position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.index});
+    for (0..iter.iterators[0].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[0].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[0].index});
+    for (0..iter.iterators[1].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[1].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[1].index});
+    for (0..iter.iterators[2].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[2].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[2].index});
+    for (0..iter.iterators[3].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[3].position[i]});
+    }
+    std.debug.print("]: {:0>2}\n", .{iter.iterators[3].index});
+    while (iter.nextOrder(false) != null) {
+        std.debug.print("[  ", .{});
+        for (0..iter.ndim) |i| {
+            std.debug.print("{}  ", .{iter.position[i]});
+        }
+        std.debug.print("]: {:0>2}   [  ", .{iter.index});
+        for (0..iter.iterators[0].ndim) |i| {
+            std.debug.print("{}  ", .{iter.iterators[0].position[i]});
+        }
+        std.debug.print("]: {:0>2}   [  ", .{iter.iterators[0].index});
+        for (0..iter.iterators[1].ndim) |i| {
+            std.debug.print("{}  ", .{iter.iterators[1].position[i]});
+        }
+        std.debug.print("]: {:0>2}   [  ", .{iter.iterators[1].index});
+        for (0..iter.iterators[2].ndim) |i| {
+            std.debug.print("{}  ", .{iter.iterators[2].position[i]});
+        }
+        std.debug.print("]: {:0>2}   [  ", .{iter.iterators[2].index});
+        for (0..iter.iterators[3].ndim) |i| {
+            std.debug.print("{}  ", .{iter.iterators[3].position[i]});
+        }
+        std.debug.print("]: {:0>2}\n", .{iter.iterators[3].index});
+    }
+    std.debug.print("Final state:\n", .{});
+    std.debug.print("[  ", .{});
+    for (0..iter.ndim) |i| {
+        std.debug.print("{}  ", .{iter.position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.index});
+    for (0..iter.iterators[0].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[0].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[0].index});
+    for (0..iter.iterators[1].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[1].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[1].index});
+    for (0..iter.iterators[2].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[2].position[i]});
+    }
+    std.debug.print("]: {:0>2}   [  ", .{iter.iterators[2].index});
+    for (0..iter.iterators[3].ndim) |i| {
+        std.debug.print("{}  ", .{iter.iterators[3].position[i]});
+    }
+    std.debug.print("]: {:0>2}\n", .{iter.iterators[3].index});
+}
+
+fn formatValueWithCustomPadding(value: i32, padding: u8) []const u8 {
+    const buffer = std.mem.Allocator.buffer(@sizeOf(value), padding);
+    const fmt = "{02d}";
+    const len = std.fmt.bufPrint(buffer[0..], fmt, .{value}) catch return "";
+    return buffer[0..len];
 }
 
 fn perfTesting(a: std.mem.Allocator) !void {

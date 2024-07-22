@@ -1,5 +1,7 @@
 # To-Do
 
+Move verything in the legacy folder to a leghacy branch, and then delete the folder (need to investigate how to do this).
+
 ## Documentation
 
 ## Expressions

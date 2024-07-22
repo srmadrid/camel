@@ -624,102 +624,14 @@ pub fn NDArray(comptime T: type) type {
         /// them is a scalar, it is added to all the elements of the other
         /// array.
         pub fn add(self: *Self, left: Self, right: Self) !void {
-            var oneIsScalar: bool = undefined;
-            var leftIsScalar: bool = undefined;
-            var bothAreScalar: bool = undefined;
-            if (left.isScalar() and !right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = true;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, right.shape)) {
-                    return Error.IncompatibleDimensions;
-                }
-            } else if (!left.isScalar() and right.isScalar()) {
-                oneIsScalar = true;
-                leftIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape)) {
-                    return Error.IncompatibleDimensions;
-                }
-            } else if (left.isScalar() and right.isScalar()) {
-                bothAreScalar = true;
-            } else {
-                oneIsScalar = false;
-                bothAreScalar = false;
-                if (!std.mem.eql(usize, self.shape, left.shape) or
-                    !std.mem.eql(usize, left.shape, right.shape))
-                {
-                    return Error.IncompatibleDimensions;
-                }
+            var iter: MultiIterator(T) = Iterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
+            if (!std.mem.eql(usize, self.shape, iter.shape[0..self.shape.len])) {
+                return Error.IncompatibleDimensions;
             }
 
-            if (bothAreScalar) {
-                _add(&self.data[0], left.data[0], right.data[0]);
-                return;
-            }
-            if (oneIsScalar) {
-                if (leftIsScalar) {
-                    if (self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous) {
-                        const scalar: T = left.data[0];
-                        for (0..self.size) |i| {
-                            _add(&self.data[i], scalar, right.data[i]);
-                        }
-                    } else {
-                        const scalar: T = left.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _add(&self.data[i], scalar, right.data[right._index(position)]);
-                        }
-                    }
-                } else {
-                    if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous) {
-                        const scalar: T = right.data[0];
-                        for (0..self.size) |i| {
-                            _add(&self.data[i], left.data[i], scalar);
-                        }
-                    } else {
-                        const scalar: T = right.data[0];
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order
-                            self._position(i, position);
-                            _add(&self.data[i], left.data[left._index(position)], scalar);
-                        }
-                    }
-                }
-            } else {
-                if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous and
-                    self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous)
-                {
-                    for (0..self.size) |i| {
-                        _add(&self.data[i], left.data[i], right.data[i]);
-                    }
-                } else {
-                    // Follow the order common to two of them (better caching).
-                    if (self.flags.ColumnMajorContiguous == left.flags.ColumnMajorContiguous or
-                        self.flags.ColumnMajorContiguous == right.flags.ColumnMajorContiguous)
-                    {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow self's order (also used by left or right).
-                            self._position(i, position);
-                            _add(&self.data[i], left.data[left._index(position)], right.data[right._index(position)]);
-                        }
-                    } else {
-                        var position_buf: [MaxDimensions]usize = undefined;
-                        const position = position_buf[0..self.shape.len];
-                        for (0..self.size) |i| {
-                            // Follow left's order (also used by right).
-                            left._position(i, position);
-                            _add(&self.data[self._index(position)], left.data[i], right.data[i]);
-                        }
-                    }
-                }
+            _add(&self.data[0], left.data[0], right.data[0]);
+            while (iter.next() != null) {
+                _add(&self.data[iter.aindices[0]], left.data[iter.aindices[1]], right.data[iter.aindices[2]]);
             }
         }
 
