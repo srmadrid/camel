@@ -1,8 +1,12 @@
 # To-Do
 
-Move verything in the legacy folder to a leghacy branch, and then delete the folder (need to investigate how to do this).
+Move verything in the legacy folder to a legacy branch, and then delete the folder (need to investigate how to do this).
 
 ## Documentation
+
+## Optimization
+
+Implement SIMD optimizations.
 
 ## Expressions
 

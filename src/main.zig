@@ -14,7 +14,7 @@ pub fn main() !void {
 
     // try iterPerfTesting(a);
 
-    try multiIterTesting(a);
+    // try multiIterTesting(a);
 
     // try perfTesting(a);
 }
@@ -53,10 +53,10 @@ fn generalTesting(a: std.mem.Allocator) !void {
 }
 
 fn addTesting(a: std.mem.Allocator) !void {
-    var B: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var B: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 1, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer B.deinit();
     for (0..B.size) |i| {
-        B.data[i] = @floatFromInt(i);
+        B.data[i] = @floatFromInt(i + 1);
     }
     std.debug.print("B =\n", .{});
     for (0..B.shape[0]) |i| {
@@ -67,7 +67,7 @@ fn addTesting(a: std.mem.Allocator) !void {
         std.debug.print("\n", .{});
     }
 
-    var C: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var C: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
     defer C.deinit();
     C.setAll(10);
     std.debug.print("\nC =\n", .{});
@@ -79,9 +79,9 @@ fn addTesting(a: std.mem.Allocator) !void {
         std.debug.print("\n", .{});
     }
 
-    var D: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var D: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 3, 4 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer D.deinit();
-    try D.add(B, C);
+    try D.mult(B, C);
     // try camel.NDArray(u64).add(&D, B, C);
     std.debug.print("\nD =\n", .{});
     for (0..D.shape[0]) |i| {
@@ -111,7 +111,7 @@ fn iterTesting(a: std.mem.Allocator) !void {
         std.debug.print("{}  ", .{iterC.position[i]});
     }
     std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
-    while (iterR.nextOrder(true) != null and iterC.nextOrder(true) != null) {
+    while (iterR.nextOrder(false) != null and iterC.nextOrder(false) != null) {
         std.debug.print("[  ", .{});
         for (0..iterR.ndim) |i| {
             std.debug.print("{}  ", .{iterR.position[i]});
@@ -122,7 +122,7 @@ fn iterTesting(a: std.mem.Allocator) !void {
         }
         std.debug.print("],  {},  {}\n", .{ iterR.index, iterC.index });
     }
-    _ = iterC.nextOrder(true);
+    _ = iterC.nextOrder(false);
     std.debug.print("Final state:\n", .{});
     std.debug.print("[  ", .{});
     for (0..iterR.ndim) |i| {
@@ -198,18 +198,19 @@ fn iterPerfTesting(a: std.mem.Allocator) !void {
 }
 
 fn multiIterTesting(a: std.mem.Allocator) !void {
-    var iterArrR: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 4, 2, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
-    defer iterArrR.deinit();
-    var iterArrC: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
-    defer iterArrC.deinit();
+    var arr1: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 4, 2, 1 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    defer arr1.deinit();
+    var arr2: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    defer arr2.deinit();
 
     // Other arrays for broadcasting testing.
-    var A: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 1, 1, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
-    defer A.deinit();
-    var scalar: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{}, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    //var arr3: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 1, 1, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var arr3: camel.NDArray(f64) = try camel.NDArray(f64).initFlags(a, &[_]usize{ 2, 4, 2, 3 }, camel.ndarray.Flags{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    defer arr3.deinit();
+    var scalar: camel.NDArray(f64) = try camel.NDArray(f64).init(a, &[_]usize{});
     defer scalar.deinit();
 
-    var iter: camel.ndarray.MultiIterator(f64) = try camel.ndarray.MultiIterator(f64).initFlags(&[_]camel.NDArray(f64){ iterArrR, iterArrC, A, scalar }, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = false });
+    var iter: camel.ndarray.MultiIterator(f64) = try camel.ndarray.MultiIterator(f64).initFlags(&[_]camel.NDArray(f64){ arr1, arr2, arr3, scalar }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
 
     std.debug.print("ndim = {}\n", .{iter.ndim});
     std.debug.print("narray = {}\n", .{iter.narray});
