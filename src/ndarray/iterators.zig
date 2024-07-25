@@ -204,22 +204,6 @@ pub fn MultiIterator(comptime T: type) type {
         ///
         /// **Description**:
         ///
-        /// Initializes a multi iterator for the given arrays. Calls `initFlags`
-        /// using the first array's flags.
-        ///
-        /// **Input Parameters**:
-        /// - `array`: the array for the Iterator.
-        ///
-        /// **Return Values**:
-        /// - `Self`: the initialized iterator.
-        pub fn init(arrays: []const NDArray(T)) !Self {
-            return initFlags(arrays, arrays[0].flags);
-        }
-
-        /// Initializes a multi iterator for the given arrays.
-        ///
-        /// **Description**:
-        ///
         /// Initializes a multi iterator for the given arrays and flags.
         ///
         /// **Input Parameters**:
@@ -228,7 +212,7 @@ pub fn MultiIterator(comptime T: type) type {
         ///
         /// **Return Values**:
         /// - `Self`: the initialized iterator.
-        pub fn initFlags(arrays: []const NDArray(T), flags: Flags) !Self {
+        pub fn init(arrays: []const NDArray(T), flags: Flags) !Self {
             if (arrays.len == 0) {
                 return IteratorError.NoArrays;
             }
@@ -313,7 +297,7 @@ pub fn MultiIterator(comptime T: type) type {
         /// - `Self`: the initialized iterator.
         pub fn initCheck(first: NDArray(T), rest: []const NDArray(T)) !Self {
             // Not implemented yet, this is done to be able to compile.
-            return initFlags([_]NDArray(T){first} ++ rest, first.flags);
+            return init([_]NDArray(T){first} ++ rest, first.flags);
         }
 
         /// Iterates to the next element.

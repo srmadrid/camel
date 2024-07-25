@@ -96,7 +96,7 @@ pub inline fn _sub(out: anytype, left: anytype, right: anytype) void {
 /// Multiplies two elements of any supported type and stores the result in the
 /// output variable. `left` and `right` must be of the same type, and `out` must
 /// be a pointer of that same type.
-pub inline fn _mult(out: anytype, left: anytype, right: anytype) void {
+pub inline fn _mul(out: anytype, left: anytype, right: anytype) void {
     const T = @TypeOf(out.*, left, right);
     const supported = whatSupportedNumericType(T);
     switch (supported) {

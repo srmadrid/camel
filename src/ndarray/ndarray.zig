@@ -8,7 +8,8 @@
 
 // Create a subarray view creator. Useful for i.e. LU decomposition
 
-// FOR MOST FUNCTIONS, MAKE TWO VERSIONS (NAMES NOT FINAL)?
+// FOR MOST FUNCTIONS, MAKE TWO VERSIONS (NAMES NOT FINAL)?? MAYBE JUST OPTIONAL
+// PARAMETERS (?T)?
 // - add, addInPlace: (self: *Self, left: Self, right: Self) void: adds left +
 //   right and stores the result in self
 // - addNew, add: (allocator: std.mem.Allocator, left: Self, right: Self) Self:
@@ -24,7 +25,7 @@ const ndarray = @This();
 
 const _add = core.supported._add;
 const _sub = core.supported._sub;
-const _mult = core.supported._mult;
+const _mul = core.supported._mul;
 const _div = core.supported._div;
 
 /// Maximal number of dimensions.
@@ -65,32 +66,6 @@ pub fn NDArray(comptime T: type) type {
         ///
         /// **Description**:
         ///
-        /// Initializes a matrix with the given shape and the default flags. It
-        /// is highly recommended to initialize all elements of the array after
-        /// calling this function using the `set` or `setAll` functions. Failure
-        /// to do so may result in undefined behavior if the uninitialized
-        /// elements are accessed before being set.
-        ///
-        /// Deinitialize with `deinit`.
-        ///
-        /// **Input Parameters**:
-        /// - `allocator`: allocator to use internally.
-        /// - `shape`: shape of the array. Must have length
-        /// `≤ MaxDimensions` and no dimension of size `0`.
-        ///
-        /// **Return Values**:
-        /// - `Self`: the initialized array.
-        /// - `TooManyDimensions`: `shape` is too long (`≥ MaxDimensions`).
-        /// - `ZeroDimension`: at least one dimension is `0`.
-        /// - `OutOfMemory`: `alloc` failed.
-        pub fn init(allocator: std.mem.Allocator, shape: []const usize) !Self {
-            return initFlags(allocator, shape, .{});
-        }
-
-        /// Initializes an array.
-        ///
-        /// **Description**:
-        ///
         /// Initializes a matrix with the given shape and flags. It is highly
         /// recommended to initialize all elements of the array after calling
         /// this function using the `set` or `setAll` functions. Failure to do
@@ -106,7 +81,8 @@ pub fn NDArray(comptime T: type) type {
         /// - `flags`: storage flags for the array (must be valid:
         /// `RowMajorContiguous` and `ColumnMajorContinuous` must not be set at
         /// the same time, unless the desired array is a scalar or a vector, and
-        /// `OwnsData` must be true.
+        /// `OwnsData` must be true. Using an empty anonymous struct `.{}` will
+        /// yield the default flags.
         ///
         /// **Return Values**:
         /// - `Self`: the initialized array.
@@ -114,7 +90,7 @@ pub fn NDArray(comptime T: type) type {
         /// - `ZeroDimension`: at least one dimension is `0`.
         /// - `InvalidFlags`: flags are invalid.
         /// - `OutOfMemory`: `alloc` failed.
-        pub fn initFlags(allocator: std.mem.Allocator, shape: []const usize, flags: Flags) !Self {
+        pub fn init(allocator: std.mem.Allocator, shape: []const usize, flags: Flags) !Self {
             if (shape.len > MaxDimensions) {
                 return Error.TooManyDimensions;
             }
@@ -621,7 +597,7 @@ pub fn NDArray(comptime T: type) type {
         /// - `IncompatibleDimensions`: the `out` array does not have the shape
         /// of the full broadcast.
         pub fn add(self: *Self, left: Self, right: Self) !void {
-            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
+            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right }, self.flags);
             if (!std.mem.eql(usize, self.shape, iter.shape[0..self.shape.len])) {
                 return Error.IncompatibleDimensions;
             }
@@ -655,7 +631,7 @@ pub fn NDArray(comptime T: type) type {
         /// - `IncompatibleDimensions`: the `out` array does not have the shape
         /// of the full broadcast.
         pub fn sub(self: *Self, left: Self, right: Self) !void {
-            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
+            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right }, self.flags);
             if (!std.mem.eql(usize, self.shape, iter.shape[0..self.shape.len])) {
                 return Error.IncompatibleDimensions;
             }
@@ -688,15 +664,15 @@ pub fn NDArray(comptime T: type) type {
         /// broadcasted.
         /// - `IncompatibleDimensions`: the `out` array does not have the shape
         /// of the full broadcast.
-        pub fn mult(self: *Self, left: Self, right: Self) !void {
-            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right });
+        pub fn mul(self: *Self, left: Self, right: Self) !void {
+            var iter: MultiIterator(T) = try MultiIterator(T).init(&[_]camel.NDArray(f64){ self.*, left, right }, self.flags);
             if (!std.mem.eql(usize, self.shape, iter.shape[0..self.shape.len])) {
                 return Error.IncompatibleDimensions;
             }
 
-            _mult(&self.data[0], left.data[0], right.data[0]);
+            _mul(&self.data[0], left.data[0], right.data[0]);
             while (iter.next() != null) {
-                _mult(&self.data[iter.iterators[0].index], left.data[iter.iterators[1].index], right.data[iter.iterators[2].index]);
+                _mul(&self.data[iter.iterators[0].index], left.data[iter.iterators[1].index], right.data[iter.iterators[2].index]);
             }
         }
 
@@ -806,40 +782,14 @@ pub const Flags = packed struct {
 test "init" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 });
-    defer A.deinit();
-    try std.testing.expect(A.data.len == 1200);
-    try std.testing.expect(std.mem.eql(usize, &[_]usize{ 10, 5, 8, 3 }, A.shape));
-    try std.testing.expect(std.mem.eql(usize, &[_]usize{ 120, 24, 3, 1 }, A.strides));
-    try std.testing.expect(A.size == 1200);
-    try std.testing.expect(A.flags.RowMajorContiguous);
-    try std.testing.expect(!A.flags.ColumnMajorContiguous);
-    try std.testing.expect(A.flags.OwnsData);
-    try std.testing.expect(A.flags.Writeable);
-
-    var scalar: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{});
-    defer scalar.deinit();
-    try std.testing.expect(scalar.data.len == 1);
-    try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar.shape));
-    try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar.strides));
-    try std.testing.expect(scalar.size == 1);
-    try std.testing.expect(scalar.flags.RowMajorContiguous);
-    try std.testing.expect(!scalar.flags.ColumnMajorContiguous);
-    try std.testing.expect(scalar.flags.OwnsData);
-    try std.testing.expect(scalar.flags.Writeable);
-}
-
-test "initFlags" {
-    const a: std.mem.Allocator = std.testing.allocator;
-
     const tooBig: [MaxDimensions + 1]usize = [_]usize{1} ** (MaxDimensions + 1);
-    try std.testing.expectError(Error.TooManyDimensions, NDArray(f64).initFlags(a, &tooBig, .{}));
-    try std.testing.expectError(Error.ZeroDimension, NDArray(f64).initFlags(a, &[_]usize{ 2, 3, 5, 6, 0, 1, 8 }, .{}));
-    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).initFlags(a, &[_]usize{ 2, 2 }, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = true }));
-    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).initFlags(a, &[_]usize{ 2, 2 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = false }));
-    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).initFlags(a, &[_]usize{ 2, 2 }, .{ .OwnsData = false }));
+    try std.testing.expectError(Error.TooManyDimensions, NDArray(f64).init(a, &tooBig, .{}));
+    try std.testing.expectError(Error.ZeroDimension, NDArray(f64).init(a, &[_]usize{ 2, 3, 5, 6, 0, 1, 8 }, .{}));
+    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).init(a, &[_]usize{ 2, 2 }, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = true }));
+    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).init(a, &[_]usize{ 2, 2 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = false }));
+    try std.testing.expectError(Error.InvalidFlags, NDArray(f64).init(a, &[_]usize{ 2, 2 }, .{ .OwnsData = false }));
 
-    var scalar1: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{}, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = true });
+    var scalar1: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{}, .{ .RowMajorContiguous = true, .ColumnMajorContiguous = true });
     defer scalar1.deinit();
     try std.testing.expect(scalar1.data.len == 1);
     try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar1.shape));
@@ -850,7 +800,7 @@ test "initFlags" {
     try std.testing.expect(scalar1.flags.OwnsData);
     try std.testing.expect(scalar1.flags.Writeable);
 
-    var scalar2: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{}, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = false });
+    var scalar2: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{}, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = false });
     defer scalar2.deinit();
     try std.testing.expect(scalar2.data.len == 1);
     try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar2.shape));
@@ -861,7 +811,7 @@ test "initFlags" {
     try std.testing.expect(scalar2.flags.OwnsData);
     try std.testing.expect(scalar2.flags.Writeable);
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 10, 5, 8, 3 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 }, .{});
     defer A.deinit();
 
     try std.testing.expect(A.data.len == 1200);
@@ -873,7 +823,7 @@ test "initFlags" {
     try std.testing.expect(A.flags.OwnsData);
     try std.testing.expect(A.flags.Writeable);
 
-    var B: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 10, 5, 8, 3 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    var B: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer B.deinit();
 
     try std.testing.expect(B.data.len == 1200);
@@ -885,18 +835,29 @@ test "initFlags" {
     try std.testing.expect(B.flags.OwnsData);
     try std.testing.expect(B.flags.Writeable);
 
+    var scalar: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{}, .{});
+    defer scalar.deinit();
+    try std.testing.expect(scalar.data.len == 1);
+    try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar.shape));
+    try std.testing.expect(std.mem.eql(usize, &[_]usize{}, scalar.strides));
+    try std.testing.expect(scalar.size == 1);
+    try std.testing.expect(scalar.flags.RowMajorContiguous);
+    try std.testing.expect(!scalar.flags.ColumnMajorContiguous);
+    try std.testing.expect(scalar.flags.OwnsData);
+    try std.testing.expect(scalar.flags.Writeable);
+
     // MORE FOR VIEWS WHEN THEY ARE IMPLEMENTED
 }
 
 test "_index" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 10, 5, 8, 3 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 }, .{});
     defer A.deinit();
 
     try std.testing.expect(A._index(&[_]usize{ 3, 1, 0, 2 }) == 386);
 
-    var B: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 10, 5, 8, 3 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    var B: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer B.deinit();
 
     try std.testing.expect(B._index(&[_]usize{ 3, 1, 0, 2 }) == 813);
@@ -905,7 +866,7 @@ test "_index" {
 test "_checkPosition" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 10, 5, 8, 3 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 10, 5, 8, 3 }, .{});
     defer A.deinit();
 
     try std.testing.expectError(Error.DimensionMismatch, A._checkPosition(&[_]usize{3}));
@@ -915,7 +876,7 @@ test "_checkPosition" {
 test "set" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 3, 2, 4 }, .{});
     defer A.deinit();
     // This is one way of iterating through an array.
     var elem: f64 = 1;
@@ -929,7 +890,7 @@ test "set" {
     }
     try std.testing.expect(std.mem.eql(f64, A.data, &[_]f64{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 }));
 
-    var B: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
+    var B: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 3, 2, 4 }, .{ .RowMajorContiguous = false, .ColumnMajorContiguous = true });
     defer B.deinit();
     elem = 1;
     for (0..B.shape[0]) |i| {
@@ -946,7 +907,7 @@ test "set" {
 test "setAll" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 5, 10, 4 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 5, 10, 4 }, .{});
     defer A.deinit();
     // This is one way of iterating through an array.
     A.setAll(5);
@@ -956,7 +917,7 @@ test "setAll" {
 test "replace" {
     const a: std.mem.Allocator = std.testing.allocator;
 
-    var A: NDArray(f64) = try NDArray(f64).initFlags(a, &[_]usize{ 3, 2, 4 }, .{});
+    var A: NDArray(f64) = try NDArray(f64).init(a, &[_]usize{ 3, 2, 4 }, .{});
     defer A.deinit();
     // This is one way of iterating through an array.
     var elem: f64 = 1;
