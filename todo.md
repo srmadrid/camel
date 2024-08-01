@@ -1,6 +1,6 @@
 # To-Do
 
-Move verything in the legacy folder to a legacy branch, and then delete the folder (need to investigate how to do this).
+Make an apply function, which applys a function to each element of an array.
 
 ## Documentation
 
@@ -10,7 +10,11 @@ Implement SIMD optimizations.
 
 ## Expressions
 
-Make the parser notation agnostic: it will be defined in a notation configuration file, and ship the library with some presets.
+Make symbols (symbol type) an interface? like std.mem.Allocator, so each object (ring, vector space, function, etc.) can be its own type, that can be passed to any function asking for a symbol.
+
+In order to user the symbolic system, the user must call camel.init(allocator, ...) (name and namespace not final) to initiallize an object (returns it) with all the info of the system, i.e., all the stored symbols of the system so they can be called within a new expression by just referring to them (the library will search in the backend object to find it). This object can store many things, and many of these object can be made within one runtime to allow for multiple configurations at once.
+
+Make the parser notation agnostic: it will be defined in a notation configuration file (yaml, toml, file extention not chosen), and ship the library with some presets.
 
 Like with strings, make a funxction to make temporary expressions so for example, a user can do cml_expression_solve(cml_expression_temp(cml_string_temp("f(g(x))^f(x)")), ...) to do things to temporary expressions, where g(x) and f(x) would have to be predefined.
 

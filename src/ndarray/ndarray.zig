@@ -683,13 +683,13 @@ pub fn NDArray(comptime T: type) type {
             /// **Description**:
             ///
             /// The routine computes the sum of the magnitudes of elements of a
-            /// real vector, or the sum of magnitudes of the real and imaginary
-            /// parts of elements of a complex vector:
+            /// real array, or the sum of magnitudes of the real and imaginary
+            /// parts of elements of a complex array:
             ///
             /// `res = |x[1].Re| + |x[1].Im| + |x[2].Re| + |x[2].Im| + ... +
             /// |x[n].Re| + |x[n].Im|`,
             ///
-            /// where `x` is an `NDArray` with shape `{n}`.
+            /// where `x` is an `NDArray`.
             ///
             /// **Input Parameters**:
             /// - `allocator`: an optional `std.mem.Allocator`. Only needed when
@@ -700,11 +700,8 @@ pub fn NDArray(comptime T: type) type {
             /// - `T`: The sum of magnitudes of real and imaginary parts of
             /// all elements of the vector.
             /// - `someError`: blabla
-            //pub fn asum(allocator: ?std.mem.Allocator, x: NDArray(T)) !T {
-            //    return @import("ndarray/BLAS/asum.zig").asum(T, allocator, x);
-            //}
-            pub fn tmp() usize {
-                return 3;
+            pub fn asum(allocator: ?std.mem.Allocator, x: NDArray(T)) !T {
+                return @import("BLAS/BLAS.zig").asum(allocator, T, x);
             }
         };
 
@@ -764,6 +761,8 @@ pub const Error = error{
     NotMatrix,
     /// The dimensions of the array are not compatible.
     IncompatibleDimensions,
+    /// No allocator was provided when needed.
+    NoAllocator,
 };
 
 /// Flags representing information on the storage of an array.
@@ -932,4 +931,9 @@ test "replace" {
     const replaced: f64 = try A.replace(&[_]usize{ 0, 1, 1 }, 20);
     try std.testing.expect(replaced == 6);
     try std.testing.expect(try A.get(&[_]usize{ 0, 1, 1 }) == 20);
+}
+
+test {
+    _ = @import("BLAS/BLAS.zig");
+    std.testing.refAllDeclsRecursive(@This());
 }
